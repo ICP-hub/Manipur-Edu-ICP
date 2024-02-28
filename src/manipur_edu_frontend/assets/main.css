@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+
+
+body {
+    font-family: "Noto Sans";
+    
+    /* font-size: 1.5rem; */
+}
+
+/* Input Date Picker */
+.Date input[type="date"]::-webkit-calendar-picker-indicator {
+    color: rgba(0, 0, 0, 0);
+    opacity: 1;
+    display: block;
+    position: absolute;
+    outline: #ACBFFD;
+    right: 0;
+    padding: 5px;
+    padding-right: 10px;
+    background: url(./calander.svg) no-repeat;
+    width: 20px;
+    height: 20px;   
+    border-width: thin;
+
+}
+
+/* Navbar Glass effect */
+.navbar-glass {
+    background: #ffffff1b;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px); /* For Safari browser support */
+    color: #00227A;
+  }
+/* 
+img {
+    max-width: 50vw;
+    max-height: 25vw;
+    display: block;
+    margin: auto;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+
+    flex-flow: row wrap;
+    max-width: 40vw;
+    margin: auto;
+    align-items: baseline;
+
+    flex-direction: column;
+    gap: 1.25rem;
+
+}
+
+form label {
+    flex: 1 1 0%;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 700;
+    color: #374151;
+}
+
+form input {
+
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-radius: 0.25rem;
+    border-width: 1px;
+    width: 100%;
+    font-weight: 400;
+
+}
+
+form h1 {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-weight: 700;
+}
+
+form span {
+    color: #EF4444;
+}
+
+button[type="submit"] {
+    padding: 5px 20px;
+    margin: 10px auto;
+    float: right;
+}
+
+#greeting {
+    margin: 10px auto;
+    padding: 10px 60px;
+    border: 1px solid #222;
+}
+
+#greeting:empty {
+    display: none;
+} */
