@@ -4,84 +4,9 @@ import UploadResult from "../../components/institute/upload_result_popup";
 const ResultTab = ({ entries }) => {
   const [editresultpopup, seteditresultpopup] = useState(false);
   const [uploadresultpopup, setuploadresultpopup] = useState(false);
+  const [publicKey, setPublicKey] = useState('');
+  const [principalId, setPrincipalId] = useState('');
 
-
-
-
-  // const entries = [
-  //   {
-  //     name: "Student 1",
-  //     id: "STU-12345",
-  //     email: "email@email.com",
-  //     rollnum: "RN-123",
-  //   },
-  //   {
-  //     name: "Student 2",
-  //     id: "STU-12345",
-  //     email: "email@email.com",
-  //     rollnum: "RN-123",
-  //   },
-  //   {
-  //     name: "Student 3",
-  //     id: "STU-12345",
-  //     email: "email@email.com",
-  //     rollnum: "RN-123",
-  //   },
-  //   {
-  //     name: "Student 4",
-  //     id: "STU-12345",
-  //     email: "email@email.com",
-  //     rollnum: "RN-123",
-  //   },
-  //   {
-  //     name: "Student 1",
-  //     id: "STU-12345",
-  //     email: "email@email.com",
-  //     rollnum: "RN-123",
-  //   },
-  //   {
-  //     name: "Student 2",
-  //     id: "STU-12345",
-  //     email: "email@email.com",
-  //     rollnum: "RN-123",
-  //   },
-  //   {
-  //     name: "Student 3",
-  //     id: "STU-12345",
-  //     email: "email@email.com",
-  //     rollnum: "RN-123",
-  //   },
-  //   {
-  //     name: "Student 4",
-  //     id: "STU-12345",
-  //     email: "email@email.com",
-  //     rollnum: "RN-123",
-  //   },
-  //   {
-  //     name: "Student 1",
-  //     id: "STU-12345",
-  //     email: "email@email.com",
-  //     rollnum: "RN-123",
-  //   },
-  //   {
-  //     name: "Student 2",
-  //     id: "STU-12345",
-  //     email: "email@email.com",
-  //     rollnum: "RN-123",
-  //   },
-  //   {
-  //     name: "Student 3",
-  //     id: "STU-12345",
-  //     email: "email@email.com",
-  //     rollnum: "RN-123",
-  //   },
-  //   {
-  //     name: "Student 4",
-  //     id: "STU-12345",
-  //     email: "email@email.com",
-  //     rollnum: "RN-123",
-  //   },
-  // ];
   return (
     <div className="w-[85%] self-center  pt-[27px]">
       <div className="grid grid-cols-[repeat(5,1fr)_50px]  py-[15px] mt-[27px] rounded-md bg-[#D9EBFF] font-[600] font-[Segoe UI] text-[15px] text-[#00227A] leading-[20px]">
@@ -93,18 +18,22 @@ const ResultTab = ({ entries }) => {
 
         {/* Adjust width as needed */}
       </div>
-      {entries.map(({ studentId, details }, index) => (
+      {entries?.map(({ studentId, details }, index) => (
         <Card
           key={index}
           entry={details}
           studentPrincipalId={studentId}
           seteditresultpopup={seteditresultpopup}
+          setPublicKey={setPublicKey}
+          setPrincipalId={setPrincipalId}
         />
       ))}
       <div className="relative">
         <EditResult
           open={editresultpopup}
           onClose={() => seteditresultpopup(false)}
+          publicKey={publicKey}
+          principalId={principalId}
         />
         <UploadResult
           open={uploadresultpopup}
@@ -126,7 +55,7 @@ const ResultTab = ({ entries }) => {
 };
 export default ResultTab;
 
-const Card = ({ studentPrincipalId, entry, seteditresultpopup }) => {
+const Card = ({ studentPrincipalId, entry, seteditresultpopup, setPublicKey, setPrincipalId }) => {
 
   const studentName = entry?.[0].first_name?.[0] + " " + entry?.[0].last_name?.[0] ?? 'N/A';
   const studentId = entry?.[0].student_id?.[0].substr(0, 6) ?? 'N/A';
@@ -155,7 +84,12 @@ const Card = ({ studentPrincipalId, entry, seteditresultpopup }) => {
         {rollNo}
       </p>
       <button
-        onClick={() => seteditresultpopup(true)}
+        onClick={() => {
+          seteditresultpopup(true);
+          setPrincipalId(studentPrincipalId);
+          setPublicKey(entry?.[0].public_key?.[0]);
+        }}
+
         className="pt-[0.4375rem] font-[700] underline flex justify-center bg-[#EEF6FF] text-[#687DB2] font-[Segoe UI] font-[400] text-[0.9375rem] leading-[1.25rem]"
       >
         Click to Edit

@@ -7,14 +7,17 @@ import Background from "../../components/BackgroudPage";
 import {
   Link, useNavigate,
 } from "../../../../../node_modules/react-router-dom/dist/index";
+import { handleFileDecrypt } from "../../utils/helper";
 
 const ProfileResult = () => {
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
   const { actor, authClient } = useAuth();
+  const principal_id = authClient.getIdentity().getPrincipal().toString();
+  const [imageUrl, setImageUrl] = useState('');
 
   const fetchStudentDetails = async () => {
-    const principal_id = authClient.getIdentity().getPrincipal().toString();
+
     const response = await actor.get_student_details(principal_id);
     return response;
   };
@@ -28,11 +31,27 @@ const ProfileResult = () => {
   if (!isLoadingEntry && !errorEntry) {
     console.log("student view profile", entry);
   }
+  const handleView = async () => {
+
+    const getResult = await actor.get_user_result(principal_id);
+    console.log('getresult', getResult);
+    const firstItem = getResult.Ok[0];
+    console.log("firstItem", firstItem);
+    console.log("result", firstItem.result);
+    const decryptedFile = await handleFileDecrypt(firstItem.result, entry?.[0]?.public_key?.[0]);
+    console.log(decryptedFile);
+    const url = URL.createObjectURL(decryptedFile);
+    setImageUrl(url);
+
+
+
+    setOpenModal(true);
+  }
 
   return (
     <Background>
       <div className="relative pt-10">
-        <Modal open={openModal} onClose={() => setOpenModal(false)} />
+        <Modal open={openModal} onClose={() => setOpenModal(false)} image={imageUrl} />
         <div className="flex min-h-screen justify-evenly  ">
           <div className="w-[30%] bg-white mt-[80px] mb-[40px] rounded-[10px] flex flex-col">
             <div className="flex flex-col items-center border-b border-[#D8E1F8] mx-[20px]">
@@ -252,7 +271,7 @@ const ProfileResult = () => {
                 </p>
                 <div className="flex flex-row-reverse pt-[27px] pb-[14px]">
                   <button
-                    onClick={() => setOpenModal(true)}
+                    onClick={handleView}
                     className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[30px] py-[5px]"
                   >
                     View
@@ -276,7 +295,7 @@ const ProfileResult = () => {
                 </p>
                 <div className="flex flex-row-reverse pt-[27px] pb-[14px]">
                   <button
-                    onClick={() => setOpenModal(true)}
+                    onClick={handleView}
                     className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[30px] py-[5px]"
                   >
                     View

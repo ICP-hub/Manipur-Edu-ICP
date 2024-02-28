@@ -5,12 +5,15 @@ import CertificatesIssued from "../Institute/certificatesIssued";
 import { useAuth } from "../../utils/useAuthClient";
 import Modal from "../../components/modal";
 import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
+import { handleFileDecrypt } from "../../utils/helper";
+
 
 const Certifications = () => {
   const { userType } = React.useContext(UserContext);
   const [openModal, setOpenModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const { actor } = useAuth();
+  const [imageUrl, setImageUrl] = useState('');
+  const { actor, authClient } = useAuth();
   React.useEffect(() => {
     const checkLogin = async () => {
       if (userType) {
@@ -21,10 +24,36 @@ const Certifications = () => {
 
     checkLogin();
   }, [userType, actor]);
-const navigate = useNavigate();
+  const principal_id = authClient.getIdentity().getPrincipal().toString();
+  const navigate = useNavigate();
+  const handleStudentCertificate = async () => {
+
+
+    const entry = await actor.get_student_details(principal_id);
+
+    const getCertificates = await actor.get_user_certificates(principal_id);
+    console.log('getCertificates', getCertificates);
+    const firstItem = getCertificates.Ok[0];
+    console.log("firstItem", firstItem);
+    console.log("certificate_link", firstItem.certificate_link);
+
+    //todo:- there should be a method to display multiple certificates
+    const decryptedFile = await handleFileDecrypt(firstItem.certificate_link, entry?.[0]?.public_key?.[0]);
+    console.log(decryptedFile);
+    const url = URL.createObjectURL(decryptedFile);
+    setImageUrl(url);
+
+
+
+    setOpenModal(true);
+
+
+  }
+
+
   return (
     <Background>
-      <Modal open={openModal} onClose={() => setOpenModal(false)} />
+      <Modal open={openModal} onClose={() => setOpenModal(false)} image={imageUrl} />
       <div className="relative pt-[100px] pb-[50px] flex justify-center items-center px-[4%] lg1:px-[5%] ">
         <div className=" w-full bg-white flex flex-col justify-between rounded-[10px]">
           <div className="  flex justify-center rounded-t-[10px]">
@@ -109,7 +138,7 @@ const navigate = useNavigate();
           </div>
           {userType === "institute" && isLoggedIn ? (
             <>
-              <CertificatesIssued />
+              <CertificatesIssued institutePrincipalId={principal_id} />
             </>
           ) : userType === "student" && isLoggedIn ? (
             <>
@@ -131,7 +160,7 @@ const navigate = useNavigate();
                   </p>
                   <div className="flex flex-row-reverse pt-[27px] pb-[14px]">
                     <button
-                      onClick={() => setOpenModal(true)}
+                      onClick={handleStudentCertificate}
                       className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[30px] py-[5px]"
                     >
                       View
@@ -154,7 +183,7 @@ const navigate = useNavigate();
                 <p className="text-[#032068] text-[16px] font-[600] leading-[24px] font-[Source Sans Pro]">
                   Already have an account?
                 </p>{" "}
-                <button onClick={()=> navigate('/login')} className=" ml-[3px] text-[12px] font-[600] leading-[24px] text-[#346DC2] pt-[3px]">
+                <button onClick={() => navigate('/login')} className=" ml-[3px] text-[12px] font-[600] leading-[24px] text-[#346DC2] pt-[3px]">
                   Signin
                 </button>
               </div>

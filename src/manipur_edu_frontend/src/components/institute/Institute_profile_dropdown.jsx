@@ -9,7 +9,7 @@ const InstituteProfileDropdown = ({ open }) => {
   const handleLogout = async () => {
     let auth = await logout();
     console.log(auth);
-    navigate('/');
+    await navigate('/');
   }
   if (!open) return null;
   return (
