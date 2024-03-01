@@ -1,16 +1,11 @@
 import React from "react";
 import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
 import Login from "../../Login/stud_institute_login_signup";
-import { UserContext } from "../../utils/UserTypeProvider";
+
 const SignUp = () => {
-  const { setUserType } = React.useContext(UserContext);
-
   const navigate = useNavigate();
-
   const handleSubmit = (event) => {
     console.log(event.target.value);
-    setUserType(event.target.value);
-
     navigate("/login");
   };
 

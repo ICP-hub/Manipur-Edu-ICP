@@ -1,27 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import StudentProfileDropdown from "./student/Student_profile_dropdown";
 import InstituteProfileDropdown from "./institute/Institute_profile_dropdown";
 import InstituteNotifDropdown from "./institute/Institute_notif_dropdown";
 import StudentNotifDropdown from "./student/Student_notif_dropdown";
 import { useAuth } from "../utils/useAuthClient";
+import { useDispatch, useSelector } from "react-redux";
+import { profileOpenCloseDropDown,notificationOpenCloseDropDown } from "../../Redux/Action/index";
+
 const Navbar = () => {
+  let dispatch = useDispatch();
+  const dropdownRef = useRef(null);
+  let isDropDownOpen = useSelector(
+    (state) => state.profileOpenCloseDropDownReducer
+  );
+  let isNotificationDropDownOpen = useSelector(
+    (state) => state.notificationOpenCloseDropDownReducer
+  );
+  console.log("isDropDownOpen", isDropDownOpen);
 
-  const [student_profile, SetStudentProfile] = useState(false);
-  const [student_notif, SetStudentnotif] = useState(false);
-  const [institute_profile, SetinstituteProfile] = useState(false);
-  const [institute_notif, Setinstitutenotif] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { actor,isAuthenticated,userType } = useAuth();
+  const { actor, isAuthenticated, userType } = useAuth();
 
-
-  console.log(userType)
-  console.log("isAuthenticated",isAuthenticated)
+  console.log(userType);
+  console.log("isAuthenticated", isAuthenticated);
   const [isLoggedIn, setIsLoggedIn] = React.useState(isAuthenticated);
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     setIsLoggedIn(isAuthenticated);
-  },[isAuthenticated])
+  }, [isAuthenticated]);
 
   React.useEffect(() => {
     const checkLogin = async () => {
@@ -34,8 +41,6 @@ const Navbar = () => {
     checkLogin();
   }, [userType, actor]);
 
-
-
   // Handle the scroll event
   const handleScroll = () => {
     const offset = window.scrollY;
@@ -46,18 +51,52 @@ const Navbar = () => {
     }
   };
 
+  // Handle drop down events
+  const handleDropDown = () => {
+    dispatch(profileOpenCloseDropDown(!isDropDownOpen));
+  };
+
+  // Handle notification drop down events
+  const handleNotificationDropDown = () => {
+    dispatch(notificationOpenCloseDropDown(!isNotificationDropDownOpen));
+  };
+
+  // Handle close drop down events when user clicks outside of the drop down
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        dispatch(notificationOpenCloseDropDown(false));
+        dispatch(profileOpenCloseDropDown(false));
+      }
+    }
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on cleanup
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef]);
+
   // Add scroll event listener
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 ${scrolled ? 'navbar-glass' : 'bg-transparent'}`}>
-      <div className={`flex items-center justify-between ${scrolled ? 'mt-2' : 'h-32'} px-[4%] lg1:px-[5%]`}>
+    <nav
+      className={`fixed top-0 left-0 w-full z-50 ${
+        scrolled ? "navbar-glass" : "bg-transparent"
+      }`}
+    >
+      <div
+        className={`flex items-center justify-between ${
+          scrolled ? "mt-2" : "h-32"
+        } px-[4%] lg1:px-[5%]`}
+      >
         <div className="w-[50%]">
           <Link to="/">
             <h2 className="font-[Philosopher] text-[#0041E9] font-bold text-[28px] px-3 py-2">
@@ -68,7 +107,10 @@ const Navbar = () => {
         <div className="w-[50%] ">
           <ul className="flex font-[Noto Sans] items-center text-lg float-right list-none">
             <li className="mr-4">
-              <Link to="/" className="text-[#0041E9] hover:underline hover:bg-opacity-30 font-medium px-4 py-2 rounded">
+              <Link
+                to="/"
+                className="text-[#0041E9] hover:underline hover:bg-opacity-30 font-medium px-4 py-2 rounded"
+              >
                 Home
               </Link>
             </li>
@@ -78,15 +120,18 @@ const Navbar = () => {
               </Link>
             </li>
             <li className="mr-4">
-              <Link to="/certificates" className="text-[#0041E9] hover:underline hover:bg-opacity-30 font-medium px-4 py-2 rounded">
+              <Link
+                to="/certificates"
+                className="text-[#0041E9] hover:underline hover:bg-opacity-30 font-medium px-4 py-2 rounded"
+              >
                 Certifications
               </Link>
             </li>
-            <li className="mr-4">
+            <li ref={dropdownRef} className="mr-4">
               {userType === "institute" && isLoggedIn ? (
                 <div className="flex">
                   <button
-                    onClick={() => Setinstitutenotif(!institute_notif)}
+                    onClick={() => handleNotificationDropDown()}
                     className="mr-4 mb-7"
                   >
                     <svg
@@ -112,23 +157,18 @@ const Navbar = () => {
                       />
                     </svg>
                   </button>
-                  <InstituteNotifDropdown open={institute_notif} />
+                  <InstituteNotifDropdown open={isNotificationDropDownOpen} />
                   <li className="mr-4">
-                    <button
-                      onClick={() => SetinstituteProfile(!institute_profile)}
-                    >
-                      <img className="w-14 h-14 " src='/student.svg' alt="" />
+                    <button onClick={() => handleDropDown()}>
+                      <img className="w-14 h-14 " src="/student.svg" alt="" />
                     </button>
                   </li>
-                  <InstituteProfileDropdown open={institute_profile} />
+                  <InstituteProfileDropdown open={isDropDownOpen} />
                 </div>
               ) : userType === "student" && isLoggedIn ? (
                 <div className="flex">
                   <div className="self-center">
-                    <button
-                      onClick={() => SetStudentnotif(!student_notif)}
-                      className="mr-4"
-                    >
+                    <button onClick={() => handleNotificationDropDown()} className="mr-4">
                       <svg
                         width="27"
                         height="27"
@@ -152,14 +192,14 @@ const Navbar = () => {
                         />
                       </svg>
                     </button>
-                    <StudentNotifDropdown open={student_notif} />
+                    <StudentNotifDropdown open={isNotificationDropDownOpen} />
                   </div>
                   <li className="mr-4">
-                    <button onClick={() => SetStudentProfile(!student_profile)}>
-                      <img className="w-14 h-14 " src='/student.svg' alt="" />
+                    <button onClick={() => handleDropDown()}>
+                      <img className="w-14 h-14 " src="/student.svg" alt="" />
                     </button>
                   </li>
-                  <StudentProfileDropdown open={student_profile} />
+                  <StudentProfileDropdown open={isDropDownOpen} />
                 </div>
               ) : (
                 <Link

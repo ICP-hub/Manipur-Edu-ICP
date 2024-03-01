@@ -1,37 +1,27 @@
-
-
-
-
-
 import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
-import "../assets/main.css"
-import UserTypeProvider from "./utils/UserTypeProvider";
-
+import "../assets/main.css";
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
 import { QueryClient, QueryClientProvider } from "react-query";
-
+import store from "../Redux/store";
+import { Provider } from "react-redux";
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: 0,
     },
-  }
-})
+  },
+});
+
 root.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <UserTypeProvider>
-
-
-        <App />
-
-
-      </UserTypeProvider>
-    </QueryClientProvider>
-
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+          <App />
+      </QueryClientProvider>
+    </Provider>
   </React.StrictMode>
 );

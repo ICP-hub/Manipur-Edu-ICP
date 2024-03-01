@@ -7,6 +7,7 @@ import {
 } from "../../../declarations/manipur_edu_backend/index";
 import { AccountIdentifier } from "@dfinity/ledger-icp";
 import { Actor, HttpAgent } from "@dfinity/agent";
+import appConstants from "../../Constants/appConstants";
 
 const AuthContext = createContext();
 
@@ -29,7 +30,7 @@ const defaultOptions = {
    */
   loginOptions: {
     identityProvider:
-      process.env.DFX_NETWORK !== "ic"
+      process.env.DFX_NETWORK === "ic"
         ? "https://identity.ic0.app/#authorize"
         : `http://rdmx6-jaaaa-aaaaa-aaadq-cai.localhost:4943`,
   },
@@ -45,7 +46,7 @@ const defaultOptions = {
 export const useAuthClient = (options = defaultOptions) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [accountIdString, setAccountIdString] = useState("");
-  const [userType, setUserType] = useState("");
+  const [userType, setUserType] = useState(appConstants.UNKNOWN);
   const [authClient, setAuthClient] = useState(null);
   const [identity, setIdentity] = useState(null);
   const [principal, setPrincipal] = useState(null);

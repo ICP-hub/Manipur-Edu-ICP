@@ -24,7 +24,6 @@ const Login = () => {
     console.log("real authClient", authClient);
 
     const newUserType = event.target.value;
-    setUserType(newUserType);
     console.log(newUserType);
 
     console.log(userType);

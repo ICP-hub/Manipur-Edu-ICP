@@ -5,11 +5,9 @@ import { Link, useNavigate } from "../../../../../node_modules/react-router-dom/
 
 
 const ViewInstituteDetailsInstitutePage = () => {
-
   const [data, setData] = useState([]);
 
-
-  const { actor, authClient } = useAuth();
+  const { actor, authClient,identity,principal } = useAuth();
   console.log("identity", identity);
   console.log("principal", principal);
   React.useEffect(() => {
@@ -38,9 +36,7 @@ const ViewInstituteDetailsInstitutePage = () => {
     if (data) {
       console.log(data);
       navigate("/institute_detail_edit", { state: { data } });
-
     }
-
   };
 
 
