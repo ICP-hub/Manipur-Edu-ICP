@@ -29,7 +29,7 @@ const defaultOptions = {
    */
   loginOptions: {
     identityProvider:
-      process.env.DFX_NETWORK === "ic"
+      process.env.DFX_NETWORK !== "ic"
         ? "https://identity.ic0.app/#authorize"
         : `http://rdmx6-jaaaa-aaaaa-aaadq-cai.localhost:4943`,
   },
@@ -44,6 +44,8 @@ const defaultOptions = {
  */
 export const useAuthClient = (options = defaultOptions) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [accountIdString, setAccountIdString] = useState("");
+  const [userType, setUserType] = useState("");
   const [authClient, setAuthClient] = useState(null);
   const [identity, setIdentity] = useState(null);
   const [principal, setPrincipal] = useState(null);
@@ -85,40 +87,32 @@ export const useAuthClient = (options = defaultOptions) => {
     })
   };
 
+  const reloadLogin = () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        if (authClient.isAuthenticated() && ((await authClient.getIdentity().getPrincipal().isAnonymous()) === false)) {
+          updateClient(authClient);
+          resolve(AuthClient);
+        }
+      } catch (error) {
+        reject(error);
+      }
+    })
+  };
+
   async function updateClient(client) {
     const isAuthenticated = await client.isAuthenticated();
     setIsAuthenticated(isAuthenticated);
-
     const identity = client.getIdentity();
     setIdentity(identity);
-
     const principal = identity.getPrincipal();
     setPrincipal(principal);
-
     const accountId = AccountIdentifier.fromPrincipal({ principal });
     setAccountId(toHexString(accountId.bytes));
-
     setAuthClient(client);
-
-    // const actor = createLedgerActor(process.env.CANISTER_ID_MANIPUR_EDU_BACKEND, {
-    //   agentOptions: {
-    //     identity,
-    //   },
-    // });
-
-    // setBackendActor(actor);
-
-    window.identity = identity;
-    window.principal = principal;
-    window.principalString = principal.toText();
-    window.accountId = accountId;
     let accountIdString = toHexString(accountId.bytes);
-    window.accountIdString = accountIdString;
+    setAccountIdString(accountIdString);
     const agent = new HttpAgent({ identity });
-    // const tokenActorNew = createLedgerActor(process.env.CANISTER_ID_MANIPUR_EDU_BACKEND, {
-    //   agent,
-    // });
-    // window.tokenActor = tokenActorNew;
     const backendActorNew = createActor(
       process.env.CANISTER_ID_MANIPUR_EDU_BACKEND,
       {
@@ -126,8 +120,8 @@ export const useAuthClient = (options = defaultOptions) => {
       }
     );
     setBackendActor(backendActorNew);
-    window.backendActor = backendActorNew;
-    window.authClient = client;
+    let userType = await backendActorNew.check_user_type();
+    setUserType(userType);
   }
 
   const createLedgerActor = (canisterId) => {
@@ -170,6 +164,9 @@ export const useAuthClient = (options = defaultOptions) => {
     accountId,
     createLedgerActor,
     actor,
+    reloadLogin,
+    accountIdString,
+    userType
   };
 };
 

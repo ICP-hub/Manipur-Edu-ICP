@@ -13,12 +13,16 @@ const Navbar = () => {
   const [institute_profile, SetinstituteProfile] = useState(false);
   const [institute_notif, Setinstitutenotif] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { userType } = React.useContext(UserContext);
-  const { actor } = useAuth();
+  const { actor,isAuthenticated,userType } = useAuth();
 
 
   console.log(userType)
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  console.log("isAuthenticated",isAuthenticated)
+  const [isLoggedIn, setIsLoggedIn] = React.useState(isAuthenticated);
+
+  React.useEffect(()=>{
+    setIsLoggedIn(isAuthenticated);
+  },[isAuthenticated])
 
   React.useEffect(() => {
     const checkLogin = async () => {

@@ -94,4 +94,5 @@ service : {
   student_application_status : (text) -> (opt text) query;
   verify_institute : (text) -> (text);
   verify_student : (text) -> (text);
+  check_user_type : () -> (text);
 }

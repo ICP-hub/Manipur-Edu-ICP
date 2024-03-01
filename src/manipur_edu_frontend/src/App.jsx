@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useAuth, AuthProvider } from "./utils/useAuthClient";
 import Login from "./pages/Login/stud_institute_login_signup";
@@ -20,6 +20,13 @@ import InstituteDetails from "./pages/Admin/instituteDetails";
 import RegisteredStudents from "./pages/Admin/registered_students";
 
 function App() {
+
+  const { reloadLogin } = useAuth();
+
+  useEffect(() => {
+    reloadLogin();
+  }, [])
+  
   return (
     <div className="App">
       <Router>
