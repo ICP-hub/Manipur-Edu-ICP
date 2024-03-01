@@ -8,7 +8,6 @@ import { createRoot } from "react-dom/client";
 import App from "./App";
 import "../assets/main.css"
 import UserTypeProvider from "./utils/UserTypeProvider";
-import UserDataProvider from "./utils/UserDataProvider";
 
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);

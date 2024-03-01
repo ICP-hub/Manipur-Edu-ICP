@@ -3,14 +3,12 @@ import { useAuth } from "../../utils/useAuthClient";
 import { manipur_edu_backend } from "../../../../declarations/manipur_edu_backend/index";
 import Button from "../../components/Button";
 import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
-import { UserContext } from "../../utils/UserTypeProvider";
 import SignUpPage from "../../components/student/SignUpPage";
 import Status from "../../components/student/status";
 
 const Login = () => {
-  const { actor, login, principal, authClient, identity } = useAuth();
+  const { actor, login, principal, authClient, identity,userType } = useAuth();
   const navigate = useNavigate();
-  const { userType, setUserType } = React.useContext(UserContext);
 
   const [status, setStatus] = React.useState(false);
   const [Field, setField] = React.useState("");

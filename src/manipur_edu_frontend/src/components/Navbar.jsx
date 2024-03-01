@@ -4,7 +4,6 @@ import StudentProfileDropdown from "./student/Student_profile_dropdown";
 import InstituteProfileDropdown from "./institute/Institute_profile_dropdown";
 import InstituteNotifDropdown from "./institute/Institute_notif_dropdown";
 import StudentNotifDropdown from "./student/Student_notif_dropdown";
-import { UserContext } from "../utils/UserTypeProvider";
 import { useAuth } from "../utils/useAuthClient";
 const Navbar = () => {
 

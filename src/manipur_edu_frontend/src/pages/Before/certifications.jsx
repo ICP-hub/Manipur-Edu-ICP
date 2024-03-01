@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Background from "../../components/BackgroudPage";
-import { UserContext } from "../../utils/UserTypeProvider";
 import CertificatesIssued from "../Institute/certificatesIssued";
 import { useAuth } from "../../utils/useAuthClient";
 import Modal from "../../components/modal";
@@ -9,11 +8,10 @@ import { handleFileDecrypt } from "../../utils/helper";
 
 
 const Certifications = () => {
-  const { userType } = React.useContext(UserContext);
   const [openModal, setOpenModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [imageUrl, setImageUrl] = useState('');
-  const { actor, authClient } = useAuth();
+  const { actor, authClient,userType } = useAuth();
   React.useEffect(() => {
     const checkLogin = async () => {
       if (userType) {
