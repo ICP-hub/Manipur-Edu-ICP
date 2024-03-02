@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import EditResult from "../../components/institute/edit_result_pop";
+import EditResult from "../../components/institute/editResultPop";
 import UploadResult from "../../components/institute/upload_result_popup";
 const ResultTab = ({ entries }) => {
   const [editresultpopup, seteditresultpopup] = useState(false);

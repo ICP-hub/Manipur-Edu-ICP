@@ -117,7 +117,7 @@ const StudentsTab = () => {
                   </div>
                   <img
                     className="w-[67px] h-[55px] pl-[12px]"
-                    src='/student.svg'
+                    src='student.jpg'
                     alt=""
                   />
                 </div>
@@ -222,7 +222,7 @@ const Card = ({ entry, onView }) => {
     <div className=" grid grid-cols-[repeat(4,1fr)_45px] py-[15px] border-t border-[#D9EBFF]">
       <div className=" flex justify-center  text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] rounded-[5px]">
         <div className="flex rounded-[5px]">
-          <img className="w-[33px] h-[33px] " src='/student.svg' alt="" />
+          <img className="w-[33px] h-[33px] " src='student.jpg' alt="" />
           <p className="pt-[6px] pl-[13px]">{entry.name}</p>
         </div>
       </div>

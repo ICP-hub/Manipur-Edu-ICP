@@ -86,7 +86,7 @@ const ScholarshipTab = () => {
                     123456789
                   </p>
                 </div>
-                <img className="w-[67px] h-[55px] pl-[12px]" src='/student.svg' alt="" />
+                <img className="w-[67px] h-[55px] pl-[12px]" src="student.jpg" alt="" />
               </div>
             </div>
           </div>
