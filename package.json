@@ -37,7 +37,8 @@
     "react-query": "^3.39.3",
     "react-router-dom": "^6.21.2",
     "ts-loader": "^9.5.0",
-    "url-loader": "^4.1.1"
+    "react-redux": "^8.0.5",
+    "redux": "^4.0.4"
   },
   "devDependencies": {
     "assert": "2.0.0",

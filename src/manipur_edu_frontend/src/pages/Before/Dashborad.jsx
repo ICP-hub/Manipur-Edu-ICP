@@ -4,13 +4,11 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/footer";
 import { Link } from "../../../../../node_modules/react-router-dom/dist/index";
 import FAQ from "../../components/Faq";
-import { UserContext } from "../../utils/UserTypeProvider";
 import { useAuth } from "../../utils/useAuthClient";
 
 function Dashboard() {
 
-  const { userType } = React.useContext(UserContext);
-  const { actor } = useAuth();
+  const { actor,userType } = useAuth();
 
   console.log(userType)
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
