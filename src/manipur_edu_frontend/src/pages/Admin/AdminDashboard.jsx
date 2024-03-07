@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import DashboardTab from "../../components/admin/dashboardTab";
-import InstitutesTab from "../../components/admin/institutesTab";
-import StudentsTab from "../../components/admin/studentsTab";
-import ProfileTab from "../../components/admin/profileTab";
-import ScholarshipTab from "../../components/admin/scholarshipTab";
+import DashboardTab from "../../components/admin/DashboardTab";
+import InstitutesTab from "../../components/admin/InstitutesTab";
+import StudentsTab from "../../components/admin/StudentsTab";
+import ProfileTab from "../../components/admin/ProfileTab";
+import ScholarshipTab from "../../components/admin/ScholarshipTab";
 const AdminDashboard = () => {
   const [selected_tab, SetTab] = useState("Dashboard");
   return (
     <div className="flex justify-center bg-[#86ABF3] h-screen">
       <div className="w-[20%] py-10  flex flex-col justify-between">
         <div>
-          <p className="font-[Philosopher] font-[700] text-3xl text-[white] leading-8 flex justify-center">
+          <p className="font-[Philosopher] font-[700] text-2xl text-[white] leading-8 flex justify-center ml-1 ">
             Manipur Edu
           </p>
           <div className="flex flex-col mt-[60px] gap-[20px] ">
@@ -373,7 +373,7 @@ const AdminDashboard = () => {
               fill="white"
             />
           </svg>
-          <button className="pb-[3px]">Log Out</button>
+          <button className="pb-[3px] mr-10">Log Out</button>
         </div>
       </div>
       <div className="w-[80%] rounded-[30px] h-[95%] bg-[white] my-[1.25rem] mr-3 overflow-auto">

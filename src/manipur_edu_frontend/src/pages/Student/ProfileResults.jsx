@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-
+import Loader from "../../Loader/Loader";
 import { useAuth } from "../../utils/useAuthClient";
 import { useQuery } from 'react-query';
-import Modal from "../../components/modal";
+import Modal from "../../components/Modal";
 import Background from "../../components/BackgroudPage";
 import {
   Link, useNavigate,
@@ -31,6 +31,7 @@ const ProfileResult = () => {
   if (!isLoadingEntry && !errorEntry) {
     console.log("student view profile", entry);
   }
+
   const handleView = async () => {
 
     const getResult = await actor.get_user_result(principal_id);
@@ -47,7 +48,9 @@ const ProfileResult = () => {
 
     setOpenModal(true);
   }
-
+//  if (isLoadingEntry) {
+//     return <Loader />; // Render loader if data is still loading
+//   }
   return (
     <Background>
       <div className="relative pt-10">

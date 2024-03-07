@@ -1,14 +1,14 @@
 import React from "react";
-import Card from "../../components/card";
+import Card from "../../components/Card";
 import Navbar from "../../components/Navbar";
-import Footer from "../../components/footer";
+import Footer from "../../components/Footer";
 import { Link } from "../../../../../node_modules/react-router-dom/dist/index";
 import FAQ from "../../components/Faq";
 import { useAuth } from "../../utils/useAuthClient";
 
 function Dashboard() {
 
-  const { actor,userType } = useAuth();
+  const { actor, userType } = useAuth();
 
   console.log(userType)
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
@@ -21,7 +21,7 @@ function Dashboard() {
       }
     };
 
-    
+
     checkLogin();
   }, [userType, actor]);
 
@@ -101,7 +101,7 @@ function Dashboard() {
                       <span className="text-3xl font-medium text-white">2</span>
                     </div>
                     <div>
-                      <img src="acadmic.svg" alt="acadmic image" />
+                      <img className="h-[164px] w-[239px]" src="acadmic.svg" alt="acadmic image" />
                     </div>
                   </Card>
                   <Card

@@ -6,11 +6,11 @@ function SignUpPage({ children }) {
       <div className=" w-full">
         <div className="flex h-screen">
           <div className="flex flex-col justify-center md:w-1/2 w-full">
-          <div className="text-3xl font-bold mb-2 font-[Philosopher] text-[#0041E9] flex justify-center pb-10">Manipur Edu</div>
+            <div className="text-3xl font-bold mb-2 font-[Philosopher] text-[#0041E9] flex justify-center pb-10">Manipur Edu</div>
             <div className="border-b-2 border-[#33286F] flex justify-center w-full">
               <img
                 className="h-full object-fill px-[120px] relative -bottom-1"
-                src="signup_page_girl.png"
+                src="SignupPageGirl.png"
                 alt="Sign up illustration"
               />
             </div>

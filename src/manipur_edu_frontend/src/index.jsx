@@ -5,7 +5,7 @@ import "../assets/main.css";
 const rootElement = document.getElementById("root");
 const root = createRoot(rootElement);
 import { QueryClient, QueryClientProvider } from "react-query";
-import store from "../Redux/store";
+import store from "../Redux/Store";
 import { Provider } from "react-redux";
 
 const queryClient = new QueryClient({

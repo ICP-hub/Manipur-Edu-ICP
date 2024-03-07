@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import StudentProfileDropdown from "./student/Student_profile_dropdown";
-import InstituteProfileDropdown from "./institute/Institute_profile_dropdown";
-import InstituteNotifDropdown from "./institute/Institute_notif_dropdown";
-import StudentNotifDropdown from "./student/Student_notif_dropdown";
+import StudentProfileDropdown from "./student/StudentProfileDropdown";
+import InstituteProfileDropdown from "./institute/InstituteProfileDropdown";
+import InstituteNotifDropdown from "./institute/InstituteNotifDropdown";
+import StudentNotifDropdown from "./student/StudentNotifDropdown";
 import { useAuth } from "../utils/useAuthClient";
 import { useDispatch, useSelector } from "react-redux";
-import { profileOpenCloseDropDown,notificationOpenCloseDropDown } from "../../Redux/Action/index";
+import { profileOpenCloseDropDown, notificationOpenCloseDropDown } from "../../Redux/Action/index";
 
 const Navbar = () => {
   let dispatch = useDispatch();
@@ -88,14 +88,12 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 ${
-        scrolled ? "navbar-glass" : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 w-full z-50 ${scrolled ? "navbar-glass" : "bg-transparent"
+        }`}
     >
       <div
-        className={`flex items-center justify-between ${
-          scrolled ? "mt-2" : "h-32"
-        } px-[4%] lg1:px-[5%]`}
+        className={`flex items-center justify-between ${scrolled ? "mt-2" : "h-32"
+          } px-[4%] lg1:px-[5%]`}
       >
         <div className="w-[50%]">
           <Link to="/">
@@ -129,18 +127,20 @@ const Navbar = () => {
             </li>
             <li ref={dropdownRef} className="mr-4">
               {userType === "institute" && isLoggedIn ? (
-                <div className="flex">
+                <div className="flex ">
                   <button
                     onClick={() => handleNotificationDropDown()}
-                    className="mr-4 mb-7"
-                  >
+                    // className="mr-4 mb-7 "
+                    class="mr-4 mb-4 flex items-center mt-4"
+                  > 
                     <svg
                       width="27"
                       height="27"
                       viewBox="0 0 27 27"
                       fill="none"
+                   
                       xmlns="http://www.w3.org/2000/svg"
-                    >
+                      >
                       <path
                         d="M20.25 9C20.25 7.20979 19.5388 5.4929 18.273 4.22703C17.0071 2.96116 15.2902 2.25 13.5 2.25C11.7098 2.25 9.9929 2.96116 8.72703 4.22703C7.46116 5.4929 6.75 7.20979 6.75 9C6.75 16.875 3.375 19.125 3.375 19.125H23.625C23.625 19.125 20.25 16.875 20.25 9Z"
                         stroke="#00227A"
