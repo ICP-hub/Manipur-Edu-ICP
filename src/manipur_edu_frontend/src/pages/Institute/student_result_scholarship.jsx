@@ -6,13 +6,15 @@ import Background from "../../components/BackgroudPage";
 import { useQuery } from "react-query";
 import { useAuth } from "../../utils/useAuthClient";
 import { useLocation } from "../../../../../node_modules/react-router-dom/dist/index";
-
+import { useDispatch } from "react-redux";
+import { getAllStudents } from "../../../Redux/Action/index";
 const StudentResultScholarship = () => {
 
   const location = useLocation();
   const [page, setPage] = useState("student");
   const [result, setResult] = useState([]);
   const { actor } = useAuth();
+  const dispatch = useDispatch();
   useEffect(() => {
     // Check the path in the location object and set the page state accordingly
     if (location.pathname === '/institute-student/result') {
@@ -52,11 +54,13 @@ const StudentResultScholarship = () => {
   } = useQuery("dataEntries", getEntries);
   if (!isLoadingEntries && !errorEntries) {
     console.log("entries", result)
+
     // console.log("entries 1st array", entries[0])
     // entries[0].map(item => (
     //   console.log(item)
     // ))
   }
+  dispatch(getAllStudents(result));
 
 
 
@@ -171,8 +175,8 @@ const StudentResultScholarship = () => {
               </div>
             </div>
           </div>
-          {page === "student" && <StudentsTab entries={result} />}
-          {page === "result" && <ResultTab entries={result} />}
+          {page === "student" && <StudentsTab />}
+          {page === "result" && <ResultTab />}
 
           {/*  */}
         </div>

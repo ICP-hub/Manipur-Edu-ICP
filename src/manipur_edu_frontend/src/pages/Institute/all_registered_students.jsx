@@ -1,5 +1,7 @@
+
 import React from "react";
-const AllRegisteredStudents = ({ entries }) => {
+import {useSelector} from "react-redux";
+const AllRegisteredStudents = () => {
 
 
 
@@ -97,6 +99,9 @@ const AllRegisteredStudents = ({ entries }) => {
   //     rollnum: "RN-123",
   //   },
   // ];
+  let entries = useSelector(
+    (state) => state.allStudentsReducer
+  );
   console.log(entries);
   return (
     <div className="w-full self-center">

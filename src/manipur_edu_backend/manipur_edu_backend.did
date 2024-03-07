@@ -67,6 +67,7 @@ service : {
   approve_student_profile_update : (text) -> (text);
   calculate_state_size : () -> (nat64) query;
   check_admin : () -> (bool) query;
+  check_user_type : () -> (text) query;
   create_user_certificate : (text, CertificateData) -> (Result_1);
   create_user_result : (text, UserResult) -> (Result_1);
   delete_institute_record : (text) -> (text);
@@ -86,6 +87,7 @@ service : {
   get_user_result : (text) -> (Result_3) query;
   greet : () -> (text) query;
   institute_application_status : (text) -> (opt text) query;
+  is_user_already_registered : () -> (bool) query;
   login : (text) -> (bool) query;
   register_institute : (InstituteData) -> (text);
   register_user : (UserData) -> (text);
@@ -94,5 +96,4 @@ service : {
   student_application_status : (text) -> (opt text) query;
   verify_institute : (text) -> (text);
   verify_student : (text) -> (text);
-  check_user_type : () -> (text) query;
 }

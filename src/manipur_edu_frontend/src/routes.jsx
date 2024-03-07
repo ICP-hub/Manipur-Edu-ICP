@@ -138,7 +138,7 @@ const routes = [
   {
     path: "/institute-details-verify",
     component: <InstituteDetails />,
-    allowedUser: [appConstants.ADMIN],
+    allowedUser: [appConstants.ADMIN, appConstants.UNKNOWN, appConstants.INSTITUTE],
   },
   {
     path: "/register-students-details",
@@ -148,7 +148,7 @@ const routes = [
   {
     path: "/dsa",
     component: <AdminDashboard />,
-    allowedUser: [appConstants.ADMIN],
+    allowedUser: [appConstants.ADMIN, appConstants.UNKNOWN, appConstants.INSTITUTE],
   },
 ];
 

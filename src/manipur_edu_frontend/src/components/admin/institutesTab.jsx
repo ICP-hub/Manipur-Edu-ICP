@@ -9,19 +9,22 @@ import RegisteredStudents from "../../pages/Admin/registered_students";
 import StudentDetails from "../admin/studentsTab";
 import { useQuery } from "react-query";
 import { useAuth } from "../../utils/useAuthClient";
+import { useDispatch } from "react-redux";
+import { getAllInstitutes } from "../../../Redux/Action/index";
 
 const InstitutesTab = () => {
   const [selected_button, SetButton] = useState("Verification");
   const [view, SelectView] = useState("default");
   const { actor, authClient } = useAuth();
+  const dispatch = useDispatch();
 
-  const [entries, setEntries] = React.useState(null);
+
 
 
   const getEntries = async () => {
     const allInstitutes = await actor.get_institutes();
     console.log("allInstitutes", allInstitutes);
-    setEntries(allInstitutes);
+    dispatch(getAllInstitutes(allInstitutes))
   }
 
 
@@ -30,10 +33,7 @@ const InstitutesTab = () => {
     isLoading: isLoadingEntries,
     error: errorEntries,
   } = useQuery("dataEntries", getEntries);
-  if (!isLoadingEntries && !errorEntries) {
-    console.log("entries", entries)
 
-  }
 
 
 
@@ -223,14 +223,14 @@ const InstitutesTab = () => {
               </div>
             </div>
             {selected_button === "Verification" && (!isLoadingEntries && !errorEntries) && (
-              <VerificationButton onTap={() => SelectView("details")} entries={entries} />
+              <VerificationButton onTap={() => SelectView("details")} />
             )}
             {selected_button === "AllRegistered" && (!isLoadingEntries && !errorEntries) && (
               <AllRegisteredInstitutes
                 onView={() => SelectView("viewdetails")}
                 onEdit={() => SelectView("edit")}
                 onStudent={() => SelectView("students")}
-                entries={entries}
+
               />
             )}
           </div>

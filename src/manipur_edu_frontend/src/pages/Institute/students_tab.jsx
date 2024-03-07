@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import StudentVerificationRequest from "./student_verification_request";
 import StudentRegisteredByInstitute from "./student_registered_by_institute";
 import AllRegisteredStudents from "./all_registered_students";
-const StudentsTab = ({entries}) => {
+const StudentsTab = () => {
   const [page, setPage] = useState("verification");
   return (
     <div className="w-[85%] self-center  pt-[27px]">
@@ -37,9 +37,9 @@ const StudentsTab = ({entries}) => {
         All Registered Students
       </button>
 
-      {page === "verification" && <StudentVerificationRequest  entries={entries}/>}
+      {page === "verification" && <StudentVerificationRequest  />}
       {/* {page === "registeredbyinstitute" && <StudentRegisteredByInstitute  entries={entries} />} */}
-      {page === "allstudents" && <AllRegisteredStudents entries={entries} />}
+      {page === "allstudents" && <AllRegisteredStudents />}
     </div>
   );
 };

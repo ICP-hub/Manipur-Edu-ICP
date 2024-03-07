@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useLocation } from "../../../../../node_modules/react-router-dom/dist/index";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 const InstituteDetailsEditInstitutePage = () => {
 
   const {
@@ -9,14 +10,15 @@ const InstituteDetailsEditInstitutePage = () => {
     formState: { errors },
   } = useForm();
 
-  const location = useLocation();
-  console.log(location.state);
-  const { data } = location.state;
+  let data = useSelector(
+    (state) => state.instituteDetailsReducer
+  );
   console.log(data);
   console.log(data.studentId);
   console.log(data.details);
   console.log(data.details[0]);
   console.log(data.details[0].status[0]);
+
 
   const onSubmit = async (entry) => {
     console.log(entry);
@@ -51,7 +53,7 @@ const InstituteDetailsEditInstitutePage = () => {
   };
 
   //todo:- fix this form. I have implemented the functions
-  
+
 
 
   //todo:- map over this and set data in value

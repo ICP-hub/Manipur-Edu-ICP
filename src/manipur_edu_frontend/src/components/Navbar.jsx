@@ -6,7 +6,7 @@ import InstituteNotifDropdown from "./institute/Institute_notif_dropdown";
 import StudentNotifDropdown from "./student/Student_notif_dropdown";
 import { useAuth } from "../utils/useAuthClient";
 import { useDispatch, useSelector } from "react-redux";
-import { profileOpenCloseDropDown,notificationOpenCloseDropDown } from "../../Redux/Action/index";
+import { profileOpenCloseDropDown, notificationOpenCloseDropDown } from "../../Redux/Action/index";
 
 const Navbar = () => {
   let dispatch = useDispatch();
@@ -88,14 +88,12 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 ${
-        scrolled ? "navbar-glass" : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 w-full z-50 ${scrolled ? "navbar-glass" : "bg-transparent"
+        }`}
     >
       <div
-        className={`flex items-center justify-between ${
-          scrolled ? "mt-2" : "h-32"
-        } px-[4%] lg1:px-[5%]`}
+        className={`flex items-center justify-between ${scrolled ? "mt-2" : "h-32"
+          } px-[4%] lg1:px-[5%]`}
       >
         <div className="w-[50%]">
           <Link to="/">

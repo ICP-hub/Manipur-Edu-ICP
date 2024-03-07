@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import EditResult from "../../components/institute/edit_result_pop";
 import UploadResult from "../../components/institute/upload_result_popup";
-const ResultTab = ({ entries }) => {
+import {useSelector} from "react-redux";
+const ResultTab = () => {
   const [editresultpopup, seteditresultpopup] = useState(false);
   const [uploadresultpopup, setuploadresultpopup] = useState(false);
   const [publicKey, setPublicKey] = useState('');
   const [principalId, setPrincipalId] = useState('');
+  let entries = useSelector(
+    (state) => state.allStudentsReducer
+  );
 
   return (
     <div className="w-[85%] self-center  pt-[27px]">

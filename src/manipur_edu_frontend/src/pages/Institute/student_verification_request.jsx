@@ -3,24 +3,27 @@ import { useAuth } from "../../utils/useAuthClient";
 import { Link, useNavigate } from "react-router-dom"; // Simplified import for clarity
 import { handleFileDecrypt, importAesKeyFromBase64 } from "../../utils/helper";
 import Modal from "../../components/modal";
-
-const StudentVerificationRequest = ({ entries }) => {
+import { useDispatch, useSelector } from "react-redux";
+const StudentVerificationRequest = () => {
   const { actor, authClient } = useAuth();
   const principal_id = authClient.getIdentity().getPrincipal().toString();
   const [publicKey, setPublicKey] = React.useState('');
 
+  const result = useSelector((state) => state.instituteDetailsReducer);
+
   React.useEffect(() => {
-    const getPublicKey = async () => {
-      const result = await actor.get_institute_details([principal_id]);
-
-      console.log("result", result);
-      console.log('public key', result[0].public_key[0])
-      setPublicKey(result[0].public_key[0]);
+    // Direct operations that don't involve hook calls can be placed here.
+    const publicKey = result[0]?.public_key[0]; // Safely access the property with optional chaining
+    if (publicKey) {
+      setPublicKey(publicKey);
+      console.log("public key", publicKey);
     }
+  }, [result]);
 
-    getPublicKey();
 
-  }, []);
+  let entries = useSelector(
+    (state) => state.allStudentsReducer
+  );
 
 
 

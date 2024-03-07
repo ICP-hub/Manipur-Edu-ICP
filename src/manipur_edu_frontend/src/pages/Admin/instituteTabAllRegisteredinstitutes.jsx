@@ -1,6 +1,9 @@
 import React from "react";
 import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
-const AllRegisteredInstitutes = ({ onView, onEdit, onStudent, entries }) => {
+import { useSelector } from "react-redux";
+const AllRegisteredInstitutes = ({ onView, onEdit, onStudent }) => {
+
+  let entries = useSelector((state) => state.allInstitutesReducer)
   return (
     <div>
       <div className="border rounded-[10px] border-[#D9EBFF]">
