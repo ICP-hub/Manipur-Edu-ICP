@@ -14,6 +14,7 @@ import {
 
 } from "../../utils/helper";
 import Status from "../../components/student/status";
+import Loader from "../../loader/Loader";
 
 const SignupStudents = () => {
   const {
@@ -30,6 +31,7 @@ const SignupStudents = () => {
   // Set City and state
   const [selectedCountry, setSelectedCountry] = useState("IN");
   const [selectedState, setSelectedState] = useState("");
+  const [isRendering, setIsRendering] = React.useState(false);
   const handleCountryChange = (e) => {
     setSelectedCountry(e.target.value);
     setSelectedState(""); // Reset state selection on country change
@@ -97,6 +99,7 @@ const SignupStudents = () => {
 
     setStep((prevStep) => prevStep + 1);
     if (step === 2) {
+      setIsRendering(true);
       // window.location.href = '/login';
       // Replace "/success" with the route you want to redirect to
       console.log("control reached");
@@ -144,6 +147,7 @@ const SignupStudents = () => {
       const register_student = await actor.register_user(newData);
       console.log(register_student);
       // const addPrivateKey = await actor.
+      setIsRendering(false);
       console.log("Submitted Successfully");
       setField("Wait for your request to get approved");
       await setModelStatus(true);
@@ -153,6 +157,7 @@ const SignupStudents = () => {
 
   return (
     <SignUpPage>
+      {isRendering && <Loader></Loader>}
       <div className="">
         <Status
           open={modelStatus}

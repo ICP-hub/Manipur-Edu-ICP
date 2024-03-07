@@ -8,6 +8,7 @@ import { useQuery } from "react-query";
 import { ICountry, IState, City, State, Country } from "country-state-city";
 import Status from "../../components/student/status";
 import { getKeysForInstitute, generateAesKeyBase64 } from "../../utils/helper";
+import Loader from "../../loader/Loader";
 
 const SignupInstitute = () => {
 
@@ -21,6 +22,7 @@ const SignupInstitute = () => {
   // Set City and state
   const [selectedCountry, setSelectedCountry] = useState("IN");
   const [selectedState, setSelectedState] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const handleCountryChange = (e) => {
     setSelectedCountry(e.target.value);
     setSelectedState(""); // Reset state selection on country change
@@ -66,14 +68,15 @@ const SignupInstitute = () => {
         institute_type: [data.institute_type],
         status: ["pending"],
       };
-
+      setIsLoading(true);
       const register_institute = await actor.register_institute(newData);
+
       console.log(register_institute);
       // const addedPrivateKey = await actor.add_private_key(keyPair.privateKey);
       // console.log(addedPrivateKey);
       console.log("Submitted Successfully");
       // await navigate("/");
-
+      setIsLoading(false);
       setField("Wait for your request to get approved");
       setModelStatus(true);
       console.log("Submitted Successfully");
@@ -81,8 +84,14 @@ const SignupInstitute = () => {
   };
 
   return (
+
+
+
     <SignUpPage>
+      {isLoading && <Loader></Loader>}
+
       <div className="">
+
         <Status
           open={modelStatus}
           Field={Field}
@@ -499,6 +508,7 @@ const SignupInstitute = () => {
         )}
       </>
     </SignUpPage>
+
   );
 };
 
