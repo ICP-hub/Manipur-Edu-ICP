@@ -5,13 +5,15 @@ import { useAuth } from "../../utils/useAuthClient";
 import Modal from "../../components/modal";
 import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
 import { handleFileDecrypt } from "../../utils/helper";
+import Loader from "../../loader/Loader";
 
 
 const Certifications = () => {
   const [openModal, setOpenModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [imageUrl, setImageUrl] = useState('');
-  const { actor, authClient,userType } = useAuth();
+  const { actor, authClient, userType } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
   React.useEffect(() => {
     const checkLogin = async () => {
       if (userType) {
@@ -25,25 +27,29 @@ const Certifications = () => {
   const principal_id = authClient.getIdentity().getPrincipal().toString();
   const navigate = useNavigate();
   const handleStudentCertificate = async () => {
+    setIsLoading(true);
+
 
 
     const entry = await actor.get_student_details(principal_id);
 
     const getCertificates = await actor.get_user_certificates(principal_id);
     console.log('getCertificates', getCertificates);
-    const firstItem = getCertificates.Ok[0];
+    const firstItem = getCertificates?.Ok?.[0];
     console.log("firstItem", firstItem);
     console.log("certificate_link", firstItem.certificate_link);
 
+
     //todo:- there should be a method to display multiple certificates
-    const decryptedFile = await handleFileDecrypt(firstItem.certificate_link, entry?.[0]?.public_key?.[0]);
-    console.log(decryptedFile);
-    const url = URL.createObjectURL(decryptedFile);
-    setImageUrl(url);
+    if (firstItem) {
+      const decryptedFile = await handleFileDecrypt(firstItem.certificate_link, entry?.[0]?.public_key?.[0]);
+      console.log(decryptedFile);
+      const url = URL.createObjectURL(decryptedFile);
+      setImageUrl(url);
+      setIsLoading(false);
+      setOpenModal(true);
 
-
-
-    setOpenModal(true);
+    }
 
 
   }
@@ -51,6 +57,7 @@ const Certifications = () => {
 
   return (
     <Background>
+      {isLoading && <Loader></Loader>}
       <Modal open={openModal} onClose={() => setOpenModal(false)} image={imageUrl} />
       <div className="relative pt-[100px] pb-[50px] flex justify-center items-center px-[4%] lg1:px-[5%] ">
         <div className=" w-full bg-white flex flex-col justify-between rounded-[10px]">

@@ -17,6 +17,7 @@ import AdminDashboard from "./pages/Admin/AdminDashboard";
 import InstituteDetails from "./pages/Admin/instituteDetails";
 import RegisteredStudents from "./pages/Admin/registered_students";
 import appConstants from "../Constants/appConstants";
+import ErrorPage from "../error/ErrorPage";
 
 // All Routes according to usertype
 const routes = [
@@ -148,8 +149,11 @@ const routes = [
   {
     path: "/dsa",
     component: <AdminDashboard />,
-    allowedUser: [appConstants.ADMIN, appConstants.UNKNOWN, appConstants.INSTITUTE],
+    allowedUser: [appConstants.ADMIN],
   },
+
+
 ];
+
 
 export default routes;

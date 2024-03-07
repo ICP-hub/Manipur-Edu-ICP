@@ -8,6 +8,7 @@ import { useAuth } from "../../utils/useAuthClient";
 import { useLocation } from "../../../../../node_modules/react-router-dom/dist/index";
 import { useDispatch } from "react-redux";
 import { getAllStudents } from "../../../Redux/Action/index";
+import Loader from "../../loader/Loader";
 const StudentResultScholarship = () => {
 
   const location = useLocation();
@@ -67,6 +68,7 @@ const StudentResultScholarship = () => {
 
   return (
     <Background>
+      {isLoadingEntries && <Loader></Loader>}
       <div
         className="relative pt-[70px] min-h-screen flex justify-center items-center px-[4%] lg1:px-[5%] "
       // style={{ backgroundImage: "radial-gradient( #E5F1FF 0%, #E5F1FF 100%)" }}

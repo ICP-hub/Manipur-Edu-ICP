@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useAuth, AuthProvider } from "./utils/useAuthClient";
 import UserBasedRoute from "./UserBasedRoute";
 import routes from "./routes";
+import ErrorPage from "../error/ErrorPage";
 
 function App() {
   const { reloadLogin } = useAuth();
@@ -27,6 +28,7 @@ function App() {
               }
             />
           ))}
+          <Route path="*" element={<ErrorPage />} />  
         </Routes>
       </Router>
     </div>

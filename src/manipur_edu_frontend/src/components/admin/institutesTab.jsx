@@ -11,6 +11,7 @@ import { useQuery } from "react-query";
 import { useAuth } from "../../utils/useAuthClient";
 import { useDispatch } from "react-redux";
 import { getAllInstitutes } from "../../../Redux/Action/index";
+import Loader from "../../loader/Loader";
 
 const InstitutesTab = () => {
   const [selected_button, SetButton] = useState("Verification");
@@ -42,6 +43,7 @@ const InstitutesTab = () => {
 
   return (
     <div>
+      {isLoadingEntries && <Loader></Loader>}
       {view === "details" ? (
         <InstituteDetails onBack={() => SelectView("default")} />
       ) : view === "viewdetails" ? (
