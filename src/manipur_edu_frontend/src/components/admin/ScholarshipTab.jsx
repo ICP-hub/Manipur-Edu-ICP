@@ -13,9 +13,9 @@ const ScholarshipTab = () => {
   return (
     <div>
       {view === "scholarshipApplication" ? (
-        <ScholarshipApplication onBack={() => SelectView("default")} />
+        <ScholarshipApplication onBack={() => SelectView("default")}/>
       ) : view === "viewapplicants" ? (
-        <ScholarshipApplicants onBack={() => SelectView("default")} />
+        <ScholarshipApplicants onView={() => SelectView("scholarshipApplication")} onBack={() => SelectView("default")} />
       ) : view === "edit" ? (
         <ScholarshipDetails onBack={() => SelectView("default")} />
       ) : view === "postnew" ? (

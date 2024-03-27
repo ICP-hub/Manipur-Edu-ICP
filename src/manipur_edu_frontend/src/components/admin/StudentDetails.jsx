@@ -301,7 +301,51 @@ const StudentDetails = ({ onBack }) => {
                             </div>
                         </div>
                     </div>
+                <div className="  flex flex-col rounded-[20px] border border-[#D8E1F8]">
+                <div className="border-b border-[#D8E1F8]">
+                  <p className="px-[46px] py-[19px] text-[#00227A] text-[18px] font-[Noto Sans] font-[500]">
+                    KYC Documents
+                </p>
+                <div className="mr-[39px]">
+                <button className="flex">
+                  <svg
+                    width="1.25rem"
+                    height="1.25rem"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M16.2768 15.683H3.72232C3.46489 15.683 3.24707 15.9008 3.24707 16.1582C3.24707 16.4156 3.46489 16.6335 3.72232 16.6335H16.2768C16.5342 16.6335 16.752 16.4156 16.752 16.1582C16.752 15.9008 16.5342 15.683 16.2768 15.683ZM3.26687 11.5246L3.24707 13.7622C3.24707 13.881 3.28667 14.0196 3.38568 14.0988C3.48469 14.178 3.60351 14.2374 3.72232 14.2374L5.95994 14.2176C6.07875 14.2176 6.19757 14.1582 6.29658 14.079L13.9797 6.39585C14.158 6.21763 14.158 5.9008 13.9797 5.72258L11.7619 3.50476C11.5837 3.32654 11.2669 3.32654 11.0887 3.50476L9.5441 5.04931L3.40549 11.1879C3.30648 11.2869 3.26687 11.4057 3.26687 11.5246ZM12.9698 6.05921L12.0986 6.9305L10.554 5.38595L11.4253 4.51466L12.9698 6.05921ZM4.21737 11.7226L9.88073 6.05921L11.4253 7.60377L5.76192 13.2671H4.21737V11.7226Z"
+                      fill="#00227A"
+                    />
+                  </svg>
 
+                  <p className="font-[Noto Sans] text-[#00227A] text-[0.9375rem] leading-[1.3125rem] font-[400]">
+                    Edit
+                  </p>
+                </button>
+              </div>
+                </div>
+                <div className="py-[30px] px-[46px] gap-[76px]">
+                  <div>
+                    <p className="text-[#8CA3C3] text-[16px] font-[Noto Sans] font-[300] pb-[20px]">
+                      Aadhaar Card
+                    </p>
+                    <button className="rounded-[5px] py-[14px] px-[36px] border border-[#00227A] text-[#00227A] text-[16px] font-[500] text-[Noto Sans]">
+                      Aadhaar Card
+                    </button>
+                  </div>
+                  <div>
+                    <p className="text-[#8CA3C3] text-[16px] font-[Noto Sans] font-[300] pb-[20px]">
+                      PAN Card
+                    </p>
+                    <button className="rounded-[5px] py-[14px] px-[50px] border border-[#00227A] text-[#00227A] text-[16px] font-[500] text-[Noto Sans]">
+                      PAN Card
+                    </button>
+                  </div>
+                </div>
+              </div>
                     <div className="flex flex-row-reverse">
                         <button
                             onClick={onBack}

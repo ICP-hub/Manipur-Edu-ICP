@@ -11,7 +11,7 @@ const Desktop3 = () => {
         <div className="flex justify-center bg-[white] md2:bg-[#86ABF3] h-screen">
             <div className="dxs:hidden md2:flex flex-col justify-between w-[20%] py-10  ">
                 <div>
-                    <p className="font-[Philosopher] font-[700] text-3xl text-[white] leading-8 flex justify-center">
+                    <p className="font-[Philosopher] font-[700] text-3xl text-[white] leading-8 flex pl-[50px]">
                         Manipur Edu
                     </p>
                     <div className="flex flex-col mt-[60px] gap-[20px] ">
@@ -356,7 +356,7 @@ const Desktop3 = () => {
                         )}
                     </div>
                 </div>
-                <div className="text-[20px] font-[400] font-[Segoe UI] leading-[26px] text-[white] flex justify-center">
+                <div className="text-[20px] font-[400] font-[Segoe UI] leading-[26px] text-[white] flex pl-[50px]">
                     <svg
                         width="40"
                         height="40"

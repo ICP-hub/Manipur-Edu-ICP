@@ -144,6 +144,7 @@ const Card = ({ entry }) => {
       <button className="pt-[7px] font-[700] underline flex justify-center bg-[#EEF6FF] text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] ">
         {entry.details}
       </button>
+      {/* verify edit details page link krna h sent by shivansh sir on whatsapp*/}
     </div>
   );
 };

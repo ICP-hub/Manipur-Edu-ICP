@@ -7,7 +7,7 @@ const StudentsTab = ({ entries }) => {
   const [page, setPage] = useState("verification");
   return (
    <div className="w-[85%] self-center pt-[27px]">
-      <div className="flex justify-between">
+      <div className="flex gap-[15px]">
         <div>
           <button
             onClick={() => setPage("verification")}
