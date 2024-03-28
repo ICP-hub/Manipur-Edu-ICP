@@ -17,6 +17,7 @@ import AdminDashboard from "./pages/Admin/AdminDashboard";
 import InstituteDetails from "./pages/Admin/InstituteDetails";
 import RegisteredStudents from "./pages/Admin/RegisteredStudents";
 import appConstants from "../Constants/appConstants";
+import RejectModal from "./components/RejectModal";
 
 // All Routes according to usertype
 const routes = [
@@ -100,6 +101,36 @@ const routes = [
       appConstants.UNKNOWN,
     ],
   },
+  {
+    path: "/ViewDetails",
+    component: <ViewProfileDetails />,
+    allowedUser: [
+      appConstants.INSTITUTE,
+      appConstants.ADMIN,
+      appConstants.STUDENT,
+      appConstants.UNKNOWN,
+    ],
+  },
+  {
+    path: "/institute-details-check",
+    component: <InstituteDetails />,
+    allowedUser: [
+      appConstants.INSTITUTE,
+      appConstants.ADMIN,
+      appConstants.STUDENT,
+      appConstants.UNKNOWN,
+    ],
+  },
+  // {
+  //   path: "/DeleteDetails",
+  //   component: <RejectModal />,
+  //   allowedUser: [
+  //     appConstants.INSTITUTE,
+  //     appConstants.ADMIN,
+  //     appConstants.STUDENT,
+  //     appConstants.UNKNOWN,
+  //   ],
+  // },
   {
     path: "/profile-result",
     component: <ProfileResult />,

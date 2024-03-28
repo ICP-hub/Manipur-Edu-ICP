@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import StudentDetailsEdit from "../Student/StudentDetailsEdit";
 import { Link, useNavigate } from "react-router-dom";
+import ViewProfileDetails from "../Student/ViewProfileDetails";
 const VerifyEditDeleteDropdown = ({ open, onClose, entries }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isViewOpen, setIsViewOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const navigate = useNavigate();
   console.log("hii", entries);
   const handleViewDetails = () => {
-    setIsEditOpen(true);
+    setIsViewOpen(true);
     navigate("/viewDetails", { state: { entries } });
   };
   const handleEditClick = () => {
@@ -14,8 +17,8 @@ const VerifyEditDeleteDropdown = ({ open, onClose, entries }) => {
     navigate("/EditDetails", { state: { entries } });
   };
   const handleDeleteClick = () => {
-    setIsEditOpen(true);
-    navigate("/DeleteDetails", { state: { entries } });
+    setIsDeleteOpen(true);
+    // navigate("/DeleteDetails", { state: { entries } });
   };
   if (!open) return null;
   return (
@@ -47,6 +50,14 @@ const VerifyEditDeleteDropdown = ({ open, onClose, entries }) => {
         </button>
       </div>
       {isEditOpen && <StudentDetailsEdit />}
+      {isViewOpen && <ViewProfileDetails />}
+      {isDeleteOpen && (
+        <RejectModal
+          open={isDeleteOpen}
+          onClose={() => setIsDeleteOpen(false)}
+          handleReject={() => setIsDeleteOpen(false)}
+        />
+      )}
     </div>
   );
 };

@@ -478,7 +478,7 @@ const Navbar = () => {
                   </div>
                   <li className="mr-4">
                     <button
-                      onClick={() => handleDropDown()}
+                      onClick={handleProfileDropDown}
                       ref={profileButtonRef}
                     >
                       <img className="w-14 h-14 " src="/student.svg" alt="" />
