@@ -28,6 +28,7 @@ const SignupStudents = () => {
   // Set City and state
   const [selectedCountry, setSelectedCountry] = useState("IN");
   const [selectedState, setSelectedState] = useState("");
+  const [isRendering, setIsRendering] = React.useState(false);
   const handleCountryChange = (e) => {
     setSelectedCountry(e.target.value);
     setSelectedState(""); // Reset state selection on country change
@@ -98,6 +99,7 @@ const SignupStudents = () => {
 
     setStep((prevStep) => prevStep + 1);
     if (step === 2) {
+      setIsRendering(true);
       // window.location.href = '/login';
       // Replace "/success" with the route you want to redirect to
       console.log("control reached");
@@ -142,17 +144,19 @@ const SignupStudents = () => {
       const register_student = await actor.register_user(newData);
       console.log(register_student);
       // const addPrivateKey = await actor.
+      setIsRendering(false);
       console.log("Submitted Successfully");
       setField("Wait for your request to get approved");
       await setModelStatus(true);
       // await navigate("/");
     }
   };
-//  if (isLoadingkey) {
-//     return <Loader />; // Render loader if data is still loading
-//   }
+  //  if (isLoadingkey) {
+  //     return <Loader />; // Render loader if data is still loading
+  //   }
   return (
     <SignUpPage>
+      {isRendering && <Loader></Loader>}
       <div className="">
         <Status
           open={modelStatus}
@@ -498,10 +502,10 @@ const SignupStudents = () => {
                     <br />
                     <select
                       className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
-                         errors.state && !selectedState
-          ? "border-[#FF0606] focus:outline-[#FF0606]" 
-          : "border-[#ACBFFD] focus:outline-[#ACBFFD]" 
-      }`}
+                        errors.state && !selectedState
+                          ? "border-[#FF0606] focus:outline-[#FF0606]"
+                          : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      }`}
                       id="state"
                       name="state"
                       {...register("state", {
@@ -520,7 +524,7 @@ const SignupStudents = () => {
                         )
                       )}
                     </select>
-                    {errors && errors.state &&  !selectedState  && (
+                    {errors && errors.state && !selectedState && (
                       <span className="absolute grid text-xs text-[#FF0606]">
                         Please select state.
                       </span>
@@ -648,7 +652,7 @@ const SignupStudents = () => {
                   </select>
                   {errors && errors.institute_name && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                     Please enter the name of the institute.
+                      Please enter the name of the institute.
                     </span>
                   )}
                 </div>
@@ -700,7 +704,7 @@ const SignupStudents = () => {
                     />
                     {errors && errors.cgpa && (
                       <span className="absolute grid text-xs text-[#FF0606]">
-                         Please enter your CGPA.
+                        Please enter your CGPA.
                       </span>
                     )}
                   </div>
@@ -729,7 +733,7 @@ const SignupStudents = () => {
                     />
                     {errors && errors.graduation_year && (
                       <span className="absolute grid text-xs text-[#FF0606]">
-                         Please specify your graduation year.
+                        Please specify your graduation year.
                       </span>
                     )}
                   </div>
@@ -755,7 +759,7 @@ const SignupStudents = () => {
                   />
                   {errors && errors.enroll && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                       Please enter your enrollment number.
+                      Please enter your enrollment number.
                     </span>
                   )}
                 </div>
@@ -781,7 +785,7 @@ const SignupStudents = () => {
                 </div>
                 {errors && errors.student_institute_email && (
                   <span className="absolute grid text-xs text-[#FF0606]">
-                   Please enter your student institute email.
+                    Please enter your student institute email.
                   </span>
                 )}
               </div>

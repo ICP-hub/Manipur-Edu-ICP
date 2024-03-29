@@ -8,7 +8,7 @@ import {
   Link, useNavigate,
 } from "../../../../../node_modules/react-router-dom/dist/index";
 import { handleFileDecrypt } from "../../utils/helper";
-
+import { useSelector } from "react-redux";
 const ProfileResult = () => {
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();

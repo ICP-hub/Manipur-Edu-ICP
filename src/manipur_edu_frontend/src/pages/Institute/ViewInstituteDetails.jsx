@@ -2,41 +2,29 @@ import React, { useState } from "react";
 import { useAuth } from "../../utils/useAuthClient";
 import Background from "../../components/BackgroudPage";
 import { Link, useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
-
-
+import { useSelector, useDispatch } from "react-redux";
+import { getInstituteDetails } from "../../../Redux/Action/index";
 const ViewInstituteDetailsInstitutePage = () => {
-  const [data, setData] = useState([]);
 
-  const { actor, authClient,identity,principal } = useAuth();
+
+  const { actor, authClient, identity, principal } = useAuth();
   console.log("identity", identity);
   console.log("principal", principal);
-  React.useEffect(() => {
+  let data = useSelector(
+    (state) => state.instituteDetailsReducer
+  );
 
-    const getData = async () => {
-      const principal_id = authClient.getIdentity().getPrincipal().toString();
 
-      const result = await actor.get_institute_details([principal_id]);
-      console.log("result", result);
-      const combinedResult = {
-        studentId: principal_id,
-        details: result
-      };
-      console.log(combinedResult);
-      setData(combinedResult);
 
-    }
+  console.log("entries from redux", data)
 
-    getData();
-
-  }, [])
 
   const navigate = useNavigate();
 
   const handleClick = () => {
-    if (data) {
-      console.log(data);
-      navigate("/institute_detail_edit", { state: { data } });
-    }
+
+    navigate("/institute_detail_edit");
+
   };
 
 
@@ -54,7 +42,7 @@ const ViewInstituteDetailsInstitutePage = () => {
               <img src='/student.svg' alt="" />
               <div className="flex flex-col justify-center pl-[1.8125rem]">
                 <p className="font-[Noto Sans] text-[#00227A] text-[1.5625rem] leading-[2.125rem] font-[400] pb-[0.375rem]">
-              {data?.details?.[0]?.institute_name?.[0]}
+                  {data?.details?.[0]?.institute_name?.[0]}
                 </p>
                 <p className="font-[Noto Sans] text-[#687EB5] text-[0.9375rem] leading-[1.25rem] font-[500]">
                   Institute-id: 1234567
@@ -126,10 +114,10 @@ const ViewInstituteDetailsInstitutePage = () => {
                       Address
                     </p>
                     <p className="font-[Noto Sans] text-[#00227A] text-[1.125rem] leading-[1.53125rem] font-[400]">
-                     {data?.details?.[0]?.address?.[0]}
+                      {data?.details?.[0]?.address?.[0]}
                     </p>
                     <p className="font-[Noto Sans] text-[#00227A] text-[1.125rem] leading-[1.53125rem] font-[400]">
-                    {data?.details?.[0]?.state?.[0] + " " + data?.details?.[0]?.zip_code?.[0]}
+                      {data?.details?.[0]?.state?.[0] + " " + data?.details?.[0]?.zip_code?.[0]}
                     </p>
                   </div>
                   <div className="w-[50%] flex justify-between">
@@ -138,7 +126,7 @@ const ViewInstituteDetailsInstitutePage = () => {
                         State
                       </p>
                       <p className="font-[Noto Sans] text-[#00227A] text-[1.125rem] leading-[1.53125rem] font-[400]">
-                       {data?.details?.[0]?.state?.[0]}
+                        {data?.details?.[0]?.state?.[0]}
                       </p>
                     </div>
                     <div className="w-[50%]">
@@ -146,7 +134,7 @@ const ViewInstituteDetailsInstitutePage = () => {
                         Zip code
                       </p>
                       <p className="font-[Noto Sans] text-[#00227A] text-[1.125rem] leading-[1.53125rem] font-[400]">
-                       {data?.details?.[0]?.zip_code?.[0]}
+                        {data?.details?.[0]?.zip_code?.[0]}
                       </p>
                     </div>
                   </div>

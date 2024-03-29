@@ -7,12 +7,11 @@ import SignUpPage from "../../components/student/SignUpPage";
 import Status from "../../components/student/status";
 
 const Login = () => {
-  const { actor, login, principal, authClient, identity,userType } = useAuth();
+  const { actor, login, principal, authClient, identity, userType } = useAuth();
   const navigate = useNavigate();
 
   const [status, setStatus] = React.useState(false);
   const [Field, setField] = React.useState("");
-
 
   const handleLogin = async (event) => {
     let auth = await login();
@@ -22,13 +21,13 @@ const Login = () => {
     console.log(principal_id);
 
     console.log("real authClient", authClient);
+    const is_already_registered = await actor.is_user_already_registered;
 
     const newUserType = event.target.value;
     console.log(newUserType);
 
     console.log(userType);
 
-    const isAdmin = await actor.check_admin();
     if (newUserType == "student") {
       const student_status = await actor.student_application_status(
         principal_id
@@ -43,18 +42,21 @@ const Login = () => {
         navigate("/");
       } else if (student_status[0] === "rejected") {
         setStatus(true);
-        setField('your profile has been rejected. You cant login');
+        setField("your profile has been rejected. You cant login");
         // Use the Field variable as needed
         console.log("your profile has been rejected. You can't login");
       } else {
-        setStatus(true);
-        setField("Student Details not found");
-        console.log("student details not found");
-        navigate("/register-student");
+        if (is_already_registered) {
+          setField("You have already registered");
+          setStatus(true);
+        } else {
+          setField("Student Details not found");
+          setStatus(true);
+          console.log("student details not found");
+          navigate("/register-student");
+        }
       }
       console.log(student_status);
-
-
     } else if (newUserType == "institute") {
       const institute_status = await actor.institute_application_status(
         principal_id
@@ -71,27 +73,27 @@ const Login = () => {
         navigate("/");
       } else if (institute_status[0] === "rejected") {
         setStatus(true);
-        setField('your profile has been rejected. You cant login');
+        setField("your profile has been rejected. You cant login");
         // Use the Field variable as needed
         console.log("your profile has been rejected. You can't login");
       } else {
-        setStatus(true);
-        setField("institute Details not found");
-        console.log("institute details not found");
-        navigate("/register-institute");
+        if (is_already_registered) {
+          setField("You have already registered");
+          setStatus(true);
+        } else {
+          setField("institute Details not found");
+          setStatus(true);
+          console.log("institute details not found");
+          navigate("/register-institute");
+        }
       }
 
       console.log(institute_status);
-
-
     } else if (newUserType == "admin") {
       navigate("/dsa");
-
-    }
-    else {
+    } else {
       setStatus(true);
       setField("You are not authorized");
-
     }
   };
 

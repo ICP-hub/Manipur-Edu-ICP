@@ -1,5 +1,5 @@
 import React from "react";
-// import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
+import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
 const AllRegisteredInstitutes = ({ onView, onEdit, onStudent, entries }) => {
   return (
     <div>
@@ -26,19 +26,19 @@ const AllRegisteredInstitutes = ({ onView, onEdit, onStudent, entries }) => {
 };
 export default AllRegisteredInstitutes;
 const Card = ({ entry, onView, onEdit, onStudent }) => {
-  console.log(entry)
-  // const navigate = useNavigate();
-  // const handleClick = () => {
-  //   navigate("/register-students-details", { state: { entry } });
-  // };
-  const instituteName = entry?.[1].institute_name?.[0] ?? 'N/A';
-  const instituteId = entry?.[1].institute_id?.[0].substr(0, 6) ?? 'N/A';
-  const instituteEmail = entry?.[1].email?.[0] ?? 'N/A';
+  console.log(entry);
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/register-students-details", { state: { entry } });
+  };
+  const instituteName = entry?.[1].institute_name?.[0] ?? "N/A";
+  const instituteId = entry?.[1].institute_id?.[0].substr(0, 6) ?? "N/A";
+  const instituteEmail = entry?.[1].email?.[0] ?? "N/A";
   return (
     <div className=" grid grid-cols-[repeat(4,1fr)_100px] py-[15px] border-t border-[#D9EBFF]">
       <div className=" flex justify-center  text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] rounded-[5px]">
         <div className="flex rounded-[5px]">
-          <img className="w-[33px] h-[33px] " src='/student.svg' alt="" />
+          <img className="w-[33px] h-[33px] " src="/student.svg" alt="" />
           <p className="pt-[6px] pl-[13px]">{instituteName}</p>
         </div>
       </div>

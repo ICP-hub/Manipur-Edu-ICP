@@ -9,3 +9,4 @@ dfx deps deploy
 RUN Commands
 dfx start --background
 dfx deploy
+  

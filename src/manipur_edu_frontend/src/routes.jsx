@@ -20,6 +20,223 @@ import appConstants from "../Constants/appConstants";
 import RejectModal from "./components/RejectModal";
 
 // All Routes according to usertype
+// const routes = [
+//   {
+//     path: "/",
+//     component: <Dashboard />,
+//     allowedUser: [
+//       appConstants.ADMIN,
+//       appConstants.INSTITUTE,
+//       appConstants.STUDENT,
+//       appConstants.UNKNOWN,
+//     ],
+//   },
+//   {
+//     path: "/certificates",
+//     component: <Certifications />,
+//     allowedUser: [
+//       appConstants.INSTITUTE,
+//       appConstants.STUDENT,
+//       appConstants.ADMIN,
+//       appConstants.UNKNOWN,
+//     ],
+//   },
+//   {
+//     path: "/login",
+//     component: <Login />,
+//     allowedUser: [
+//       appConstants.ADMIN,
+//       appConstants.INSTITUTE,
+//       appConstants.STUDENT,
+//       appConstants.UNKNOWN,
+//     ],
+//   },
+//   {
+//     path: "/institute-detail",
+//     component: <ViewInstituteDetailsInstitutePage />,
+//     allowedUser: [
+//       appConstants.INSTITUTE,
+//       appConstants.ADMIN,
+//       appConstants.STUDENT,
+//       appConstants.UNKNOWN,
+//     ],
+//   },
+//   {
+//     path: "/institute_detail_edit",
+//     component: <InstituteDetailsEditInstitutePage />,
+//     allowedUser: [
+//       appConstants.INSTITUTE,
+//       appConstants.ADMIN,
+//       appConstants.STUDENT,
+//       appConstants.UNKNOWN,
+//     ],
+//   },
+//   {
+//     path: "/institute-student/result",
+//     component: <StudentResultScholarship />,
+//     allowedUser: [
+//       appConstants.INSTITUTE,
+//       appConstants.STUDENT,
+//       appConstants.ADMIN,
+//       appConstants.UNKNOWN,
+//     ],
+//   },
+//   {
+//     path: "/institute-student/",
+//     component: <StudentResultScholarship />,
+//     allowedUser: [
+//       appConstants.INSTITUTE,
+//       appConstants.ADMIN,
+//       appConstants.STUDENT,
+//       appConstants.UNKNOWN,
+//     ],
+//   },
+//   {
+//     path: "/EditDetails",
+//     component: <StudentDetailsEdit />,
+//     allowedUser: [
+//       appConstants.INSTITUTE,
+//       appConstants.ADMIN,
+//       appConstants.STUDENT,
+//       appConstants.UNKNOWN,
+//     ],
+//   },
+//   {
+//     path: "/ViewDetails",
+//     component: <ViewProfileDetails />,
+//     allowedUser: [
+//       appConstants.INSTITUTE,
+//       appConstants.ADMIN,
+//       appConstants.STUDENT,
+//       appConstants.UNKNOWN,
+//     ],
+//   },
+//   {
+//     path: "/institute-details-check",
+//     component: <InstituteDetails />,
+//     allowedUser: [
+//       appConstants.INSTITUTE,
+//       appConstants.ADMIN,
+//       appConstants.STUDENT,
+//       appConstants.UNKNOWN,
+//     ],
+//   },
+//   // {
+//   //   path: "/DeleteDetails",
+//   //   component: <RejectModal />,
+//   //   allowedUser: [
+//   //     appConstants.INSTITUTE,
+//   //     appConstants.ADMIN,
+//   //     appConstants.STUDENT,
+//   //     appConstants.UNKNOWN,
+//   //   ],
+//   // },
+//   {
+//     path: "/profile-result",
+//     component: <ProfileResult />,
+//     allowedUser: [
+//       appConstants.STUDENT,
+//       appConstants.ADMIN,
+//       appConstants.INSTITUTE,
+//       appConstants.UNKNOWN,
+//     ],
+//   },
+//   {
+//     path: "/personal-detail-edit",
+//     component: <StudentDetailsEdit />,
+//     allowedUser: [
+//       appConstants.STUDENT,
+//       appConstants.INSTITUTE,
+//       appConstants.UNKNOWN,
+//     ],
+//   },
+//   {
+//     path: "/view-profileDetail",
+//     component: <ViewProfileDetails />,
+//     allowedUser: [
+//       appConstants.STUDENT,
+//       appConstants.ADMIN,
+//       appConstants.INSTITUTE,
+//       appConstants.UNKNOWN,
+//     ],
+//   },
+//   {
+//     path: "/verify",
+//     component: <VerifyRejectStudentProfile />,
+//     allowedUser: [
+//       appConstants.ADMIN,
+//       appConstants.INSTITUTE,
+//       appConstants.STUDENT,
+//       appConstants.UNKNOWN,
+//     ],
+//   },
+//   {
+//     path: "/register-student",
+//     component: <StudentSignUpForm />,
+//     allowedUser: [
+//       appConstants.ADMIN,
+//       appConstants.INSTITUTE,
+//       appConstants.STUDENT,
+//       appConstants.UNKNOWN,
+//     ],
+//   },
+//   {
+//     path: "/register-institute",
+//     component: <InstituteSignUpForm />,
+//     allowedUser: [
+//       appConstants.ADMIN,
+//       appConstants.INSTITUTE,
+//       appConstants.STUDENT,
+//       appConstants.UNKNOWN,
+//     ],
+//   },
+//   {
+//     path: "/student-profile",
+//     component: <StudentProfile />,
+//     allowedUser: [
+//       appConstants.STUDENT,
+//       appConstants.ADMIN,
+//       appConstants.INSTITUTE,
+//       appConstants.UNKNOWN,
+//     ],
+//   },
+//   {
+//     path: "/registered-students",
+//     component: <AllRegisteredStudents />,
+//     allowedUser: [
+//       appConstants.ADMIN,
+//       appConstants.INSTITUTE,
+//       appConstants.STUDENT,
+//       appConstants.UNKNOWN,
+//     ],
+//   },
+//   {
+//     path: "/institute-details-verify",
+//     component: <InstituteDetails />,
+//     allowedUser: [
+//       appConstants.ADMIN,
+//       appConstants.INSTITUTE,
+//       appConstants.STUDENT,
+//       appConstants.UNKNOWN,
+//     ],
+//   },
+//   // {
+//   //   path: "/register-students-details",
+//   //   component: <RegisteredStudents />,
+//   //   allowedUser: [appConstants.ADMIN, appConstants.INSTITUTE,appConstants.STUDENT, appConstants.UNKNOWN],
+//   // },
+//   {
+//     path: "/dsa",
+//     component: <AdminDashboard />,
+//     allowedUser: [
+//       appConstants.ADMIN,
+//       appConstants.INSTITUTE,
+//       appConstants.STUDENT,
+//       appConstants.UNKNOWN,
+//     ],
+//   },
+
+// ];
 const routes = [
   {
     path: "/",
@@ -38,7 +255,6 @@ const routes = [
       appConstants.INSTITUTE,
       appConstants.STUDENT,
       appConstants.ADMIN,
-      appConstants.UNKNOWN,
     ],
   },
   {
@@ -78,7 +294,6 @@ const routes = [
       appConstants.INSTITUTE,
       appConstants.STUDENT,
       appConstants.ADMIN,
-      appConstants.UNKNOWN,
     ],
   },
   {
@@ -92,53 +307,12 @@ const routes = [
     ],
   },
   {
-    path: "/EditDetails",
-    component: <StudentDetailsEdit />,
-    allowedUser: [
-      appConstants.INSTITUTE,
-      appConstants.ADMIN,
-      appConstants.STUDENT,
-      appConstants.UNKNOWN,
-    ],
-  },
-  {
-    path: "/ViewDetails",
-    component: <ViewProfileDetails />,
-    allowedUser: [
-      appConstants.INSTITUTE,
-      appConstants.ADMIN,
-      appConstants.STUDENT,
-      appConstants.UNKNOWN,
-    ],
-  },
-  {
-    path: "/institute-details-check",
-    component: <InstituteDetails />,
-    allowedUser: [
-      appConstants.INSTITUTE,
-      appConstants.ADMIN,
-      appConstants.STUDENT,
-      appConstants.UNKNOWN,
-    ],
-  },
-  // {
-  //   path: "/DeleteDetails",
-  //   component: <RejectModal />,
-  //   allowedUser: [
-  //     appConstants.INSTITUTE,
-  //     appConstants.ADMIN,
-  //     appConstants.STUDENT,
-  //     appConstants.UNKNOWN,
-  //   ],
-  // },
-  {
     path: "/profile-result",
     component: <ProfileResult />,
     allowedUser: [
       appConstants.STUDENT,
       appConstants.ADMIN,
       appConstants.INSTITUTE,
-      appConstants.UNKNOWN,
     ],
   },
   {
@@ -157,7 +331,6 @@ const routes = [
       appConstants.STUDENT,
       appConstants.ADMIN,
       appConstants.INSTITUTE,
-      appConstants.UNKNOWN,
     ],
   },
   {
@@ -197,7 +370,6 @@ const routes = [
       appConstants.STUDENT,
       appConstants.ADMIN,
       appConstants.INSTITUTE,
-      appConstants.UNKNOWN,
     ],
   },
   {
@@ -220,11 +392,19 @@ const routes = [
       appConstants.UNKNOWN,
     ],
   },
-  // {
-  //   path: "/register-students-details",
-  //   component: <RegisteredStudents />,
-  //   allowedUser: [appConstants.ADMIN, appConstants.INSTITUTE,appConstants.STUDENT, appConstants.UNKNOWN],
-  // },
+
+  //mychanges
+  {
+    path: "/register-students-details",
+    component: <RegisteredStudents />,
+    allowedUser: [
+      appConstants.ADMIN,
+      appConstants.INSTITUTE,
+      appConstants.STUDENT,
+      appConstants.UNKNOWN,
+    ],
+  },
+
   {
     path: "/dsa",
     component: <AdminDashboard />,
@@ -237,6 +417,7 @@ const routes = [
   },
 ];
 
+// initial vala routes
 // const routes = [
 //   {
 //     path: "/",

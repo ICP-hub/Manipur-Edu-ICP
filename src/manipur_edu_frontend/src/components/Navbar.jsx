@@ -260,6 +260,7 @@ import {
   profileOpenCloseDropDown,
   notificationOpenCloseDropDown,
 } from "../../Redux/Action/index";
+// import { profileOpenCloseDropDown, notificationOpenCloseDropDown } from "../../Redux/Action/index";
 
 const Navbar = () => {
   let dispatch = useDispatch();
