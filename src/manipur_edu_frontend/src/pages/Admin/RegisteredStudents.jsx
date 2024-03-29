@@ -1,43 +1,91 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { useLocation } from "../../../../../node_modules/react-router-dom/dist/index";
-
+import { useQuery } from 'react-query'; 
+import { useAuth } from "../../utils/useAuthClient";
+import { getAllStudents } from "../../../Redux/Action/index";
 const RegisteredStudents = ({ onBack, onView }) => {
   const location = useLocation();
-  // const { entry } = location.state;
-  // console.log("entry here in register_student", entry);
-  const entry = [
-    {
-      name: "Student Name",
-      id: "STU-12345",
-      email: "email@email.com",
-      roll_num: "RN-123",
-    },
-    {
-      name: "Student Name",
-      id: "STU-12345",
-      email: "email@email.com",
-      roll_num: "RN-123",
-    },
+  //mychanges
+  const [result, setResult] = useState([]);
+  const { actor } = useAuth();
+  const { entry } = location.state;
+  
+   
 
-    {
-      name: "Student Name",
-      id: "STU-12345",
-      email: "email@email.com",
-      roll_num: "RN-123",
-    },
-    {
-      name: "Student Name",
-      id: "STU-12345",
-      email: "email@email.com",
-      roll_num: "RN-123",
-    },
-    {
-      name: "Student Name",
-      id: "STU-12345",
-      email: "email@email.com",
-      roll_num: "RN-123",
-    },
-  ];
+
+  useEffect(() => {
+    const getEntries = async () => {
+      const institute_id = entry[0].toString();
+  console.log("intitute id for its register_student", institute_id);
+      try {
+        const studentIdsResponse = await actor.get_institute_students_by_id(institute_id);
+        console.log('backend response', studentIdsResponse);
+        //trying
+        // if (studentIdsResponse.length > 0 && studentIdsResponse[0].length > 0) {
+        //   const studentIds = studentIdsResponse[0]; // Access the first element to get the actual student IDs array
+        //   console.log(studentIds);
+    
+        //   // Fetch details for each student
+        //   const detailsPromises = studentIds.map(studentId => actor.get_student_details(studentId));
+        //   const detailsResults = await Promise.all(detailsPromises);
+    
+        //   console.log(detailsResults);
+    
+        //   // Combine student IDs and their details into an array of objects
+        //   const combinedResult = detailsResults.map((details, index) => ({
+        //     studentId: studentIds[index], // Now correctly matches each detail with its student ID
+        //     details: details
+        //   }));
+    
+        //   console.log(combinedResult);
+        //   setResult(combinedResult);
+        // }
+        // setResult(studentIdsResponse); // Update the state with the combined data
+      } catch (error) {
+        console.error('Error fetching student data:', error);
+      }
+    };
+
+    getEntries();
+  }, [actor]);
+
+
+
+  // const entry = [
+  //   {
+  //     name: "Student Name",
+  //     id: "STU-12345",
+  //     email: "email@email.com",
+  //     roll_num: "RN-123",
+  //   },
+  //   {
+  //     name: "Student Name",
+  //     id: "STU-12345",
+  //     email: "email@email.com",
+  //     roll_num: "RN-123",
+  //   },
+
+  //   {
+  //     name: "Student Name",
+  //     id: "STU-12345",
+  //     email: "email@email.com",
+  //     roll_num: "RN-123",
+  //   },
+  //   {
+  //     name: "Student Name",
+  //     id: "STU-12345",
+  //     email: "email@email.com",
+  //     roll_num: "RN-123",
+  //   },
+  //   {
+  //     name: "Student Name",
+  //     id: "STU-12345",
+  //     email: "email@email.com",
+  //     roll_num: "RN-123",
+  //   },
+  // ];
+
+
   return (
     <div className="py-[25px] px-[63px]">
       <div className="flex flex-col ">

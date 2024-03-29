@@ -1,6 +1,9 @@
 import React from "react";
 import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
-const VerificationButton = ({ onTap, entries }) => {
+import { useSelector } from 'react-redux';
+const VerificationButton = ({ onTap }) => {
+
+  let entries = useSelector((state) => state.allInstitutesReducer)
 
   return (
     <div>
@@ -47,11 +50,10 @@ const Card = ({ entry, onTap }) => {
         {instituteEmail}
       </p>
       <p
-        className={`flex justify-center font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px] ${
-          verificationStatus === "approved" ? "text-[#13BC24]" : 
-          verificationStatus === "pending" ? "text-[#C3A846]" : 
-          verificationStatus === "rejected" ? "text-[#B26868]" : "text-[#687DB2]"
-        }`}
+        className={`flex justify-center font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px] ${verificationStatus === "approved" ? "text-[#13BC24]" :
+            verificationStatus === "pending" ? "text-[#C3A846]" :
+              verificationStatus === "rejected" ? "text-[#B26868]" : "text-[#687DB2]"
+          }`}
       >
         {verificationStatus}
       </p>

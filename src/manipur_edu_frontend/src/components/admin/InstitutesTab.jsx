@@ -1,43 +1,49 @@
 import React, { useState } from "react";
 import VerificationButton from "../../pages/Admin/InstitutesTabVerification";
-import AllRegisteredInstitutes from "../../pages/Admin/InstituteTabAllRegisteredInstitutes.jsx";
+import AllRegisteredInstitutes from "../../pages/Admin/InstituteTabAllRegisteredInstitutes";
 import InstituteDetails from "../../pages/Admin/InstituteDetails";
 import ViewInstituteDetails from "../../pages/Admin/ViewInstituteDetails";
 import EditInstituteProfile from "../../pages/Admin/EditInstituteProfile";
 import EditInstituteDetails from "../../pages/Admin/EditInstituteDetails";
 import RegisteredStudents from "../../pages/Admin/RegisteredStudents";
-import InstitutesRegisteredByAdminButton from "../admin/InstitutesTabInstitutesRegisteredByInstitute";
-import InstituteEditRequest from "../../pages/Institute/InstituteEditRequest";
-import StudentDetails from "../admin/StudentDetails";
+import StudentDetails from "../admin/StudentsTab";
 import { useQuery } from "react-query";
 import { useAuth } from "../../utils/useAuthClient";
-import Loader from "../../Loader/Loader";
+import { useDispatch } from "react-redux";
+import { getAllInstitutes } from "../../../Redux/Action/index";
+import Loader from "../../loader/Loader";
+
 const InstitutesTab = () => {
   const [selected_button, SetButton] = useState("Verification");
   const [view, SelectView] = useState("default");
   const { actor, authClient } = useAuth();
+  const dispatch = useDispatch();
 
-  const [entries, setEntries] = React.useState(null);
+
+
 
   const getEntries = async () => {
     const allInstitutes = await actor.get_institutes();
     console.log("allInstitutes", allInstitutes);
-    setEntries(allInstitutes);
-  };
+    dispatch(getAllInstitutes(allInstitutes))
+  }
+
 
   const {
     data: result,
     isLoading: isLoadingEntries,
     error: errorEntries,
   } = useQuery("dataEntries", getEntries);
-  if (!isLoadingEntries && !errorEntries) {
-    console.log("entries", entries);
-  }
-//  if (isLoadingEntries) {
-//     return <Loader />; // Render loader if data is still loading
-//   }
+
+
+
+
+
+
+
   return (
     <div>
+      {isLoadingEntries && <Loader></Loader>}
       {view === "details" ? (
         <InstituteDetails onBack={() => SelectView("default")} />
       ) : view === "viewdetails" ? (
@@ -119,11 +125,7 @@ const InstitutesTab = () => {
                     123456789
                   </p>
                 </div>
-                <img
-                  className="w-[67px] h-[55px] pl-[12px]"
-                  src="/student.svg"
-                  alt=""
-                />
+                <img className="w-[67px] h-[55px] pl-[12px]" src='/student.svg' alt="" />
               </div>
             </div>
           </div>
@@ -138,16 +140,6 @@ const InstitutesTab = () => {
             >
               Verification Requests{" "}
             </button>
-            {/* <button
-              onClick={() => SetButton("Admin")}
-              className={
-                selected_button === "Admin"
-                  ? "py-[10px] px-[22px] bg-[#D9EBFF] text-[#687DB2] rounded-[5px] text-[14px] font-[Segoe UI] font-[400] leading-[18px]"
-                  : "py-[10px] px-[22px] border boder-[#D9EBFF] text-[#687DB2] rounded-[5px] text-[14px] font-[Segoe UI] font-[400] leading-[18px]"
-              }
-            >
-              Institutes Registered by Admin
-            </button> */}
             <button
               onClick={() => SetButton("AllRegistered")}
               className={
@@ -157,16 +149,6 @@ const InstitutesTab = () => {
               }
             >
               All Registered Institutes
-            </button>
-            <button
-              onClick={() => SetButton("EditRequests")}
-              className={
-                selected_button === "EditRequests"
-                  ? "py-[10px] px-[22px] bg-[#D9EBFF] text-[#687DB2] rounded-[5px] text-[14px] font-[Segoe UI] font-[400] leading-[18px]"
-                  : "py-[10px] px-[22px] border boder-[#D9EBFF] text-[#687DB2] rounded-[5px] text-[14px] font-[Segoe UI] font-[400] leading-[18px]"
-              }
-            >
-              Institute Edit Requests
             </button>
           </div>
           <div className="flex flex-col">
@@ -242,44 +224,17 @@ const InstitutesTab = () => {
                 />
               </div>
             </div>
-            {selected_button === "Verification" &&
-              !isLoadingEntries &&
-              !errorEntries && (
-                <VerificationButton
-                  onTap={() => SelectView("details")}
-                  entries={entries}
-                />
-              )}
-            {selected_button === "AllRegistered" &&
-              !isLoadingEntries &&
-              !errorEntries && (
-                <AllRegisteredInstitutes
-                  onView={() => SelectView("viewdetails")}
-                  onEdit={() => SelectView("edit")}
-                  onStudent={() => SelectView("students")}
-                  entries={entries}
-                />
-              )}
-            {selected_button === "Admin" &&
-              !isLoadingEntries &&
-              !errorEntries && (
-                <InstitutesRegisteredByAdminButton
-                  onView={() => SelectView("viewdetails")}
-                  onEdit={() => SelectView("edit")}
-                  onRegister={() => SelectView("register")}
-                  onStudent={() => SelectView("students")}
-                  entries={entries}
-                />
-              )}
+            {selected_button === "Verification" && (!isLoadingEntries && !errorEntries) && (
+              <VerificationButton onTap={() => SelectView("details")} />
+            )}
+            {selected_button === "AllRegistered" && (!isLoadingEntries && !errorEntries) && (
+              <AllRegisteredInstitutes
+                onView={() => SelectView("viewdetails")}
+                onEdit={() => SelectView("edit")}
+                onStudent={() => SelectView("students")}
 
-            {selected_button === "EditRequests" &&
-              !isLoadingEntries &&
-              !errorEntries && (
-                <InstituteEditRequest
-                  onView={() => SelectView("view_verify")}
-                  entries={entries}
-                />
-              )}
+              />
+            )}
           </div>
         </div>
       )}

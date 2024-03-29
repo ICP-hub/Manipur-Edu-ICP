@@ -3,13 +3,15 @@ import { useForm } from "react-hook-form";
 import SignUpPage from "../../components/student/SignUpPage"; // Import SignUp Page ui
 import { useAuth } from "../../utils/useAuthClient";
 import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
-import Loader from "../../Loader/Loader";
+
 import { useQuery } from "react-query";
 import { ICountry, IState, City, State, Country } from "country-state-city";
 import Status from "../../components/student/status";
 import { getKeysForInstitute, generateAesKeyBase64 } from "../../utils/helper";
+import Loader from "../../loader/Loader";
 
 const SignupInstitute = () => {
+
   const {
     register,
     handleSubmit,
@@ -20,7 +22,7 @@ const SignupInstitute = () => {
   // Set City and state
   const [selectedCountry, setSelectedCountry] = useState("IN");
   const [selectedState, setSelectedState] = useState("");
-
+  const [isLoading, setIsLoading] = useState(false);
   const handleCountryChange = (e) => {
     setSelectedCountry(e.target.value);
     setSelectedState(""); // Reset state selection on country change
@@ -30,6 +32,7 @@ const SignupInstitute = () => {
   };
   const [step, setStep] = useState(0);
   const { actor } = useAuth();
+  const navigate = useNavigate();
 
   const {
     data: key,
@@ -41,16 +44,6 @@ const SignupInstitute = () => {
     console.log(key);
     console.log("base64String", key);
   }
-  //  if (isLoadingkey) {
-  //   return <Loader />; // Render loader if data is still loading
-  // }
-  const handlePrevious = () => {
-    setStep((prevStep) => prevStep - 1);
-  };
-  const navigate = useNavigate();
-  const handlePrevious1 = () => {
-    navigate("/login"); // Navigate to the signup component
-  };
   const onSubmit = async (data) => {
     console.log(data);
     setStep((prevStep) => prevStep + 1);
@@ -75,14 +68,15 @@ const SignupInstitute = () => {
         institute_type: [data.institute_type],
         status: ["pending"],
       };
-
+      setIsLoading(true);
       const register_institute = await actor.register_institute(newData);
+
       console.log(register_institute);
       // const addedPrivateKey = await actor.add_private_key(keyPair.privateKey);
       // console.log(addedPrivateKey);
       console.log("Submitted Successfully");
       // await navigate("/");
-
+      setIsLoading(false);
       setField("Wait for your request to get approved");
       setModelStatus(true);
       console.log("Submitted Successfully");
@@ -90,8 +84,14 @@ const SignupInstitute = () => {
   };
 
   return (
+
+
+
     <SignUpPage>
+      {isLoading && <Loader></Loader>}
+
       <div className="">
+
         <Status
           open={modelStatus}
           Field={Field}
@@ -112,11 +112,10 @@ const SignupInstitute = () => {
                   </label>
                   <br />
                   <input
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
-                      errors.institute_name
-                        ? "border-[#FF0606] focus:outline-[#FF0606]"
-                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
-                    }`}
+                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.institute_name
+                      ? "border-[#FF0606] focus:outline-[#FF0606]"
+                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      }`}
                     type="text"
                     id="institute_name"
                     name="institute_name"
@@ -126,7 +125,7 @@ const SignupInstitute = () => {
                   />
                   {errors && errors.institute_name && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                      Please enter the name of the institute.
+                      This field is required
                     </span>
                   )}
                 </div>
@@ -136,11 +135,10 @@ const SignupInstitute = () => {
                   </label>
                   <br />
                   <select
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
-                      errors.institute_type
-                        ? "border-[#FF0606] focus:outline-[#FF0606]"
-                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
-                    }`}
+                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.institute_type
+                      ? "border-[#FF0606] focus:outline-[#FF0606]"
+                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      }`}
                     id="institute_type"
                     name="institute_type"
                     {...register("institute_type", {
@@ -163,7 +161,7 @@ const SignupInstitute = () => {
                   </select>
                   {errors && errors.institute_type && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                      Please select institute type
+                      This field is required
                     </span>
                   )}
                 </div>
@@ -172,11 +170,10 @@ const SignupInstitute = () => {
                     Institute Size <span className="text-[#FF0606]">*</span>
                   </label>
                   <input
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
-                      errors.instituteSize
-                        ? "border-[#FF0606] focus:outline-[#FF0606]"
-                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
-                    }`}
+                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.instituteSize
+                      ? "border-[#FF0606] focus:outline-[#FF0606]"
+                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      }`}
                     type="text"
                     id="instituteSize"
                     name="instituteSize"
@@ -190,7 +187,7 @@ const SignupInstitute = () => {
                   />
                   {errors.instituteSize && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                      Please provide the size of the institute.
+                      This field is required
                     </span>
                   )}
                 </div>
@@ -200,11 +197,10 @@ const SignupInstitute = () => {
                   </label>
                   <br />
                   <input
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
-                      errors.address
-                        ? "border-[#FF0606] focus:outline-[#FF0606]"
-                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
-                    }`}
+                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.address
+                      ? "border-[#FF0606] focus:outline-[#FF0606]"
+                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      }`}
                     type="text"
                     id="address"
                     name="address"
@@ -214,7 +210,7 @@ const SignupInstitute = () => {
                   />
                   {errors && errors.address && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                      Please provide the address.
+                      This field is required
                     </span>
                   )}
                 </div>
@@ -226,11 +222,10 @@ const SignupInstitute = () => {
                   </label>
                   <br />
                   <select
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
-                     errors.state && !selectedState
-          ? "border-[#FF0606] focus:outline-[#FF0606]" 
-          : "border-[#ACBFFD] focus:outline-[#ACBFFD]" 
-      }`}
+                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.state
+                      ? "border-[#FF0606] focus:outline-[#FF0606]"
+                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      }`}
                     id="state"
                     name="state"
                     {...register("state", {
@@ -247,9 +242,9 @@ const SignupInstitute = () => {
                       </option>
                     ))}
                   </select>
-                  {errors && errors.state && !selectedState && (
+                  {errors && errors.state && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                      Please select a state.
+                      This field is required
                     </span>
                   )}
                 </div>
@@ -259,11 +254,10 @@ const SignupInstitute = () => {
                   </label>
                   <br />
                   <select
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
-                      errors.city
-                        ? "border-[#FF0606] focus:outline-[#FF0606]"
-                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
-                    }`}
+                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.city
+                      ? "border-[#FF0606] focus:outline-[#FF0606]"
+                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      }`}
                     id="city"
                     name="city"
                     {...register("city", {
@@ -282,7 +276,7 @@ const SignupInstitute = () => {
                   </select>
                   {errors && errors.city && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                      Please select a city.
+                      This field is required
                     </span>
                   )}
                 </div>
@@ -292,11 +286,10 @@ const SignupInstitute = () => {
                   </label>
                   <br />
                   <input
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
-                      errors.zip_code
-                        ? "border-[#FF0606] focus:outline-[#FF0606]"
-                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
-                    }`}
+                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.zip_code
+                      ? "border-[#FF0606] focus:outline-[#FF0606]"
+                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      }`}
                     type="text"
                     id="zip_code"
                     name="zip_code"
@@ -310,22 +303,14 @@ const SignupInstitute = () => {
                   />
                   {errors && errors.zip_code && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                      Please enter a valid zip code.
+                      This field is required
                     </span>
                   )}
                 </div>
               </div>
-              <div className="mt-[20px] dxl:mt-[30px] flex">
-                {/* previous button */}
+              <div className="mt-[20px] dxl:mt-[30px]">
                 <button
-                  className="flex-1 mr-[10px] w-[40%] h-[40px] dxl:h-[45px] text-white text-[20px] bg-[#646ED6] rounded-[10px]"
-                  type="button"
-                  onClick={handlePrevious1}
-                >
-                  Previous
-                </button>
-                <button
-                  className="flex-1 ml-[10px] w-[40%] h-[40px] dxl:h-[45px] text-white text-[20px] bg-[#646ED6] rounded-[10px]"
+                  className="w-full h-[40px] dxl:h-[45px] text-white text-[20px] bg-[#646ED6] rounded-[10px]"
                   type="submit"
                 >
                   Next
@@ -347,11 +332,10 @@ const SignupInstitute = () => {
                   </label>
                   <br />
                   <input
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] lowercase px-1 border ${
-                      errors.email
-                        ? "border-[#ff0606] focus:outline-[#ff0606]"
-                        : "border-[#acbffd] focus:outline-[#acbffd]"
-                    }`}
+                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] lowercase px-1 border ${errors.email
+                      ? "border-[#ff0606] focus:outline-[#ff0606]"
+                      : "border-[#acbffd] focus:outline-[#acbffd]"
+                      }`}
                     type="email"
                     id="email"
                     name="email"
@@ -365,7 +349,7 @@ const SignupInstitute = () => {
                   />
                   {errors && errors.email && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                      Please enter a valid email address.
+                      This field is required
                     </span>
                   )}
                 </div>
@@ -375,11 +359,10 @@ const SignupInstitute = () => {
                   </label>
                   <br />
                   <input
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
-                      errors.phone_no
-                        ? "border-[#FF0606] focus:outline-[#FF0606]"
-                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
-                    }`}
+                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.phone_no
+                      ? "border-[#FF0606] focus:outline-[#FF0606]"
+                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      }`}
                     type="tel"
                     id="phone_no"
                     name="phone_no"
@@ -393,7 +376,7 @@ const SignupInstitute = () => {
                   />
                   {errors && errors.phone_no && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                      Please enter a valid Phone Number.
+                      This field is required
                     </span>
                   )}
                 </div>
@@ -404,11 +387,10 @@ const SignupInstitute = () => {
                   </label>
                   <br />
                   <input
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
-                      errors.website
-                        ? "border-[#FF0606] focus:outline-[#FF0606]"
-                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
-                    }`}
+                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.website
+                      ? "border-[#FF0606] focus:outline-[#FF0606]"
+                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      }`}
                     type="text"
                     id="website"
                     name="website"
@@ -422,7 +404,7 @@ const SignupInstitute = () => {
                   />
                   {errors && errors.website && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                      Please enter a valid website URL.
+                      This field is required
                     </span>
                   )}
                 </div>
@@ -433,11 +415,10 @@ const SignupInstitute = () => {
                   </label>
                   <br />
                   <select
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
-                      errors.approvalAuthority
-                        ? "border-[#FF0606] focus:outline-[#FF0606]"
-                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
-                    }`}
+                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.approvalAuthority
+                      ? "border-[#FF0606] focus:outline-[#FF0606]"
+                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      }`}
                     id="approvalAuthority"
                     name="approvalAuthority"
                     {...register("approvalAuthority", {
@@ -466,7 +447,7 @@ const SignupInstitute = () => {
                   </select>
                   {errors && errors.approvalAuthority && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                      Please specify the approval authority.
+                      This field is required
                     </span>
                   )}
                 </div>
@@ -476,11 +457,10 @@ const SignupInstitute = () => {
                   </label>
                   <br />
                   <select
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
-                      errors.coedStatus
-                        ? "border-[#FF0606] focus:outline-[#FF0606]"
-                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
-                    }`}
+                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.coedStatus
+                      ? "border-[#FF0606] focus:outline-[#FF0606]"
+                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      }`}
                     id="coedStatus"
                     name="coedStatus"
                     {...register("coedStatus", {
@@ -509,22 +489,16 @@ const SignupInstitute = () => {
                   </select>
                   {errors && errors.coedStatus && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                      Please specify the coed status.
+                      This field is required
                     </span>
                   )}
                 </div>
               </div>
-              <div className="mt-[20px] dxl:mt-[30px] flex">
+              <div className="mt-[20px] dxl:mt-[30px]">
                 <button
-                  className="flex-1 mr-[10px] w-[40%] h-[40px] dxl:h-[45px] text-white text-[20px] bg-[#646ED6] rounded-[10px]"
-                  type="button"
-                  onClick={handlePrevious}
-                >
-                  Previous
-                </button>
-                <button
-                  className="flex-1 ml-[10px] w-[40%] h-[40px] dxl:h-[45px] text-white text-[20px] bg-[#646ED6] rounded-[10px]"
+                  className="w-full h-[40px] dxl:h-[45px] text-white text-[20px] bg-[#646ED6] rounded-[10px]"
                   type="submit"
+
                 >
                   Sign up
                 </button>
@@ -534,6 +508,7 @@ const SignupInstitute = () => {
         )}
       </>
     </SignUpPage>
+
   );
 };
 

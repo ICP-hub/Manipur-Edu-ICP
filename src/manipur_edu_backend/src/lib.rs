@@ -94,26 +94,20 @@ fn login(user_type: String) -> bool {
 
 #[query]
 fn check_user_type() -> String {
-    let principal_id = caller().to_string(); 
+    let principal_id = caller().to_string();
     STATE.with(|state| {
         let state = state.borrow();
         if state.users.contains_key(&principal_id)
             && student_application_status(principal_id.clone()) == Some("approved".to_string())
         {
             "student".to_string()
-        }
-        
-        else if state.institute.contains_key(&principal_id)
+        } else if state.institute.contains_key(&principal_id)
             && institute_application_status(principal_id.clone()) == Some("approved".to_string())
         {
             "institute".to_string()
-        }
-    
-        else if state.admin.contains(&principal_id) {
+        } else if state.admin.contains(&principal_id) {
             "admin".to_string()
-        }
-        
-        else {
+        } else {
             "unknown".to_string()
         }
     })
@@ -124,6 +118,22 @@ fn check_user_type() -> String {
 fn greet() -> String {
     let principal_id = caller().to_string();
     format!("principal id - : {:?}", principal_id)
+}
+
+#[query]
+pub fn is_user_already_registered() -> bool {
+    let principal_id = caller().to_string();
+    STATE.with(|state| {
+        let state = state.borrow();
+        if state.users.contains_key(&principal_id.clone())
+            || state.institute.contains_key(&principal_id.clone())
+            || state.admin.contains(&principal_id)
+        {
+            true
+        } else {
+            false
+        }
+    })
 }
 
 #[pre_upgrade]

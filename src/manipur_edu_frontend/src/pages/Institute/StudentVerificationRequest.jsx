@@ -3,24 +3,27 @@ import { useAuth } from "../../utils/useAuthClient";
 import { Link, useNavigate } from "react-router-dom"; // Simplified import for clarity
 import { handleFileDecrypt, importAesKeyFromBase64 } from "../../utils/helper";
 import Modal from "../../components/Modal";
-
-const StudentVerificationRequest = ({ entries }) => {
+import { useDispatch, useSelector } from "react-redux";
+const StudentVerificationRequest = () => {
   const { actor, authClient } = useAuth();
   const principal_id = authClient.getIdentity().getPrincipal().toString();
   const [publicKey, setPublicKey] = React.useState('');
 
+  const result = useSelector((state) => state.instituteDetailsReducer);
+
   React.useEffect(() => {
-    const getPublicKey = async () => {
-      const result = await actor.get_institute_details([principal_id]);
-
-      console.log("result", result);
-      console.log('public key', result[0].public_key[0])
-      setPublicKey(result[0].public_key[0]);
+    // Direct operations that don't involve hook calls can be placed here.
+    const publicKey = result[0]?.public_key[0]; // Safely access the property with optional chaining
+    if (publicKey) {
+      setPublicKey(publicKey);
+      console.log("public key", publicKey);
     }
+  }, [result]);
 
-    getPublicKey();
 
-  }, []);
+  let entries = useSelector(
+    (state) => state.allStudentsReducer
+  );
 
 
 
@@ -32,13 +35,12 @@ const StudentVerificationRequest = ({ entries }) => {
 
   return (
     <div className="w-full self-center">
-      <div className="grid grid-cols-6 py-[15px] mt-[27px] rounded-md bg-[#D9EBFF] font-[600] text-[15px] text-[#00227A] leading-[20px]">
+      <div className="grid grid-cols-5 py-[15px] mt-[27px] rounded-md bg-[#D9EBFF] font-[600] text-[15px] text-[#00227A] leading-[20px]">
         <div className="flex justify-center">NAME</div>
         <div className="flex justify-center">STUDENT ID</div>
         <div className="flex justify-center">ROLL NUMBER</div>
         <div className="flex justify-center">STATUS</div>
         <div className="flex justify-center">STUDENT DETAILS</div>
-        <div className="flex justify-center">VIEW KYC</div>
       </div>
       {entries && entries.map(({ studentId, details }, index) => (
         <Card key={index} entry={details} studentPrincipalId={studentId} publicKey={publicKey} /> // Directly pass each entry
@@ -61,7 +63,7 @@ const Card = ({ studentPrincipalId, entry, publicKey }) => {
   const [image, setImage] = React.useState("");
 
 
-const handleKyc = async () => {
+  const handleKyc = async () => {
     console.log(entry?.[0].public_key?.[0])
 
     if (entry && entry[0]) {
@@ -90,7 +92,7 @@ const handleKyc = async () => {
     <div>
 
       <Modal open={openModal} image={image} onClose={() => setOpenModal(false)} />
-      <div className="grid grid-cols-6 mt-4 h-[48px] rounded-[5px] bg-[#EEF6FF] pt-[7px]">
+      <div className="grid grid-cols-5 mt-4 h-[48px] rounded-[5px] bg-[#EEF6FF] pt-[7px]">
         <div className="flex justify-center text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] rounded-[5px]">
           <div className="flex rounded-[5px]">
             <img className="w-[33px] h-[33px]" src="/student.svg" alt="" />
@@ -110,13 +112,12 @@ const handleKyc = async () => {
           {verificationStatus} {/* Displaying the student ID */}
         </p>
         {/* Continue with other fields as needed, similar to firstName and studentId */}
-        <div className="flex justify-center px-4">
+        <div className="flex items-center justify-between px-4">
           <button className="font-[700] underline flex justify-center bg-[#EEF6FF] text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px]"
             onClick={handleClick}>
             {'Check'}
           </button>
-        </div>
-          <div className="flex justify-center px-4">
+
           <button className="font-[700] underline flex justify-center bg-[#EEF6FF] text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px]"
             onClick={handleKyc}>
             {'view kyc'}

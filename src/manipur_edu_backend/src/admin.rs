@@ -131,6 +131,38 @@ pub fn get_institute_students() -> Option<Vec<String>> {
     })
 }
 
+
+
+//mychange
+#[query]
+pub fn get_institute_students_by_id(institute_principal: String) -> Option<Vec<String>> {
+    // let default_principal = caller().to_string();
+    // let institute_id = institute_principal.unwrap_or_else(|| default_principal.clone()); // Handle potential panic by using unwrap_or_else
+    let institute_id = institute_principal;
+    STATE.with(|state| {
+        let state = state.borrow();
+        if let Some(institute_data) = state.institute.get(&institute_id) {
+            if let Some(institute_name) = &institute_data.institute_name {
+                if let Some(students) = state.institute_students.get(institute_name) {
+                    if !students.is_empty() {
+                        return Some(students.clone());
+                    }
+                }
+            }
+        }
+        None
+    })
+}
+
+
+
+
+
+
+
+
+
+
 // function to get institutes list
 #[query]
 pub fn get_institutes() -> HashMap<String, InstituteData> {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Loader from "../../Loader/Loader";
+import Loader from "../../loader/Loader";
 import { useAuth } from "../../utils/useAuthClient";
 import { useQuery } from 'react-query';
 import Modal from "../../components/Modal";
@@ -8,7 +8,7 @@ import {
   Link, useNavigate,
 } from "../../../../../node_modules/react-router-dom/dist/index";
 import { handleFileDecrypt } from "../../utils/helper";
-
+import { useSelector } from "react-redux";
 const ProfileResult = () => {
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
@@ -16,21 +16,9 @@ const ProfileResult = () => {
   const principal_id = authClient.getIdentity().getPrincipal().toString();
   const [imageUrl, setImageUrl] = useState('');
 
-  const fetchStudentDetails = async () => {
-
-    const response = await actor.get_student_details(principal_id);
-    return response;
-  };
-
-  const {
-    data: entry,
-    isLoading: isLoadingEntry,
-    error: errorEntry,
-  } = useQuery("entry", fetchStudentDetails);
-
-  if (!isLoadingEntry && !errorEntry) {
-    console.log("student view profile", entry);
-  }
+  let entry = useSelector(
+    (state) => state.studentDetailsReducer
+  );
 
   const handleView = async () => {
 

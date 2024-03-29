@@ -1,6 +1,9 @@
 import React from "react";
-// import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
-const AllRegisteredInstitutes = ({ onView, onEdit, onStudent, entries }) => {
+import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
+import { useSelector } from "react-redux";
+const AllRegisteredInstitutes = ({ onView, onEdit, onStudent }) => {
+
+  let entries = useSelector((state) => state.allInstitutesReducer)
   return (
     <div>
       <div className="border rounded-[10px] border-[#D9EBFF]">
@@ -27,10 +30,10 @@ const AllRegisteredInstitutes = ({ onView, onEdit, onStudent, entries }) => {
 export default AllRegisteredInstitutes;
 const Card = ({ entry, onView, onEdit, onStudent }) => {
   console.log(entry)
-  // const navigate = useNavigate();
-  // const handleClick = () => {
-  //   navigate("/register-students-details", { state: { entry } });
-  // };
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/register-students-details", { state: { entry } });
+  };
   const instituteName = entry?.[1].institute_name?.[0] ?? 'N/A';
   const instituteId = entry?.[1].institute_id?.[0].substr(0, 6) ?? 'N/A';
   const instituteEmail = entry?.[1].email?.[0] ?? 'N/A';
@@ -49,7 +52,7 @@ const Card = ({ entry, onView, onEdit, onStudent }) => {
         {instituteEmail}
       </p>
       <button
-        onClick={onStudent}
+        onClick={handleClick}
         className="pt-[7px] font-[700] underline flex justify-center  text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] "
       >
         Click to View
@@ -57,8 +60,8 @@ const Card = ({ entry, onView, onEdit, onStudent }) => {
       <div className="flex gap-[8px]">
         <button onClick={onView}>
           <svg
-            width="25"
-            height="25"
+            width="20"
+            height="20"
             viewBox="0 0 20 20"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +87,6 @@ const Card = ({ entry, onView, onEdit, onStudent }) => {
           </svg>
         </button>
         <button>
-          {/* eye size */}
           <svg
             width="16"
             height="16"

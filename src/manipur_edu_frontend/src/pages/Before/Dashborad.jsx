@@ -5,13 +5,18 @@ import Footer from "../../components/Footer";
 import { Link } from "../../../../../node_modules/react-router-dom/dist/index";
 import FAQ from "../../components/Faq";
 import { useAuth } from "../../utils/useAuthClient";
+import { useDispatch } from "react-redux";
+import { getStudentDetails, getInstituteDetails } from "../../../Redux/Action/index";
 
 function Dashboard() {
 
-  const { actor, userType } = useAuth();
+  const { actor, userType, authClient } = useAuth();
+  const principal_id = authClient.getIdentity().getPrincipal().toString();
 
   console.log(userType)
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     const checkLogin = async () => {
@@ -24,6 +29,48 @@ function Dashboard() {
 
     checkLogin();
   }, [userType, actor]);
+
+
+
+
+
+  React.useEffect(() => {
+
+    const fetchInstituteDetails = async () => {
+      const response = await actor.get_institute_details([principal_id]);
+      console.log('institute response', response);
+      const data = {
+        instituteId: principal_id,
+        details: response
+      };
+      console.log("data", data);
+      dispatch(getInstituteDetails(data));
+
+    }
+    const fetchStudentDetails = async () => {
+
+      const response = await actor.get_student_details(principal_id);
+      // const data = {
+      //   studentId: principal_id,
+      //   details: response
+      // };
+      console.log('student response', response);
+      // console.log("data", data);
+      dispatch(getStudentDetails(response));
+    };
+
+    if (userType == 'student') {
+      fetchStudentDetails();
+
+    }
+    else if (userType == 'institute') {
+      fetchInstituteDetails();
+    }
+
+  }, [userType])
+
+
+
 
   return (
     <div>

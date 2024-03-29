@@ -1,27 +1,29 @@
 import React, { useState, useEffect } from "react";
+
 import StudentsTab from "./StudentsTab";
 import ResultTab from "./ResultsTab";
 import Background from "../../components/BackgroudPage";
 import { useQuery } from "react-query";
 import { useAuth } from "../../utils/useAuthClient";
-import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
-import Loader from "../../Loader/Loader";
-import ScholarshipTab from "./ScholarshipTab";
-
+import { useLocation } from "../../../../../node_modules/react-router-dom/dist/index";
+import { useDispatch } from "react-redux";
+import { getAllStudents } from "../../../Redux/Action/index";
+import Loader from "../../loader/Loader";
 const StudentResultScholarship = () => {
 
-  // const location = useLocation();
+  const location = useLocation();
   const [page, setPage] = useState("student");
   const [result, setResult] = useState([]);
   const { actor } = useAuth();
-  // useEffect(() => {
-  //   // Check the path in the location object and set the page state accordingly
-  //   if (location.pathname === '/institute-student/result') {
-  //     setPage('result');
-  //   } else {
-  //     setPage('student');
-  //   }
-  // }, [location.pathname]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    // Check the path in the location object and set the page state accordingly
+    if (location.pathname === '/institute-student/result') {
+      setPage('result');
+    } else {
+      setPage('student');
+    }
+  }, [location.pathname]);
 
   const getEntries = async () => {
     const studentIdsResponse = await actor.get_institute_students(); // This returns an array containing a single element that is an array of student IDs
@@ -53,21 +55,25 @@ const StudentResultScholarship = () => {
   } = useQuery("dataEntries", getEntries);
   if (!isLoadingEntries && !errorEntries) {
     console.log("entries", result)
+
     // console.log("entries 1st array", entries[0])
     // entries[0].map(item => (
     //   console.log(item)
     // ))
   }
+  dispatch(getAllStudents(result));
+
+
 
 
   return (
-
     <Background>
+      {isLoadingEntries && <Loader></Loader>}
       <div
         className="relative pt-[70px] min-h-screen flex justify-center items-center px-[4%] lg1:px-[5%] "
       // style={{ backgroundImage: "radial-gradient( #E5F1FF 0%, #E5F1FF 100%)" }}
       >
-        <div className=" w-full xl:w-[1367px] my-[100px]  bg-white flex flex-col justify-between rounded-[10px]">
+        <div className=" w-full  my-[100px]  bg-white flex flex-col justify-between rounded-[10px]">
           <div className="  flex justify-center rounded-t-[10px]">
             <div className="bg-white w-[85%] flex border-b border-[#BED0FF]   pt-[19px]">
               <div className="w-[70%] border-r border-[#BED0FF] flex ">
@@ -94,16 +100,10 @@ const StudentResultScholarship = () => {
                   {" "}
                   Results
                 </button>{" "}
-                <button
-                onClick={() => setPage("scholarship")}
-                className={
-                  page === "scholarship"
-                    ? "border-b-2 border-[#00227A] text-[#00227A] text-[1.125rem] font-[500] leading-[1.5625rem] mr-[3.125rem]"
-                    : "text-[#687DB2] text-[1.125rem] font-[500] leading-[1.5625rem] mr-[3.125rem]"
-                }
-              >
-                Scholarship Applications
-              </button>{" "}
+                <button className="  text-[#687DB2] text-[1.125rem] font-[500] leading-[1.5625rem]  ">
+                  {" "}
+                  Scholarship Applications
+                </button>{" "}
               </div>
               <div className="w-[15%] border-r border-[#BED0FF]  flex justify-between">
                 <svg
@@ -177,9 +177,8 @@ const StudentResultScholarship = () => {
               </div>
             </div>
           </div>
-  {page === "student" && <StudentsTab entries={result} />}
-          {page === "result" && <ResultTab entries={result} />}
-          {page === "scholarship" && <ScholarshipTab />}
+          {page === "student" && <StudentsTab />}
+          {page === "result" && <ResultTab />}
 
           {/*  */}
         </div>

@@ -5,7 +5,7 @@ import Modal from "../../components/Modal";
 import { useQuery } from "react-query";
 import { useAuth } from "../../utils/useAuthClient";
 import UploadStudentCertificate from "../../components/institute/UploadCertificatePopup";
-import Loader from "../../Loader/Loader";
+import Loader from "../../loader/Loader";
 //todo:- remove this and fix it. Make ui same as result type show students and add button to upload certificates
 const CertificatesIssued = ({ institutePrincipalId }) => {
   const [popupState, setPopupState] = useState(false);

@@ -280,10 +280,12 @@ pub async fn register_user(mut user_data: UserData) -> String {
             }
         } else {
             user_data.student_id = Some(id);
+            let cgpa = user_data.cgpa.map(|cgpa| (cgpa * 100.0).round() / 100.0);
             match user_data.validate() {
                 Ok(_) => {
                     println!("Validation passed!");
                     user_data.status = Some("pending".to_string());
+                    user_data.cgpa = cgpa;
                     if let Some(institute_name) = &user_data.institute_name {
                         state
                             .institute_students
