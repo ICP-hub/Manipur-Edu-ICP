@@ -1,17 +1,11 @@
-
 import React from "react";
-import {useSelector} from "react-redux";
+import { useState, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
+import VerifyEditDeleteDropdown from "./VerifyEditDeleteDropdown";
 const AllRegisteredStudents = () => {
-
-
-
-
-
   // userData.map(element => {
   //   console.log(element)
   // })
-
-
   // const entries = data.userData[0];
   // const entries = [
   //   {
@@ -99,9 +93,7 @@ const AllRegisteredStudents = () => {
   //     rollnum: "RN-123",
   //   },
   // ];
-  let entries = useSelector(
-    (state) => state.allStudentsReducer
-  );
+  let entries = useSelector((state) => state.allStudentsReducer);
   console.log(entries);
   return (
     <div className="w-full self-center">
@@ -112,9 +104,10 @@ const AllRegisteredStudents = () => {
         <div className="flex justify-center">PHONE NUMBER</div>
         <div className="flex justify-center">ROLL NUMBER</div>
       </div>
-      {entries && entries.map(({ studentId, details }, index) => (
-        <Card key={index} entry={details} studentPrincipalId={studentId} /> // Directly pass each entry
-      ))}
+      {entries &&
+        entries.map(({ studentId, details }, index) => (
+          <Card key={index} entry={details} studentPrincipalId={studentId} /> // Directly pass each entry
+        ))}
 
       <div className="flex flex-row-reverse pt-[3.125rem] pb-[6.25rem]">
         <p>Page 1 of 100</p>
@@ -125,20 +118,35 @@ const AllRegisteredStudents = () => {
 export default AllRegisteredStudents;
 
 const Card = ({ studentPrincipalId, entry }) => {
+  const [toggle, SetDropDown] = useState(false);
+  let menuRef = useRef();
+  useEffect(() => {
+    const handleClick = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        SetDropDown(false);
+      }
+    };
 
-  const studentName = entry?.[0].first_name?.[0] + " " + entry?.[0].last_name?.[0] ?? 'N/A';
-  const studentId = entry?.[0].student_id?.[0].substr(0, 6) ?? 'N/A';
-  const rollNo = entry?.[0].roll_no?.[0] ?? 'N/A';
-  const verificationStatus = entry?.[0].status?.[0] ?? 'N/A';
-  const email = entry?.[0].personal_email?.[0] ?? 'N/A';
-  const phoneNo = entry?.[0].phone_no?.[0] ?? 'N/A';
+    document.addEventListener("click", handleClick);
+
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, [menuRef]);
+
+  const studentName =
+    entry?.[0].first_name?.[0] + " " + entry?.[0].last_name?.[0] ?? "N/A";
+  const studentId = entry?.[0].student_id?.[0].substr(0, 6) ?? "N/A";
+  const rollNo = entry?.[0].roll_no?.[0] ?? "N/A";
+  const email = entry?.[0].personal_email?.[0] ?? "N/A";
+  const phoneNo = entry?.[0].phone_no?.[0] ?? "N/A";
   return (
     <div className=" grid grid-cols-[repeat(5,1fr)_50px] mt-4 h-[48px] rounded-[5px]  bg-[#EEF6FF] pt-[7px]">
       <div className="flex justify-center text-[#687DB2] font-[Segoe UI] font-[400] text-[0.9375rem] leading-[1.25rem] rounded-[0.3125rem]">
         <div className="flex rounded-[0.3125rem]">
           <img
             className="w-[2.0625rem] h-[2.0625rem]"
-            src='/student.svg'
+            src="/student.svg"
             alt=""
           />
           <p className="pt-[0.375rem] pl-[0.8125rem]">{studentName}</p>
@@ -186,6 +194,11 @@ const Card = ({ studentPrincipalId, entry }) => {
           </defs>
         </svg>
       </button>
+      <VerifyEditDeleteDropdown
+        open={toggle}
+        onClose={() => SetDropDown(false)}
+        entries
+      />
     </div>
   );
 };

@@ -15,7 +15,6 @@ const Modal = ({ open, onClose, image }) => {
   }, [open]);
 
   const handleDownload = () => {
-    // Create a temporary anchor element
     const anchor = document.createElement('a');
     anchor.href = image;
     anchor.download = 'image.jpg'; // Specify the filename for the downloaded image

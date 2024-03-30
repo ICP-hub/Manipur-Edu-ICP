@@ -198,11 +198,27 @@ function StudentSignUpForm() {
           <span className="text-red-500">{errors.phone_no.message}</span>
         )}
       </label>
-      <label className="text-gray-700 text-sm font-bold flex-1">
+      {/* <label className="text-gray-700 text-sm font-bold flex-1">
         CGPA
         <input
           className="border rounded w-full py-1 px-2 font-normal"
           {...register("cgpa", { required: true })}
+        />
+        {errors.cgpa && (
+          <span className="text-red-500">{errors.cgpa.message}</span>
+        )}
+      </label> */}
+      <label className="text-gray-700 text-sm font-bold flex-1">
+        CGPA
+        <input
+          className="border rounded w-full py-1 px-2 font-normal"
+          {...register("cgpa", {
+            required: "CGPA is required",
+            pattern: {
+              value: /^\d+(\.\d{1})?$/,
+              message: "Invalid CGPA. Please enter up to one decimal place.",
+            },
+          })}
         />
         {errors.cgpa && (
           <span className="text-red-500">{errors.cgpa.message}</span>

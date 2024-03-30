@@ -1,11 +1,11 @@
 import React from "react";
-import { Link, useLocation } from "../../../../../node_modules/react-router-dom/dist/index";
+import {
+  Link,
+  useLocation,
+} from "../../../../../node_modules/react-router-dom/dist/index";
 import Background from "../../components/BackgroudPage";
 
-const InstituteDetailsEdit = ({ prev }) => {
-  
-  
-
+const InstituteDetailsEdit = ({ prev, next }) => {
   return (
     <Background>
       <div className="relative pt-[100px] px-[4%] lg1:px-[5%] flex flex-col justify-between w-full ">
@@ -111,7 +111,7 @@ const InstituteDetailsEdit = ({ prev }) => {
               </div>
             </div>
 
-            <div className="flex flex-row-reverse pr-[30px] pt-[45px] pb-[105px] text-[18px] ">
+            {/* <div className="flex flex-row-reverse pr-[30px] pt-[45px] pb-[105px] text-[18px] ">
             <Link to="/institute-detail"><button className="border py-[16px] px-[55px] bg-[#0041E9] rounded-[10px] text-[white] ml-[18px]">
                 Save
               </button>
@@ -121,6 +121,26 @@ const InstituteDetailsEdit = ({ prev }) => {
                   Cancel
                 </button>
               </Link>
+            </div> */}
+            <div className="flex flex-row-reverse pr-[30px] pt-[45px] pb-[105px] text-[18px]">
+              <button className="border  py-[16px] px-[56px] bg-[#0041E9] rounded-[10px] text-[white] ml-[18px]">
+                Save
+              </button>
+              <button
+                onClick={next}
+                className="border  py-[16px] px-[55px] bg-[#0041E9] rounded-[10px] text-[white] ml-[18px]"
+              >
+                Next
+              </button>
+              <button
+                onClick={prev}
+                className="border  py-[16px] px-[41px] bg-[#0041E9] rounded-[10px] text-[white] ml-[18px]"
+              >
+                Previous
+              </button>
+              <button className="border border-[#00227A] py-[16px] px-[48px] rounded-[10px] text-[#00227A]">
+                Cancel
+              </button>
             </div>
           </form>
         </div>
@@ -130,3 +150,25 @@ const InstituteDetailsEdit = ({ prev }) => {
 };
 
 export default InstituteDetailsEdit;
+
+// line 114 to 124
+// <div className="flex flex-row-reverse pr-[30px] pt-[45px] pb-[105px] text-[18px]">
+//           <button className="border  py-[16px] px-[56px] bg-[#0041E9] rounded-[10px] text-[white] ml-[18px]">
+//             Save
+//           </button>
+//           <button
+//             onClick={next}
+//             className="border  py-[16px] px-[55px] bg-[#0041E9] rounded-[10px] text-[white] ml-[18px]"
+//           >
+//             Next
+//           </button>
+//           <button
+//             onClick={prev}
+//             className="border  py-[16px] px-[41px] bg-[#0041E9] rounded-[10px] text-[white] ml-[18px]"
+//           >
+//             Previous
+//           </button>
+//           <button className="border border-[#00227A] py-[16px] px-[48px] rounded-[10px] text-[#00227A]">
+//             Cancel
+//           </button>
+//         </div>

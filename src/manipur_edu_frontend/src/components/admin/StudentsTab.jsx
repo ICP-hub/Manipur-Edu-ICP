@@ -143,7 +143,7 @@ const StudentsTab = () => {
                   </div>
                   <img
                     className="w-[67px] h-[55px] pl-[12px]"
-                    src='student.jpg'
+                    src="student.jpg"
                     alt=""
                   />
                 </div>
@@ -229,9 +229,13 @@ const StudentsTab = () => {
                 <div className="flex justify-center">ROLL NUMBER</div>
                 <div className="flex justify-center">EMAIL</div>
               </div>
-              {entries.map((entry, index) => (
+              {Array.isArray(entries) &&
+                entries.map((entry, index) => (
+                  <Card key={index} entry={entry} onView={onView} />
+                ))}
+              {/* {entries.map((entry, index) => (
                 <Card key={index} entry={entry} onView={onView} />
-              ))}
+              ))} */}
             </div>
             <div className="flex flex-row-reverse pt-[10px] ">
               Page 1 of 100

@@ -7,6 +7,7 @@ import EditInstituteProfile from "../../pages/Admin/EditInstituteProfile";
 import EditInstituteDetails from "../../pages/Admin/EditInstituteDetails";
 import RegisteredStudents from "../../pages/Admin/RegisteredStudents";
 import StudentDetails from "../admin/StudentsTab";
+import InstituteEditRequest from "../../pages/Institute/InstituteEditRequest";
 import { useQuery } from "react-query";
 import { useAuth } from "../../utils/useAuthClient";
 import { useDispatch } from "react-redux";
@@ -19,27 +20,17 @@ const InstitutesTab = () => {
   const { actor, authClient } = useAuth();
   const dispatch = useDispatch();
 
-
-
-
   const getEntries = async () => {
     const allInstitutes = await actor.get_institutes();
     console.log("allInstitutes", allInstitutes);
-    dispatch(getAllInstitutes(allInstitutes))
-  }
-
+    dispatch(getAllInstitutes(allInstitutes));
+  };
 
   const {
     data: result,
     isLoading: isLoadingEntries,
     error: errorEntries,
   } = useQuery("dataEntries", getEntries);
-
-
-
-
-
-
 
   return (
     <div>
@@ -125,7 +116,11 @@ const InstitutesTab = () => {
                     123456789
                   </p>
                 </div>
-                <img className="w-[67px] h-[55px] pl-[12px]" src='/student.svg' alt="" />
+                <img
+                  className="w-[67px] h-[55px] pl-[12px]"
+                  src="/student.svg"
+                  alt=""
+                />
               </div>
             </div>
           </div>
@@ -149,6 +144,16 @@ const InstitutesTab = () => {
               }
             >
               All Registered Institutes
+            </button>
+            <button
+              onClick={() => SetButton("EditRequests")}
+              className={
+                selected_button === "EditRequests"
+                  ? "py-[10px] px-[22px] bg-[#D9EBFF] text-[#687DB2] rounded-[5px] text-[14px] font-[Segoe UI] font-[400] leading-[18px]"
+                  : "py-[10px] px-[22px] border boder-[#D9EBFF] text-[#687DB2] rounded-[5px] text-[14px] font-[Segoe UI] font-[400] leading-[18px]"
+              }
+            >
+              Institute Edit Requests
             </button>
           </div>
           <div className="flex flex-col">
@@ -224,17 +229,27 @@ const InstitutesTab = () => {
                 />
               </div>
             </div>
-            {selected_button === "Verification" && (!isLoadingEntries && !errorEntries) && (
-              <VerificationButton onTap={() => SelectView("details")} />
-            )}
-            {selected_button === "AllRegistered" && (!isLoadingEntries && !errorEntries) && (
-              <AllRegisteredInstitutes
-                onView={() => SelectView("viewdetails")}
-                onEdit={() => SelectView("edit")}
-                onStudent={() => SelectView("students")}
-
-              />
-            )}
+            {selected_button === "Verification" &&
+              !isLoadingEntries &&
+              !errorEntries && (
+                <VerificationButton onTap={() => SelectView("details")} />
+              )}
+            {selected_button === "AllRegistered" &&
+              !isLoadingEntries &&
+              !errorEntries && (
+                <AllRegisteredInstitutes
+                  onView={() => SelectView("viewdetails")}
+                  onEdit={() => SelectView("edit")}
+                  onStudent={() => SelectView("students")}
+                />
+              )}
+            {selected_button === "EditRequests" &&
+              !isLoadingEntries &&
+              !errorEntries && (
+                <InstituteEditRequest
+                  onView={() => SelectView("view_verify")}
+                />
+              )}
           </div>
         </div>
       )}

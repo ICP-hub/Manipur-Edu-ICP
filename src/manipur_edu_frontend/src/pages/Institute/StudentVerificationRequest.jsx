@@ -42,9 +42,15 @@ const StudentVerificationRequest = () => {
         <div className="flex justify-center">STATUS</div>
         <div className="flex justify-center">STUDENT DETAILS</div>
       </div>
-      {entries && entries.map(({ studentId, details }, index) => (
-        <Card key={index} entry={details} studentPrincipalId={studentId} publicKey={publicKey} /> // Directly pass each entry
-      ))}
+      {entries &&
+        entries.map(({ studentId, details }, index) => (
+          <Card
+            key={index}
+            entry={details}
+            studentPrincipalId={studentId}
+            publicKey={publicKey}
+          /> // Directly pass each entry
+        ))}
       <div className="flex flex-row-reverse pt-[50px] pb-[100px]">
         Page 1 of 100
       </div>
@@ -67,27 +73,26 @@ const Card = ({ studentPrincipalId, entry, publicKey }) => {
     console.log(entry?.[0].public_key?.[0])
 
     if (entry && entry[0]) {
-      console.log('kyc', entry[0].kyc)
-      console.log('public key', entry[0].public_key[0])
+      console.log("kyc", entry[0].kyc);
+      console.log("public key", entry[0].public_key[0]);
 
       const decryptedImage = await handleFileDecrypt(entry[0].kyc, publicKey);
       console.log(decryptedImage);
-      console.log("decryptedImage", decryptedImage)
+      console.log("decryptedImage", decryptedImage);
       const url = URL.createObjectURL(decryptedImage);
       setImage(url);
-      setOpenModal(true);
+      // setOpenModal(true);
     }
-
-  }
+  };
 
   console.log("checking", entry);
 
+  const studentName =
+    entry?.[0].first_name?.[0] + " " + entry?.[0].last_name?.[0] ?? "N/A";
+  const studentId = entry?.[0].student_id?.[0].substr(0, 6) ?? "N/A";
+  const rollNo = entry?.[0].roll_no?.[0] ?? "N/A";
+  const verificationStatus = entry?.[0].status?.[0] ?? "N/A"; // Example for accessing student_id
 
-  const studentName = entry?.[0].first_name?.[0] + " " + entry?.[0].last_name?.[0] ?? 'N/A';
-  const studentId = entry?.[0].student_id?.[0].substr(0, 6) ?? 'N/A';
-  const rollNo = entry?.[0].roll_no?.[0] ?? 'N/A';
-  const verificationStatus = entry?.[0].status?.[0] ?? 'N/A';// Example for accessing student_id
-  // Add similar accessors for other properties as needed
   return (
     <div>
 
@@ -96,7 +101,8 @@ const Card = ({ studentPrincipalId, entry, publicKey }) => {
         <div className="flex justify-center text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] rounded-[5px]">
           <div className="flex rounded-[5px]">
             <img className="w-[33px] h-[33px]" src="/student.svg" alt="" />
-            <p className="pt-[6px] pl-[13px]">{studentName}</p> {/* Displaying the first name */}
+            <p className="pt-[6px] pl-[13px]">{studentName}</p>{" "}
+            {/* Displaying the first name */}
           </div>
         </div>
         <p className="flex justify-center bg-[#EEF6FF] text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px]">
@@ -105,10 +111,17 @@ const Card = ({ studentPrincipalId, entry, publicKey }) => {
         <p className="flex justify-center bg-[#EEF6FF] text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px]">
           {rollNo} {/* Displaying the student ID */}
         </p>
-        <p className={`flex justify-center bg-[#EEF6FF] font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px] ${verificationStatus === "approved" ? "text-[#13BC24]" :
-          verificationStatus === "pending" ? "text-[#C3A846]" :
-            verificationStatus === "rejected" ? "text-[#B26868]" : "text-[#687DB2]"
-          }`}>
+        <p
+          className={`flex justify-center bg-[#EEF6FF] font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px] ${
+            verificationStatus === "approved"
+              ? "text-[#13BC24]"
+              : verificationStatus === "pending"
+              ? "text-[#C3A846]"
+              : verificationStatus === "rejected"
+              ? "text-[#B26868]"
+              : "text-[#687DB2]"
+          }`}
+        >
           {verificationStatus} {/* Displaying the student ID */}
         </p>
         {/* Continue with other fields as needed, similar to firstName and studentId */}

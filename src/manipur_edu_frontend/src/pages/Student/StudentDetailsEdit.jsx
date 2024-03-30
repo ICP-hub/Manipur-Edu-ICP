@@ -85,6 +85,16 @@ const StudentDetailsEdit = () => {
             >
               Institute Details
             </button>
+            <button
+              onClick={() => setPage("kyc")}
+              className={
+                page === "kyc"
+                  ? "mt-[30px] text-[Segoe UI] text-[#00227A] text-[19px] leading-[27px] font-[500] w-[145px] ml-[4px] pr-[2px]"
+                  : "mt-[30px] text-[Segoe UI] text-[#687EB5] text-[20px] leading-[27px] font-[400] w-[145px] pr-[3px]"
+              }
+            >
+              KYC Documents
+            </button>
           </div>
           {page === "personal" && (
             <StudentPersonalDetailsEdit next={() => setPage("parents")} formData={formData} updateFormData={updateFormData} 
@@ -100,6 +110,7 @@ const StudentDetailsEdit = () => {
           {page === "institute" && (
             <InstituteDetailsEdit prev={() => setPage("parents")} formData={formData} updateFormData={updateFormData}/>
           )}
+          {page === "kyc" && <KycDocuments prev={() => setPage("institute")} />}
         </div>
       </div>
       {/* <div className="">

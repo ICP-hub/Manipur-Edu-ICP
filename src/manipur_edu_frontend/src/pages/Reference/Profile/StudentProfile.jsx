@@ -7,33 +7,8 @@ const StudentProfile = () => {
     const { actor } = useAuth();
     const { register, handleSubmit, formState: { errors }, watch } = useForm();
     let studentData;
-
-    // React.useEffect(() => {
-
-    //     const getStudentData = async () => {
-    //         StudentData = await actor.
-
-
-    //     }
-    //     getStudentData();
-
-    // }, []);
-
-
-
-
     const onSubmit = async (data) => {
         console.log(data);
-        // const newData = {
-        //     is
-
-
-        // }
-
-
-
-
-
         const register_student = await actor.edit_student_profile(data);
         console.log(register_student);
 

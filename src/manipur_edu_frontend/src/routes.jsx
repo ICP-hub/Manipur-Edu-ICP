@@ -18,6 +18,7 @@ import InstituteDetails from "./pages/Admin/InstituteDetails";
 import RegisteredStudents from "./pages/Admin/RegisteredStudents";
 import appConstants from "../Constants/appConstants";
 import ErrorPage from "../error/ErrorPage";
+import RejectModal from "./components/RejectModal";
 
 // All Routes according to usertype
 const routes = [
@@ -38,6 +39,7 @@ const routes = [
       appConstants.INSTITUTE,
       appConstants.STUDENT,
       appConstants.ADMIN,
+      appConstants.UNKNOWN,
     ],
   },
   {
@@ -53,14 +55,22 @@ const routes = [
   {
     path: "/institute-detail",
     component: <ViewInstituteDetailsInstitutePage />,
-    allowedUser: [appConstants.INSTITUTE, appConstants.ADMIN,appConstants.STUDENT,
-      appConstants.UNKNOWN,],
+    allowedUser: [
+      appConstants.INSTITUTE,
+      appConstants.ADMIN,
+      appConstants.STUDENT,
+      appConstants.UNKNOWN,
+    ],
   },
   {
     path: "/institute_detail_edit",
     component: <InstituteDetailsEditInstitutePage />,
-    allowedUser: [appConstants.INSTITUTE, appConstants.ADMIN,appConstants.STUDENT,
-      appConstants.UNKNOWN,],
+    allowedUser: [
+      appConstants.INSTITUTE,
+      appConstants.ADMIN,
+      appConstants.STUDENT,
+      appConstants.UNKNOWN,
+    ],
   },
   {
     path: "/institute-student/result",
@@ -69,6 +79,7 @@ const routes = [
       appConstants.INSTITUTE,
       appConstants.STUDENT,
       appConstants.ADMIN,
+      appConstants.UNKNOWN,
     ],
   },
 
@@ -88,8 +99,12 @@ const routes = [
   {
     path: "/institute-student/",
     component: <StudentResultScholarship />,
-    allowedUser: [appConstants.INSTITUTE, appConstants.ADMIN,appConstants.STUDENT,
-      appConstants.UNKNOWN,],
+    allowedUser: [
+      appConstants.INSTITUTE,
+      appConstants.ADMIN,
+      appConstants.STUDENT,
+      appConstants.UNKNOWN,
+    ],
   },
   {
     path: "/profile-result",
@@ -98,12 +113,18 @@ const routes = [
       appConstants.STUDENT,
       appConstants.ADMIN,
       appConstants.INSTITUTE,
+      appConstants.UNKNOWN,
     ],
   },
   {
     path: "/personal-detail-edit",
     component: <StudentDetailsEdit />,
-    allowedUser: [appConstants.STUDENT, appConstants.INSTITUTE, appConstants.UNKNOWN],
+    allowedUser: [
+      appConstants.STUDENT,
+      appConstants.INSTITUTE,
+      appConstants.UNKNOWN,
+      appConstants.ADMIN,
+    ],
   },
   {
     path: "/view-profileDetail",
@@ -112,12 +133,18 @@ const routes = [
       appConstants.STUDENT,
       appConstants.ADMIN,
       appConstants.INSTITUTE,
+      appConstants.UNKNOWN,
     ],
   },
   {
     path: "/verify",
     component: <VerifyRejectStudentProfile />,
-    allowedUser: [appConstants.ADMIN, appConstants.INSTITUTE, appConstants.STUDENT, appConstants.UNKNOWN],
+    allowedUser: [
+      appConstants.ADMIN,
+      appConstants.INSTITUTE,
+      appConstants.STUDENT,
+      appConstants.UNKNOWN,
+    ],
   },
   {
     path: "/register-student",
@@ -139,6 +166,57 @@ const routes = [
       appConstants.UNKNOWN,
     ],
   },
+  // Priyachanges
+  {
+    path: "/instituteEditRequest",
+    component: <InstituteDetails />,
+    allowedUser: [
+      appConstants.ADMIN,
+      appConstants.INSTITUTE,
+      appConstants.STUDENT,
+      appConstants.UNKNOWN,
+    ],
+  },
+  {
+    path: "/EditDetails",
+    component: <StudentDetailsEdit />,
+    allowedUser: [
+      appConstants.INSTITUTE,
+      appConstants.ADMIN,
+      appConstants.STUDENT,
+      appConstants.UNKNOWN,
+    ],
+  },
+  {
+    path: "/ViewDetails",
+    component: <ViewProfileDetails />,
+    allowedUser: [
+      appConstants.INSTITUTE,
+      appConstants.ADMIN,
+      appConstants.STUDENT,
+      appConstants.UNKNOWN,
+    ],
+  },
+  {
+    path: "/institute-details-check",
+    component: <InstituteDetails />,
+    allowedUser: [
+      appConstants.INSTITUTE,
+      appConstants.ADMIN,
+      appConstants.STUDENT,
+      appConstants.UNKNOWN,
+    ],
+  },
+  {
+    path: "/DeleteDetails",
+    component: <RejectModal />,
+    allowedUser: [
+      appConstants.INSTITUTE,
+      appConstants.ADMIN,
+      appConstants.STUDENT,
+      appConstants.UNKNOWN,
+    ],
+  },
   {
     path: "/student-profile",
     component: <StudentProfile />,
@@ -146,31 +224,51 @@ const routes = [
       appConstants.STUDENT,
       appConstants.ADMIN,
       appConstants.INSTITUTE,
+      appConstants.UNKNOWN,
     ],
   },
   {
     path: "/registered-students",
     component: <AllRegisteredStudents />,
-    allowedUser: [appConstants.ADMIN, appConstants.INSTITUTE, appConstants.STUDENT, appConstants.UNKNOWN],
+    allowedUser: [
+      appConstants.ADMIN,
+      appConstants.INSTITUTE,
+      appConstants.STUDENT,
+      appConstants.UNKNOWN,
+    ],
   },
   {
     path: "/institute-details-verify",
     component: <InstituteDetails />,
-    allowedUser: [appConstants.ADMIN, appConstants.INSTITUTE, appConstants.STUDENT, appConstants.UNKNOWN],
+    allowedUser: [
+      appConstants.ADMIN,
+      appConstants.INSTITUTE,
+      appConstants.STUDENT,
+      appConstants.UNKNOWN,
+    ],
   },
 
   //mychanges
   {
     path: "/register-students-details",
     component: <RegisteredStudents />,
-    allowedUser: [appConstants.ADMIN, appConstants.INSTITUTE,appConstants.STUDENT, appConstants.UNKNOWN],
+    allowedUser: [
+      appConstants.ADMIN,
+      appConstants.INSTITUTE,
+      appConstants.STUDENT,
+      appConstants.UNKNOWN,
+    ],
   },
-
 
   {
     path: "/dsa",
     component: <AdminDashboard />,
-    allowedUser: [appConstants.ADMIN , appConstants.INSTITUTE, appConstants.STUDENT, appConstants.UNKNOWN],
+    allowedUser: [
+      appConstants.ADMIN,
+      appConstants.INSTITUTE,
+      appConstants.STUDENT,
+      appConstants.UNKNOWN,
+    ],
   },
 ];
 
@@ -306,8 +404,6 @@ const routes = [
 //     allowedUser: [appConstants.ADMIN],
 //   },
 
-
 // ];
-
 
 export default routes;
