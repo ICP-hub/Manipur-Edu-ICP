@@ -1,51 +1,77 @@
 import React, { useState } from "react";
+import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
+import { useSelector } from "react-redux";
+import { useQuery } from 'react-query'; 
 import StudentDetails from "../../pages/Admin/StudentDetails";
+//mychanges
+import { useAuth } from "../../utils/useAuthClient";
+import Loader from "../../loader/Loader";
 
 const StudentsTab = () => {
   const [view, setView] = useState("default");
   const onView = () => setView("studentdetails");
-  const entries = [
-    {
-      name: "Student Name",
-      id: "STU-12345",
-      email: "email@email.com",
-      roll_num: "RN-123",
-    },
-    {
-      name: "Student Name",
-      id: "STU-12345",
-      email: "email@email.com",
-      roll_num: "RN-123",
-    },
+  //mychanges
+  const { actor } = useAuth();
+  const [entries, setEntries] = useState([])
+  const getStudents = async () => {
+  const studentIdsResponse = await actor.get_students_withdetails();
+  console.log('studentIdsResponse', studentIdsResponse);
+  setEntries(studentIdsResponse);
+  }
+  const { 
+    data: result,
+    isLoading: isLoadingEntries,
+    error: errorEntries,
+  } = useQuery("dataEntries", getStudents);
+  if (!isLoadingEntries && !errorEntries) {
+    console.log("entries", entries)
+  }
+  
+  // let entries = useSelector((state) => state.allStudentsReducer)
+  // console.log('entries: ',entries)
+  // const entries = [
+  //   {
+  //     name: "Student Name",
+  //     id: "STU-12345",
+  //     email: "email@email.com",
+  //     roll_num: "RN-123",
+  //   },
+  //   {
+  //     name: "Student Name",
+  //     id: "STU-12345",
+  //     email: "email@email.com",
+  //     roll_num: "RN-123",
+  //   },
 
-    {
-      name: "Student Name",
-      id: "STU-12345",
-      email: "email@email.com",
-      roll_num: "RN-123",
-    },
+  //   {
+  //     name: "Student Name",
+  //     id: "STU-12345",
+  //     email: "email@email.com",
+  //     roll_num: "RN-123",
+  //   },
 
-    {
-      name: "Student Name",
-      id: "STU-12345",
-      email: "email@email.com",
-      roll_num: "RN-123",
-    },
-    {
-      name: "Student Name",
-      id: "STU-12345",
-      email: "email@email.com",
-      roll_num: "RN-123",
-    },
-    {
-      name: "Student Name",
-      id: "STU-12345",
-      email: "email@email.com",
-      roll_num: "RN-123",
-    },
-  ];
+  //   {
+  //     name: "Student Name",
+  //     id: "STU-12345",
+  //     email: "email@email.com",
+  //     roll_num: "RN-123",
+  //   },
+  //   {
+  //     name: "Student Name",
+  //     id: "STU-12345",
+  //     email: "email@email.com",
+  //     roll_num: "RN-123",
+  //   },
+  //   {
+  //     name: "Student Name",
+  //     id: "STU-12345",
+  //     email: "email@email.com",
+  //     roll_num: "RN-123",
+  //   },
+  // ];
   return (
     <div>
+      {isLoadingEntries && <Loader></Loader>}
       {view === "studentdetails" ? (
         <StudentDetails onBack={() => setView("default")} />
       ) : (
@@ -218,22 +244,28 @@ const StudentsTab = () => {
 };
 export default StudentsTab;
 const Card = ({ entry, onView }) => {
+  
+  const studentName = entry?.[1].first_name?.[0] + " " + entry?.[0].last_name?.[0] ?? 'N/A';
+  const studentId = entry?.[1].student_id?.[0].substr(0, 6) ?? 'N/A';
+  const rollNo = entry?.[1].roll_no?.[0] ?? 'N/A';
+  
+  const email = entry?.[1].personal_email?.[0] ?? 'N/A';
   return (
     <div className=" grid grid-cols-[repeat(4,1fr)_45px] py-[15px] border-t border-[#D9EBFF]">
       <div className=" flex justify-center  text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] rounded-[5px]">
         <div className="flex rounded-[5px]">
           <img className="w-[33px] h-[33px] " src='student.jpg' alt="" />
-          <p className="pt-[6px] pl-[13px]">{entry.name}</p>
+          <p className="pt-[6px] pl-[13px]">{studentName}</p>
         </div>
       </div>
       <p className="flex justify-center  text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px]">
-        {entry.id}
+        {studentId}
       </p>
       <p className="flex justify-center  text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px]">
-        {entry.roll_num}
+        {rollNo}
       </p>
       <p className="flex justify-center  text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px] ">
-        {entry.email}
+        {email}
       </p>
       <div className="flex gap-[8px]">
         <button onClick={onView}>

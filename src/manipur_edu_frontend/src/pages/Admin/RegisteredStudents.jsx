@@ -2,92 +2,106 @@ import React, {useState, useEffect} from "react";
 import { useLocation } from "../../../../../node_modules/react-router-dom/dist/index";
 import { useQuery } from 'react-query'; 
 import { useAuth } from "../../utils/useAuthClient";
+import { useDispatch, useSelector } from 'react-redux';
 import { getAllStudents } from "../../../Redux/Action/index";
+import Loader from "../../loader/Loader";
+
+
 const RegisteredStudents = ({ onBack, onView }) => {
   const location = useLocation();
-  //mychanges
   const [result, setResult] = useState([]);
   const { actor } = useAuth();
+  const dispatch = useDispatch();
   const { entry } = location.state;
+  
+  const getEntries = async () => {
+    //get_inst_students wala func humme caller ke student id list de raha hai
+    // const studentIdsResponse = await actor.get_institute_students(); // This returns an array containing a single element that is an array of student IDs
+    var institute_id =entry[0].toString()
+    console.log("institute id : ", institute_id);
+    const studentIdsResponse = await actor.get_institute_students_by_id(institute_id);
+    console.log('studentIdsResponse', studentIdsResponse);
+    if (studentIdsResponse.length > 0 && studentIdsResponse[0].length > 0) {
+    const studentIds = studentIdsResponse[0]; // Access the first element to get the actual student IDs array
+    console.log('studentIds',studentIds);
+    const detailsPromises = studentIds.map(studentId => actor.get_student_details(studentId));
+    const detailsResults = await Promise.all(detailsPromises);
+
+    console.log('detailsResults : )',detailsResults);
+    const combinedResult = detailsResults.map((details, index) => ({
+     studentId: studentIds[index], // Now correctly matches each detail with its student ID
+    details: details
+      }));
+
+      console.log('combinedResult : ',combinedResult);
+      setResult(combinedResult); // Update the state with the combined data
+    }
+}
+  const {
+    data: entries,
+    isLoading: isLoadingEntries,
+    error: errorEntries,
+  } = useQuery("dataEntries", getEntries);
+  if (!isLoadingEntries && !errorEntries) {
+    console.log("entries", result)
+  }
+  dispatch(getAllStudents(result));
+
+
+  let allentry = useSelector(
+    (state) => state.allStudentsReducer
+  );
+
+// const RegisteredStudents = ({ onBack, onView }) => {
+//   const location = useLocation();
+//   //mychanges
+//   const [result, setResult] = useState([]);
+//   const { actor } = useAuth();
+//   const { entry } = location.state;
   
    
 
 
-  useEffect(() => {
-    const getEntries = async () => {
-      const institute_id = entry[0].toString();
-  console.log("intitute id for its register_student", institute_id);
-      try {
-        const studentIdsResponse = await actor.get_institute_students_by_id(institute_id);
-        console.log('backend response', studentIdsResponse);
-        //trying
-        // if (studentIdsResponse.length > 0 && studentIdsResponse[0].length > 0) {
-        //   const studentIds = studentIdsResponse[0]; // Access the first element to get the actual student IDs array
-        //   console.log(studentIds);
+//   useEffect(() => {
+//     const getEntries = async () => {
+//       const institute_id = entry[0].toString();
+//   console.log("intitute id for its register_student", institute_id);
+//       try {
+//         const studentIdsResponse = await actor.get_institute_students_by_id(institute_id);
+//         console.log('backend response', studentIdsResponse);
+//         //trying
+//         // if (studentIdsResponse.length > 0 && studentIdsResponse[0].length > 0) {
+//         //   const studentIds = studentIdsResponse[0]; // Access the first element to get the actual student IDs array
+//         //   console.log(studentIds);
     
-        //   // Fetch details for each student
-        //   const detailsPromises = studentIds.map(studentId => actor.get_student_details(studentId));
-        //   const detailsResults = await Promise.all(detailsPromises);
+//         //   // Fetch details for each student
+//         //   const detailsPromises = studentIds.map(studentId => actor.get_student_details(studentId));
+//         //   const detailsResults = await Promise.all(detailsPromises);
     
-        //   console.log(detailsResults);
+//         //   console.log(detailsResults);
     
-        //   // Combine student IDs and their details into an array of objects
-        //   const combinedResult = detailsResults.map((details, index) => ({
-        //     studentId: studentIds[index], // Now correctly matches each detail with its student ID
-        //     details: details
-        //   }));
+//         //   // Combine student IDs and their details into an array of objects
+//         //   const combinedResult = detailsResults.map((details, index) => ({
+//         //     studentId: studentIds[index], // Now correctly matches each detail with its student ID
+//         //     details: details
+//         //   }));
     
-        //   console.log(combinedResult);
-        //   setResult(combinedResult);
-        // }
-        // setResult(studentIdsResponse); // Update the state with the combined data
-      } catch (error) {
-        console.error('Error fetching student data:', error);
-      }
-    };
+//         //   console.log(combinedResult);
+//         //   setResult(combinedResult);
+//         // }
+//         // setResult(studentIdsResponse); // Update the state with the combined data
+//       } catch (error) {
+//         console.error('Error fetching student data:', error);
+//       }
+//     };
 
-    getEntries();
-  }, [actor]);
+//     getEntries();
+//   }, [actor]);
 
-
-
-  // const entry = [
-  //   {
-  //     name: "Student Name",
-  //     id: "STU-12345",
-  //     email: "email@email.com",
-  //     roll_num: "RN-123",
-  //   },
-  //   {
-  //     name: "Student Name",
-  //     id: "STU-12345",
-  //     email: "email@email.com",
-  //     roll_num: "RN-123",
-  //   },
-
-  //   {
-  //     name: "Student Name",
-  //     id: "STU-12345",
-  //     email: "email@email.com",
-  //     roll_num: "RN-123",
-  //   },
-  //   {
-  //     name: "Student Name",
-  //     id: "STU-12345",
-  //     email: "email@email.com",
-  //     roll_num: "RN-123",
-  //   },
-  //   {
-  //     name: "Student Name",
-  //     id: "STU-12345",
-  //     email: "email@email.com",
-  //     roll_num: "RN-123",
-  //   },
-  // ];
-
-
+ 
   return (
     <div className="py-[25px] px-[63px]">
+      {isLoadingEntries && <Loader></Loader>}
       <div className="flex flex-col ">
         <div className="flex justify-between ">
           <div className="font-[600] font-[Segoe UI] text-4xl text-[#2D6BE4]">
@@ -260,9 +274,16 @@ const RegisteredStudents = ({ onBack, onView }) => {
             <div className="flex justify-center">ROLL NUMBER</div>
             <div className="flex justify-center">EMAIL</div>
           </div>
-          {entry.map((entry, index) => (
+          {/* {entry.map((entry, index) => (
             <Card key={index} entry={entry} onView={onView} />
-          ))}
+          ))} */}
+          {/* {allentry && allentry.map(({ studentId, details }, index) => (
+        <Card key={index} entry={details} studentPrincipalId={studentId} onView={onView}/> // Directly pass each entry
+      ))} */}
+      {Array.isArray(allentry) && allentry.map(({ studentId, details }, index) => (
+  <Card key={index} entry={details} studentPrincipalId={studentId} onView={onView}/>
+))}
+
         </div>
         <div className="flex flex-row-reverse pt-[10px] ">Page 1 of 100</div>
       </div>
@@ -270,28 +291,30 @@ const RegisteredStudents = ({ onBack, onView }) => {
   );
 };
 export default RegisteredStudents;
-const Card = ({ entry, onView }) => {
+const Card = ({studentPrincipalId, entry, onView }) => {
   console.log("226entry",entry)
-  const instituteName = entry?.name?.[0] ?? 'N/A';
-  const instituteId = entry?.id?.[0].substr(0, 6) ?? 'N/A';
-  const instituteEmail = entry?.email?.[0] ?? 'N/A';
-  const instituteroll_num = entry?.roll_num?.[0] ?? 'N/A';
+  const studentName = entry?.[0].first_name?.[0] + " " + entry?.[0].last_name?.[0] ?? 'N/A';
+  const studentId = entry?.[0].student_id?.[0].substr(0, 6) ?? 'N/A';
+  const rollNo = entry?.[0].roll_no?.[0] ?? 'N/A';
+  
+  const email = entry?.[0].personal_email?.[0] ?? 'N/A';
+  
   return (
     <div className=" grid grid-cols-[repeat(4,1fr)_45px] py-[15px] border-t border-[#D9EBFF]">
       <div className=" flex justify-center  text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] rounded-[5px]">
         <div className="flex rounded-[5px]">
           <img className="w-[33px] h-[33px] " src='/student.svg' alt="" />
-          <p className="pt-[6px] pl-[13px]">{instituteName}</p>
+          <p className="pt-[6px] pl-[13px]">{studentName}</p>
         </div>
       </div>
       <p className="flex justify-center  text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px]">
-        {instituteId}
+        {studentId}
       </p>
       <p className="flex justify-center  text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px]">
-        {instituteroll_num}
+        {rollNo}
       </p>
       <p className="flex justify-center  text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px] ">
-        {instituteEmail}
+        {email}
       </p>
       <div className="flex gap-[8px]">
         <button onClick={onView}>

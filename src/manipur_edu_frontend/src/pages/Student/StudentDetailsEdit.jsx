@@ -2,10 +2,38 @@ import React, { useState } from "react";
 import StudentPersonalDetailsEdit from "./PersonalDetails";
 import ParentDetailsEdit from "./ParentsDetails";
 import InstituteDetailsEdit from "./StudentInstituteDetails";
-
+import { useAuth } from "../../utils/useAuthClient";
+import { useSelector } from 'react-redux';
+import Status from "../../components/student/status";
 const StudentDetailsEdit = () => {
   const [page, setPage] = useState("personal");
+ 
+  //mychanges
 
+  const { actor } = useAuth();
+  // const [status, setStatus] = React.useState(false);
+  // const [Field, setField] = React.useState("");
+
+  let entry = useSelector(
+    (state) => state.studentDetailsReducer
+  );
+  console.log('entry',entry);
+  console.log('entry update', entry[0]);
+  const [formData, setFormData] = useState(entry[0]);
+  console.log('initialformdata', formData)
+  const updateFormData = (newData) => {
+    setFormData(newData);
+  };
+
+  //new change trying
+  
+  // const handleSave = async() => {
+  //   // const editStatusResponse = await actor.edit_student_profile(formData);
+  //   // console.log("Saving data:", formData);
+  //   setField('hello');
+  //   setStatus(true);
+  //   // Reset currentPage if needed
+  // };
   return (
     <div className="bg-[#E5F1FF] min-h-screen flex justify-center px-[4%] lg1:px-[5%] ">
       <div className="w-full  my-[50px] rounded-[10px] bg-white">
@@ -59,19 +87,24 @@ const StudentDetailsEdit = () => {
             </button>
           </div>
           {page === "personal" && (
-            <StudentPersonalDetailsEdit next={() => setPage("parents")} />
+            <StudentPersonalDetailsEdit next={() => setPage("parents")} formData={formData} updateFormData={updateFormData} 
+            // handleSave={handleSave}
+            />
           )}
           {page === "parents" && (
             <ParentDetailsEdit
               next={() => setPage("institute")}
               prev={() => setPage("personal")}
-            />
+              formData={formData} updateFormData={updateFormData}/>
           )}
           {page === "institute" && (
-            <InstituteDetailsEdit prev={() => setPage("parents")} />
+            <InstituteDetailsEdit prev={() => setPage("parents")} formData={formData} updateFormData={updateFormData}/>
           )}
         </div>
       </div>
+      {/* <div className="">
+        <Status open={status} Field={Field} onClose={() => setStatus(false)} />
+      </div> */}
     </div>
   );
 };

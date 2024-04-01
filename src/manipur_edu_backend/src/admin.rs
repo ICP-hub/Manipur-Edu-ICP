@@ -1,6 +1,6 @@
 use crate::institute;
 use crate::InstituteData;
-
+use crate::UserData;
 use super::State;
 
 use super::STATE;
@@ -154,7 +154,16 @@ pub fn get_institute_students_by_id(institute_principal: String) -> Option<Vec<S
     })
 }
 
-
+//mychanges
+#[query]
+pub fn get_students_withdetails() -> HashMap<String, UserData> {
+    // check_admin();
+    STATE.with(|state| {
+        let state = state.borrow_mut();
+        state.users.clone()
+        
+    })
+}
 
 
 

@@ -82,6 +82,7 @@ service : {
   get_institutes_name_and_public_key : () -> (vec InstituteInfo) query;
   get_student_details : (text) -> (opt UserData) query;
   get_students : () -> (text) query;
+  get_students_withdetails : () -> (vec record { text; UserData }) query;
   get_unverified_institutes : () -> (vec text) query;
   get_unverified_students : (opt text) -> (vec text) query;
   get_user_certificates : (text) -> (Result_2) query;

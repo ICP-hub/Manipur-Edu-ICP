@@ -71,6 +71,20 @@ const routes = [
       appConstants.ADMIN,
     ],
   },
+
+  //mychanges
+  //scholarship-institute
+  {
+    path: "/institute-student/scholarship",
+    component: <StudentResultScholarship />,
+    allowedUser: [
+      appConstants.INSTITUTE,
+      appConstants.STUDENT,
+      appConstants.ADMIN,
+    ],
+  },
+
+
   {
     path: "/institute-student/",
     component: <StudentResultScholarship />,

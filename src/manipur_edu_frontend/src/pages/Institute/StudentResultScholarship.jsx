@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import StudentsTab from "./StudentsTab";
 import ResultTab from "./ResultsTab";
+import ScholarshipTab from "./ScholarshipTab";
 import Background from "../../components/BackgroudPage";
 import { useQuery } from "react-query";
 import { useAuth } from "../../utils/useAuthClient";
@@ -17,10 +18,17 @@ const StudentResultScholarship = () => {
   const { actor } = useAuth();
   const dispatch = useDispatch();
   useEffect(() => {
+
+    // what is the necessacity of this useEffect code in here
+
+    
     // Check the path in the location object and set the page state accordingly
     if (location.pathname === '/institute-student/result') {
       setPage('result');
-    } else {
+    
+    // } else if(location.pathname === '/institute-student/scholarship'){
+    //   setPage('scholarship');
+    }else {
       setPage('student');
     }
   }, [location.pathname]);
@@ -100,7 +108,9 @@ const StudentResultScholarship = () => {
                   {" "}
                   Results
                 </button>{" "}
-                <button className="  text-[#687DB2] text-[1.125rem] font-[500] leading-[1.5625rem]  ">
+                <button 
+                  onClick={() => setPage("scholarship")}
+                   className="  text-[#687DB2] text-[1.125rem] font-[500] leading-[1.5625rem]  ">
                   {" "}
                   Scholarship Applications
                 </button>{" "}
@@ -179,7 +189,7 @@ const StudentResultScholarship = () => {
           </div>
           {page === "student" && <StudentsTab />}
           {page === "result" && <ResultTab />}
-
+          {page === "scholarship" && <ScholarshipTab />}
           {/*  */}
         </div>
       </div>
