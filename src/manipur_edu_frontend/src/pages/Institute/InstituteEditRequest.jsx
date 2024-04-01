@@ -4,37 +4,6 @@ import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/i
 
 const InstituteEditRequest = ({ onView }) => {
   let entries = useSelector((state) => state.allInstitutesReducer);
-  // const entries = [
-  //   {
-  //     name: "Institute 1",
-  //     id: "INS-12345",
-  //     email: "email@email.com",
-  //     status: "Approved",
-  //     details: "Click to View/Verify",
-  //   },
-  //   {
-  //     name: "Institute 2",
-  //     id: "INS-12345",
-  //     email: "email@email.com",
-  //     status: "Approved",
-  //     details: "Click to View/Verify",
-  //   },
-
-  //   {
-  //     name: "Institute 4",
-  //     id: "INS-12345",
-  //     email: "email@email.com",
-  //     status: "Pending",
-  //     details: "Click to View/Verify",
-  //   },
-  //   {
-  //     name: "Institute 1",
-  //     id: "INS-12345",
-  //     email: "email@email.com",
-  //     status: "Rejected",
-  //     details: "Click to View/Verify",
-  //   },
-  // ];
   return (
     <div>
       <div className="border rounded-[10px] border-[#D9EBFF]">
