@@ -25,14 +25,6 @@ const StudentVerificationRequest = () => {
     (state) => state.allStudentsReducer
   );
 
-
-
-
-
-
-
-
-
   return (
     <div className="w-full self-center">
       <div className="grid grid-cols-5 py-[15px] mt-[27px] rounded-md bg-[#D9EBFF] font-[600] text-[15px] text-[#00227A] leading-[20px]">

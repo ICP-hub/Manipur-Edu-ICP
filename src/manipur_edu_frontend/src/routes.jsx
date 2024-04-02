@@ -19,6 +19,7 @@ import RegisteredStudents from "./pages/Admin/RegisteredStudents";
 import appConstants from "../Constants/appConstants";
 import ErrorPage from "../error/ErrorPage";
 import RejectModal from "./components/RejectModal";
+import StudentEditRequestRejectApproval from "./pages/Student/StudentEditRequestRejectApproval";
 
 // All Routes according to usertype
 const routes = [
@@ -95,7 +96,6 @@ const routes = [
     ],
   },
 
-
   {
     path: "/institute-student/",
     component: <StudentResultScholarship />,
@@ -170,6 +170,7 @@ const routes = [
   {
     path: "/instituteEditRequest",
     component: <InstituteDetails />,
+    // component: <StudentEditRequestRejectApproval />,
     allowedUser: [
       appConstants.ADMIN,
       appConstants.INSTITUTE,
