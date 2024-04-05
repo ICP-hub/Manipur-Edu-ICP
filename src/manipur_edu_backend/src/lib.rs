@@ -19,6 +19,10 @@ use studentresult::*;
 pub mod certificate;
 use certificate::*;
 
+//scholarship
+pub mod scholarship;
+use scholarship::*;
+
 // State of the Canister
 #[derive(Serialize, CandidType, Deserialize, Debug, Clone, Default)]
 pub struct State {
@@ -37,7 +41,8 @@ pub struct State {
     pub students_registered_by_institute: Vec<String>,
     pub institutes_registered_by_admin: Vec<String>,
     pub private_keys: HashMap<String, String>,
-}
+    
+}  
 
 thread_local! {
     pub static STATE: RefCell<State> = RefCell::new(State::default());
@@ -130,6 +135,7 @@ pub fn is_user_already_registered() -> bool {
             || state.admin.contains(&principal_id)
         {
             true
+            
         } else {
             false
         }

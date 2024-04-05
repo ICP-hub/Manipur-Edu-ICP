@@ -1,36 +1,58 @@
-import React from "react";
+import React,{useState} from "react";
 
+import { useAuth } from "../../utils/useAuthClient";
+import { useQuery } from "react-query";
+import Loader from "../../loader/Loader";
 
 const ScholarshipPostedAdmin = ({ onView, onEdit, onPost }) => {
-    const entries = [
-        {
-            scholarship_name: "Scholarships for College Students",
-            institute_name: "Manipur Edu",
-            description:
-                "Easy ₹ 50,000 monthly scholarship. No essay or account sign-ups, just a simple scholarship for those seeking help paying for college!",
-            ed_level: "High school student",
-            grad_type: "Under Graduate",
-            gender: " Female-identifying",
-            amount: "₹50,000",
-            deadline: "May 31, 2024",
-        },
+    // const entries = [
+    //     {
+    //         scholarship_name: "Scholarships for College Students",
+    //         institute_name: "Manipur Edu",
+    //         description:
+    //             "Easy ₹ 50,000 monthly scholarship. No essay or account sign-ups, just a simple scholarship for those seeking help paying for college!",
+    //         ed_level: "High school student",
+    //         grad_type: "Under Graduate",
+    //         gender: " Female-identifying",
+    //         amount: "₹50,000",
+    //         deadline: "May 31, 2024",
+    //     },
 
-        {
-            scholarship_name: "Scholarships for College Students",
-            institute_name: "Manipur Edu",
-            description:
-                "Easy ₹ 50,000 monthly scholarship. No essay or account sign-ups, just a simple scholarship for those seeking help paying for college!",
-            ed_level: "High school student",
-            grad_type: "Under Graduate",
-            gender: " Female-identifying",
-            amount: "₹50,000",
-            deadline: "May 31, 2024",
-        },
-    ];
+    //     {
+    //         scholarship_name: "Scholarships for College Students",
+    //         institute_name: "Manipur Edu",
+    //         description:
+    //             "Easy ₹ 50,000 monthly scholarship. No essay or account sign-ups, just a simple scholarship for those seeking help paying for college!",
+    //         ed_level: "High school student",
+    //         grad_type: "Under Graduate",
+    //         gender: " Female-identifying",
+    //         amount: "₹50,000",
+    //         deadline: "May 31, 2024",
+    //     },
+    // ];
+    const { actor, authClient } = useAuth();
+    const [entries,setEntries] = useState([]);
+    const getEntries = async () => {
+        const allScholarships = await actor.get_all_scholarship();
+        console.log("allScholarships", allScholarships);
+        setEntries(allScholarships);
+        
+    }
+    // getEntries();
+    const {
+        data: result,
+        isLoading: isLoadingEntries,
+        error: errorEntries,
+      } = useQuery("dataEntries", getEntries);
+      if (!isLoadingEntries && !errorEntries) {
+        console.log("entries", entries)
+      }
+
     return (
         <div>
+            {isLoadingEntries && <Loader></Loader>}
             <div className="flex flex-col gap-[35px] ">
-                {entries.map((entry, index) => (
+            {entries && entries.map((entry, index) => ( // Add a check for entries before mapping
                     <Card key={index} entry={entry} onView={onView} onEdit={onEdit} />
                 ))}
                 <div className="flex justify-between">
@@ -66,7 +88,7 @@ const Card = ({ entry, onView, onEdit }) => {
                         </div>
                         <div className=" pl-[22px] ">
                             <p className="text-[Inter] text-[19px] font-[600] pb-[22px]">
-                                {entry.scholarship_name}
+                                {entry?.[1].name ?? 'N/A'}
                             </p>
                             <div className="flex items-center pb-[22px] gap-[10px]">
                                 <p className="text-[Inter] text-[14px] font-[400] text-[#76788C] leading-[14px]">
@@ -74,7 +96,9 @@ const Card = ({ entry, onView, onEdit }) => {
                                 </p>
                                 <p className="text-[Inter] text-[14px] font-[400] leading-[14px]">
                                     {" "}
-                                    {entry.institute_name}{" "}
+                                    {/* {entry.institute} */}
+                                    {entry?.[1].institute ?? 'N/A'}
+                                    {" "}
                                 </p>
                                 <svg
                                     width="12"
@@ -101,7 +125,8 @@ const Card = ({ entry, onView, onEdit }) => {
                                 </svg>
                             </div>
                             <p className="text-[Inter] text-[14px] font-[400] text-[#76788C] leading-[1.5]">
-                                {entry.description}
+                                {/* {entry.description} */}
+                                {entry?.[1].description ?? 'N/A'}
                             </p>
                         </div>
                     </div>
@@ -132,7 +157,10 @@ const Card = ({ entry, onView, onEdit }) => {
                                 </svg>
 
                                 <p className="pl-[5px] text-[Inter] text-[14px] font-[400] leading-[20px]">
-                                    Education Level: {entry.ed_level}{" "}
+                                    Education Level: 
+                                    {/* {entry.eligibility} */}
+                                    {entry?.[1].eligibility ?? 'N/A'}
+                                    {" "}
                                 </p>
                             </div>
                             <div className="flex">
@@ -158,7 +186,8 @@ const Card = ({ entry, onView, onEdit }) => {
                                     </svg>
 
                                     <p className="pl-[5px] text-[Inter] text-[14px] font-[400] leading-[20px]">
-                                        {entry.grad_type}{" "}
+                                        {/* {entry.grad_type}{" "} */}
+                                        Duration : {entry?.[1].duration ?? 'N/A'} {" "}
                                     </p>
                                 </div>
                                 <div className="flex items-center mb-[22px] pl-[60px]">
@@ -183,7 +212,7 @@ const Card = ({ entry, onView, onEdit }) => {
                                     </svg>
 
                                     <p className="pl-[5px] text-[Inter] text-[14px] font-[400] leading-[20px]">
-                                        Gender: {entry.gender}{" "}
+                                        Gender: For all{" "}
                                     </p>
                                 </div>
                             </div>
@@ -197,7 +226,8 @@ const Card = ({ entry, onView, onEdit }) => {
                                 Amount:
                             </p>
                             <p className="text-[Inter] text-[19px] font-[600] pb-[22px]">
-                                {entry.amount}
+                                {/* {entry.amount} */}
+                                {entry?.[1].amount ?? 'N/A'}
                             </p>
                         </div>
                         <div className="flex justify-between h-[22.5px]">
@@ -205,7 +235,8 @@ const Card = ({ entry, onView, onEdit }) => {
                                 Deadline:
                             </p>
                             <p className="text-[Inter] text-[14px] font-[400] pb-[22px]">
-                                {entry.deadline}
+                                {/* {entry.deadline} */}
+                                {entry?.[1].deadline ?? 'N/A'}
                             </p>
                         </div>
                     </div>

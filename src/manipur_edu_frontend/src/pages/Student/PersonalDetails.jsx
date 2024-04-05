@@ -2,22 +2,41 @@ import React, { useState } from "react";
 import { Link } from "../../../../../node_modules/react-router-dom/dist/index";
 import { useAuth } from "../../utils/useAuthClient";
 import Status from "../../components/student/status";
+
+import { useForm } from "react-hook-form";
+
 const StudentPersonalDetailsEdit = ({ next, formData, updateFormData }) => {
+  // const { register, handleSubmit, setValue } = useForm();
   const { actor } = useAuth();
   const [status, setStatus] = React.useState(false);
   const [Field, setField] = React.useState("");
   console.log('formData',formData);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     updateFormData({ ...formData, [name]: value });
     console.log("Saving data:", formData);
   };
-  const handleSave = () => {
-    // const editStatusResponse = actor.edit_student_profile(formData);
-    // console.log("Saving data:", formData);
-    setField('hh');
-    setStatus(true);
-    // Reset currentPage if needed
+
+ 
+  // const handleSave = () => {
+  //   const editStatusResponse = actor.edit_student_profile(formData);
+  //   console.log("Saving data:", formData);
+  //   setField(editStatusResponse);
+  //   setStatus(true);
+  //   // Reset currentPage if needed
+  // };
+  const handleSave = async () => {
+    try {
+      const editStatusResponse = await actor.edit_student_profile(formData);
+      console.log("Saving data:", formData);
+      setField(editStatusResponse);
+      setStatus(true);
+      // Reset currentPage if needed
+    } catch (error) {
+      console.error("Error while saving data:", error);
+      // Handle error state if necessary
+    }
   };
   return (
     <div className="border-l border-[#D8E1F8] ml-[55px] flex flex-col justify-between pl-[47px] w-full pt-[45px] pr-[45px] ">

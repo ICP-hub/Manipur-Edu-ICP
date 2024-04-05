@@ -1,9 +1,65 @@
-import React from "react";
+import React, { useState } from "react";
 
+import { useAuth } from "../../utils/useAuthClient";
+import { useForm } from "react-hook-form";
 
+// import Status from "../../components/student/status";
 const PostScholarshipDetails = ({ onBack }) => {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+      } = useForm();
+    const { actor } = useAuth();
+   
+    // const [modelStatus, setModelStatus] = React.useState(false);
+    // const [Field, setField] = React.useState("");
+    // const [isRendering, setIsRendering] = React.useState(false);
+    const onSubmit =async(data) => {
+        // setIsRendering(true);
+        console.log(data);
+    //     const newScholarship = {
+    //         name: [data.name],
+    // description: [data.description],
+    // amount: [data.amount],
+    // duration: [data.duration],
+    // deadline: [data.deadline],
+    // eligibility: [data.eligibility],
+    // institute: [data.institute],
+    // status: ["pending"],
+    // applicants: [[""]],
+    //     };
+    const newScholarship = {
+        scholarship_id:[""],
+        name: data.name,
+        description: data.description,
+        amount: data.amount,
+        duration: data.duration,
+        deadline: "",
+        eligibility: data.eligibility,
+        institute: "",
+        status: "pending",
+        applicants: [],
+      };
+      console.log('newScholarship',newScholarship);
+        const create_scholarship =await actor.create_scholarship(newScholarship);
+        console.log('result of backend',create_scholarship);
+        // setIsRendering(false);
+      console.log("Submitted Successfully");
+      
+    //   setField("Scholarship Posted");
+    //   await setModelStatus(true);
+    };
     return (
         <div className="px-[63px] py-[25px] flex flex-col gap-[25px]">
+            {/* {isRendering && <Loader></Loader>} */}
+            {/* <div className="">
+        <Status
+          open={modelStatus}
+          Field={Field}
+          onClose={() => setModelStatus(false)}
+        />
+      </div> */}
             <div className="flex justify-between ">
                 <div className="font-[600] font-[Segoe UI] text-4xl text-[#2D6BE4]">
                     Enter Scholarship Details
@@ -85,7 +141,14 @@ const PostScholarshipDetails = ({ onBack }) => {
                         <input
                             className="w-full h-[56px] border border-[#CCD9FA] rounded-[10px] focus:outline-none px-[10px] mt-[5px]"
                             type="text"
-                        ></input>
+                            name="name"
+                            {...register("name",{required: "This field is required",})}
+                        />
+                        {errors && errors.name && (
+                    <span className="absolute grid text-xs text-[#FF0606]">
+                      Please enter scholarship title.
+                    </span>
+                  )}
                     </div>
                     <div className="w-[50%]">
                         <label
@@ -113,7 +176,16 @@ const PostScholarshipDetails = ({ onBack }) => {
                         <input
                             className="w-full h-[56px] border border-[#CCD9FA] rounded-[10px] focus:outline-none px-[10px] mt-[5px]"
                             type="date"
-                        ></input>
+                            name="date"
+                            {...register("date", {
+                                required: "This field is required",
+                              })}
+                            />
+                            {errors && errors.date_of_birth && (
+                              <span className="absolute grid text-xs text-[#FF0606]">
+                                Please enter the date.
+                              </span>
+                            )}
                     </div>
                     <div className="w-[50%]">
                         <label
@@ -126,6 +198,8 @@ const PostScholarshipDetails = ({ onBack }) => {
                         <input
                             className="w-full h-[56px] border border-[#CCD9FA] rounded-[10px] focus:outline-none px-[10px] mt-[5px]"
                             type="text"
+                            name="eligibility"
+                            {...register("eligibility",{required: "This field is required",})}
                         ></input>
                     </div>
                 </div>
@@ -141,6 +215,8 @@ const PostScholarshipDetails = ({ onBack }) => {
                         <input
                             className="w-full h-[56px] border border-[#CCD9FA] rounded-[10px] focus:outline-none px-[10px] mt-[5px]"
                             type="text"
+                            name="duration"
+                            {...register("duration",{required: "This field is required",})}
                         ></input>
                     </div>
                     <div className="w-[50%]">
@@ -154,6 +230,8 @@ const PostScholarshipDetails = ({ onBack }) => {
                         <input
                             className="w-full h-[56px] border border-[#CCD9FA] rounded-[10px] focus:outline-none px-[10px] mt-[5px]"
                             type="text"
+                            name="amount"
+                            {...register("amount",{required: "This field is required",})}
                         ></input>
                     </div>
                 </div>
@@ -198,6 +276,8 @@ const PostScholarshipDetails = ({ onBack }) => {
                     <textarea
                         className="w-full  border border-[#CCD9FA] rounded-[10px] focus:outline-none px-[10px] mt-[5px] pt-[10px] h-[363px]"
                         type="text"
+                        name="description"
+                        {...register("description",{required: "This field is required",})}
                     ></textarea>
                 </div>
                 <p className="text-[17px] text-[Noto Sans] font-[400] text-[#00227A] ml-[20px]">
@@ -228,9 +308,11 @@ const PostScholarshipDetails = ({ onBack }) => {
                     >
                         Cancel
                     </button>
-                    <button className="text-[white] font-[500] bg-[#0041E9] rounded-[10px] px-[40px] py-[14px]">
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <button className="text-[white] font-[500] bg-[#0041E9] rounded-[10px] px-[40px] py-[14px]" type="submit">
                         Post
                     </button>
+                    </form>
                 </div>
             </div>
         </div>
