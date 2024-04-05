@@ -3,9 +3,9 @@ import { useAuth } from "../../utils/useAuthClient";
 import { Link, useNavigate } from "react-router-dom"; // Simplified import for clarity
 import { handleFileDecrypt, importAesKeyFromBase64 } from "../../utils/helper";
 import Modal from "../../components/Modal";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 const StudentVerificationRequest = () => {
-  const { actor, authClient } = useAuth();
+  const { authClient } = useAuth();
   const principal_id = authClient.getIdentity().getPrincipal().toString();
   const [publicKey, setPublicKey] = React.useState('');
 

@@ -18,6 +18,7 @@ import InstituteDetails from "./pages/Admin/InstituteDetails";
 import RegisteredStudents from "./pages/Admin/RegisteredStudents";
 import appConstants from "../Constants/appConstants";
 import ErrorPage from "../error/ErrorPage";
+import ScholarshipPostedAdmin from "./components/admin/ScholarshipPostedAdmin";
 
 // All Routes according to usertype
 const routes = [
@@ -50,6 +51,23 @@ const routes = [
       appConstants.UNKNOWN,
     ],
   },
+
+
+
+
+
+  {
+    path: "/instituteEditRequest",
+    component: <InstituteDetails />,
+    // component: <StudentEditRequestRejectApproval />,
+    allowedUser: [
+      appConstants.ADMIN,
+      appConstants.INSTITUTE,
+      appConstants.STUDENT,
+      appConstants.UNKNOWN,],
+  },
+
+
   {
     path: "/institute-detail",
     component: <ViewInstituteDetailsInstitutePage />,
@@ -172,7 +190,14 @@ const routes = [
     component: <AdminDashboard />,
     allowedUser: [appConstants.ADMIN , appConstants.INSTITUTE, appConstants.STUDENT, appConstants.UNKNOWN],
   },
+
+  {
+    path: "/adminScholarships",
+    component: <ScholarshipPostedAdmin />,
+    allowedUser: [appConstants.ADMIN , appConstants.INSTITUTE, appConstants.STUDENT, appConstants.UNKNOWN],
+  }
 ];
+
 
 // const routes = [
 //   {

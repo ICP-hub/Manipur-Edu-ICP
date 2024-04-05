@@ -245,7 +245,7 @@ const StudentsTab = () => {
 export default StudentsTab;
 const Card = ({ entry, onView }) => {
   
-  const studentName = entry?.[1].first_name?.[0] + " " + entry?.[0].last_name?.[0] ?? 'N/A';
+  const studentName = entry?.[1].first_name?.[0] + " " + entry?.[1].last_name?.[0] ?? 'N/A';
   const studentId = entry?.[1].student_id?.[0].substr(0, 6) ?? 'N/A';
   const rollNo = entry?.[1].roll_no?.[0] ?? 'N/A';
   
