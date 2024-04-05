@@ -4,6 +4,7 @@ import InstitutesTab from "../../components/admin/InstitutesTab";
 import StudentsTab from "../../components/admin/StudentsTab";
 import ProfileTab from "../../components/admin/ProfileTab";
 import ScholarshipTab from "../../components/admin/ScholarshipTab";
+import Calendar from "react-calendar";
 const AdminDashboard = () => {
   const [selected_tab, SetTab] = useState("Dashboard");
   return (

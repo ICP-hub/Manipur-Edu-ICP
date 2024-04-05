@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import StudentDetailsEdit from "../Student/StudentDetailsEdit";
 import { Link, useNavigate } from "react-router-dom";
 import ViewProfileDetails from "../Student/ViewProfileDetails";
+import RejectModal from "../../components/RejectModal";
 const VerifyEditDeleteDropdown = ({ open, onClose, entries }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isViewOpen, setIsViewOpen] = useState(false);
@@ -18,7 +19,7 @@ const VerifyEditDeleteDropdown = ({ open, onClose, entries }) => {
   };
   const handleDeleteClick = () => {
     setIsDeleteOpen(true);
-    navigate("/DeleteDetails", { state: { entries } });
+    // navigate("/DeleteDetails", { state: { entries } });
   };
   if (!open) return null;
   return (
@@ -56,7 +57,7 @@ const VerifyEditDeleteDropdown = ({ open, onClose, entries }) => {
           open={isDeleteOpen}
           onClose={() => setIsDeleteOpen(false)}
           handleReject={() => setIsDeleteOpen(false)}
-        />
+        ></RejectModal>
       )}
     </div>
   );

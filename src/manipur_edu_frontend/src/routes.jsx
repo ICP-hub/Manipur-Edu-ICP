@@ -170,7 +170,7 @@ const routes = [
   {
     path: "/instituteEditRequest",
     component: <InstituteDetails />,
-    // component: <StudentEditRequestRejectApproval />,
+    // component: <ViewProfileDetails />,
     allowedUser: [
       appConstants.ADMIN,
       appConstants.INSTITUTE,
@@ -208,16 +208,16 @@ const routes = [
       appConstants.UNKNOWN,
     ],
   },
-  {
-    path: "/DeleteDetails",
-    component: <RejectModal />,
-    allowedUser: [
-      appConstants.INSTITUTE,
-      appConstants.ADMIN,
-      appConstants.STUDENT,
-      appConstants.UNKNOWN,
-    ],
-  },
+  // {
+  //   path: "/DeleteDetails",
+  //   component: <RejectModal />,
+  //   allowedUser: [
+  //     appConstants.INSTITUTE,
+  //     appConstants.ADMIN,
+  //     appConstants.STUDENT,
+  //     appConstants.UNKNOWN,
+  //   ],
+  // },
   {
     path: "/student-profile",
     component: <StudentProfile />,

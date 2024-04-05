@@ -13,7 +13,6 @@ const Login = () => {
   const [status, setStatus] = React.useState(false);
   const [Field, setField] = React.useState("");
 
-
   const handleLogin = async (event) => {
     let auth = await login();
     console.log("authClient", auth);
@@ -24,13 +23,10 @@ const Login = () => {
     console.log("real authClient", authClient);
     const is_already_registered = await actor.is_user_already_registered();
 
-
     const newUserType = event.target.value;
     console.log(newUserType);
 
     console.log(userType);
-
-
 
     if (newUserType == "student") {
       const student_status = await actor.student_application_status(
@@ -46,29 +42,21 @@ const Login = () => {
         navigate("/");
       } else if (student_status[0] === "rejected") {
         setStatus(true);
-        setField('your profile has been rejected. You cant login');
+        setField("your profile has been rejected. You cant login");
         // Use the Field variable as needed
         console.log("your profile has been rejected. You can't login");
       } else {
         if (is_already_registered) {
           setField("You have already registered");
           setStatus(true);
-
-
-        }
-        else {
-
+        } else {
           setField("Student Details not found");
           setStatus(true);
           console.log("student details not found");
           navigate("/register-student");
-
         }
-
       }
       console.log(student_status);
-
-
     } else if (newUserType == "institute") {
       const institute_status = await actor.institute_application_status(
         principal_id
@@ -85,52 +73,39 @@ const Login = () => {
         navigate("/");
       } else if (institute_status[0] === "rejected") {
         setStatus(true);
-        setField('your profile has been rejected. You cant login');
+        setField("your profile has been rejected. You cant login");
         // Use the Field variable as needed
         console.log("your profile has been rejected. You can't login");
       } else {
-
         if (is_already_registered) {
           setField("You have already registered");
           setStatus(true);
-
-
-        }
-        else {
-
-
+        } else {
           setField("institute Details not found");
           setStatus(true);
           console.log("institute details not found");
           navigate("/register-institute");
-
         }
-
       }
 
       console.log(institute_status);
-
-
     } else if (newUserType == "admin") {
       navigate("/dsa");
-
-    }
-    else {
+    } else {
       setStatus(true);
       setField("You are not authorized");
-
     }
   };
 
   return (
     <SignUpPage>
       <div className="flex flex-col items-center justify-center w-full">
-        <div className=" text-[#00227A] text-4xl font-medium p ">
+        <div className=" text-[#00227A] text-2xl md2:text-4xl font-medium p ">
           Log in/Sign up as
         </div>
         <div className="mt-[48px] w-full flex flex-col  items-center gap-4">
           <button
-            className="w-1/2 h-14 text-white text-xl rounded-xl bg-[#646ED6]"
+            className="md2:w-1/2 w-full h-14 text-white text-xl rounded-xl bg-[#646ED6]"
             value="student"
             onClick={handleLogin}
           >
@@ -138,14 +113,14 @@ const Login = () => {
           </button>
 
           <button
-            className="w-1/2 h-14 text-white text-xl rounded-xl bg-[#646ED6]"
+            className="md2:w-1/2 w-full h-14 text-white text-xl rounded-xl bg-[#646ED6]"
             value="institute"
             onClick={handleLogin}
           >
             Institute
           </button>
           <button
-            className="w-1/2 h-14 text-white text-xl rounded-xl bg-[#646ED6]"
+            className="md2:w-1/2 w-full h-14 text-white text-xl rounded-xl bg-[#646ED6]"
             value="admin"
             onClick={handleLogin}
           >

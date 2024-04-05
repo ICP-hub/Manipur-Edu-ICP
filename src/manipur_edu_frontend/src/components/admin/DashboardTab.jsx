@@ -4,11 +4,13 @@ import ScholarshipTab from "./ScholarshipTab";
 import ScholarshipApplication from "./ScholarshipApplication";
 import InstitutesTab from "./InstitutesTab";
 import ScholarshipDetails from "./ScholarshipDetails";
-
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import "../../../assets/main.css";
 const DashboardTab = () => {
   const [view, setView] = useState("default");
   const isXlScreen = useMediaQuery("(min-width: 1440px)");
-
+  const [value, onChange] = useState(new Date());
   let entries;
   if (isXlScreen) {
     entries = [
@@ -185,8 +187,8 @@ const DashboardTab = () => {
               </p>
               <div className="  md1:flex md1:justify-between px-9">
                 <div className="flex rounded-[10px]  mb-[20px] dxs:w-full sm1:w-[80%] md1:mb-[0px] md1:w-[48%]">
-                          <div className="w-[35%] bg-[#86ABF3] rounded-tl-[10px] rounded-bl-[10px]">
-                            <img src="scholarship.jpg" class="w-48 h-38 mt-8" ></img>
+                  <div className="w-[35%] bg-[#86ABF3] rounded-tl-[10px] rounded-bl-[10px]">
+                    <img src="scholarship.jpg" class="w-48 h-38 mt-8"></img>
                   </div>
                   <div className="w-[65%] bg-[#E7F4FF] p-[13px] rounded-tr-[10px] rounded-br-[10px]">
                     <p className="font-[Segoe UI] font-[600] text-[16px] text-[#00227A] leading-[21px] pb-[10px]">
@@ -209,8 +211,8 @@ const DashboardTab = () => {
                   </div>
                 </div>
                 <div className="flex rounded-[10px]  mb-[20px] dxs:w-full sm1:w-[80%] md1:mb-[0px] md1:w-[48%]">
-                          <div className="w-[35%] bg-[#86ABF3] rounded-tl-[10px] rounded-bl-[10px]">
-                             <img src="scholarship.jpg" class="w-48 h-38 mt-8" ></img>
+                  <div className="w-[35%] bg-[#86ABF3] rounded-tl-[10px] rounded-bl-[10px]">
+                    <img src="scholarship.jpg" class="w-48 h-38 mt-8"></img>
                   </div>
                   <div className="w-[65%] bg-[#E7F4FF] p-[13px] rounded-tr-[10px] rounded-br-[10px]">
                     <p className="font-[Segoe UI] font-[600] text-[16px] text-[#00227A] leading-[21px] pb-[10px]">
@@ -269,7 +271,11 @@ const DashboardTab = () => {
               <div className="py-[39px]  flex flex-col gap-[29px]">
                 <div className="flex justify-between">
                   <div className="flex items-center">
-                    <img className="w-[50px] h-[50px]" src="student.jpg" alt="" />
+                    <img
+                      className="w-[50px] h-[50px]"
+                      src="student.jpg"
+                      alt=""
+                    />
                     <div className="pl-[27px]">
                       <p className="text-[#00227A] text-[15px] font-[Segoe UI] font-[600] leading-[24px]">
                         Name
@@ -295,7 +301,11 @@ const DashboardTab = () => {
                 </div>
                 <div className="flex justify-between">
                   <div className="flex items-center">
-                    <img className="w-[50px] h-[50px]" src="student.jpg" alt="" />
+                    <img
+                      className="w-[50px] h-[50px]"
+                      src="student.jpg"
+                      alt=""
+                    />
                     <div className="pl-[27px]">
                       <p className="text-[#00227A] text-[15px] font-[Segoe UI] font-[600] leading-[24px]">
                         Name
@@ -321,7 +331,11 @@ const DashboardTab = () => {
                 </div>
                 <div className="flex justify-between">
                   <div className="flex items-center">
-                    <img className="w-[50px] h-[50px]" src="student.jpg" alt="" />
+                    <img
+                      className="w-[50px] h-[50px]"
+                      src="student.jpg"
+                      alt=""
+                    />
                     <div className="pl-[27px]">
                       <p className="text-[#00227A] text-[15px] font-[Segoe UI] font-[600] leading-[24px]">
                         Name
@@ -349,7 +363,7 @@ const DashboardTab = () => {
             </div>
           </div>
           <div className="bg-[#F3F6FF] dxs:hidden lg1:w-[28%] rounded-tr-[20px] rounded-br-[20px] lg1:flex flex-col justify-between">
-            <div className="pt-[25px] flex flex-col mr-10">
+            <div className="pt-[25px] flex flex-col px-2 py-4 pb-[5px]">
               <div className="flex justify-center">
                 <div className="pr-[12px]">
                   <p className="font-[600] font-[Segoe UI] text-[18px] text-[#00227A] leading-[27px] flex flex-row-reverse">
@@ -359,15 +373,31 @@ const DashboardTab = () => {
                     123456789
                   </p>
                 </div>
-                <img className="w-[67px] h-[55px] pl-[12px]" src="student.jpg" alt="" />
+                <img
+                  className="w-[67px] h-[55px] pl-[12px]"
+                  src="student.jpg"
+                  alt=""
+                />
               </div>
-              <p className="text-[#2D6BE4] text-[18px] font-[Segoe UI] font-[600] flex justify-center pt-[38px] mr-20">
+              <p className="text-[#2D6BE4] text-[18px] font-[Segoe UI] font-[600] flex pt-[38px] px-[5px]">
                 My Schedule
               </p>
+              <div className="calendar-wrapper">
+                <div>
+                  <Calendar
+                    className="calendar-container rounded-lg"
+                    style={{
+                      border: "1px solid black",
+                    }}
+                    onChange={onChange}
+                    value={value}
+                  />
+                </div>
+              </div>
             </div>
-            <div className="px-[38px] flex flex-col">
+            <div className="px-[15px] flex flex-col">
               <div className="flex justify-between">
-                <p className="text-[#2D6BE4] text-[18px] font-[Segoe UI] font-[600]">
+                <p className="text-[#2D6BE4] text-[15px] font-[Segoe UI] font-[600]">
                   Verification Requests
                 </p>
                 <button
@@ -380,7 +410,11 @@ const DashboardTab = () => {
               <div className="py-[39px] flex flex-col gap-[29px]">
                 <div className="flex justify-between">
                   <div className="flex items-center">
-                    <img className="w-[50px] h-[50px]" src="student.jpg" alt="" />
+                    <img
+                      className="w-[50px] h-[50px]"
+                      src="student.jpg"
+                      alt=""
+                    />
                     <div className="pl-[27px]">
                       <p className="text-[#00227A] text-[15px] font-[Segoe UI] font-[600] leading-[24px]">
                         Name
@@ -406,7 +440,11 @@ const DashboardTab = () => {
                 </div>
                 <div className="flex justify-between">
                   <div className="flex items-center">
-                    <img className="w-[50px] h-[50px]" src="student.jpg" alt="" />
+                    <img
+                      className="w-[50px] h-[50px]"
+                      src="student.jpg"
+                      alt=""
+                    />
                     <div className="pl-[27px]">
                       <p className="text-[#00227A] text-[15px] font-[Segoe UI] font-[600] leading-[24px]">
                         Name
@@ -432,7 +470,11 @@ const DashboardTab = () => {
                 </div>
                 <div className="flex justify-between">
                   <div className="flex items-center">
-                    <img className="w-[50px] h-[50px]" src="student.jpg" alt="" />
+                    <img
+                      className="w-[50px] h-[50px]"
+                      src="student.jpg"
+                      alt=""
+                    />
                     <div className="pl-[27px]">
                       <p className="text-[#00227A] text-[15px] font-[Segoe UI] font-[600] leading-[24px]">
                         Name

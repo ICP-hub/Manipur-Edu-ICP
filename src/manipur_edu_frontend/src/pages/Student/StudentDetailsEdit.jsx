@@ -7,12 +7,6 @@ import { useSelector } from 'react-redux';
 import Status from "../../components/student/status";
 const StudentDetailsEdit = () => {
   const [page, setPage] = useState("personal");
- 
-  //mychanges
-
-  const { actor } = useAuth();
-  // const [status, setStatus] = React.useState(false);
-  // const [Field, setField] = React.useState("");
 
   let entry = useSelector(
     (state) => state.studentDetailsReducer
@@ -25,15 +19,6 @@ const StudentDetailsEdit = () => {
     setFormData(newData);
   };
 
-  //new change trying
-  
-  // const handleSave = async() => {
-  //   // const editStatusResponse = await actor.edit_student_profile(formData);
-  //   // console.log("Saving data:", formData);
-  //   setField('hello');
-  //   setStatus(true);
-  //   // Reset currentPage if needed
-  // };
   return (
     <div className="bg-[#E5F1FF] min-h-screen flex justify-center px-[4%] lg1:px-[5%] ">
       <div className="w-full  my-[50px] rounded-[10px] bg-white">

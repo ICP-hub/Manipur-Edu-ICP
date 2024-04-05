@@ -2,41 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-
-
-
 body {
-    font-family: "Noto Sans";
-    
-    /* font-size: 1.5rem; */
+  font-family: "Noto Sans";
+
+  /* font-size: 1.5rem; */
 }
 
 /* Input Date Picker */
 .Date input[type="date"]::-webkit-calendar-picker-indicator {
-    color: rgba(0, 0, 0, 0);
-    opacity: 1;
-    display: block;
-    position: absolute;
-    outline: #ACBFFD;
-    right: 0;
-    padding: 5px;
-    padding-right: 10px;
-    background: url(./calander.svg) no-repeat;
-    width: 20px;
-    height: 20px;   
-    border-width: thin;
-
+  color: rgba(0, 0, 0, 0);
+  opacity: 1;
+  display: block;
+  position: absolute;
+  outline: #acbffd;
+  right: 0;
+  padding: 5px;
+  padding-right: 10px;
+  background: url(./calander.svg) no-repeat;
+  width: 20px;
+  height: 20px;
+  border-width: thin;
 }
 
 /* Navbar Glass effect */
 .navbar-glass {
-    background: #ffffff1b;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px); /* For Safari browser support */
-    color: #00227A;
-  }
+  background: #ffffff1b;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px); /* For Safari browser support */
+  color: #00227a;
+}
 /* 
 img {
     max-width: 50vw;
@@ -105,3 +99,13 @@ button[type="submit"] {
 #greeting:empty {
     display: none;
 } */
+
+.calendar-container {
+  border-radius: 8px;
+  height: "70px";
+}
+.rbc-month-row {
+  display: inline-table !important;
+  flex: 0 0 0 !important;
+  min-height: 50px !important;
+}

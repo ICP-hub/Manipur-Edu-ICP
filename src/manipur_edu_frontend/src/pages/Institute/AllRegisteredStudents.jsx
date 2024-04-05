@@ -118,21 +118,26 @@ const AllRegisteredStudents = () => {
 export default AllRegisteredStudents;
 
 const Card = ({ studentPrincipalId, entry }) => {
-  const [toggle, SetDropDown] = useState(false);
-  let menuRef = useRef();
+  const [toggle, setToggle] = useState(false);
+
+  const toggleDropdown = () => {
+    setToggle((prevToggle) => !prevToggle);
+  };
+
+  const handleClickOutside = (event) => {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      setToggle(false);
+    }
+  };
+
+  const menuRef = useRef(null);
+
   useEffect(() => {
-    const handleClick = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        SetDropDown(false);
-      }
-    };
-
-    document.addEventListener("click", handleClick);
-
+    document.addEventListener("click", handleClickOutside);
     return () => {
-      document.removeEventListener("click", handleClick);
+      document.removeEventListener("click", handleClickOutside);
     };
-  }, [menuRef]);
+  }, []);
 
   const studentName =
     entry?.[0].first_name?.[0] + " " + entry?.[0].last_name?.[0] ?? "N/A";
@@ -165,7 +170,7 @@ const Card = ({ studentPrincipalId, entry }) => {
         {rollNo}
       </p>
 
-      <button className=" mb-[8px] ">
+      <button className=" mb-[8px] " onClick={toggleDropdown}>
         <svg
           width="30"
           height="30"
@@ -196,7 +201,7 @@ const Card = ({ studentPrincipalId, entry }) => {
       </button>
       <VerifyEditDeleteDropdown
         open={toggle}
-        onClose={() => SetDropDown(false)}
+        onClose={() => setToggle(false)}
         entries
       />
     </div>

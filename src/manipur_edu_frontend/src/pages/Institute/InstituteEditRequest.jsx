@@ -1,29 +1,31 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
+import AdminDashboard from "../Admin/AdminDashboard";
 
 const InstituteEditRequest = ({ onView }) => {
   let entries = useSelector((state) => state.allInstitutesReducer);
   return (
-    <div>
-      <div className="border rounded-[10px] border-[#D9EBFF]">
-        <div className="  grid grid-cols-5 py-[20px]   font-[600]  font-[Segoe UI] text-[15px] text-[#00227A] leading-[20px]">
-          <div className="flex justify-center">INSTITUTE NAME</div>
-          <div className="flex justify-center">INSTITUTE ID</div>
-          <div className="flex justify-center">EMAIL</div>
-          <div className="flex justify-center">STATUS</div>
-          <div className="flex justify-center ">INSTITUTE DETAILS</div>
-        </div>
-        {Array.isArray(entries) &&
-          entries.map((entry, index) => (
-            <Card key={index} entry={entry} onView={onView} />
-          ))}
-        {/* {entries.map((entry, index) => (
+
+      <div>
+        <div className="border rounded-[10px] border-[#D9EBFF]">
+          <div className="  grid grid-cols-5 py-[20px]   font-[600]  font-[Segoe UI] text-[15px] text-[#00227A] leading-[20px]">
+            <div className="flex justify-center">INSTITUTE NAME</div>
+            <div className="flex justify-center">INSTITUTE ID</div>
+            <div className="flex justify-center">EMAIL</div>
+            <div className="flex justify-center">STATUS</div>
+            <div className="flex justify-center ">INSTITUTE DETAILS</div>
+          </div>
+          {Array.isArray(entries) &&
+            entries.map((entry, index) => (
+              <Card key={index} entry={entry} onView={onView} />
+            ))}
+          {/* {entries.map((entry, index) => (
           <Card key={index} entry={entry} onView={onView} />
         ))} */}
+        </div>
+        <div className="flex flex-row-reverse pt-[10px] ">Page 1 of 100</div>
       </div>
-      <div className="flex flex-row-reverse pt-[10px] ">Page 1 of 100</div>
-    </div>
   );
 };
 export default InstituteEditRequest;

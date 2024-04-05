@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
 import { useSelector } from "react-redux";
-import { useQuery } from 'react-query'; 
+import { useQuery } from "react-query";
 import StudentDetails from "../../pages/Admin/StudentDetails";
 //mychanges
 import { useAuth } from "../../utils/useAuthClient";
@@ -12,21 +12,21 @@ const StudentsTab = () => {
   const onView = () => setView("studentdetails");
   //mychanges
   const { actor } = useAuth();
-  const [entries, setEntries] = useState([])
+  const [entries, setEntries] = useState([]);
   const getStudents = async () => {
-  const studentIdsResponse = await actor.get_students_withdetails();
-  console.log('studentIdsResponse', studentIdsResponse);
-  setEntries(studentIdsResponse);
-  }
-  const { 
+    const studentIdsResponse = await actor.get_students_withdetails();
+    console.log("studentIdsResponse", studentIdsResponse);
+    setEntries(studentIdsResponse);
+  };
+  const {
     data: result,
     isLoading: isLoadingEntries,
     error: errorEntries,
   } = useQuery("dataEntries", getStudents);
   if (!isLoadingEntries && !errorEntries) {
-    console.log("entries", entries)
+    console.log("entries", entries);
   }
-  
+
   // let entries = useSelector((state) => state.allStudentsReducer)
   // console.log('entries: ',entries)
   // const entries = [
@@ -79,7 +79,7 @@ const StudentsTab = () => {
           <div className="flex flex-col ">
             <div className="flex justify-between ">
               <div className="font-[600] font-[Segoe UI] text-4xl text-[#2D6BE4]">
-                Students
+                Students hello
               </div>
               <div className="flex gap-[44px]">
                 <div className="flex gap-[23px]">
@@ -248,17 +248,17 @@ const StudentsTab = () => {
 };
 export default StudentsTab;
 const Card = ({ entry, onView }) => {
-  
-  const studentName = entry?.[1].first_name?.[0] + " " + entry?.[0].last_name?.[0] ?? 'N/A';
-  const studentId = entry?.[1].student_id?.[0].substr(0, 6) ?? 'N/A';
-  const rollNo = entry?.[1].roll_no?.[0] ?? 'N/A';
-  
-  const email = entry?.[1].personal_email?.[0] ?? 'N/A';
+  const studentName =
+    entry?.[1].first_name?.[0] + " " + entry?.[0].last_name?.[0] ?? "N/A";
+  const studentId = entry?.[1].student_id?.[0].substr(0, 6) ?? "N/A";
+  const rollNo = entry?.[1].roll_no?.[0] ?? "N/A";
+
+  const email = entry?.[1].personal_email?.[0] ?? "N/A";
   return (
     <div className=" grid grid-cols-[repeat(4,1fr)_45px] py-[15px] border-t border-[#D9EBFF]">
       <div className=" flex justify-center  text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] rounded-[5px]">
         <div className="flex rounded-[5px]">
-          <img className="w-[33px] h-[33px] " src='student.jpg' alt="" />
+          <img className="w-[33px] h-[33px] " src="student.jpg" alt="" />
           <p className="pt-[6px] pl-[13px]">{studentName}</p>
         </div>
       </div>

@@ -4,13 +4,16 @@ import {
   useLocation,
   useNavigate,
 } from "../../../../../node_modules/react-router-dom/dist/index";
-import { useSelector } from "react-redux";
+import Background from "../../components/BackgroudPage";
+
 const ViewProfileDetails = () => {
-  let entry = useSelector((state) => state.studentDetailsReducer);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { entry } = location.state;
   console.log("entry here", entry);
 
   return (
-    <>
+    <Background>
       <div className="bg-[#E5F1FF] min-h-screen flex justify-center px-[4%] lg1:px-[5%] ">
         <div className="w-full  my-[3.125rem] rounded-[0.625rem] bg-white px-[4.125rem] py-[2.625rem] ">
           <div className="flex flex-col">
@@ -261,7 +264,7 @@ const ViewProfileDetails = () => {
                   </button>
                 </div>
               </div>
-              <div className="py-[30px] px-[46px] gap-[76px]">
+              <div className="flex py-[30px] px-[46px] gap-[76px]">
                 <div>
                   <p className="text-[#8CA3C3] text-[16px] font-[Noto Sans] font-[300] pb-[20px]">
                     Aadhaar Card
@@ -286,10 +289,13 @@ const ViewProfileDetails = () => {
                   Edit
                 </button>
               </Link>
-              <button className="px-[2.75rem] py-[1rem]  text-[white] rounded-[0.625rem] bg-[#DF0C0C]">
-                Delete
-              </button>
-              <Link to="/profile-result">
+              {/* <Link to="/profile-result">
+                <button className="px-[2.25rem] py-[1rem] border border-[#00227A] text-[#00227A] rounded-[0.625rem]">
+                  Back
+                </button>
+              </Link> */}
+              {/* My Changes Want this Back to go back to all regisered students */}
+              <Link to="/institute-student">
                 <button className="px-[2.25rem] py-[1rem] border border-[#00227A] text-[#00227A] rounded-[0.625rem]">
                   Back
                 </button>
@@ -298,7 +304,7 @@ const ViewProfileDetails = () => {
           </div>
         </div>
       </div>
-    </>
+    </Background>
   );
 };
 
