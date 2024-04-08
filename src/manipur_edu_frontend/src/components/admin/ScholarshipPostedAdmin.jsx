@@ -1,9 +1,9 @@
 import React,{useState} from "react";
 
-import { useAuth } from "../../utils/useAuthClient";
-import { useQuery } from "react-query";
-import Loader from "../../loader/Loader";
-
+// import { useAuth } from "../../utils/useAuthClient";
+// import { useQuery } from "react-query";
+// import Loader from "../../loader/Loader";
+import { useSelector } from "react-redux";
 const ScholarshipPostedAdmin = ({ onView, onEdit, onPost }) => {
     // const entries = [
     //     {
@@ -30,27 +30,29 @@ const ScholarshipPostedAdmin = ({ onView, onEdit, onPost }) => {
     //         deadline: "May 31, 2024",
     //     },
     // ];
-    const { actor, authClient } = useAuth();
-    const [entries,setEntries] = useState([]);
-    const getEntries = async () => {
-        const allScholarships = await actor.get_all_scholarship();
-        console.log("allScholarships", allScholarships);
-        setEntries(allScholarships);
-        
-    }
-    // getEntries();
-    const {
-        data: result,
-        isLoading: isLoadingEntries,
-        error: errorEntries,
-      } = useQuery("dataEntries", getEntries);
-      if (!isLoadingEntries && !errorEntries) {
-        console.log("entries", entries)
-      }
 
+
+    // const { actor, authClient } = useAuth();
+    // const [entries,setEntries] = useState([]);
+    // const getEntries = async () => {
+    //     const allScholarships = await actor.get_all_scholarship();
+    //     console.log("allScholarships", allScholarships);
+    //     setEntries(allScholarships);
+        
+    // }
+    // // getEntries();
+    // const {
+    //     data: result,
+    //     isLoading: isLoadingEntries,
+    //     error: errorEntries,
+    //   } = useQuery("dataEntries", getEntries);
+    //   if (!isLoadingEntries && !errorEntries) {
+    //     console.log("entries", entries)
+    //   }
+    const entries = useSelector((state) => state.allScholarshipsReducer);
     return (
         <div>
-            {isLoadingEntries && <Loader></Loader>}
+            {/* {isLoadingEntries && <Loader></Loader>} */}
             <div className="flex flex-col gap-[35px] ">
             {entries && entries.map((entry, index) => ( // Add a check for entries before mapping
                     <Card key={index} entry={entry} onView={onView} onEdit={onEdit} />

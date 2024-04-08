@@ -32,7 +32,6 @@ const InstituteDetails = ({ onBack }) => {
   };
 
   return (
-    // <Desktop3>
     <div className="py-[25px] px-[63px]">
       <div className="flex flex-col ">
         <div className="flex justify-between ">
@@ -237,7 +236,6 @@ const InstituteDetails = ({ onBack }) => {
         </div>
       </div>
     </div>
-    // </Desktop3>
   );
 };
 export default InstituteDetails;

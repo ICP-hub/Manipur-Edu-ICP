@@ -79,7 +79,7 @@ const StudentsTab = () => {
           <div className="flex flex-col ">
             <div className="flex justify-between ">
               <div className="font-[600] font-[Segoe UI] text-4xl text-[#2D6BE4]">
-                Students hello
+                Students 
               </div>
               <div className="flex gap-[44px]">
                 <div className="flex gap-[23px]">

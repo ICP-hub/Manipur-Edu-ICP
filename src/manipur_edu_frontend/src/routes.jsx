@@ -12,6 +12,7 @@ import ProfileResult from "./pages/Student/ProfileResults";
 import StudentDetailsEdit from "./pages/Student/StudentDetailsEdit";
 import ViewProfileDetails from "./pages/Student/ViewProfileDetails";
 import ViewInstituteDetailsInstitutePage from "./pages/Institute/ViewInstituteDetails";
+import ViewInstituteDetailsAdminPage from "./pages/Admin/ViewInstituteDetails";
 import InstituteDetailsEditInstitutePage from "./pages/Institute/InstituteDetialsEdit";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import InstituteDetails from "./pages/Admin/InstituteDetails";
@@ -80,6 +81,12 @@ const routes = [
       appConstants.STUDENT,
       appConstants.UNKNOWN,
     ],
+  },
+  {
+    path: "/institute-details-admin",
+    component: <ViewInstituteDetailsAdminPage />,
+    allowedUser: [appConstants.INSTITUTE, appConstants.ADMIN,appConstants.STUDENT,
+      appConstants.UNKNOWN,],
   },
   {
     path: "/institute_detail_edit",

@@ -103,9 +103,9 @@ const Login = () => {
         <div className=" text-[#00227A] text-2xl md2:text-4xl font-medium p ">
           Log in/Sign up as
         </div>
-        <div className="mt-[48px] w-full flex flex-col  items-center gap-4">
+        <div className="mt-[48px] w-full flex flex-col  items-center gap-4 px-10">
           <button
-            className="md2:w-1/2 w-full h-14 text-white text-xl rounded-xl bg-[#646ED6]"
+            className="sm:w-1/2 w-full h-14 text-white text-xl rounded-xl bg-[#646ED6]"
             value="student"
             onClick={handleLogin}
           >
@@ -113,14 +113,14 @@ const Login = () => {
           </button>
 
           <button
-            className="md2:w-1/2 w-full h-14 text-white text-xl rounded-xl bg-[#646ED6]"
+            className="sm:w-1/2 w-full h-14 text-white text-xl rounded-xl bg-[#646ED6]"
             value="institute"
             onClick={handleLogin}
           >
             Institute
           </button>
           <button
-            className="md2:w-1/2 w-full h-14 text-white text-xl rounded-xl bg-[#646ED6]"
+            className="sm:w-1/2 w-full h-14 text-white text-xl rounded-xl bg-[#646ED6]"
             value="admin"
             onClick={handleLogin}
           >
