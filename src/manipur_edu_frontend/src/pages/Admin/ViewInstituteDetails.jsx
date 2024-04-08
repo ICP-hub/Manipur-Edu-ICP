@@ -1,5 +1,9 @@
 import React from "react";
+import { useLocation, useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
 const ViewInstituteDetails = ({ onBack }) => {
+  const location = useLocation();
+  const { entry } = location.state;
+  console.log('entry',entry);
   return (
     <div className="py-[25px] px-[63px]">
       <div className="flex flex-col ">
@@ -75,7 +79,8 @@ const ViewInstituteDetails = ({ onBack }) => {
           <img className="w-[100px] h-[100px]" src='/student.svg' alt="" />
           <div className="flex flex-col justify-center pl-[1.8125rem]">
             <p className="font-[Noto Sans] text-[#00227A] text-[1.5625rem] leading-[2.125rem] font-[400] pb-[0.375rem]">
-              Institute Name
+              {/* Institute Name */}
+              {entry?.[1].institute_name?.[0] || 'N/A'}
             </p>
             <p className="font-[Noto Sans] text-[#687EB5] text-[0.9375rem] leading-[1.25rem] font-[500]">
               Institute-id: 1234567
@@ -98,7 +103,8 @@ const ViewInstituteDetails = ({ onBack }) => {
                   Institute Type
                 </p>
                 <p className="font-[Noto Sans] text-[#00227A] text-[1.125rem] leading-[1.53125rem] font-[400]">
-                  College
+                  {/* College */}
+                  {entry?.[1].institute_type?.[0] || 'N/A'}
                 </p>
               </div>
               <div className="w-[33.333333333333336%]">
@@ -106,7 +112,8 @@ const ViewInstituteDetails = ({ onBack }) => {
                   Institute Size
                 </p>
                 <p className="font-[Noto Sans] text-[#00227A] text-[1.125rem] leading-[1.53125rem] font-[400]">
-                  2000
+                  {/* 2000 */}
+                  {entry?.[1].institute_size?.[0] || 'N/A'}
                 </p>
               </div>
               <div className="w-[33.333333333333336%]">
@@ -114,7 +121,8 @@ const ViewInstituteDetails = ({ onBack }) => {
                   Email
                 </p>
                 <p className="font-[Noto Sans] text-[#00227A] text-[1.125rem] leading-[1.53125rem] font-[400]">
-                  email@email.com
+                  {/* email@email.com */}
+                  {entry?.[1].email?.[0] || 'N/A'}
                 </p>
               </div>
               <div className="w-[33.333333333333336%]">
@@ -122,7 +130,8 @@ const ViewInstituteDetails = ({ onBack }) => {
                   Phone Number
                 </p>
                 <p className="font-[Noto Sans] text-[#00227A] text-[1.125rem] leading-[1.53125rem] font-[400]">
-                  1234567890
+                  {/* 1234567890 */}
+                  {entry?.[1].phone_no?.[0] || 'N/A'}
                 </p>
               </div>
             </div>
@@ -132,10 +141,12 @@ const ViewInstituteDetails = ({ onBack }) => {
                   Address
                 </p>
                 <p className="font-[Noto Sans] text-[#00227A] text-[1.125rem] leading-[1.53125rem] font-[400]">
-                  QW3G+VJM, Naoriya Pakhanglakpa, Imphal,
+                  {/* QW3G+VJM, Naoriya Pakhanglakpa, Imphal, */}
+                  {entry?.[1].address?.[0] || 'N/A'}
                 </p>
                 <p className="font-[Noto Sans] text-[#00227A] text-[1.125rem] leading-[1.53125rem] font-[400]">
-                  Manipur 795003
+                  {/* Manipur 795003 */}
+                  {entry?.[1].state?.[0] + " " + entry?.[1].zip_code?.[0] || 'N/A'}
                 </p>
               </div>
               <div className="w-[50%] flex justify-between">
@@ -144,7 +155,8 @@ const ViewInstituteDetails = ({ onBack }) => {
                     State
                   </p>
                   <p className="font-[Noto Sans] text-[#00227A] text-[1.125rem] leading-[1.53125rem] font-[400]">
-                    Manipur
+                    {/* Manipur */}
+                    {entry?.[1].state?.[0] || 'N/A'}
                   </p>
                 </div>
                 <div className="w-[50%]">
@@ -152,7 +164,8 @@ const ViewInstituteDetails = ({ onBack }) => {
                     Zip code
                   </p>
                   <p className="font-[Noto Sans] text-[#00227A] text-[1.125rem] leading-[1.53125rem] font-[400]">
-                    123456
+                    {/* 123456 */}
+                    {entry?.[1].zip_code?.[0] || 'N/A'}
                   </p>
                 </div>
               </div>

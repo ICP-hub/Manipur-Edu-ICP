@@ -35,6 +35,10 @@ const Card = ({ entry, onView, onEdit, onStudent }) => {
   const handleClick = () => {
     navigate("/register-students-details", { state: { entry } });
   };
+  
+  const handleView = () => {
+    navigate("/institute-details-admin", { state: { entry } });
+  };
   const instituteName = entry?.[1].institute_name?.[0] ?? 'N/A';
   const instituteId = entry?.[1].institute_id?.[0].substr(0, 6) ?? 'N/A';
   const instituteEmail = entry?.[1].email?.[0] ?? 'N/A';
@@ -59,7 +63,7 @@ const Card = ({ entry, onView, onEdit, onStudent }) => {
         Click to View
       </button>
       <div className="flex gap-[8px]">
-        <button onClick={onView}>
+        <button onClick={handleView}>
           <svg
             width="20"
             height="20"

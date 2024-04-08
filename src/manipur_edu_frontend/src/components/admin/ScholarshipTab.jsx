@@ -6,12 +6,34 @@ import PostScholarshipDetails from "../../pages/Admin/PostScholarshipDetails";
 import ScholarshipApplicationsTab from "../../pages/Admin/ScholarshipApplicationsTab";
 import OngoingScholarshipsTab from "../../components/admin/OngoingScholarshipsTab";
 import ScholarshipPostedAdmin from "../../components/admin/ScholarshipPostedAdmin";
-
+import { useAuth } from "../../utils/useAuthClient";
+import { useQuery } from "react-query";
+import Loader from "../../loader/Loader";
+import { useDispatch } from "react-redux";
+import { getAllScholarships } from "../../../Redux/Action/index";
 const ScholarshipTab = () => {
   const [selected_button, SetButton] = useState("Applications");
   const [view, SelectView] = useState("default");
+  const { actor, authClient } = useAuth();
+  const dispatch = useDispatch();
+    // const [entries,setEntries] = useState([]);
+    const getEntries = async () => {
+        const allScholarships = await actor.get_all_scholarship();
+        console.log("allScholarships", allScholarships);
+        // setEntries(allScholarships);
+        dispatch(getAllScholarships(allScholarships));
+        
+    }
+    // getEntries();
+    const {
+        data: result,
+        isLoading: isLoadingEntries,
+        error: errorEntries,
+      } = useQuery("dataEntries", getEntries);
+      
   return (
     <div>
+      {isLoadingEntries && <Loader></Loader>}
       {view === "scholarshipApplication" ? (
         <ScholarshipApplication onBack={() => SelectView("default")} />
       ) : view === "viewapplicants" ? (
@@ -195,18 +217,24 @@ const ScholarshipTab = () => {
                 />
               </div>
             </div>
-            {selected_button === "Applications" && (
+            {selected_button === "Applications"  &&
+              !isLoadingEntries &&
+              !errorEntries && (
               <ScholarshipApplicationsTab
                 onTap={() => SelectView("scholarshipApplication")}
               />
             )}
-            {selected_button === "Ongoing" && (
+            {selected_button === "Ongoing"  &&
+              !isLoadingEntries &&
+              !errorEntries && (
               <OngoingScholarshipsTab
                 onView={() => SelectView("viewapplicants")}
                 onEdit={() => SelectView("edit")}
               />
             )}
-            {selected_button === "Admin" && (
+            {selected_button === "Admin"  &&
+              !isLoadingEntries &&
+              !errorEntries && (
               <ScholarshipPostedAdmin
                 onView={() => SelectView("viewapplicants")}
                 onEdit={() => SelectView("edit")}
