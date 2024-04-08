@@ -100,12 +100,17 @@ import AdminDashboard from "../Admin/AdminDashboard";
 const InstituteEditRequest = ({ onView }) => {
   // let entries = useSelector((state) => state.allInstitutesReducer);
   let entries = useSelector((state) => state.allInstitutesReducer);
+
+
+  console.log("entries size" , entries.length )
   return (
 
       <div>
         <div className="border rounded-[10px] border-[#D9EBFF]">
           <div className="  grid grid-cols-5 py-[20px]   font-[600]  font-[Segoe UI] text-[15px] text-[#00227A] leading-[20px]">
             <div className="flex justify-center">INSTITUTE NAME</div>
+            {/* <div className="flex justify-center">SHivam E</div> */}
+
             <div className="flex justify-center">INSTITUTE ID</div>
             <div className="flex justify-center">EMAIL</div>
             <div className="flex justify-center">STATUS</div>
@@ -128,7 +133,9 @@ export default InstituteEditRequest;
 const Card = ({ entry, onView }) => {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate("/instituteEditRequest", { state: { entry } });
+    // navigate("/instituteEditRequest", { state: { entry } });
+    navigate("/InstituteEditRequestRejectApprove/");
+
   };
   // const instituteName = entry?.[1].institute_name?.[0] ?? "N/A";
   // const instituteId = entry?.[1].institute_id?.[0].substr(0, 6) ?? "N/A";
@@ -148,17 +155,17 @@ const Card = ({ entry, onView }) => {
         <div className="flex rounded-[5px]">
           <img className="w-[33px] h-[33px] " src="/student.svg" alt="" />
           <p className="pt-[6px] pl-[13px]">{instituteName}</p>
-          <img className="w-[33px] h-[33px] " src="/student.svg" alt="" />
-          <p className="pt-[6px] pl-[13px]">{instituteName}</p>
+          {/* <img className="w-[33px] h-[33px] " src="/student.svg" alt="" />
+          <p className="pt-[6px] pl-[13px]">{instituteName}</p> */}
         </div>
       </div>
       <p className="flex justify-center  text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px]">
         {instituteId}
-        {instituteId}
+        {/* {instituteId} */}
       </p>
       <p className="flex justify-center  text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px]">
         {instituteEmail}
-        {instituteEmail}
+        {/* {instituteEmail} */}
       </p>
       <p
         className={`flex justify-center font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px] ${
@@ -180,7 +187,7 @@ const Card = ({ entry, onView }) => {
         //     : "text-[#687DB2]"
         // }`}
       >
-        {verificationStatus}
+        {/* {verificationStatus} */}
         {verificationStatus}
       </p>
 
@@ -190,9 +197,8 @@ const Card = ({ entry, onView }) => {
         className="pt-[7px] font-[700] underline flex justify-center  text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] "
       >
         {" "}
-        Click to View/Verify
-        {" "}
-        Click to View/Verify
+        Click to View/Verify 
+        
       </button>
     </div>
   );

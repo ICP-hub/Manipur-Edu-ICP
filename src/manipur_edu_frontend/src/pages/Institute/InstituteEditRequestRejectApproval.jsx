@@ -1,5 +1,5 @@
 import React from "react";
-import img from "../../assets/student.png";
+// import img from "../../assets/student.png";
 
 const InstituteEditRequestRejectApprove = ({ onBack }) => {
   return (
@@ -68,7 +68,7 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
                 123456789
               </p>
             </div>
-            <img className="w-[67px] h-[55px] pl-[12px]" src={img} alt="" />
+            {/* <img className="w-[67px] h-[55px] pl-[12px]" src={img} alt="" /> */}
           </div>
         </div>
       </div>
@@ -78,7 +78,7 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
             Previous
           </div>
           <div className="px-[46px] py-[28px] flex items-center gap-[29px] rounded-[20px] border border-[#D8E1F8]">
-            <img className="w-[100px] h-[100px]" src={img} alt="" />
+            {/* <img className="w-[100px] h-[100px]" src={img} alt="" /> */}
             <div className="gap-[6px]">
               <p className="text-[#00227A] text-[25px] font-[Noto Sans] font-[400]">
                 Name
@@ -175,7 +175,7 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
             Edited by Institute
           </div>
           <div className="px-[46px] py-[28px] flex items-center gap-[29px] rounded-[20px] border border-[#D8E1F8]">
-            <img className="w-[100px] h-[100px]" src={img} alt="" />
+            {/* <img className="w-[100px] h-[100px]" src={img} alt="" /> */}
             <div className="gap-[6px]">
               <p className="text-[#00227A] text-[25px] font-[Noto Sans] font-[400]">
                 Name

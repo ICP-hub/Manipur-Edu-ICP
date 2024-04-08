@@ -5,13 +5,38 @@ import ScholarshipApplication from "./ScholarshipApplication";
 import InstitutesTab from "./InstitutesTab";
 import ScholarshipDetails from "./ScholarshipDetails";
 import Calendar from "react-calendar";
+import { useSelector } from "react-redux";
+import { useAuth } from "../../utils/useAuthClient";
+
+
 import "react-calendar/dist/Calendar.css";
 import "../../../assets/main.css";
 const DashboardTab = () => {
+  const [scholarshipPosted , setScholarshipPosted] = useState(0); 
   const [view, setView] = useState("default");
   const isXlScreen = useMediaQuery("(min-width: 1440px)");
   const [value, onChange] = useState(new Date());
-  let entries;
+
+  let entries = useSelector((state) => state.allInstitutesReducer);
+  let studentEntries = useSelector((state) => state.studentDetailsReducer);
+
+  console.log(studentEntries)
+  let registeredStudent = studentEntries.length ; 
+  // if(registeredStudent > 1000) registeredStudent = registeredStudent/1000  + "K" ; 
+  // let entries;
+
+  const { actor, authClient } = useAuth();
+  const getEntries = async () => {
+      const allScholarships = await actor.get_all_scholarship();
+      console.log("allScholarship are below s", allScholarships);
+      console.log("allScholarship are below s", allScholarships.length);
+
+      setScholarshipPosted(allScholarships.length)
+  }
+  getEntries(); 
+
+
+
   if (isXlScreen) {
     entries = [
       {
@@ -118,7 +143,7 @@ const DashboardTab = () => {
             <div className="flex justify-between pt-10 px-9 ">
               <div className="rounded-[20px] bg-[#E7F4FF] flex w-[48%] md2:w-[30%] h-[131px] p-[10px] ">
                 <div className="font-[400] font-[Mukta] text-[#00227A] text-[40px] dxl:text-5xl flex items-center pr-[10px] ">
-                  100
+                  {entries.length}
                 </div>
                 <div className="font-[350] font-[Segoe UI] text-[#00227A] text-[13px] xxs1:text-lg flex flex-col justify-center ">
                   <p>
@@ -128,7 +153,7 @@ const DashboardTab = () => {
               </div>
               <div className="rounded-[20px] bg-[#F3E7FF] flex w-[48%] md2:w-[30%] h-[131px] p-[10px]">
                 <div className="font-[400] font-[Mukta] text-[#00227A] text-[40px] dxl:text-5xl  flex items-center pr-[10px] ">
-                  15K
+               { registeredStudent}
                 </div>
                 <div className="font-[350] font-[Segoe UI] text-[#00227A] text-[13px] xxs1:text-lg flex items-center ">
                   Students <br /> Registered
@@ -136,7 +161,8 @@ const DashboardTab = () => {
               </div>
               <div className="dxs:hidden rounded-[20px] bg-[#FFEAE7] md2:flex w-[30%] h-[131px] p-[10px]">
                 <div className="font-[400] font-[Mukta] text-[#00227A] text-[40px] dxl:text-5xl flex items-center pr-[10px] ">
-                  80
+                  {/* 80 */}
+                  {scholarshipPosted}
                 </div>
                 <div className="font-[350] font-[Segoe UI] text-[#00227A] text-[13px] xxs1:text-lg flex items-center ">
                   Scholarships <br /> Posted
