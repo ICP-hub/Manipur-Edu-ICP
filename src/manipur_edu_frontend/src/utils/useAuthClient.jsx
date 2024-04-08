@@ -3,7 +3,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import {
   createActor,
   manipur_edu_backend,
-  idlFactory
+  idlFactory,
 } from "../../../declarations/manipur_edu_backend/index";
 import { AccountIdentifier } from "@dfinity/ledger-icp";
 import { Actor, HttpAgent } from "@dfinity/agent";
@@ -23,6 +23,7 @@ const defaultOptions = {
     idleOptions: {
       idleTimeout: 1000 * 60 * 30, // set to 30 minutes
       disableDefaultIdleCallback: true, // disable the default reload behavior
+      VerifyQuerySignatures: false,
     },
   },
   /**
@@ -69,13 +70,17 @@ export const useAuthClient = (options = defaultOptions) => {
   const login = () => {
     return new Promise(async (resolve, reject) => {
       try {
-        if (authClient.isAuthenticated() && ((await authClient.getIdentity().getPrincipal().isAnonymous()) === false)) {
+        if (
+          authClient.isAuthenticated() &&
+          (await authClient.getIdentity().getPrincipal().isAnonymous()) ===
+            false
+        ) {
           updateClient(authClient);
           resolve(AuthClient);
         } else {
           authClient.login({
             ...options.loginOptions,
-            onError: (error) => reject((error)),
+            onError: (error) => reject(error),
             onSuccess: () => {
               updateClient(authClient);
               resolve(authClient);
@@ -85,20 +90,24 @@ export const useAuthClient = (options = defaultOptions) => {
       } catch (error) {
         reject(error);
       }
-    })
+    });
   };
 
   const reloadLogin = () => {
     return new Promise(async (resolve, reject) => {
       try {
-        if (authClient.isAuthenticated() && ((await authClient.getIdentity().getPrincipal().isAnonymous()) === false)) {
+        if (
+          authClient.isAuthenticated() &&
+          (await authClient.getIdentity().getPrincipal().isAnonymous()) ===
+            false
+        ) {
           updateClient(authClient);
           resolve(AuthClient);
         }
       } catch (error) {
         reject(error);
       }
-    })
+    });
   };
 
   async function updateClient(client) {
@@ -141,17 +150,11 @@ export const useAuthClient = (options = defaultOptions) => {
     setIsAuthenticated(false);
   }
 
-
-
   const canisterId =
     process.env.CANISTER_ID_MANIPUR_EDU_BACKEND ||
     process.env.MANIPUR_EDU_BACKEND_CANISTER_ID;
 
-
-  const actor = createActor(canisterId, { agentOptions: { identity } })
-
-
-
+  const actor = createActor(canisterId, { agentOptions: { identity } });
 
   return {
     isAuthenticated,
@@ -167,7 +170,7 @@ export const useAuthClient = (options = defaultOptions) => {
     actor,
     reloadLogin,
     accountIdString,
-    userType
+    userType,
   };
 };
 
@@ -178,9 +181,7 @@ export const AuthProvider = ({ children }) => {
   const auth = useAuthClient();
   if (auth.authClient && auth.actor) {
     return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
-
   }
-
 };
 
 export const useAuth = () => useContext(AuthContext);
