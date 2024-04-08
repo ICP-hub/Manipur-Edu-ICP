@@ -28,6 +28,7 @@ const Card = ({ entry, onTap }) => {
   const navigate = useNavigate();
   const handleClick = () => {
     navigate("/institute-details-verify", { state: { entry } });
+
   };
   const instituteName = entry?.[1].institute_name?.[0] ?? "N/A";
   const instituteId = entry?.[1].institute_id?.[0].substr(0, 6) ?? "N/A";

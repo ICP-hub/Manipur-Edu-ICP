@@ -23,7 +23,7 @@ const defaultOptions = {
     idleOptions: {
       idleTimeout: 1000 * 60 * 30, // set to 30 minutes
       disableDefaultIdleCallback: true, // disable the default reload behavior
-      VerifyQuerySignatures: false,
+      verifyQuerySignatures: false
     },
   },
   /**

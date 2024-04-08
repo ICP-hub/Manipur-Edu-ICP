@@ -98,8 +98,11 @@ import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/i
 import AdminDashboard from "../Admin/AdminDashboard";
 
 const InstituteEditRequest = ({ onView }) => {
+  // let entries = useSelector((state) => state.allInstitutesReducer);
   let entries = useSelector((state) => state.allInstitutesReducer);
-  let entries = useSelector((state) => state.allInstitutesReducer);
+
+
+  console.log("entries size" , entries.length )
   return (
     <div>
       <div className="border rounded-[10px] border-[#D9EBFF]">
@@ -127,16 +130,18 @@ export default InstituteEditRequest;
 const Card = ({ entry, onView }) => {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate("/instituteEditRequest", { state: { entry } });
+    // navigate("/instituteEditRequest", { state: { entry } });
+    navigate("/InstituteEditRequestRejectApprove/");
+
   };
-  const instituteName = entry?.[1].institute_name?.[0] ?? "N/A";
-  const instituteId = entry?.[1].institute_id?.[0].substr(0, 6) ?? "N/A";
-  const instituteEmail = entry?.[1].email?.[0] ?? "N/A";
-  const verificationStatus = entry?.[1].status?.[0] ?? "N/A";
-  const navigate = useNavigate();
-  const handleClick = () => {
-    navigate("/instituteEditRequest", { state: { entry } });
-  };
+  // const instituteName = entry?.[1].institute_name?.[0] ?? "N/A";
+  // const instituteId = entry?.[1].institute_id?.[0].substr(0, 6) ?? "N/A";
+  // const instituteEmail = entry?.[1].email?.[0] ?? "N/A";
+  // const verificationStatus = entry?.[1].status?.[0] ?? "N/A";
+  // const navigate = useNavigate();
+  // const handleClick = () => {
+  //   navigate("/instituteEditRequest", { state: { entry } });
+  // };
   const instituteName = entry?.[1].institute_name?.[0] ?? "N/A";
   const instituteId = entry?.[1].institute_id?.[0].substr(0, 6) ?? "N/A";
   const instituteEmail = entry?.[1].email?.[0] ?? "N/A";
@@ -206,17 +211,17 @@ const Card = ({ entry, onView }) => {
             ? "text-[#B26868]"
             : "text-[#687DB2]"
         }`}
-        className={`flex justify-center font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px] ${
-          verificationStatus === "approved"
-            ? "text-[#13BC24]"
-            : verificationStatus === "pending"
-            ? "text-[#C3A846]"
-            : verificationStatus === "rejected"
-            ? "text-[#B26868]"
-            : "text-[#687DB2]"
-        }`}
+        // className={`flex justify-center font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px] ${
+        //   verificationStatus === "approved"
+        //     ? "text-[#13BC24]"
+        //     : verificationStatus === "pending"
+        //     ? "text-[#C3A846]"
+        //     : verificationStatus === "rejected"
+        //     ? "text-[#B26868]"
+        //     : "text-[#687DB2]"
+        // }`}
       >
-        {verificationStatus}
+        {/* {verificationStatus} */}
         {verificationStatus}
       </p>
       <div className="flex items-center">

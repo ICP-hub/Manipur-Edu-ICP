@@ -51,6 +51,10 @@ module: {
   rules: [
       { test: /\.(ts|tsx|jsx)$/, loader: "ts-loader" },
       { test: /\.css$/, use: ["style-loader", "css-loader", "postcss-loader"] },
+    {
+      test: /\.(png|svg|jpe?g|gif)$/i,
+      type: 'asset/resource',
+    },
     ],
   },
  
