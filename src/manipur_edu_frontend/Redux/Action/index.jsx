@@ -20,3 +20,6 @@ export const getAllInstitutes = (instituteDetail) => {
 export const getAllStudents = (studentDetails) => {
   return { type: constants.GET_ALL_STUDENTS, payload: studentDetails };
 };
+export const getAllScholarships = (scholarshipDetails) => {
+  return { type: constants.GET_ALL_SCHOLARSHIPS, payload: scholarshipDetails};
+};

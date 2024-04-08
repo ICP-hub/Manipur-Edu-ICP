@@ -34,9 +34,13 @@ const Card = ({ entry, onView, onEdit, onStudent }) => {
   const handleClick = () => {
     navigate("/register-students-details", { state: { entry } });
   };
-  const instituteName = entry?.[1].institute_name?.[0] ?? "N/A";
-  const instituteId = entry?.[1].institute_id?.[0].substr(0, 6) ?? "N/A";
-  const instituteEmail = entry?.[1].email?.[0] ?? "N/A";
+  
+  const handleView = () => {
+    navigate("/institute-details-admin", { state: { entry } });
+  };
+  const instituteName = entry?.[1].institute_name?.[0] ?? 'N/A';
+  const instituteId = entry?.[1].institute_id?.[0].substr(0, 6) ?? 'N/A';
+  const instituteEmail = entry?.[1].email?.[0] ?? 'N/A';
   return (
     // <div className=" grid grid-cols-[repeat(4,1fr)_100px] py-[15px] border-t border-[#D9EBFF]">
     //   <div className=" flex justify-center  text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] rounded-[5px]">
@@ -142,7 +146,7 @@ const Card = ({ entry, onView, onEdit, onStudent }) => {
         Click to View
       </button>
       <div className="flex gap-[8px]">
-        <button onClick={onView}>
+        <button onClick={handleView}>
           <svg
             width="20"
             height="20"

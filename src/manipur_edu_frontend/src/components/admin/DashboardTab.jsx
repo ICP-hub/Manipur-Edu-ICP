@@ -4,13 +4,15 @@ import ScholarshipTab from "./ScholarshipTab";
 import ScholarshipApplication from "./ScholarshipApplication";
 import InstitutesTab from "./InstitutesTab";
 import ScholarshipDetails from "./ScholarshipDetails";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
-import "../../../assets/main.css";
+
+
+import { useSelector } from "react-redux";
+
 const DashboardTab = () => {
   const [view, setView] = useState("default");
   const isXlScreen = useMediaQuery("(min-width: 1440px)");
-  const [value, onChange] = useState(new Date());
+  
+  const scholarships = useSelector((state) => state.allScholarshipsReducer);
   let entries;
   if (isXlScreen) {
     entries = [
@@ -181,7 +183,7 @@ const DashboardTab = () => {
                 ))}
               </div>
             </div>
-            <div className="flex flex-col">
+            {/* <div className="flex flex-col">
               <p className="font-[Segoe UI] font-[600] text-xl text-[#2D6BE4] px-9 pt-[20px] pb-[21px]">
                 Ongoing Scholarships
               </p>
@@ -235,7 +237,62 @@ const DashboardTab = () => {
                   </div>
                 </div>
               </div>
+            </div> */}
+
+
+
+
+
+<div className="flex flex-col">
+      <p className="font-[Segoe UI] font-[600] text-xl text-[#2D6BE4] px-9 pt-[20px] pb-[21px]">
+        Ongoing Scholarships
+      </p>
+      <div className="md1:flex md1:justify-between px-9">
+        {scholarships && scholarships.map((scholarship, index) => (
+          <div key={index} className="flex rounded-[10px] mb-[20px] dxs:w-full sm1:w-[80%] md1:mb-[0px] md1:w-[48%]">
+            <div className="w-[35%] bg-[#86ABF3] rounded-tl-[10px] rounded-bl-[10px]">
+              {/* <img src={scholarship.image} className="w-48 h-38 mt-8" alt="scholarship" /> */}
+              <img src="scholarship.jpg" class="w-48 h-38 mt-8" ></img>
             </div>
+            <div className="w-[65%] bg-[#E7F4FF] p-[13px] rounded-tr-[10px] rounded-br-[10px]">
+              <p className="font-[Segoe UI] font-[600] text-[16px] text-[#00227A] leading-[21px] pb-[10px]">
+                {scholarship?.[1].name ?? 'N/A'}
+              </p>
+              <p className="font-[Segoe UI] font-[400] text-[13px] text-[#4E6DBB] leading-[17px] pb-[5px]">
+                Offered by: {scholarship?.[1].institute ?? 'N/A'}
+              </p>
+              <p className="font-[Segoe UI] font-[400] text-[13px] text-[#4E6DBB] leading-[17px] pb-[16px]">
+                Total Students Registered: {scholarship?.[1].students ?? 'N/A'}
+              </p>
+              <div className="flex flex-row-reverse">
+                <button
+                  onClick={() => setView("viewScholarship")}
+                  className="bg-[#89C1FF] text-[#00227A] text-[13px] rounded-[5px] px-[22px] py-[5px]"
+                >
+                  View
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <div className="dxs:hidden md:block">
               <div className="flex justify-between pr-[36px] pt-[25px]">
                 <p className="font-[Segoe UI] font-[600] text-xl text-[#2D6BE4] px-9 pb-[21px]">

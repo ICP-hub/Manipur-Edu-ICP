@@ -2,6 +2,7 @@ const CONSTANTS = {
     ADMIN: "admin",
     INSTITUTE: "institute",
     STUDENT: "student",
+    SCHOLARSHIP: "scholarship",
     UNKNOWN: "unknown",
   };
   
