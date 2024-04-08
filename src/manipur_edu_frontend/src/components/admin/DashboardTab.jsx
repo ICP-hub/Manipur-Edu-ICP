@@ -197,7 +197,7 @@ const DashboardTab = () => {
                     onClick={() => setView("allScholarshipApplications")}
                     className="text-[#2D6BE4] text-[15px] leading-[20px] font-[Segoe UI] font-[400] "
                   >
-                    View All
+                    View All 1
                   </button>
                 </div>
               </div>
@@ -272,7 +272,7 @@ const DashboardTab = () => {
                     onClick={() => setView("allScholarshipApplications")}
                     className="text-[#2D6BE4] text-[15px] leading-[20px] font-[Segoe UI] font-[400] "
                   >
-                    View All
+                    View All 2
                   </button>
                 </div>
               </div>
@@ -291,7 +291,7 @@ const DashboardTab = () => {
                   onClick={() => setView("allVerificationRequest")}
                   className="text-[#2D6BE4] text-[12px] leading-[20px] font-[Segoe UI] font-[400] pt-[2px] "
                 >
-                  View All
+                  View All 3
                 </button>
               </div>
               <div className="py-[39px]  flex flex-col gap-[29px]">
@@ -430,7 +430,7 @@ const DashboardTab = () => {
                   onClick={() => setView("allVerificationRequest")}
                   className="text-[#2D6BE4] text-[12px] leading-[20px] font-[Segoe UI] font-[400] pt-[2px] "
                 >
-                  View All
+                  View All 4
                 </button>
               </div>
               <div className="py-[39px] flex flex-col gap-[29px]">
@@ -464,7 +464,7 @@ const DashboardTab = () => {
                     </button>
                   </div>
                 </div>
-                <div className="flex justify-between">
+                {/* <div className="flex justify-between">
                   <div className="flex items-center">
                     <img
                       className="w-[50px] h-[50px]"
@@ -493,8 +493,8 @@ const DashboardTab = () => {
                       </svg>
                     </button>
                   </div>
-                </div>
-                <div className="flex justify-between">
+                </div> */}
+                {/* <div className="flex justify-between">
                   <div className="flex items-center">
                     <img
                       className="w-[50px] h-[50px]"
@@ -523,7 +523,7 @@ const DashboardTab = () => {
                       </svg>
                     </button>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
