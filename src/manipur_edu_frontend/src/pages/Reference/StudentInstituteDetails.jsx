@@ -67,7 +67,11 @@ const SignupStudentsInstitute = () => {
         </div>
         <div>
           <div className="h-[482px]">
-            <img className="w-full object-contain" src="SignupPageGirl.png" alt="Image 1" />
+            <img
+              className="w-full object-contain"
+              src="SignupPageGirl.png"
+              alt="Image 1"
+            />
           </div>
         </div>
       </div>
@@ -195,7 +199,7 @@ const SignupStudentsInstitute = () => {
                     borderRadius: "10px",
                   }} /*onClick={handleLogin}*/
                 >
-                  PreviousH
+                  Previous
                 </button>
                 <button
                   className="w-[45px] h-[45px] text-white text-[20px]"
