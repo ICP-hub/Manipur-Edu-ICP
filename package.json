@@ -17,9 +17,9 @@
     "generate": "scripts/did.sh && dfx generate manipur_edu_backend"
   },
   "dependencies": {
-    "@dfinity/agent": "^0.20.2",
+    "@dfinity/agent": "^1.2.0",
     "@dfinity/auth-client": "^0.20.2",
-    "@dfinity/candid": "^0.20.2",
+    "@dfinity/candid": "^1.2.0",
     "@dfinity/identity": "^1.2.0",
     "@dfinity/ledger-icp": "^2.1.1",
     "@dfinity/nns-proto": "^1.0.2",
