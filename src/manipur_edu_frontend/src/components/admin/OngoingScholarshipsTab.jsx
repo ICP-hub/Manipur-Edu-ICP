@@ -32,7 +32,7 @@ const OngoingScholarshipsTab = ({ onView, onEdit }) => {
         <div>
             <div className="flex flex-col gap-[35px] ">
                 {entries.map((entry, index) => (
-                    <Card key={index} entry={entry} onView={onView} onEdit={onEdit} />
+                    <Card key={index} entry={entry} index={index + 1} onView={onView} onEdit={onEdit} />
                 ))}
                 <div className="flex flex-row-reverse">
                     <p>Page 1 of 100</p>
@@ -44,12 +44,12 @@ const OngoingScholarshipsTab = ({ onView, onEdit }) => {
 
 export default OngoingScholarshipsTab;
 
-const Card = ({ key, entry, onView, onEdit }) => {
+const Card = ({ index, entry, onView, onEdit }) => {
     return (
         <div className="relative flex  ">
             <div className="absolute left-[-30px] top-[27px] rounded-[34px] bg-[white] w-[53px] h-[53px] ">
                 <div className="absolute top-[2.75px] rounded-[34px] bg-[#D9EBFF] w-[48px] h-[48px] flex justify-center items-center text-[#5D57FB] font-[600] text-[18px] ">
-                    {key}
+                    {index}
                 </div>
             </div>
             <div className="bg-[#F6FBFF] rounded-[4px] flex p-[30px] w-full">
