@@ -148,13 +148,13 @@ const SignupInstitute = () => {
                     <option value="" disabled selected hidden></option>
                     <option
                       value="Public"
-                      className="bg-[#E5EBFF] shadow-md text-[#00227A] font-normal text-center"
+                      className="bg-[#E5EBFF] shadow-md text-[#00227A] font-normal"
                     >
                       Public
                     </option>
                     <option
                       value="Private"
-                      className="bg-[#E5EBFF] shadow-md text-[#00227A] font-normal text-center"
+                      className="bg-[#E5EBFF] shadow-md text-[#00227A] font-normal"
                     >
                       Private
                     </option>
@@ -428,19 +428,19 @@ const SignupInstitute = () => {
                     <option value="" disabled selected hidden></option>
                     <option
                       value="UGC/AICTE/MoE"
-                      className="bg-[#E5EBFF] shadow-md text-[#00227A] font-normal text-center"
+                      className="bg-[#E5EBFF] shadow-md text-[#00227A] font-normal"
                     >
                       Courses approved by UGC/AICTE/MoE
                     </option>
                     <option
                       value="MHA"
-                      className="bg-[#E5EBFF] shadow-md text-[#00227A] font-normal text-center"
+                      className="bg-[#E5EBFF] shadow-md text-[#00227A] font-normal"
                     >
                       Courses approved by MHA
                     </option>
                     <option
                       value="Others"
-                      className="bg-[#E5EBFF] shadow-md text-[#00227A] font-normal text-center"
+                      className="bg-[#E5EBFF] shadow-md text-[#00227A] font-normal"
                     >
                       Others
                     </option>
@@ -470,19 +470,19 @@ const SignupInstitute = () => {
                     <option value="" disabled selected hidden></option>
                     <option
                       value="Women"
-                      className="bg-[#E5EBFF] shadow-md text-[#00227A] font-normal text-center"
+                      className="bg-[#E5EBFF] shadow-md text-[#00227A] font-normal"
                     >
                       Women
                     </option>
                     <option
                       value="Men"
-                      className="bg-[#E5EBFF] shadow-md text-[#00227A] font-normal text-center"
+                      className="bg-[#E5EBFF] shadow-md text-[#00227A] font-normal"
                     >
                       Men
                     </option>
                     <option
                       value="Co-Ed"
-                      className="bg-[#E5EBFF] shadow-md text-[#00227A] font-normal text-center"
+                      className="bg-[#E5EBFF] shadow-md text-[#00227A] font-normal"
                     >
                       Co-Ed
                     </option>
