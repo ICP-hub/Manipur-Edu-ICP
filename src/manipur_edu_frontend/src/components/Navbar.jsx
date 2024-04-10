@@ -248,6 +248,12 @@
 
 // export default Navbar;
 
+
+
+
+
+
+
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import StudentProfileDropdown from "./student/StudentProfileDropdown";
@@ -334,14 +340,28 @@ const Navbar = () => {
   //   };
   // }, [dropdownRef]);
   useEffect(() => {
+    // function handleClickOutside(event) {
+    //   const isOutsideDropdown =
+    //     dropdownRef.current &&
+    //     !dropdownRef.current.contains(event.target) &&
+    //     !profileButtonRef.current.contains(event.target) &&
+    //     !notificationButtonRef.current.contains(event.target);
+
+    //   if (isOutsideDropdown) {
+    //     dispatch(notificationOpenCloseDropDown(false));
+    //     dispatch(profileOpenCloseDropDown(false));
+    //   }
+    // }
+
     function handleClickOutside(event) {
-      const isOutsideDropdown =
+      if (
         dropdownRef.current &&
+        profileButtonRef.current &&
+        notificationButtonRef.current &&
         !dropdownRef.current.contains(event.target) &&
         !profileButtonRef.current.contains(event.target) &&
-        !notificationButtonRef.current.contains(event.target);
-
-      if (isOutsideDropdown) {
+        !notificationButtonRef.current.contains(event.target)
+      ) {
         dispatch(notificationOpenCloseDropDown(false));
         dispatch(profileOpenCloseDropDown(false));
       }

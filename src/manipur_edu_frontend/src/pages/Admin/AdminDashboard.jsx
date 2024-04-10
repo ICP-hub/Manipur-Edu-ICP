@@ -4,9 +4,12 @@ import InstitutesTab from "../../components/admin/InstitutesTab";
 import StudentsTab from "../../components/admin/StudentsTab";
 import ProfileTab from "../../components/admin/ProfileTab";
 import ScholarshipTab from "../../components/admin/ScholarshipTab";
+import InstituteDetails from "./InstituteDetails";
+import RegisteredStudents from "./RegisteredStudents";
 
 const AdminDashboard = () => {
   const [selected_tab, SetTab] = useState("Dashboard");
+
   const [menu, setMenu] = useState("close");
   return (
     <div className="flex justify-center bg-[white] md2:bg-[#86ABF3] h-screen">
@@ -892,10 +895,17 @@ const AdminDashboard = () => {
         `}
         </style>
         {selected_tab === "Dashboard" && <DashboardTab />}
-        {selected_tab === "Institutes" && <InstitutesTab />}
+        {selected_tab === "Institutes" && <InstitutesTab SetTab={SetTab} />}
         {selected_tab === "Students" && <StudentsTab />}
         {selected_tab === "Scholarship" && <ScholarshipTab />}
         {selected_tab === "Profile" && <ProfileTab />}
+        {selected_tab === "register-students-details" && <RegisteredStudents />}
+        {selected_tab === "institute-details-verify" && (
+          <InstituteDetails onBack={() => SetTab("Dashboard")} />
+        )}
+        {selected_tab === "instituteEditRequest" && (
+          <InstituteDetails onBack={() => SetTab("Dashboard")} />
+        )}
       </div>
     </div>
   );

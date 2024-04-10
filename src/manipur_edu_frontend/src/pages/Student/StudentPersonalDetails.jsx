@@ -5,6 +5,7 @@ import { useAuth } from "../../utils/useAuthClient";
 import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
 import { ICountry, IState, City, State, Country } from "country-state-city";
 import Loader from "../../loader/Loader";
+import "../../../assets/main.css";
 import { useQuery, useQueryClient, useMutation } from "react-query";
 import {
   generateAesKeyBase64,
@@ -12,7 +13,6 @@ import {
   handleFileEncryption,
 } from "../../utils/helper";
 import Status from "../../components/student/status";
-
 
 const SignupStudents = () => {
   const {
@@ -37,7 +37,11 @@ const SignupStudents = () => {
   const handleStateChange = (e) => {
     setSelectedState(e.target.value);
   };
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
+  const toggleDatePicker = () => {
+    setShowDatePicker(!showDatePicker);
+  };
   const fetchInstitutesList = async () => {
     const response = await actor.get_institutes_name_and_public_key();
     return response;
@@ -152,9 +156,6 @@ const SignupStudents = () => {
       // await navigate("/");
     }
   };
-//  if (isLoadingkey) {
-//     return <Loader />; // Render loader if data is still loading
-//   }
   return (
     <SignUpPage>
       {isRendering && <Loader></Loader>}
@@ -296,13 +297,27 @@ const SignupStudents = () => {
                     </span>
                   )}
                 </div>
-                {/*Enter Date Picker */}
                 <div className="flex-none pt-[24px]">
-                  <div className="rounded-[10px] px-1 p-1 focus:outline-[#ACBFFD] border-[#ACBFFD] border">
-                    <img src="/calander.svg" />
+                  <div
+                    className="w-full h-[43px] rounded-[10px] px-1 p-1 focus:outline-[#ACBFFD] border-[#ACBFFD] border cursor-pointer"
+                    onClick={toggleDatePicker}
+                  >
+                    <img src="/calander.svg" alt="calendar" />
                   </div>
                 </div>
+                {/* Date Picker */}
+                {showDatePicker && (
+                  <div className="absolute top-full left-0 mt-2">
+                    {/* Add your date picker component here */}
+                    {/* This could be a custom date picker component or an inline date input */}
+                    <input
+                      type="date"
+                      className="bg-white border border-gray-300 rounded p-1"
+                    />
+                  </div>
+                )}
               </div>
+
               <div className="mt-[10px] dxl:mt-[15px]">
                 <label className="text-[#00227A]" htmlFor="gender">
                   Gender <span className="text-[#FF0606]">*</span>
@@ -503,10 +518,10 @@ const SignupStudents = () => {
                     <br />
                     <select
                       className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
-                         errors.state && !selectedState
-          ? "border-[#FF0606] focus:outline-[#FF0606]" 
-          : "border-[#ACBFFD] focus:outline-[#ACBFFD]" 
-      }`}
+                        errors.state && !selectedState
+                          ? "border-[#FF0606] focus:outline-[#FF0606]"
+                          : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      }`}
                       id="state"
                       name="state"
                       {...register("state", {
@@ -525,7 +540,7 @@ const SignupStudents = () => {
                         )
                       )}
                     </select>
-                    {errors && errors.state &&  !selectedState  && (
+                    {errors && errors.state && !selectedState && (
                       <span className="absolute grid text-xs text-[#FF0606]">
                         Please select state.
                       </span>
@@ -653,7 +668,7 @@ const SignupStudents = () => {
                   </select>
                   {errors && errors.institute_name && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                     Please enter the name of the institute.
+                      Please enter the name of the institute.
                     </span>
                   )}
                 </div>
@@ -705,7 +720,7 @@ const SignupStudents = () => {
                     />
                     {errors && errors.cgpa && (
                       <span className="absolute grid text-xs text-[#FF0606]">
-                         Please enter your CGPA.
+                        Please enter your CGPA.
                       </span>
                     )}
                   </div>
@@ -734,7 +749,7 @@ const SignupStudents = () => {
                     />
                     {errors && errors.graduation_year && (
                       <span className="absolute grid text-xs text-[#FF0606]">
-                         Please specify your graduation year.
+                        Please specify your graduation year.
                       </span>
                     )}
                   </div>
@@ -760,7 +775,7 @@ const SignupStudents = () => {
                   />
                   {errors && errors.enroll && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                       Please enter your enrollment number.
+                      Please enter your enrollment number.
                     </span>
                   )}
                 </div>
@@ -786,7 +801,7 @@ const SignupStudents = () => {
                 </div>
                 {errors && errors.student_institute_email && (
                   <span className="absolute grid text-xs text-[#FF0606]">
-                   Please enter your student institute email.
+                    Please enter your student institute email.
                   </span>
                 )}
               </div>
