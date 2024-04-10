@@ -6,7 +6,7 @@ dfx deps pull
 dfx deps init internet_identity --argument '(null)'
 dfx deps deploy
 
-RUN Commands
+# RUN Commands
 dfx start --background
 dfx deploy
   

@@ -22,8 +22,10 @@ const DashboardTab = () => {
   };
   
   const scholarships = useSelector((state) => state.allScholarshipsReducer);
-  let entries = useSelector((state) => state.allInstitutesReducer);
+  let entries = useSelector((state) => state.allInstitutesReducer) || [];
   let studentEntries = useSelector((state) => state.studentDetailsReducer);
+  console.log("enteries is  : " , entries)
+  console.log("entries size" , entries?.length )
 
   console.log(studentEntries)
   let registeredStudent = studentEntries.length;
@@ -42,33 +44,33 @@ const DashboardTab = () => {
 
 
 
-  if (isXlScreen) {
-    entries = [
-      {
-        name: "Student 1",
-        status: "New",
-      },
-      {
-        name: "Student 1",
-        status: "Rejected",
-      },
-    ];
-  } else {
-    entries = [
-      {
-        name: "Student 1",
-        status: "New",
-      },
-      {
-        name: "Student 1",
-        status: "Approved",
-      },
-      {
-        name: "Student 1",
-        status: "Rejected",
-      },
-    ];
-  }
+  // if (isXlScreen) {
+  //   entries = [
+  //     {
+  //       name: "Student 1",
+  //       status: "New",
+  //     },
+  //     {
+  //       name: "Student 1",
+  //       status: "Rejected",
+  //     },
+  //   ];
+  // } else {
+  //   entries = [
+  //     {
+  //       name: "Student 1",
+  //       status: "New",
+  //     },
+  //     {
+  //       name: "Student 1",
+  //       status: "Approved",
+  //     },
+  //     {
+  //       name: "Student 1",
+  //       status: "Rejected",
+  //     },
+  //   ];
+  // }
   return (
     <div>
       {view === "allScholarshipApplications" ? (
@@ -157,7 +159,7 @@ const DashboardTab = () => {
             <div className="flex justify-between pt-10 px-9 ">
               <div className="rounded-[20px] bg-[#E7F4FF] flex w-[48%] md2:w-[30%] h-[131px] p-[10px] ">
                 <div className="font-[400] font-[Mukta] text-[#00227A] text-[40px] dxl:text-5xl flex items-center pr-[10px] ">
-                  {entries.length}
+                  {entries?.length}
                 </div>
                 <div className="font-[350] font-[Segoe UI] text-[#00227A] text-[13px] xxs1:text-lg flex flex-col justify-center ">
                   <p>
@@ -211,7 +213,7 @@ const DashboardTab = () => {
                     onClick={() => setView("allScholarshipApplications")}
                     className="text-[#2D6BE4] text-[15px] leading-[20px] font-[Segoe UI] font-[400] "
                   >
-                    View All
+                    View All 1
                   </button>
                 </div>
               </div>
@@ -341,7 +343,7 @@ const DashboardTab = () => {
                     onClick={() => setView("allScholarshipApplications")}
                     className="text-[#2D6BE4] text-[15px] leading-[20px] font-[Segoe UI] font-[400] "
                   >
-                    View All
+                    View All 2
                   </button>
                 </div>
               </div>
@@ -360,7 +362,7 @@ const DashboardTab = () => {
                   onClick={() => setView("allVerificationRequest")}
                   className="text-[#2D6BE4] text-[12px] leading-[20px] font-[Segoe UI] font-[400] pt-[2px] "
                 >
-                  View All
+                  View All 3
                 </button>
               </div>
               <div className="py-[39px]  flex flex-col gap-[29px]">
@@ -499,7 +501,7 @@ const DashboardTab = () => {
                   onClick={() => setView("allVerificationRequest")}
                   className="text-[#2D6BE4] text-[12px] leading-[20px] font-[Segoe UI] font-[400] pt-[2px] "
                 >
-                  View All
+                  View All 4
                 </button>
               </div>
               <div className="py-[39px] flex flex-col gap-[29px]">
@@ -533,7 +535,7 @@ const DashboardTab = () => {
                     </button>
                   </div>
                 </div>
-                <div className="flex justify-between">
+                {/* <div className="flex justify-between">
                   <div className="flex items-center">
                     <img
                       className="w-[50px] h-[50px]"
@@ -562,8 +564,8 @@ const DashboardTab = () => {
                       </svg>
                     </button>
                   </div>
-                </div>
-                <div className="flex justify-between">
+                </div> */}
+                {/* <div className="flex justify-between">
                   <div className="flex items-center">
                     <img
                       className="w-[50px] h-[50px]"
@@ -592,7 +594,7 @@ const DashboardTab = () => {
                       </svg>
                     </button>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
