@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import SignUpPage from "../../components/student/SignUpPage"; // Import SignUp Page ui
 import { useAuth } from "../../utils/useAuthClient";
 import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
-
 import { useQuery } from "react-query";
 import { ICountry, IState, City, State, Country } from "country-state-city";
 import Status from "../../components/student/status";
@@ -25,6 +24,7 @@ const SignupInstitute = () => {
   const [isLoading, setIsLoading] = useState(false);
   const handleCountryChange = (e) => {
     setSelectedCountry(e.target.value);
+
     setSelectedState(""); // Reset state selection on country change
   };
   const handleStateChange = (e) => {
@@ -32,8 +32,6 @@ const SignupInstitute = () => {
   };
   const [step, setStep] = useState(0);
   const { actor } = useAuth();
-  const navigate = useNavigate();
-
   const {
     data: key,
     isLoading: isLoadingkey,
@@ -44,6 +42,13 @@ const SignupInstitute = () => {
     console.log(key);
     console.log("base64String", key);
   }
+  const handlePrevious = () => {
+    setStep((prevStep) => prevStep - 1);
+  };
+  const navigate = useNavigate();
+  const handlePrevious1 = () => {
+    navigate("/login"); // Navigate to the signup component
+  };
   const onSubmit = async (data) => {
     console.log(data);
     setStep((prevStep) => prevStep + 1);
@@ -125,7 +130,7 @@ const SignupInstitute = () => {
                   />
                   {errors && errors.institute_name && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                      This field is required
+                      Please enter the name of the institute.
                     </span>
                   )}
                 </div>
@@ -161,7 +166,7 @@ const SignupInstitute = () => {
                   </select>
                   {errors && errors.institute_type && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                      This field is required
+                      Please select institute type
                     </span>
                   )}
                 </div>
@@ -187,7 +192,7 @@ const SignupInstitute = () => {
                   />
                   {errors.instituteSize && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                      This field is required
+                      Please provide the size of the institute.
                     </span>
                   )}
                 </div>
@@ -210,7 +215,7 @@ const SignupInstitute = () => {
                   />
                   {errors && errors.address && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                      This field is required
+                      Please provide the address.
                     </span>
                   )}
                 </div>
@@ -222,10 +227,11 @@ const SignupInstitute = () => {
                   </label>
                   <br />
                   <select
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.state
-                      ? "border-[#FF0606] focus:outline-[#FF0606]"
-                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
-                      }`}
+                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
+                      errors.state && !selectedState
+                        ? "border-[#FF0606] focus:outline-[#FF0606]"
+                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                    }`}
                     id="state"
                     name="state"
                     {...register("state", {
@@ -236,15 +242,17 @@ const SignupInstitute = () => {
                     disabled={!selectedCountry}
                   >
                     <option value="">Select State</option>
+
                     {State.getStatesOfCountry(selectedCountry).map((state) => (
                       <option key={state.isoCode} value={state.isoCode}>
                         {state.name}
                       </option>
                     ))}
                   </select>
-                  {errors && errors.state && (
+
+                  {errors && errors.state && !selectedState && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                      This field is required
+                      Please select a state.
                     </span>
                   )}
                 </div>
@@ -276,7 +284,7 @@ const SignupInstitute = () => {
                   </select>
                   {errors && errors.city && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                      This field is required
+                      Please select a city.
                     </span>
                   )}
                 </div>
@@ -303,14 +311,23 @@ const SignupInstitute = () => {
                   />
                   {errors && errors.zip_code && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                      This field is required
+                      Please enter a valid zip code.
                     </span>
                   )}
                 </div>
               </div>
-              <div className="mt-[20px] dxl:mt-[30px]">
+              <div className="mt-[20px] dxl:mt-[30px] flex">
+                {/* previous button */}
                 <button
-                  className="w-full h-[40px] dxl:h-[45px] text-white text-[20px] bg-[#646ED6] rounded-[10px]"
+                  className="flex-1 mr-[10px] w-[40%] h-[40px] dxl:h-[45px] text-white text-[20px] bg-[#646ED6] rounded-[10px]"
+                  type="button"
+                  onClick={handlePrevious1}
+                >
+                  Previous
+                </button>
+
+                <button
+                  className="flex-1 ml-[10px] w-[40%] h-[40px] dxl:h-[45px] text-white text-[20px] bg-[#646ED6] rounded-[10px]"
                   type="submit"
                 >
                   Next
@@ -349,7 +366,7 @@ const SignupInstitute = () => {
                   />
                   {errors && errors.email && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                      This field is required
+                      Please enter a valid email address.
                     </span>
                   )}
                 </div>
@@ -376,7 +393,7 @@ const SignupInstitute = () => {
                   />
                   {errors && errors.phone_no && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                      This field is required
+                      Please enter a valid Phone Number.
                     </span>
                   )}
                 </div>
@@ -404,7 +421,7 @@ const SignupInstitute = () => {
                   />
                   {errors && errors.website && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                      This field is required
+                      Please enter a valid website URL.
                     </span>
                   )}
                 </div>
@@ -447,7 +464,7 @@ const SignupInstitute = () => {
                   </select>
                   {errors && errors.approvalAuthority && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                      This field is required
+                      Please specify the approval authority.
                     </span>
                   )}
                 </div>
@@ -489,14 +506,21 @@ const SignupInstitute = () => {
                   </select>
                   {errors && errors.coedStatus && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                      This field is required
+                      Please specify the coed status.
                     </span>
                   )}
                 </div>
               </div>
-              <div className="mt-[20px] dxl:mt-[30px]">
+              <div className="mt-[20px] dxl:mt-[30px] flex">
                 <button
-                  className="w-full h-[40px] dxl:h-[45px] text-white text-[20px] bg-[#646ED6] rounded-[10px]"
+                  className="flex-1 mr-[10px] w-[40%] h-[40px] dxl:h-[45px] text-white text-[20px] bg-[#646ED6] rounded-[10px]"
+                  type="button"
+                  onClick={handlePrevious}
+                >
+                  Previous
+                </button>
+                <button
+                  className="flex-1 ml-[10px] w-[40%] h-[40px] dxl:h-[45px] text-white text-[20px] bg-[#646ED6] rounded-[10px]"
                   type="submit"
 
                 >

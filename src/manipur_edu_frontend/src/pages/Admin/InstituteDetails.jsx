@@ -2,20 +2,16 @@ import React, { useState } from "react";
 import VerifyModal from "../../components/VerifyModal";
 import RejectModal from "../../components/RejectModal";
 import { useAuth } from "../../utils/useAuthClient";
-import {
-  useLocation,
-  useNavigate,
-} from "../../../../../node_modules/react-router-dom/dist/index";
-import Background from "../../components/BackgroudPage";
-import Desktop3 from "../../components/admin/Desktop3";
+import { useSelector } from "react-redux";
+import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
+
 const InstituteDetails = ({ onBack }) => {
   const [openModalReject, setOpenModalReject] = useState(false);
   const [openModalVerify, setOpenModalVerify] = useState(false);
   const { actor } = useAuth();
   console.log(actor);
-  const location = useLocation();
   const navigate = useNavigate();
-  const { entry } = location.state;
+  let entry = useSelector((state) => state.allInstitutesReducer);
   console.log("institute details page ", entry);
   const verifyInstitute = async () => {
     const result = await actor.verify_institute(entry[0]);
@@ -23,7 +19,9 @@ const InstituteDetails = ({ onBack }) => {
     console.log(result);
     navigate("/dsa");
   };
-
+  const handleclickBack = () => {
+    navigate("/dsa");
+  };
   const rejectInstitute = async () => {
     const rejected = await actor.reject_institute(entry[0]);
     setOpenModalReject(false);
@@ -226,9 +224,7 @@ const InstituteDetails = ({ onBack }) => {
             </>
           )}
           <button
-            onClick={() => {
-              navigate("/dsa");
-            }}
+            onClick={onBack}
             className="px-[2.75rem] py-[1rem] border border-[#00227A] text-[#00227A] rounded-[0.625rem]"
           >
             Back

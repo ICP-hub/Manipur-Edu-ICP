@@ -97,8 +97,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
 import AdminDashboard from "../Admin/AdminDashboard";
 
-const InstituteEditRequest = ({ onView }) => {
-  // let entries = useSelector((state) => state.allInstitutesReducer);
+const InstituteEditRequest = ({ onView, SetTab }) => {
   let entries = useSelector((state) => state.allInstitutesReducer);
 
 
@@ -115,7 +114,7 @@ const InstituteEditRequest = ({ onView }) => {
         </div>
         {Array.isArray(entries) &&
           entries.map((entry, index) => (
-            <Card key={index} entry={entry} onView={onView} />
+            <Card SetTab={SetTab} key={index} entry={entry} onView={onView} />
           ))}
         {/* {entries.map((entry, index) => (
           <Card key={index} entry={entry} onView={onView} />
@@ -127,21 +126,12 @@ const InstituteEditRequest = ({ onView }) => {
 };
 export default InstituteEditRequest;
 
-const Card = ({ entry, onView }) => {
+const Card = ({ entry, onView, SetTab }) => {
   const navigate = useNavigate();
   const handleClick = () => {
     // navigate("/instituteEditRequest", { state: { entry } });
-    navigate("/InstituteEditRequestRejectApprove/");
-
+    SetTab("instituteEditRequest");
   };
-  // const instituteName = entry?.[1].institute_name?.[0] ?? "N/A";
-  // const instituteId = entry?.[1].institute_id?.[0].substr(0, 6) ?? "N/A";
-  // const instituteEmail = entry?.[1].email?.[0] ?? "N/A";
-  // const verificationStatus = entry?.[1].status?.[0] ?? "N/A";
-  // const navigate = useNavigate();
-  // const handleClick = () => {
-  //   navigate("/instituteEditRequest", { state: { entry } });
-  // };
   const instituteName = entry?.[1].institute_name?.[0] ?? "N/A";
   const instituteId = entry?.[1].institute_id?.[0].substr(0, 6) ?? "N/A";
   const instituteEmail = entry?.[1].email?.[0] ?? "N/A";
