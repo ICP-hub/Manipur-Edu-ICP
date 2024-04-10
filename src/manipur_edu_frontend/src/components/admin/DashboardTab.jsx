@@ -11,6 +11,11 @@ const DashboardTab = () => {
   const [view, setView] = useState("default");
   const isXlScreen = useMediaQuery("(min-width: 1440px)");
   const [value, onChange] = useState(new Date());
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleSearchBar = () => {
+    setIsOpen(!isOpen);
+  };
   let entries;
   if (isXlScreen) {
     entries = [
@@ -57,7 +62,16 @@ const DashboardTab = () => {
                 Dashboard
               </p>
               <div className="flex gap-[23px] pt-[5px] ">
-                <button>
+                {isOpen && (
+                  <div className="right-0 mt-0 w-48 h-9 bg-#c6d4fd border border-gray-300 rounded-lg shadow-md">
+                    <input
+                      type="text"
+                      placeholder="Search..."
+                      className="w-full px-4 py-1 focus:outline-none"
+                    />
+                  </div>
+                )}
+                <button onClick={toggleSearchBar}>
                   <svg
                     width="20"
                     height="20"

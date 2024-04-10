@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
 import AdminDashboard from "../Admin/AdminDashboard";
 
-const InstituteEditRequest = ({ onView }) => {
+const InstituteEditRequest = ({ onView, SetTab }) => {
   let entries = useSelector((state) => state.allInstitutesReducer);
   return (
     <div>
@@ -17,7 +17,7 @@ const InstituteEditRequest = ({ onView }) => {
         </div>
         {Array.isArray(entries) &&
           entries.map((entry, index) => (
-            <Card key={index} entry={entry} onView={onView} />
+            <Card SetTab={SetTab} key={index} entry={entry} onView={onView} />
           ))}
         {/* {entries.map((entry, index) => (
           <Card key={index} entry={entry} onView={onView} />
@@ -29,10 +29,11 @@ const InstituteEditRequest = ({ onView }) => {
 };
 export default InstituteEditRequest;
 
-const Card = ({ entry, onView }) => {
+const Card = ({ entry, onView, SetTab }) => {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate("/instituteEditRequest", { state: { entry } });
+    // navigate("/instituteEditRequest", { state: { entry } });
+    SetTab("instituteEditRequest");
   };
   const instituteName = entry?.[1].institute_name?.[0] ?? "N/A";
   const instituteId = entry?.[1].institute_id?.[0].substr(0, 6) ?? "N/A";

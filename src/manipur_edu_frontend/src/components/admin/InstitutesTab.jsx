@@ -14,12 +14,17 @@ import { useDispatch } from "react-redux";
 import { getAllInstitutes } from "../../../Redux/Action/index";
 import Loader from "../../loader/Loader";
 
-const InstitutesTab = () => {
+const InstitutesTab = ({ SetTab }) => {
   const [selected_button, SetButton] = useState("Verification");
   const [view, SelectView] = useState("default");
   const { actor, authClient } = useAuth();
   const dispatch = useDispatch();
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleSearchBar = () => {
+    setIsOpen(!isOpen);
+  };
   const getEntries = async () => {
     const allInstitutes = await actor.get_institutes();
     console.log("allInstitutes", allInstitutes);
@@ -58,7 +63,16 @@ const InstitutesTab = () => {
             </div>
             <div className="flex gap-[44px]">
               <div className="flex gap-[23px]">
-                <button>
+                {isOpen && (
+                  <div className="right-0 mt-2 w-50 h-9 bg-#c6d4fd border border-gray-300 rounded-lg shadow-md">
+                    <input
+                      type="text"
+                      placeholder="Search..."
+                      className="w-full px-4  py-1 focus:outline-none"
+                    />
+                  </div>
+                )}
+                <button onClick={toggleSearchBar}>
                   <svg
                     width="20"
                     height="20"
@@ -232,7 +246,10 @@ const InstitutesTab = () => {
             {selected_button === "Verification" &&
               !isLoadingEntries &&
               !errorEntries && (
-                <VerificationButton onTap={() => SelectView("details")} />
+                <VerificationButton
+                  onTap={() => SelectView("details")}
+                  SetTab={SetTab}
+                />
               )}
             {selected_button === "AllRegistered" &&
               !isLoadingEntries &&
@@ -241,6 +258,7 @@ const InstitutesTab = () => {
                   onView={() => SelectView("viewdetails")}
                   onEdit={() => SelectView("edit")}
                   onStudent={() => SelectView("students")}
+                  SetTab={SetTab}
                 />
               )}
             {selected_button === "EditRequests" &&
@@ -248,6 +266,7 @@ const InstitutesTab = () => {
               !errorEntries && (
                 <InstituteEditRequest
                   onView={() => SelectView("view_verify")}
+                  SetTab={SetTab}
                 />
               )}
           </div>

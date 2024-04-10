@@ -7,14 +7,8 @@ import {
 import Background from "../../components/BackgroudPage";
 import { useDispatch, useSelector } from "react-redux";
 const ViewProfileDetails = () => {
-  // const navigate = useNavigate();
-  // const location = useLocation();
-  // const { entry } = location.state;
-  // console.log("entry here", entry);
-  let entry = useSelector(
-    (state) => state.studentDetailsReducer
-  );
-  console.log("entry here", entry);
+  let entry = useSelector((state) => state.studentDetailsReducer);
+  console.log("entry here", entry);
 
   return (
     <Background>
