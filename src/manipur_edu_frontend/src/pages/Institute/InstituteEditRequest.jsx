@@ -98,11 +98,8 @@ import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/i
 import AdminDashboard from "../Admin/AdminDashboard";
 
 const InstituteEditRequest = ({ onView }) => {
-  // let entries = useSelector((state) => state.allInstitutesReducer);
-  let entries = useSelector((state) => state.allInstitutesReducer);
-
-
-  console.log("entries size" , entries.length )
+    let entries = useSelector((state) => state.allInstitutesReducer);
+    console.log("entries size" , entries.length )
   return (
     <div>
       <div className="border rounded-[10px] border-[#D9EBFF]">

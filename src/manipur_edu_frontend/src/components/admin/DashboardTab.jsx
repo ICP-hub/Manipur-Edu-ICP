@@ -16,8 +16,10 @@ const DashboardTab = () => {
   const isXlScreen = useMediaQuery("(min-width: 1440px)");
   const [value, onChange] = useState(new Date());
   const scholarships = useSelector((state) => state.allScholarshipsReducer);
-  let entries = useSelector((state) => state.allInstitutesReducer);
+  let entries = useSelector((state) => state.allInstitutesReducer) || [];
   let studentEntries = useSelector((state) => state.studentDetailsReducer);
+  console.log("enteries is  : " , entries)
+  console.log("entries size" , entries?.length )
 
   console.log(studentEntries)
   let registeredStudent = studentEntries.length;
@@ -36,33 +38,33 @@ const DashboardTab = () => {
 
 
 
-  if (isXlScreen) {
-    entries = [
-      {
-        name: "Student 1",
-        status: "New",
-      },
-      {
-        name: "Student 1",
-        status: "Rejected",
-      },
-    ];
-  } else {
-    entries = [
-      {
-        name: "Student 1",
-        status: "New",
-      },
-      {
-        name: "Student 1",
-        status: "Approved",
-      },
-      {
-        name: "Student 1",
-        status: "Rejected",
-      },
-    ];
-  }
+  // if (isXlScreen) {
+  //   entries = [
+  //     {
+  //       name: "Student 1",
+  //       status: "New",
+  //     },
+  //     {
+  //       name: "Student 1",
+  //       status: "Rejected",
+  //     },
+  //   ];
+  // } else {
+  //   entries = [
+  //     {
+  //       name: "Student 1",
+  //       status: "New",
+  //     },
+  //     {
+  //       name: "Student 1",
+  //       status: "Approved",
+  //     },
+  //     {
+  //       name: "Student 1",
+  //       status: "Rejected",
+  //     },
+  //   ];
+  // }
   return (
     <div>
       {view === "allScholarshipApplications" ? (
@@ -142,7 +144,7 @@ const DashboardTab = () => {
             <div className="flex justify-between pt-10 px-9 ">
               <div className="rounded-[20px] bg-[#E7F4FF] flex w-[48%] md2:w-[30%] h-[131px] p-[10px] ">
                 <div className="font-[400] font-[Mukta] text-[#00227A] text-[40px] dxl:text-5xl flex items-center pr-[10px] ">
-                  {entries.length}
+                  {entries?.length}
                 </div>
                 <div className="font-[350] font-[Segoe UI] text-[#00227A] text-[13px] xxs1:text-lg flex flex-col justify-center ">
                   <p>
