@@ -2,31 +2,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 const OngoingScholarshipsTab = ({ onView, onEdit }) => {
-    // const entries = [
-    //     {
-    //         scholarship_name: "Scholarships for College Students",
-    //         institute_name: "Manipur Edu",
-    //         description:
-    //             "Easy ₹ 50,000 monthly scholarship. No essay or account sign-ups, just a simple scholarship for those seeking help paying for college!",
-    //         ed_level: "High school student",
-    //         grad_type: "Under Graduate",
-    //         gender: " Female-identifying",
-    //         amount: "₹50,000",
-    //         deadline: "May 31, 2024",
-    //     },
-
-    //     {
-    //         scholarship_name: "Scholarships for College Students",
-    //         institute_name: "Manipur Edu",
-    //         description:
-    //             "Easy ₹ 50,000 monthly scholarship. No essay or account sign-ups, just a simple scholarship for those seeking help paying for college!",
-    //         ed_level: "High school student",
-    //         grad_type: "Under Graduate",
-    //         gender: " Female-identifying",
-    //         amount: "₹50,000",
-    //         deadline: "May 31, 2024",
-    //     },
-    // ];
     const entries = useSelector((state) => state.allScholarshipsReducer);
     return (
         <div>
