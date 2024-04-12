@@ -2,7 +2,11 @@ import React, { useState } from "react";
 
 import { useAuth } from "../../utils/useAuthClient";
 import { useForm } from "react-hook-form";
-
+import {
+    generateAesKeyBase64,
+    handleFileEncrypt,
+    handleFileEncryption,
+  } from "../../utils/helper";
 // import Status from "../../components/student/status";
 const PostScholarshipDetails = ({ onBack }) => {
     const {
@@ -11,7 +15,17 @@ const PostScholarshipDetails = ({ onBack }) => {
         formState: { errors },
       } = useForm();
     const { actor } = useAuth();
-   
+    // const [fileName, setFileName] = useState("");
+
+    // Function to call when a file is selected
+    // const handleFileChange = (event) => {
+    //   const file = event.target.files[0];
+    //   if (file) {
+    //     setFileName(file.name);
+    //   } else {
+    //     setFileName("");
+    //   }
+    // };
     // const [modelStatus, setModelStatus] = React.useState(false);
     // const [Field, setField] = React.useState("");
     // const [isRendering, setIsRendering] = React.useState(false);
@@ -34,13 +48,31 @@ const PostScholarshipDetails = ({ onBack }) => {
         name: data.name,
         description: data.description,
         amount: data.amount,
-        duration: data.duration,
+        date: data.date,
         deadline: "",
-        eligibility: data.eligibility,
+        education: data.eligibility,
         institute: "",
+        gender:"",
         status: "pending",
+        offerby:"",
         applicants: [],
+        // public_key: [key],
+        // photo: encryptedFile,
       };
+    //   const newScholarship = {
+    //     scholarship_id:[""],
+    //     name: data.name,
+    //     description: data.description,
+    //     amount: data.amount,
+    //     duration: data.duration,
+    //     deadline: "",
+    //     eligibility: data.eligibility,
+    //     institute: "",
+    //     status: "pending",
+    //     applicants: [],
+    //     public_key: [key],
+    //     photo: encryptedFile,
+    //   };
       console.log('newScholarship',newScholarship);
         const create_scholarship =await actor.create_scholarship(newScholarship);
         console.log('result of backend',create_scholarship);
@@ -284,7 +316,15 @@ const PostScholarshipDetails = ({ onBack }) => {
                     Upload Header
                 </p>
                 <div>
-                    <button className="border border-[#CCD9FA] rounded-[10px] px-[21px] py-[12px] text-[15px] text-[Segoe UI] font-[400] text-[#00227A]">
+                    <button className="border border-[#CCD9FA] rounded-[10px] px-[21px] py-[12px] text-[15px] text-[Segoe UI] font-[400] text-[#00227A]"
+                    type="file"
+                    id="photo"
+                    name="photo"
+                    // onChange={handleFileChange}
+                    // {...register("photo", {
+                    //   required: "This field is required",
+                    // })}
+                    >
                         Upload Photo
                     </button>
                 </div>

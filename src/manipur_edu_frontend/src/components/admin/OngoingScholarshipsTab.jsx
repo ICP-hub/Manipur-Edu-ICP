@@ -28,10 +28,13 @@ const OngoingScholarshipsTab = ({ onView, onEdit }) => {
     //     },
     // ];
     const entries = useSelector((state) => state.allScholarshipsReducer);
+    console.log('entries in ongoing',entries);
+   
     return (
         <div>
             <div className="flex flex-col gap-[35px] ">
-                {entries.map((entry, index) => (
+            
+                {Array.isArray(entries) && entries.map((entry, index) => (
                     <Card key={index} entry={entry} index={index + 1} onView={onView} onEdit={onEdit} />
                 ))}
                 <div className="flex flex-row-reverse">
@@ -45,6 +48,7 @@ const OngoingScholarshipsTab = ({ onView, onEdit }) => {
 export default OngoingScholarshipsTab;
 
 const Card = ({ index, entry, onView, onEdit }) => {
+    console.log('entry',entry);
     return (
         <div className="relative flex  ">
             <div className="absolute left-[-30px] top-[27px] rounded-[34px] bg-[white] w-[53px] h-[53px] ">
@@ -62,6 +66,7 @@ const Card = ({ index, entry, onView, onEdit }) => {
                             <p className="text-[Inter] text-[19px] font-[600] pb-[22px]">
                                 {/* {entry.name} */}
                                 {entry?.[1].name ?? 'N/A'}
+                               
                             </p>
                             <div className="flex items-center pb-[22px] gap-[10px]">
                                 <p className="text-[Inter] text-[14px] font-[400] text-[#76788C] leading-[14px]">
@@ -71,6 +76,7 @@ const Card = ({ index, entry, onView, onEdit }) => {
                                     {" "}
                                     {/* {entry.institute_name} */}
                                     {entry?.[1].institute ?? 'N/A'}
+                                   
                                     {" "}
                                 </p>
                                 <svg
@@ -100,6 +106,7 @@ const Card = ({ index, entry, onView, onEdit }) => {
                             <p className="text-[Inter] text-[14px] font-[400] text-[#76788C] leading-[1.5]">
                                 {/* {entry.description} */}
                                 {entry?.[1].description ?? 'N/A'}
+                                
                             </p>
                         </div>
                     </div>
@@ -133,6 +140,7 @@ const Card = ({ index, entry, onView, onEdit }) => {
                                     Education Level: 
                                     {/* {entry.ed_level} */}
                                     {entry?.[1].eligibility ?? 'N/A'}
+                                  
                                     {" "}
                                 </p>
                             </div>
@@ -160,7 +168,9 @@ const Card = ({ index, entry, onView, onEdit }) => {
 
                                     <p className="pl-[5px] text-[Inter] text-[14px] font-[400] leading-[20px]">
                                         {/* {entry.grad_type} */}
-                                        Duration : {entry?.[1].duration ?? 'N/A'}
+                                        Duration : 
+                                        {entry?.[1].duration ?? 'N/A'}
+                                      
                                         {" "}
                                     </p>
                                 </div>
@@ -204,6 +214,7 @@ const Card = ({ index, entry, onView, onEdit }) => {
                             <p className="text-[Inter] text-[19px] font-[600] pb-[22px]">
                                 {/* {entry.amount} */}
                                 {entry?.[1].amount ?? 'N/A'}
+                                {/* {entry?.[0].amount ?? 'N/A'} */}
                             </p>
                         </div>
                         <div className="flex justify-between h-[22.5px]">
@@ -213,6 +224,7 @@ const Card = ({ index, entry, onView, onEdit }) => {
                             <p className="text-[Inter] text-[14px] font-[400] pb-[22px]">
                                 {/* {entry.deadline} */}
                                 {entry?.[1].deadline ?? 'N/A'}
+                               
                             </p>
                         </div>
                     </div>
