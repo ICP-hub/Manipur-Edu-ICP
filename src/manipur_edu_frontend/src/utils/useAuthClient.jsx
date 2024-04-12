@@ -29,13 +29,29 @@ const defaultOptions = {
   /**
    * @type {import("@dfinity/auth-client").AuthClientLoginOptions}
    */
-  loginOptions: {
+  // loginOptions: {
+  //   identityProvider:
+  //     process.env.DFX_NETWORK === "ic"
+  //       ? "https://identity.ic0.app/#authorize"
+  //       : `http://rdmx6-jaaaa-aaaaa-aaadq-cai.localhost:4943`,
+  // },
+  loginOptionsii: {
     identityProvider:
       process.env.DFX_NETWORK === "ic"
         ? "https://identity.ic0.app/#authorize"
         : `http://rdmx6-jaaaa-aaaaa-aaadq-cai.localhost:4943`,
+        // : https://nfid.one/authenticate/?applicationName=my-ic-app#authorize,
+        // :https://nfid.one/authenticate/?applicationName=my-ic-app#authorize
   },
-};
+  loginOptionsnfid: {
+    identityProvider:
+      process.env.DFX_NETWORK === "ic"
+        // ? "https://identity.ic0.app/#authorize"
+        // : http://rdmx6-jaaaa-aaaaa-aaadq-cai.localhost:4943,
+        ? `https://nfid.one/authenticate/?applicationName=my-ic-app#authorize`
+        :`https://nfid.one/authenticate/?applicationName=my-ic-app#authorize`
+}
+}
 
 /**
  *
@@ -67,7 +83,7 @@ export const useAuthClient = (options = defaultOptions) => {
     }).join("");
   }
 
-  const login = () => {
+  const login = (val) => {
     return new Promise(async (resolve, reject) => {
       try {
         if (
@@ -78,8 +94,9 @@ export const useAuthClient = (options = defaultOptions) => {
           updateClient(authClient);
           resolve(AuthClient);
         } else {
+          let loginOption = val == "ii" ? defaultOptions.loginOptionsii : defaultOptions.loginOptionsnfid;
           authClient.login({
-            ...options.loginOptions,
+            ...loginOption,
             onError: (error) => reject(error),
             onSuccess: () => {
               updateClient(authClient);
