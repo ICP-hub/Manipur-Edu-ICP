@@ -6,6 +6,7 @@ import instituteDetailsReducer from "./instituteDetailsReducer.jsx";
 import allInstitutesReducer from "./allInstitutesReducer.jsx";
 import allStudentsReducer from "./allStudentsReducer.jsx";
 import allScholarshipsReducer from "./allScholarshipsReducer.jsx";
+import WalletReducer from "./WalletReducer.jsx";
 const rootReducer = combineReducers({
     profileOpenCloseDropDownReducer,
     notificationOpenCloseDropDownReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     allInstitutesReducer,
     allStudentsReducer,
     allScholarshipsReducer,
+    WalletReducer
 });
 
 export default rootReducer;

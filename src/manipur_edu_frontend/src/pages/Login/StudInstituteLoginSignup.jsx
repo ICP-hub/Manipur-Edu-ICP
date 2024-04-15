@@ -1,12 +1,43 @@
-import React from "react";
+import React, { useState , useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+
+import { setClickedId } from '../../../Redux/Action/WalletActions';
+
 import { useAuth } from "../../utils/useAuthClient";
 import { manipur_edu_backend } from "../../../../declarations/manipur_edu_backend/index";
 import Button from "../../components/Button";
 import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
 import SignUpPage from "../../components/student/SignUpPage";
 import Status from "../../components/student/status";
-
+import { walletModalSvg } from "../../utils/Data/SvgData";
+import Modal from './Modal';
 const Login = () => {
+
+
+  useEffect(() => {
+    let isMounted = true; // Flag to check if component is still mounted
+
+    const asyncCall = async () => {
+        const data = await fetchData();
+        if (isMounted) {
+            setState(data);
+        }
+    };
+
+    asyncCall();
+    return () => {
+        isMounted = false; // Clean up flag when component is unmounted
+    };
+}, []);
+
+
+const dispatch = useDispatch();
+
+
+  const [modalOpen, setModalOpen] = useState(false);
+  // const[wall , setWall] = useState();
+
   const { actor, login, principal, authClient, identity, userType } = useAuth();
   const navigate = useNavigate();
 
@@ -14,91 +45,208 @@ const Login = () => {
   const [Field, setField] = React.useState("");
 
   const handleLogin = async (event) => {
-    let auth = await login();
-    console.log("authClient", auth);
-    console.log("actor", actor);
-    const principal_id = authClient.getIdentity().getPrincipal().toString();
-    console.log(principal_id);
+    setModalOpen(true)
 
-    console.log("real authClient", authClient);
-    const is_already_registered = await actor.is_user_already_registered();
+    // if(modalOpen == true){
+    // let auth = await login();
+    // console.log("authClient", auth);
+    // console.log("actor", actor);
+    // const principal_id = authClient.getIdentity().getPrincipal().toString();
+    // console.log(principal_id);
 
-    const newUserType = event.target.value;
-    console.log(newUserType);
+    // console.log("real authClient", authClient);
+    // const is_already_registered = await actor.is_user_already_registered();
 
-    console.log(userType);
+    // const newUserType = event.target.value;
+    // console.log(newUserType);
 
-    if (newUserType == "student") {
-      const student_status = await actor.student_application_status(
-        principal_id
-      );
-      console.log(student_status[0]);
-      if (student_status[0] == "pending") {
-        setField("Wait for your request to get approved");
-        setStatus(true);
-        console.log("wait for your request to get approved");
-      } else if (student_status[0] == "approved") {
-        console.log("your Sign up request has been approved");
-        navigate("/");
-      } else if (student_status[0] === "rejected") {
-        setStatus(true);
-        setField("your profile has been rejected. You cant login");
-        // Use the Field variable as needed
-        console.log("your profile has been rejected. You can't login");
-      } else {
-        if (is_already_registered) {
-          setField("You have already registered");
-          setStatus(true);
-        } else {
-          setField("Student Details not found");
-          setStatus(true);
-          console.log("student details not found");
-          navigate("/register-student");
-        }
-      }
-      console.log(student_status);
-    } else if (newUserType == "institute") {
-      const institute_status = await actor.institute_application_status(
-        principal_id
-      );
+    // console.log(userType);
 
-      console.log(institute_status);
+    // if (isvalue === true) {
+    //   const student_status = await actor.student_application_status(
+    //     principal_id
+    //   );
+    //   console.log(student_status[0]);
+    //   if (student_status[0] == "pending") {
+    //     setField("Wait for your request to get approved");
+    //     setStatus(true);
+    //     console.log("wait for your request to get approved");
+    //   } else if (student_status[0] == "approved") {
+    //     console.log("your Sign up request has been approved");
+    //     navigate("/");
+    //   } else if (student_status[0] === "rejected") {
+    //     setStatus(true);
+    //     setField("your profile has been rejected. You cant login");
+    //     // Use the Field variable as needed
+    //     console.log("your profile has been rejected. You can't login");
+    //   } else {
+    //     if (is_already_registered) {
+    //       setField("You have already registered");
+    //       setStatus(true);
+    //     } else {
+    //       setField("Student Details not found");
+    //       setStatus(true);
+    //       console.log("student details not found");
+    //       navigate("/register-student");
+    //     }
+    //   }
+    //   console.log(student_status);
+    // } else if (newUserType == "institute") {
+    //   const institute_status = await actor.institute_application_status(
+    //     principal_id
+    //   );
 
-      if (institute_status[0] == "pending") {
-        setStatus(true);
-        setField("Wait for your request to get approved");
-        console.log("wait for your request to get approved");
-      } else if (institute_status[0] == "approved") {
-        console.log("your Sign up request has been approved");
-        navigate("/");
-      } else if (institute_status[0] === "rejected") {
-        setStatus(true);
-        setField("your profile has been rejected. You cant login");
-        // Use the Field variable as needed
-        console.log("your profile has been rejected. You can't login");
-      } else {
-        if (is_already_registered) {
-          setField("You have already registered");
-          setStatus(true);
-        } else {
-          setField("institute Details not found");
-          setStatus(true);
-          console.log("institute details not found");
-          navigate("/register-institute");
-        }
-      }
+    //   console.log(institute_status);
 
-      console.log(institute_status);
-    } else if (newUserType == "admin") {
-      navigate("/dsa");
-    } else {
-      setStatus(true);
-      setField("You are not authorized");
-    }
+    //   if (institute_status[0] == "pending") {
+    //     setStatus(true);
+    //     setField("Wait for your request to get approved");
+    //     console.log("wait for your request to get approved");
+    //   } else if (institute_status[0] == "approved") {
+    //     console.log("your Sign up request has been approved");
+    //     navigate("/");
+    //   } else if (institute_status[0] === "rejected") {
+    //     setStatus(true);
+    //     setField("your profile has been rejected. You cant login");
+    //     // Use the Field variable as needed
+    //     console.log("your profile has been rejected. You can't login");
+    //   } else {
+    //     if (is_already_registered) {
+    //       setField("You have already registered");
+    //       setStatus(true);
+    //     } else {
+    //       setField("institute Details not found");
+    //       setStatus(true);
+    //       console.log("institute details not found");
+    //       navigate("/register-institute");
+    //     }
+    //   }
+
+    //   console.log(institute_status);
+    // } else if (newUserType == "admin") {
+    //   navigate("/dsa");
+    // } else {
+    //   setStatus(true);
+    //   setField("You are not authorized");
+    // }}
+
   };
 
+   const executeLoginBlock = async (event) => {
+    // if(modalOpen == true){
+  // const val = useSelector(state => state.clickedId);
+  // const newUserType = event.target.value;
+
+      let auth = await login();
+      console.log("authClient", auth);
+      console.log("actor", actor);
+      const principal_id = authClient.getIdentity().getPrincipal().toString();
+      console.log(principal_id);
+  
+      console.log("real authClient", authClient);
+      const is_already_registered = await actor.is_user_already_registered();
+  
+      const newUserType = event.target.value;
+      console.log(newUserType);
+  
+      console.log(userType);
+  let isvalue = true ; 
+      if (isvalue === true) {
+        const student_status = await actor.student_application_status(
+          principal_id
+        );
+        console.log(student_status[0]);
+        if (student_status[0] == "pending") {
+          setField("Wait for your request to get approved");
+          setStatus(true);
+          console.log("wait for your request to get approved");
+        } else if (student_status[0] == "approved") {
+          console.log("your Sign up request has been approved");
+          navigate("/");
+        } else if (student_status[0] === "rejected") {
+          setStatus(true);
+          setField("your profile has been rejected. You cant login");
+          // Use the Field variable as needed
+          console.log("your profile has been rejected. You can't login");
+        } else {
+          if (is_already_registered) {
+            setField("You have already registered");
+            setStatus(true);
+          } else {
+            setField("Student Details not found");
+            setStatus(true);
+            console.log("student details not found");
+            // navigate("/register-student");
+            navigate("/dsa");
+
+            // navigate("/register-institute");
+          }
+        }
+        console.log(student_status);
+      } else if (newUserType == "institute") {
+        const institute_status = await actor.institute_application_status(
+          principal_id
+        );
+  
+        console.log(institute_status);
+  
+        if (institute_status[0] == "pending") {
+          setStatus(true);
+          setField("Wait for your request to get approved");
+          console.log("wait for your request to get approved");
+        } else if (institute_status[0] == "approved") {
+          console.log("your Sign up request has been approved");
+          navigate("/");
+        } else if (institute_status[0] === "rejected") {
+          setStatus(true);
+          setField("your profile has been rejected. You cant login");
+          // Use the Field variable as needed
+          console.log("your profile has been rejected. You can't login");
+        } else {
+          if (is_already_registered) {
+            setField("You have already registered");
+            setStatus(true);
+          } else {
+            setField("institute Details not found");
+            setStatus(true);
+            console.log("institute details not found");
+            navigate("/register-institute");
+          }
+        }
+  
+        console.log(institute_status);
+      } else if (newUserType == "admin") {
+        navigate("/dsa");
+      } else {
+        setStatus(true);
+        setField("You are not authorized");
+      }}
+  const handleClick = (id) => {
+    console.log("Clicked ID:", id);
+    // val = id ; 
+    setModalOpen(false)
+    // dispatch(setClickedId(id));
+    dispatch(setClickedId(id));
+    // setWall("ii"); 
+    // executeLoginBlock() ;
+    executeLoginBlock(event); 
+  };
+
+  
   return (
     <SignUpPage>
+
+     <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
+        <ul className="my-4 space-y-3 cursor-pointer">
+        {walletModalSvg.map((wallet, index) => (
+            <div key={index} onClick={() => handleClick(wallet.id)}>
+              {wallet.content}
+            </div>
+          ))}
+        </ul>
+      </Modal>
+
+
       <div className="flex flex-col items-center justify-center w-full">
         <div className=" text-[#00227A] text-2xl md2:text-4xl font-medium p ">
           Log in/Sign up as
@@ -131,6 +279,8 @@ const Login = () => {
       <div className="">
         <Status open={status} Field={Field} onClose={() => setStatus(false)} />
       </div>
+
+
     </SignUpPage>
   );
 };
@@ -138,3 +288,25 @@ const Login = () => {
 export default Login;
 
 
+// function StudInstituteLoginSignup() {
+
+//   return (
+//     <div>
+//       <button onClick={() => setModalOpen(true)} className="btn-open-modal">
+//         Open Wallets
+//       </button>
+      
+//       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
+//         <ul className="my-4 space-y-3 cursor-pointer">
+//           {walletModalSvg.map((wallet, index) => (
+//             <div key={index}>
+//               {wallet.content}
+//             </div>
+//           ))}
+//         </ul>
+//       </Modal>
+//     </div>
+//   );
+// }
+
+// export default StudInstituteLoginSignup;
