@@ -15,6 +15,7 @@ const InstituteDetails = ({ onBack }) => {
   let entries = useSelector((state) => state.allInstitutesReducer);
   let entry = entries[0];
   console.log("institute details page ", entry);
+  console.log(entry[0]);
   const verifyInstitute = async () => {
     const result = await actor.verify_institute(entry[0]);
     setOpenModalVerify(false);

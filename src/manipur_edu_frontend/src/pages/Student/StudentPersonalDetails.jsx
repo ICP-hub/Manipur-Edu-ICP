@@ -300,7 +300,7 @@ const SignupStudents = () => {
                 <div className="flex-none pt-[24px]">
                   <div
                     className="w-full h-[43px] rounded-[10px] px-1 p-1 focus:outline-[#ACBFFD] border-[#ACBFFD] border cursor-pointer"
-                    onClick={toggleDatePicker}
+                    // onClick={toggleDatePicker}
                   >
                     <img src="/calander.svg" alt="calendar" />
                   </div>
