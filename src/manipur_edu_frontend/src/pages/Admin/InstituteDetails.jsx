@@ -11,8 +11,10 @@ const InstituteDetails = ({ onBack }) => {
   const { actor } = useAuth();
   console.log(actor);
   const navigate = useNavigate();
-  let entry = useSelector((state) => state.allInstitutesReducer);
+  let entries = useSelector((state) => state.allInstitutesReducer);
+  let entry = entries[0];
   console.log("institute details page ", entry);
+  console.log(entry[0]);
   const verifyInstitute = async () => {
     const result = await actor.verify_institute(entry[0]);
     setOpenModalVerify(false);
@@ -108,7 +110,7 @@ const InstituteDetails = ({ onBack }) => {
           <img className="w-[100px] h-[100px]" src="/student.svg" alt="" />
           <div className="flex flex-col justify-center pl-[1.8125rem]">
             <p className="font-[Noto Sans] text-[#00227A] text-[1.5625rem] leading-[2.125rem] font-[400] pb-[0.375rem]">
-              {entry?.[1].institute_name?.[0] || "N/A"}
+              {entry?.[1].institute_name || "N/A"}
             </p>
             <p className="font-[Noto Sans] text-[#687EB5] text-[0.9375rem] leading-[1.25rem] font-[500]">
               Institute-id: 1234567
