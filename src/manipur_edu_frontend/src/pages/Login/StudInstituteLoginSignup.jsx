@@ -12,8 +12,18 @@ import SignUpPage from "../../components/student/SignUpPage";
 import Status from "../../components/student/status";
 import { walletModalSvg } from "../../utils/Data/SvgData";
 import Modal from './Modal';
+
+import { toggleBoolVar } from '../../../Redux/Action/toggleActions';
+
 const Login = () => {
 
+  const { boolVar1, boolVar2, boolVar3 } = useSelector(state => state.bools);
+  const dispatch = useDispatch();
+  const[chossed, setChoosed] = useState("")
+
+  const handleToggle = (varName) => {
+    dispatch(toggleBoolVar(varName));
+  };
 
   useEffect(() => {
     let isMounted = true; // Flag to check if component is still mounted
@@ -32,7 +42,6 @@ const Login = () => {
 }, []);
 
 
-const dispatch = useDispatch();
 
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -176,10 +185,22 @@ const dispatch = useDispatch();
             setField("Student Details not found");
             setStatus(true);
             console.log("student details not found");
-            // navigate("/register-student");
-            navigate("/dsa");
+
+            // if(boolVar1 == true){
+            //   navigate("/register-student");
+            // }else if(boolVar2 == true){
+            //   navigate("/dsa");
+            // }
 
             // navigate("/register-institute");
+            if(chossed === "stud"){
+              navigate("/register-student");
+            } else if(chossed === "inst"){
+              navigate("/register-institute")
+          }  else {
+              navigate("/dsa");
+
+            }
           }
         }
         console.log(student_status);
@@ -255,7 +276,7 @@ const dispatch = useDispatch();
           <button
             className="sm:w-1/2 w-full h-14 text-white text-xl rounded-xl bg-[#646ED6]"
             value="student"
-            onClick={handleLogin}
+            onClick={()=>{handleLogin() ; setChoosed("stud") }}
           >
             Student
           </button>
@@ -263,14 +284,18 @@ const dispatch = useDispatch();
           <button
             className="sm:w-1/2 w-full h-14 text-white text-xl rounded-xl bg-[#646ED6]"
             value="institute"
-            onClick={handleLogin}
+            // onClick={handleLogin}
+            onClick={()=>{handleLogin() ;setChoosed("inst") }}
+
           >
             Institute
           </button>
           <button
             className="sm:w-1/2 w-full h-14 text-white text-xl rounded-xl bg-[#646ED6]"
             value="admin"
-            onClick={handleLogin}
+            // onClick={handleLogin}
+            onClick={()=>{handleLogin() ; setChoosed("admin")  }}
+
           >
             Admin
           </button>
