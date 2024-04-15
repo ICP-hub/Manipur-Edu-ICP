@@ -25,27 +25,8 @@ const Login = () => {
     dispatch(toggleBoolVar(varName));
   };
 
-  useEffect(() => {
-    let isMounted = true; // Flag to check if component is still mounted
-
-    const asyncCall = async () => {
-        const data = await fetchData();
-        if (isMounted) {
-            setState(data);
-        }
-    };
-
-    asyncCall();
-    return () => {
-        isMounted = false; // Clean up flag when component is unmounted
-    };
-}, []);
-
-
-
 
   const [modalOpen, setModalOpen] = useState(false);
-  // const[wall , setWall] = useState();
 
   const { actor, login, principal, authClient, identity, userType } = useAuth();
   const navigate = useNavigate();
