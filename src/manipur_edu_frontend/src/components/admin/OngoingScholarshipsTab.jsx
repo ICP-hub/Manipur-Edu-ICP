@@ -75,8 +75,8 @@ const Card = ({ index, entry, onView, onEdit }) => {
                                 <p className="text-[Inter] text-[14px] font-[400] leading-[14px]">
                                     {" "}
                                     {/* {entry.institute_name} */}
-                                    {entry?.[1].institute ?? 'N/A'}
-                                   
+                                    {/* {entry?.[1].institute ?? 'N/A'} */}
+                                    Manipur Government
                                     {" "}
                                 </p>
                                 <svg
@@ -139,7 +139,7 @@ const Card = ({ index, entry, onView, onEdit }) => {
                                 <p className="pl-[5px] text-[Inter] text-[14px] font-[400] leading-[20px]">
                                     Education Level: 
                                     {/* {entry.ed_level} */}
-                                    {entry?.[1].eligibility ?? 'N/A'}
+                                    {entry?.[1].education ?? 'N/A'}
                                   
                                     {" "}
                                 </p>
@@ -168,8 +168,8 @@ const Card = ({ index, entry, onView, onEdit }) => {
 
                                     <p className="pl-[5px] text-[Inter] text-[14px] font-[400] leading-[20px]">
                                         {/* {entry.grad_type} */}
-                                        Duration : 
-                                        {entry?.[1].duration ?? 'N/A'}
+                                        Date : 
+                                        {entry?.[1].date ?? 'N/A'}
                                       
                                         {" "}
                                     </p>
@@ -196,7 +196,7 @@ const Card = ({ index, entry, onView, onEdit }) => {
                                     </svg>
 
                                     <p className="pl-[5px] text-[Inter] text-[14px] font-[400] leading-[20px]">
-                                        Gender: For all
+                                        Gender: {entry?.[1].gender ?? 'N/A'}
                                         {/* {entry.gender} */}
                                         {" "}
                                     </p>

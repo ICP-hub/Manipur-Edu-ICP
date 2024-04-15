@@ -5,12 +5,13 @@
 
 
 use ic_cdk::api::management_canister::main::raw_rand;
+use ic_cdk::api::time;
 
 // use regex::Regex;
 // use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 
-
+use chrono::{DateTime, NaiveDate};
 use candid::types::principal;
 use candid::{CandidType, Deserialize, Principal};
 use ic_cdk::api::caller;
@@ -22,9 +23,12 @@ use std::collections::{BTreeMap, HashMap};
 
 thread_local! {
     static SCHOLARSHIP_STORE: RefCell<ScholarshipStore> = RefCell::new(BTreeMap::new());
+    // static APPLICANT_STORE: RefCell<ApplicantStore> = RefCell::new(BTreeMap::new());
 }
 
 pub type ScholarshipStore = BTreeMap<String,ScholarShip>;
+// pub type ApplicantStore = BTreeMap<String, ApplicantDetails>;
+
 
 // thread_local! { 
 //     static SCHOLARSHIP_STORE: RefCell<ScholarshipStore> = RefCell::new(HashMap::new());
@@ -47,6 +51,81 @@ pub struct ScholarShip {
     status: String,
     applicants: Vec<Principal>,
 }
+impl ScholarShip {
+    fn validate(&self) -> Result<(), String> {
+        // current date
+        // let current_date = chrono::offset::Local::now();
+        
+        // let dt = Local::now();
+        // // // Get components
+        // let naive_utc = dt.naive_utc();
+        // let offset = dt.offset().clone();
+        // // Serialize, pass through FFI... and recreate the `DateTime`:
+        // let  current_date = DateTime::<Local>::from_naive_utc_and_offset(naive_utc, offset);
+       
+        // // // // Fields validation
+        if self.name.is_empty() {
+            return Err(String::from("Name field is empty"));
+        }
+
+        if self.gender.is_empty() {
+            return Err(String::from("Gender field is empty"));
+        }
+
+        if self.education.is_empty() {
+            return Err(String::from("Education Level field is empty"));
+        }
+
+
+
+        // // // // DATE VALIDATION
+        if self.date.is_empty() {
+            return Err(String::from("Date field cannot be empty"));
+        }
+
+        // check format
+        let date = NaiveDate::parse_from_str(&self.date, "%Y-%m-%d")
+            .map_err(|_| String::from("Invalid date format"))?;
+
+        // Check if date is in past
+        // if date < current_date {
+        //     return Err(String::from("Date must be in the future"));
+        // }
+
+
+        // // // // DEADLINE VALIDATION        
+        if self.deadline.is_empty() {
+            return Err(String::from("Deadline field cannot be empty"));
+        }
+
+        // check deadline format
+        let deadline_date = NaiveDate::parse_from_str(&self.deadline, "%Y-%m-%d")
+            .map_err(|_| String::from("Invalid deadline format"))?;
+
+        // check deadline is in future
+        // if deadline_date < current_date {
+        //     return Err(String::from("Deadline must be in the future"));
+        // }
+
+
+        // // // // AMOUNT VALIDATION      
+        if self.amount.is_empty() {
+            return Err(String::from("Scholarship Worth cannot be empty"));
+        }
+
+        // check format
+        let amount = self.amount.parse::<f64>()
+            .map_err(|_| String::from("Invalid amount format"))?;
+
+        // check amount>0 
+        if amount <= 0.0 {
+            return Err(String::from("Amount must be greater than zero"));
+        }
+
+        Ok(())
+    }
+}
+
 // pub struct ScholarShip {
 //     scholarship_id: Option<String>,
 //     name: String,
@@ -59,6 +138,7 @@ pub struct ScholarShip {
 //     status: String,
 //     applicants: Vec<Principal>,
 // }
+
 // pub struct ApplicantDetails {
 //     pub scholarship_id : Option <String>,
 //     student_id: Option<String>,
@@ -168,7 +248,7 @@ pub fn get_all_scholarship() -> ScholarshipStore {
 
 // #[update]
 // pub fn apply_scholarship(id : String
-//     // , applicant_data: ApplicantDetails
+//     , applicant_data: ApplicantDetails
 // ) {
 //     let principal_id = ic_cdk::api::caller();
 //     SCHOLARSHIP_STORE.with(|el| {
@@ -177,5 +257,7 @@ pub fn get_all_scholarship() -> ScholarshipStore {
 //               .entry(id)
 //               .and_modify(move |e| e.applicants.push(principal_id));
 //       });
-
+//     APPLICANT_STORE.with(|el| {
+//         el.borrow_mut().insert(principal_id.clone(), applicant_data);
+//     });
 // }
