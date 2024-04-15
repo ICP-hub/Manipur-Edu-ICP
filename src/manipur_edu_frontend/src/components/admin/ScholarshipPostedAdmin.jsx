@@ -25,7 +25,7 @@ const ScholarshipPostedAdmin = ({ onView, onEdit, onPost }) => {
               />
             )
           )}
-        <div className="flex justify-between pt-[200px] ">
+        <div className="flex justify-between pt-[240px] ">
           <div>
             <button
               onClick={onPost}

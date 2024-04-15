@@ -1,8 +1,11 @@
 import React from "react";
 import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
 import { useSelector } from "react-redux";
+import { useQuery } from "react-query";
 import StudentsTab from "../Institute/StudentsTab";
-const VerificationButton = ({ onTap, SetTab}) => {
+import { getInstituteDetails } from "../../../Redux/Action/index";
+import { useDispatch } from "react-redux";
+const VerificationButton = ({ onTap, SetTab }) => {
   let entries = useSelector((state) => state.allInstitutesReducer);
 
   return (
@@ -19,7 +22,9 @@ const VerificationButton = ({ onTap, SetTab}) => {
           <Card SetTab={SetTab} key={index} entry={entry} onTap={onTap} />
         ))}
       </div>
-      <div className="flex flex-row-reverse pt-[10px] ">Page 1 of 100</div>
+      <div className="flex  flex-row-reverse pt-[10px]">
+        Page 1 of 100
+      </div>
     </div>
   );
 };
@@ -27,6 +32,16 @@ export default VerificationButton;
 
 const Card = ({ entry, onTap, SetTab }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const getInstitutedetail = async () => {
+    dispatch(getInstituteDetails(entry));
+  };
+  const {
+    data: result,
+    isLoading: isLoadingEntries,
+    error: errorEntries,
+  } = useQuery("dataEntries", getInstitutedetail);
+
   const handleClick = () => {
     // navigate("/institute-details-verify", { state: { entry } });
     SetTab("institute-details-verify");
@@ -37,6 +52,7 @@ const Card = ({ entry, onTap, SetTab }) => {
   const verificationStatus = entry?.[1].status?.[0] ?? "N/A";
   return (
     <div className="grid grid-cols-5 py-[20px] border-t border-[#D9EBFF]">
+      {isLoadingEntries}
       <div className="flex items-center justify-center text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] rounded-[5px]">
         <div className="flex items-center rounded-[5px] ml-[30px]">
           {" "}

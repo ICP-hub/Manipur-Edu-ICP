@@ -79,7 +79,7 @@ const StudentsTab = () => {
           <div className="flex flex-col ">
             <div className="flex justify-between ">
               <div className="font-[600] font-[Segoe UI] text-4xl text-[#2D6BE4]">
-                Students 
+                Students
               </div>
               <div className="flex gap-[44px]">
                 <div className="flex gap-[23px]">
@@ -237,7 +237,7 @@ const StudentsTab = () => {
                 <Card key={index} entry={entry} onView={onView} />
               ))} */}
             </div>
-            <div className="flex flex-row-reverse pt-[10px] ">
+            <div className="flex flex-row-reverse pt-[220px] ">
               Page 1 of 100
             </div>
           </div>

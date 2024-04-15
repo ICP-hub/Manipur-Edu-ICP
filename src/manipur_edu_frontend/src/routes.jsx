@@ -23,6 +23,7 @@ import RejectModal from "./components/RejectModal";
 import StudentEditRequestRejectApproval from "./pages/Student/StudentEditRequestRejectApproval";
 import ScholarshipPostedAdmin from "./components/admin/ScholarshipPostedAdmin";
 import InstituteEditRequestRejectApprove from "./pages/Institute/InstituteEditRequestRejectApproval";
+import ScholarshipTab from "./pages/Institute/ScholarshipTab";
 
 // All Routes according to usertype
 const routes = [
@@ -57,10 +58,6 @@ const routes = [
     ],
   },
 
-
-
-
-
   {
     path: "/instituteEditRequest",
     component: <InstituteDetails />,
@@ -68,9 +65,9 @@ const routes = [
       appConstants.ADMIN,
       appConstants.INSTITUTE,
       appConstants.STUDENT,
-      appConstants.UNKNOWN,],
+      appConstants.UNKNOWN,
+    ],
   },
-
 
   {
     path: "/institute-detail",
@@ -85,8 +82,12 @@ const routes = [
   {
     path: "/institute-details-admin",
     component: <ViewInstituteDetailsAdminPage />,
-    allowedUser: [appConstants.INSTITUTE, appConstants.ADMIN,appConstants.STUDENT,
-      appConstants.UNKNOWN,],
+    allowedUser: [
+      appConstants.INSTITUTE,
+      appConstants.ADMIN,
+      appConstants.STUDENT,
+      appConstants.UNKNOWN,
+    ],
   },
   {
     path: "/institute_detail_edit",
@@ -108,7 +109,16 @@ const routes = [
       appConstants.UNKNOWN,
     ],
   },
-
+  {
+    path: "/institute-student",
+    component: <ScholarshipTab />,
+    allowedUser: [
+      appConstants.INSTITUTE,
+      appConstants.STUDENT,
+      appConstants.ADMIN,
+      appConstants.UNKNOWN,
+    ],
+  },
   //mychanges
   //scholarship-institute
   {
@@ -203,7 +213,7 @@ const routes = [
       appConstants.UNKNOWN,
     ],
   },
-   {
+  {
     path: "/InstituteEditRequestRejectApprove/",
     component: <InstituteEditRequestRejectApprove />,
     allowedUser: [
@@ -309,10 +319,14 @@ const routes = [
   {
     path: "/adminScholarships",
     component: <ScholarshipPostedAdmin />,
-    allowedUser: [appConstants.ADMIN , appConstants.INSTITUTE, appConstants.STUDENT, appConstants.UNKNOWN],
+    allowedUser: [
+      appConstants.ADMIN,
+      appConstants.INSTITUTE,
+      appConstants.STUDENT,
+      appConstants.UNKNOWN,
+    ],
   },
 ];
-
 
 // const routes = [
 //   {

@@ -11,7 +11,7 @@ const InstituteDetails = ({ onBack }) => {
   const { actor } = useAuth();
   console.log(actor);
   const navigate = useNavigate();
-  let entry = useSelector((state) => state.allInstitutesReducer);
+  let entry = useSelector((state) => state.instituteDetailsReducer);
   console.log("institute details page ", entry);
   const verifyInstitute = async () => {
     const result = await actor.verify_institute(entry[0]);

@@ -6,14 +6,16 @@ import { Link } from "../../../../../node_modules/react-router-dom/dist/index";
 import FAQ from "../../components/Faq";
 import { useAuth } from "../../utils/useAuthClient";
 import { useDispatch } from "react-redux";
-import { getStudentDetails, getInstituteDetails } from "../../../Redux/Action/index";
+import {
+  getStudentDetails,
+  getInstituteDetails,
+} from "../../../Redux/Action/index";
 
 function Dashboard() {
-
   const { actor, userType, authClient } = useAuth();
   const principal_id = authClient.getIdentity().getPrincipal().toString();
 
-  console.log(userType)
+  console.log(userType);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   const dispatch = useDispatch();
@@ -26,51 +28,37 @@ function Dashboard() {
       }
     };
 
-
     checkLogin();
   }, [userType, actor]);
 
-
-
-
-
   React.useEffect(() => {
-
     const fetchInstituteDetails = async () => {
       const response = await actor.get_institute_details([principal_id]);
-      console.log('institute response', response);
+      console.log("institute response", response);
       const data = {
         instituteId: principal_id,
-        details: response
+        details: response,
       };
       console.log("data", data);
       dispatch(getInstituteDetails(data));
-
-    }
+    };
     const fetchStudentDetails = async () => {
-
       const response = await actor.get_student_details(principal_id);
       // const data = {
       //   studentId: principal_id,
       //   details: response
       // };
-      console.log('student response', response);
+      console.log("student response", response);
       // console.log("data", data);
       dispatch(getStudentDetails(response));
     };
 
-    if (userType == 'student') {
+    if (userType == "student") {
       fetchStudentDetails();
-
-    }
-    else if (userType == 'institute') {
+    } else if (userType == "institute") {
       fetchInstituteDetails();
     }
-
-  }, [userType])
-
-
-
+  }, [userType]);
 
   return (
     <div>
@@ -93,7 +81,7 @@ function Dashboard() {
                       and apply for scholarships.
                     </h6>
                     {userType === "institute" && isLoggedIn ? (
-                      <Link to="/login">
+                      <Link to="/institute-student">
                         <button className="bg-[#0041E9] whitespace-nowrap py-4 px-8 text-white rounded-xl font-medium text-xl">
                           View Scholarship Applications
                         </button>
@@ -148,7 +136,11 @@ function Dashboard() {
                       <span className="text-3xl font-medium text-white">2</span>
                     </div>
                     <div>
-                      <img className="h-[164px] w-[239px]" src="acadmic.svg" alt="acadmic image" />
+                      <img
+                        className="h-[164px] w-[239px]"
+                        src="acadmic.svg"
+                        alt="acadmic image"
+                      />
                     </div>
                   </Card>
                   <Card
@@ -225,9 +217,11 @@ function Dashboard() {
                   scholarships matched to you.
                 </p>
                 {userType === "institute" && isLoggedIn ? (
-                  <button className="bg-[#0041E9] rounded-lg py-4 px-9 text-white text-xl font-medium">
-                    Post Scholarship
-                  </button>
+                  <Link to="/institute-student">
+                    <button className="bg-[#0041E9] rounded-lg py-4 px-9 text-white text-xl font-medium">
+                      Post Scholarship
+                    </button>
+                  </Link>
                 ) : userType === "student" && isLoggedIn ? (
                   <button className="bg-[#0041E9] rounded-lg py-4 px-9 text-white text-xl font-medium">
                     View your Scholarship Applications
