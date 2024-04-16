@@ -25,7 +25,10 @@ const ScholarshipPostedAdmin = ({ onView, onEdit, onPost }) => {
               />
             )
           )}
-        <div className="flex justify-between pt-[240px] ">
+        <div
+          // className="flex justify-between"
+          style={{ position: "absolute", bottom: "20px" }}
+        >
           <div>
             <button
               onClick={onPost}
@@ -34,7 +37,9 @@ const ScholarshipPostedAdmin = ({ onView, onEdit, onPost }) => {
               Post new Scholarship
             </button>
           </div>
-          <p>Page 1 of 100</p>
+        </div>
+        <div style={{ position: "absolute", bottom: "20px", right: "30px" }}>
+          Page 1 of 100
         </div>
       </div>
     </div>

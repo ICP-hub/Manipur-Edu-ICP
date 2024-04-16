@@ -10,7 +10,6 @@ import { getKeysForInstitute, generateAesKeyBase64 } from "../../utils/helper";
 import Loader from "../../loader/Loader";
 
 const SignupInstitute = () => {
-
   const {
     register,
     handleSubmit,
@@ -89,14 +88,10 @@ const SignupInstitute = () => {
   };
 
   return (
-
-
-
     <SignUpPage>
       {isLoading && <Loader></Loader>}
 
       <div className="">
-
         <Status
           open={modelStatus}
           Field={Field}
@@ -105,11 +100,11 @@ const SignupInstitute = () => {
       </div>
       <>
         {step === 0 && (
-          <div className="flex flex-col justify-center items-center px-[2%] m-auto w-fit md:px-[15%]">
+          <div className="flex flex-col justify-center items-center px-[2%] m-auto w-full md:px-[15%]">
             <div className="text-[#00227A] text-3xl font-[500] pb-8">
               Sign up: Institute Details
             </div>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} className="w-full">
               <div className="flex flex-col">
                 <div className="mt-[10px] dxl:mt-[15px]">
                   <label className="text-[#00227A]" htmlFor="institute_name">
@@ -117,10 +112,11 @@ const SignupInstitute = () => {
                   </label>
                   <br />
                   <input
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.institute_name
-                      ? "border-[#FF0606] focus:outline-[#FF0606]"
-                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
-                      }`}
+                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
+                      errors.institute_name
+                        ? "border-[#FF0606] focus:outline-[#FF0606]"
+                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                    }`}
                     type="text"
                     id="institute_name"
                     name="institute_name"
@@ -140,10 +136,11 @@ const SignupInstitute = () => {
                   </label>
                   <br />
                   <select
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.institute_type
-                      ? "border-[#FF0606] focus:outline-[#FF0606]"
-                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
-                      }`}
+                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
+                      errors.institute_type
+                        ? "border-[#FF0606] focus:outline-[#FF0606]"
+                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                    }`}
                     id="institute_type"
                     name="institute_type"
                     {...register("institute_type", {
@@ -175,10 +172,11 @@ const SignupInstitute = () => {
                     Institute Size <span className="text-[#FF0606]">*</span>
                   </label>
                   <input
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.instituteSize
-                      ? "border-[#FF0606] focus:outline-[#FF0606]"
-                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
-                      }`}
+                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
+                      errors.instituteSize
+                        ? "border-[#FF0606] focus:outline-[#FF0606]"
+                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                    }`}
                     type="text"
                     id="instituteSize"
                     name="instituteSize"
@@ -202,10 +200,11 @@ const SignupInstitute = () => {
                   </label>
                   <br />
                   <input
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.address
-                      ? "border-[#FF0606] focus:outline-[#FF0606]"
-                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
-                      }`}
+                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
+                      errors.address
+                        ? "border-[#FF0606] focus:outline-[#FF0606]"
+                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                    }`}
                     type="text"
                     id="address"
                     name="address"
@@ -262,10 +261,11 @@ const SignupInstitute = () => {
                   </label>
                   <br />
                   <select
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.city
-                      ? "border-[#FF0606] focus:outline-[#FF0606]"
-                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
-                      }`}
+                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
+                      errors.city
+                        ? "border-[#FF0606] focus:outline-[#FF0606]"
+                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                    }`}
                     id="city"
                     name="city"
                     {...register("city", {
@@ -294,10 +294,11 @@ const SignupInstitute = () => {
                   </label>
                   <br />
                   <input
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.zip_code
-                      ? "border-[#FF0606] focus:outline-[#FF0606]"
-                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
-                      }`}
+                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
+                      errors.zip_code
+                        ? "border-[#FF0606] focus:outline-[#FF0606]"
+                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                    }`}
                     type="text"
                     id="zip_code"
                     name="zip_code"
@@ -337,7 +338,7 @@ const SignupInstitute = () => {
           </div>
         )}
         {step === 1 && (
-          <div className="flex flex-col justify-center items-center px-[2%] m-auto w-fit md:px-[15%]">
+          <div className="flex flex-col justify-center items-center px-[2%] m-auto w-full md:px-[15%]">
             <div className="text-[#00227A] text-3xl font-[500] pb-8">
               Sign up: Institute Details
             </div>
@@ -349,10 +350,11 @@ const SignupInstitute = () => {
                   </label>
                   <br />
                   <input
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] lowercase px-1 border ${errors.email
-                      ? "border-[#ff0606] focus:outline-[#ff0606]"
-                      : "border-[#acbffd] focus:outline-[#acbffd]"
-                      }`}
+                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] lowercase px-1 border ${
+                      errors.email
+                        ? "border-[#ff0606] focus:outline-[#ff0606]"
+                        : "border-[#acbffd] focus:outline-[#acbffd]"
+                    }`}
                     type="email"
                     id="email"
                     name="email"
@@ -376,10 +378,11 @@ const SignupInstitute = () => {
                   </label>
                   <br />
                   <input
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.phone_no
-                      ? "border-[#FF0606] focus:outline-[#FF0606]"
-                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
-                      }`}
+                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
+                      errors.phone_no
+                        ? "border-[#FF0606] focus:outline-[#FF0606]"
+                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                    }`}
                     type="tel"
                     id="phone_no"
                     name="phone_no"
@@ -404,10 +407,11 @@ const SignupInstitute = () => {
                   </label>
                   <br />
                   <input
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.website
-                      ? "border-[#FF0606] focus:outline-[#FF0606]"
-                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
-                      }`}
+                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
+                      errors.website
+                        ? "border-[#FF0606] focus:outline-[#FF0606]"
+                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                    }`}
                     type="text"
                     id="website"
                     name="website"
@@ -432,10 +436,11 @@ const SignupInstitute = () => {
                   </label>
                   <br />
                   <select
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.approvalAuthority
-                      ? "border-[#FF0606] focus:outline-[#FF0606]"
-                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
-                      }`}
+                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
+                      errors.approvalAuthority
+                        ? "border-[#FF0606] focus:outline-[#FF0606]"
+                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                    }`}
                     id="approvalAuthority"
                     name="approvalAuthority"
                     {...register("approvalAuthority", {
@@ -474,10 +479,11 @@ const SignupInstitute = () => {
                   </label>
                   <br />
                   <select
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.coedStatus
-                      ? "border-[#FF0606] focus:outline-[#FF0606]"
-                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
-                      }`}
+                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
+                      errors.coedStatus
+                        ? "border-[#FF0606] focus:outline-[#FF0606]"
+                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                    }`}
                     id="coedStatus"
                     name="coedStatus"
                     {...register("coedStatus", {
@@ -522,7 +528,6 @@ const SignupInstitute = () => {
                 <button
                   className="flex-1 ml-[10px] w-[40%] h-[40px] dxl:h-[45px] text-white text-[20px] bg-[#646ED6] rounded-[10px]"
                   type="submit"
-
                 >
                   Sign up
                 </button>
@@ -532,7 +537,6 @@ const SignupInstitute = () => {
         )}
       </>
     </SignUpPage>
-
   );
 };
 

@@ -237,7 +237,9 @@ const StudentsTab = () => {
                 <Card key={index} entry={entry} onView={onView} />
               ))} */}
             </div>
-            <div className="flex flex-row-reverse pt-[220px] ">
+            <div
+              style={{ position: "absolute", bottom: "20px", right: "30px" }}
+            >
               Page 1 of 100
             </div>
           </div>

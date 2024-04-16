@@ -22,7 +22,7 @@ const VerificationButton = ({ onTap, SetTab }) => {
           <Card SetTab={SetTab} key={index} entry={entry} onTap={onTap} />
         ))}
       </div>
-      <div className="flex  flex-row-reverse pt-[10px]">
+      <div style={{ position: "absolute", bottom: "20px", right: "30px" }}>
         Page 1 of 100
       </div>
     </div>

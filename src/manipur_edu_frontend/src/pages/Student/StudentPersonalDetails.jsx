@@ -297,25 +297,19 @@ const SignupStudents = () => {
                     </span>
                   )}
                 </div>
-                <div className="flex-none pt-[24px]">
+                <div className="pt-[22px]">
                   <div
                     className="w-full h-[43px] rounded-[10px] px-1 p-1 focus:outline-[#ACBFFD] border-[#ACBFFD] border cursor-pointer"
-                    // onClick={toggleDatePicker}
+                    onClick={toggleDatePicker}
                   >
                     <img src="/calander.svg" alt="calendar" />
                   </div>
                 </div>
-                {/* Date Picker */}
-                {showDatePicker && (
+                {/* {showDatePicker && (
                   <div className="absolute top-full left-0 mt-2">
-                    {/* Add your date picker component here */}
-                    {/* This could be a custom date picker component or an inline date input */}
-                    <input
-                      type="date"
-                      className="bg-white border border-gray-300 rounded p-1"
-                    />
+                    <input type="date" />
                   </div>
-                )}
+                )} */}
               </div>
 
               <div className="mt-[10px] dxl:mt-[15px]">

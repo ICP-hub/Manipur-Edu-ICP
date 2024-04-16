@@ -4,16 +4,22 @@ import { useSelector } from "react-redux";
 const OngoingScholarshipsTab = ({ onView, onEdit }) => {
     const entries = useSelector((state) => state.allScholarshipsReducer);
     return (
-        <div>
-            <div className="flex flex-col gap-[35px] ">
-                {entries.map((entry, index) => (
-                    <Card key={index} entry={entry} index={index + 1} onView={onView} onEdit={onEdit} />
-                ))}
-                <div className="flex flex-row-reverse">
-                    <p>Page 1 of 100</p>
-                </div>
-            </div>
+      <div>
+        <div className="flex flex-col gap-[35px] ">
+          {entries.map((entry, index) => (
+            <Card
+              key={index}
+              entry={entry}
+              index={index + 1}
+              onView={onView}
+              onEdit={onEdit}
+            />
+          ))}
+          <div style={{ position: "absolute", bottom: "20px", right: "30px" }}>
+            Page 1 of 100
+          </div>
         </div>
+      </div>
     );
 };
 

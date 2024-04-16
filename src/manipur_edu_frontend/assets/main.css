@@ -120,3 +120,52 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   top: 0;
   width: auto;
 }
+.search {
+  display: inline-block;
+  position: relative;
+  height: 25px;
+  width: 25px;
+  box-sizing: border-box;
+  /* margin: 0px 8px 7px 0px; */
+  /* padding: 5px 5px 5px 5px; */
+  padding-bottom: 5px;
+  border: 2px solid #00227a;
+  border-radius: 25px;
+  transition: all 200ms ease;
+  cursor: text;
+}
+
+.search.active {
+  width: 200px;
+  margin-right: 0px;
+}
+
+.search input {
+  width: 100%;
+  border: none;
+  box-sizing: border-box;
+  font-family: Helvetica;
+  font-size: 15px;
+  color: inherit;
+  background: transparent;
+  outline-width: 0px;
+  padding-bottom: 3px;
+}
+
+.search:after {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 12px;
+  right: -5px;
+  top: 14px;
+  background: #00227a;
+  border-radius: 1px;
+  transform: rotate(-45deg);
+  transition: all 200ms ease;
+}
+
+.search.active:after,
+.search:hover:after {
+  height: 0px;
+}

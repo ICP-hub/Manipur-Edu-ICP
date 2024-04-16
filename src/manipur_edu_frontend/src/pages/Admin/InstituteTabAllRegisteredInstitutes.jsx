@@ -24,25 +24,27 @@ const AllRegisteredInstitutes = ({ onView, onEdit, onStudent, SetTab }) => {
           />
         ))}
       </div>
-      <div className="flex flex-row-reverse pt-[10px] ">Page 1 of 100</div>
+      <div style={{ position: "absolute", bottom: "20px", right: "30px" }}>
+        Page 1 of 100
+      </div>
     </div>
   );
 };
 export default AllRegisteredInstitutes;
-const Card = ({ entry, onView, onEdit, onStudent ,SetTab}) => {
+const Card = ({ entry, onView, onEdit, onStudent, SetTab }) => {
   console.log(entry);
   const navigate = useNavigate();
   const handleClick = () => {
     // navigate("/register-students-details", { state: { entry } });
     SetTab("register-students-details");
   };
-  
+
   const handleView = () => {
     navigate("/institute-details-admin", { state: { entry } });
   };
-  const instituteName = entry?.[1].institute_name?.[0] ?? 'N/A';
-  const instituteId = entry?.[1].institute_id?.[0].substr(0, 6) ?? 'N/A';
-  const instituteEmail = entry?.[1].email?.[0] ?? 'N/A';
+  const instituteName = entry?.[1].institute_name?.[0] ?? "N/A";
+  const instituteId = entry?.[1].institute_id?.[0].substr(0, 6) ?? "N/A";
+  const instituteEmail = entry?.[1].email?.[0] ?? "N/A";
   return (
     <div className="grid grid-cols-[repeat(4,1fr)_100px] py-[15px] border-t border-[#D9EBFF]">
       <div className="flex items-center justify-center text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] rounded-[5px]">
