@@ -23,7 +23,7 @@ const ViewInstituteDetailsInstitutePage = () => {
 
   const handleClick = () => {
 
-    navigate("/institute_detail_edit");
+    navigate("/institute_edit");
 
   };
 

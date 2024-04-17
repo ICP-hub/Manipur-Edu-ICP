@@ -2,6 +2,9 @@ import React from "react";
 import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
 import { useSelector } from "react-redux";
 import StudentsTab from "../Institute/StudentsTab";
+import { useDispatch } from "react-redux";
+import { setInstituteId } from "../../../Redux/Action/idAction";
+
 const VerificationButton = ({ onTap, SetTab}) => {
   let entries = useSelector((state) => state.allInstitutesReducer);
 
@@ -27,14 +30,24 @@ export default VerificationButton;
 
 const Card = ({ entry, onTap, SetTab }) => {
   const navigate = useNavigate();
-  const handleClick = () => {
-    // navigate("/institute-details-verify", { state: { entry } });
-    SetTab("institute-details-verify");
-  };
+  const dispatch = useDispatch();
+
+  
+  console.log("entry : " ,entry)
   const instituteName = entry?.[1].institute_name?.[0] ?? "N/A";
   const instituteId = entry?.[1].institute_id?.[0].substr(0, 6) ?? "N/A";
   const instituteEmail = entry?.[1].email?.[0] ?? "N/A";
   const verificationStatus = entry?.[1].status?.[0] ?? "N/A";
+
+  const handleClick = () => {
+
+    dispatch(setInstituteId(instituteId));
+    
+    navigate("/institute-details-verify", { state: { entry } });
+    SetTab("institute-details-verify");
+
+  };
+
   return (
     <div className="grid grid-cols-5 py-[20px] border-t border-[#D9EBFF]">
       <div className="flex items-center justify-center text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] rounded-[5px]">

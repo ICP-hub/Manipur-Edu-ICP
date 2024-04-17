@@ -28,47 +28,7 @@ const StudentsTab = () => {
   }
 
   // let entries = useSelector((state) => state.allStudentsReducer)
-  // console.log('entries: ',entries)
-  // const entries = [
-  //   {
-  //     name: "Student Name",
-  //     id: "STU-12345",
-  //     email: "email@email.com",
-  //     roll_num: "RN-123",
-  //   },
-  //   {
-  //     name: "Student Name",
-  //     id: "STU-12345",
-  //     email: "email@email.com",
-  //     roll_num: "RN-123",
-  //   },
 
-  //   {
-  //     name: "Student Name",
-  //     id: "STU-12345",
-  //     email: "email@email.com",
-  //     roll_num: "RN-123",
-  //   },
-
-  //   {
-  //     name: "Student Name",
-  //     id: "STU-12345",
-  //     email: "email@email.com",
-  //     roll_num: "RN-123",
-  //   },
-  //   {
-  //     name: "Student Name",
-  //     id: "STU-12345",
-  //     email: "email@email.com",
-  //     roll_num: "RN-123",
-  //   },
-  //   {
-  //     name: "Student Name",
-  //     id: "STU-12345",
-  //     email: "email@email.com",
-  //     roll_num: "RN-123",
-  //   },
-  // ];
   return (
     <div>
       {isLoadingEntries && <Loader></Loader>}

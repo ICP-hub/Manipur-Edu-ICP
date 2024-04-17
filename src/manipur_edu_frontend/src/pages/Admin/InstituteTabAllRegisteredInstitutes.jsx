@@ -34,6 +34,9 @@ const Card = ({ entry, onView, onEdit, onStudent ,SetTab}) => {
   const navigate = useNavigate();
   const handleClick = () => {
     // navigate("/register-students-details", { state: { entry } });
+    
+    // click to view 
+    navigate("/institute-details-admin", { state: { entry } });
     SetTab("register-students-details");
   };
   
