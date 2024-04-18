@@ -17,6 +17,10 @@ import { toggleBoolVar } from '../../../Redux/Action/toggleActions';
 
 const Login = () => {
 
+  let entry = useSelector(
+    (state) => state.studentDetailsReducer
+  );
+
   const { boolVar1, boolVar2, boolVar3 } = useSelector(state => state.bools);
   const dispatch = useDispatch();
   const[chossed, setChoosed] = useState("")
@@ -140,7 +144,7 @@ const Login = () => {
       console.log(newUserType);
   
       console.log(userType);
-  let isvalue = true ; 
+      let isvalue = true ; 
       if (isvalue === true) {
         const student_status = await actor.student_application_status(
           principal_id
@@ -274,7 +278,6 @@ const Login = () => {
           <button
             className="sm:w-1/2 w-full h-14 text-white text-xl rounded-xl bg-[#646ED6]"
             value="admin"
-            // onClick={handleLogin}
             onClick={()=>{handleLogin() ; setChoosed("admin")  }}
 
           >

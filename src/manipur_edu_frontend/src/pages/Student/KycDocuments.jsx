@@ -1,6 +1,39 @@
-import React from "react";
+import React ,  { useRef , useState} from "react";
 
 const KycDocuments = ({ prev }) => {
+
+  const aadharInputRef = useRef(null);
+  const panInputRef = useRef(null);
+
+
+  const [aadharFileName, setAadharFileName] = useState("Upload ");
+  const [panFileName, setPanFileName] = useState("Upload ");
+
+
+  function aadharUpload() {
+    aadharInputRef.current.click(); // Programmatically trigger the file input click
+  }
+  function panUpload() {
+    panInputRef.current.click();
+  }
+
+  function handleAadharFile(event) {
+    const file = event.target.files[0];
+    if (file) {
+        setAadharFileName(file.name);
+    }
+    console.log("Aadhar card uploaded: ", file.name);
+    // Add further file handling here
+  }
+
+  function handlePanFile(event) {
+    const file = event.target.files[0];
+    if (file) {
+        setPanFileName(file.name);
+    }
+  }
+
+
   return (
     <div className="border-l border-[#D8E1F8] ml-[55px] flex flex-col justify-between pl-[47px] w-full pt-[45px] pr-[45px] ">
       <div className="pb-[45px]">
@@ -13,17 +46,20 @@ const KycDocuments = ({ prev }) => {
           <p className="text-[#00227A] text-[16px] font-[500] text-[Noto Sans] pb-[6px]">
             Aadhaar Card
           </p>
-          <button className="rounded-[5px] py-[14px] px-[80px] border border-[#00227A] text-[#00227A] text-[16px] font-[500] text-[Noto Sans]">
-            Upload
+          <button onClick={aadharUpload} 
+          className="rounded-[5px] py-[14px] px-[80px] border border-[#00227A] text-[#00227A] text-[16px] font-[500] text-[Noto Sans]">
+           {aadharFileName}
           </button>
+          <input type="file" ref={aadharInputRef} style={{ display: 'none' }}  accept="image/png, image/jpeg, image/svg+xml"  onChange={handleAadharFile} />
         </div>
         <div>
           <p className="text-[#00227A] text-[16px] font-[500] text-[Noto Sans] pb-[6px]">
             PAN Card
           </p>
-          <button className="rounded-[5px] py-[14px] px-[80px] border border-[#00227A] text-[#00227A] text-[16px] font-[500] text-[Noto Sans]">
-            Upload
+          <button onClick={panUpload}  className="rounded-[5px] py-[14px] px-[80px] border border-[#00227A] text-[#00227A] text-[16px] font-[500] text-[Noto Sans]">
+          {panFileName}
           </button>
+          <input type="file" ref={panInputRef}  style={{ display: 'none' }}   accept="image/png, image/jpeg, image/svg+xml"  onChange={handlePanFile} />
         </div>
       </div>
 

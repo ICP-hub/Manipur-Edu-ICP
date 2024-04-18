@@ -1,13 +1,23 @@
 import React from "react";
+import { useSelector } from 'react-redux';
+
 import { Link, useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
 
-const ParentDetailsEdit = ({ next, prev }) => {
+const ParentDetailsEdit = ({ next, prev  , formData, updateFormData }) => {
 const navigate = useNavigate();
+
+let entry = useSelector(
+  (state) => state.studentDetailsReducer
+);
+
+console.log(entry) ; 
   return (
     <div className="border-l border-[#D8E1F8] ml-[55px] flex flex-col justify-between pl-[47px] w-full pt-[45px] pr-[45px] ">
       <div className="pb-[45px]">
         <p className="text-[Segoe UI] text-[#00227A] text-[24px] leading-[32px] font-[400]">
           Parents Details
+          {/* {entry?.[0]?.first_name?.[0] + " " + entry?.[0]?.last_name?.[0] ?? "N/A"} */}
+
         </p>
       </div>
       <form action="">
@@ -25,6 +35,7 @@ const navigate = useNavigate();
               type="text"
               id="mname"
               name="mname"
+              value={formData.mother_name || ''} 
             />
           </div>
           <div className="w-full">
@@ -40,6 +51,7 @@ const navigate = useNavigate();
               type="text"
               id="fname"
               name="fname"
+              value={formData.father_name || ''} 
             />
           </div>
           <div className="w-full">
@@ -47,6 +59,7 @@ const navigate = useNavigate();
               className="text-[Noto Sans] text-[#00227A] text-[17px] leading-[23px] font-[400]"
               for="lname"
             >
+{/*  phone_no*/}
               Phone Number
             </label>
             <br />
@@ -55,6 +68,7 @@ const navigate = useNavigate();
               type="tel"
               id="pnum"
               name="pnum"
+              value={formData.phone_no || ''} 
             />
           </div>
         </div>
@@ -72,6 +86,7 @@ const navigate = useNavigate();
               type="text"
               id="email"
               name="email"
+              value={formData.personal_email || ''} 
             />
           </div>
           <div className="w-full pt-[27px]">
@@ -87,6 +102,7 @@ const navigate = useNavigate();
               type="text"
               id="address"
               name="address"
+              value={formData.address || ''} 
             />
           </div>
           <div className="w-full pt-[27px]">
@@ -102,6 +118,7 @@ const navigate = useNavigate();
               type="text"
               id="state"
               name="state"
+              value={formData.state || ''} 
             />
           </div>
         </div>

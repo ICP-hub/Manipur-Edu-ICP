@@ -4,7 +4,7 @@ import {
   useLocation,
 } from "react-router-dom";
 
-const InstituteDetailsEdit = ({ prev }) => {
+const InstituteDetailsEdit = ({ prev ,formData , updateFormData }) => {
   return (
     <div className="px-[4%] lg1:px-[5%] flex flex-col justify-between w-full ">
       <div className="w-full my-[3.125rem] rounded-[0.625rem] bg-white px-[4.125rem] py-[2.625rem]">
@@ -20,6 +20,7 @@ const InstituteDetailsEdit = ({ prev }) => {
                 className="text-[Noto Sans] text-[#00227A] text-[17px] leading-[23px] font-[400] "
                 for="fname"
               >
+                {/* roll_no */}
                 Roll number
               </label>
               <br />
@@ -28,6 +29,8 @@ const InstituteDetailsEdit = ({ prev }) => {
                 type="text"
                 id="rnumber"
                 name="rollnumber"
+              value={formData.roll_no || ''} 
+
               />
             </div>
             <div className="w-full">
@@ -35,6 +38,7 @@ const InstituteDetailsEdit = ({ prev }) => {
                 className="text-[Noto Sans] text-[#00227A] text-[17px] leading-[23px] font-[400]"
                 for="lname"
               >
+                {/* institute_name */}
                 Institute name
               </label>
               <br />
@@ -43,6 +47,7 @@ const InstituteDetailsEdit = ({ prev }) => {
                 type="text"
                 id="name"
                 name="institutename"
+              value={formData.institute_name || ''} 
               />
             </div>
             <div className="w-full">
@@ -50,6 +55,8 @@ const InstituteDetailsEdit = ({ prev }) => {
                 className="text-[Noto Sans] text-[#00227A] text-[17px] leading-[23px] font-[400]"
                 for="lname"
               >
+                {/* student_institute_email */}
+
                 Student's Institute E-mail
               </label>
               <br />
@@ -58,6 +65,8 @@ const InstituteDetailsEdit = ({ prev }) => {
                 type="text"
                 id="email"
                 name="email"
+              value={formData.student_institute_email || ''} 
+
               />
             </div>
           </div>
@@ -75,6 +84,8 @@ const InstituteDetailsEdit = ({ prev }) => {
                 type="text"
                 id="fname"
                 name="fname"
+              value={formData.cgpa || ''} 
+
               />
             </div>
             <div className="w-full pt-[27px]">
@@ -90,6 +101,8 @@ const InstituteDetailsEdit = ({ prev }) => {
                 type="year"
                 id="gradyear"
                 name="gradyear"
+              value={formData.graduation_year || ''} 
+
               />
             </div>
             <div className="w-full pt-[27px]">
@@ -97,6 +110,7 @@ const InstituteDetailsEdit = ({ prev }) => {
                 className="text-[Noto Sans] text-[#00227A] text-[17px] leading-[23px] font-[400]"
                 for="lname"
               >
+                {/* program_enrolled */}
                 Program
               </label>
               <br />
@@ -105,6 +119,7 @@ const InstituteDetailsEdit = ({ prev }) => {
                 type="text"
                 id="program"
                 name="program"
+              value={formData.program_enrolled || ''} 
               />
             </div>
           </div>

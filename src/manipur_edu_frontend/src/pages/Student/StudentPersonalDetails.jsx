@@ -82,7 +82,12 @@ const SignupStudents = () => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setFileName(file.name);
+      const validExtensions = ['image/png', 'image/jpeg', 'image/svg+xml'];
+      if (validExtensions.includes(file.type)) {
+        setFileName(file.name);
+      } else {
+        alert("Invalid file type. Please upload an image file (.png, .jpeg, .svg).");
+      }
     } else {
       setFileName("");
     }
@@ -475,6 +480,7 @@ const SignupStudents = () => {
                     type="file"
                     id="aadhar_upload"
                     name="aadhar_upload"
+                    accept="image/png, image/jpeg, image/svg+xml" 
                     onChange={handleFileChange}
                     {...register("aadhar_upload", {
                       required: "This field is required",

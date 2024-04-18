@@ -5,7 +5,7 @@ import Status from "../../components/student/status";
 
 import { useForm } from "react-hook-form";
 
-const StudentPersonalDetailsEdit = ({ next, formData, updateFormData }) => {
+const StudentPersonalDetailsEdit = ({ next , formData, updateFormData }) => {
   // const { register, handleSubmit, setValue } = useForm();
   const { actor } = useAuth();
   const [status, setStatus] = React.useState(false);
@@ -26,18 +26,66 @@ const StudentPersonalDetailsEdit = ({ next, formData, updateFormData }) => {
   //   setStatus(true);
   //   // Reset currentPage if needed
   // };
+  // const handleSave = async () => {
+  //   try {
+  //     const editStatusResponse = await actor.edit_student_profile(formData);
+  //     console.log("Saving data:", formData);
+  //     setField(editStatusResponse);
+  //     setStatus(true);
+  //     // Reset currentPage if needed
+  //   } catch (error) {
+  //     console.error("Error while saving data:", error);
+  //     // Handle error state if necessary
+  //   }
+  // };
   const handleSave = async () => {
+    // Assuming formData contains the Uint8Array for kyc
+    const preparedData = {
+        ...formData,
+        kyc: Array.from(formData.kyc) // Convert Uint8Array to an array of numbers
+    };
+
+    console.log("Prepared Data for API:", preparedData);
+
     try {
-      const editStatusResponse = await actor.edit_student_profile(formData);
-      console.log("Saving data:", formData);
-      setField(editStatusResponse);
-      setStatus(true);
-      // Reset currentPage if needed
+      const newData={
+        student_id :  preparedData.student_id,
+    first_name : [preparedData.first_name],
+    last_name: preparedData.last_name,
+    date_of_birth: preparedData.date_of_birth,
+    personal_email: preparedData.personal_email,
+    gender: preparedData.gender,
+    address: preparedData.address,
+    city: preparedData.city,
+    state: preparedData.state,
+    zip_code: preparedData.zip_code,
+    institute_name: preparedData.institute_name,
+    roll_no: preparedData.roll_no,
+    student_institute_email: preparedData.student_institute_email,
+    phone_no: preparedData.phone_no,
+    cgpa: preparedData.cgpa,
+    graduation_year: preparedData.graduation_year,
+    program_enrolled: preparedData.program_enrolled,
+    public_key: preparedData.public_key,
+    aadhar_no: preparedData.aadhar_no,
+    mother_name: preparedData.mother_name,
+    father_name: preparedData.father_name,
+    certificates: preparedData.certificates,
+    result: preparedData.result,
+    status: preparedData.status,
+    kyc: preparedData.kyc,
+      }
+      console.log("newData data is " , newData)
+        // const editStatusResponse = await actor.edit_student_profile(preparedData);
+        const editStatusResponse = await actor.edit_student_profile(newData);
+
+        console.log("API Response:", editStatusResponse);
     } catch (error) {
-      console.error("Error while saving data:", error);
-      // Handle error state if necessary
+        console.error("Error while saving data:", error);
     }
-  };
+};
+
+
   return (
     <div className="border-l border-[#D8E1F8] ml-[55px] flex flex-col justify-between pl-[47px] w-full pt-[45px] pr-[45px] ">
       <div className="pb-[45px]">
