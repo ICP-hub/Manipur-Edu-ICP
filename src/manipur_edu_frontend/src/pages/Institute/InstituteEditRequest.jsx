@@ -132,7 +132,10 @@ const Card = ({ entry, onView, SetTab }) => {
   const navigate = useNavigate();
   const handleClick = () => {
     // navigate("/instituteEditRequest", { state: { entry } });
-    SetTab("instituteEditRequest");
+    navigate("/InstituteEditRequestRejectApprove", { state: { entry } });
+    SetTab("InstituteEditRequestRejectApprove");
+    // SetTab("instituteEditRequest");
+    // InstituteEditRequestRejectApprove
   };
   const instituteName = entry?.[1].institute_name?.[0] ?? "N/A";
   const instituteId = entry?.[1].institute_id?.[0].substr(0, 6) ?? "N/A";

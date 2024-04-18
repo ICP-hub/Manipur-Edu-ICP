@@ -3,9 +3,10 @@ import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/i
 import { useSelector } from "react-redux";
 import { useQuery } from "react-query";
 import StudentsTab from "../Institute/StudentsTab";
-import { getInstituteDetails } from "../../../Redux/Action/index";
 import { useDispatch } from "react-redux";
-const VerificationButton = ({ onTap, SetTab }) => {
+import { setInstituteId } from "../../../Redux/Action/idAction";
+
+const VerificationButton = ({ onTap, SetTab}) => {
   let entries = useSelector((state) => state.allInstitutesReducer);
 
   return (
@@ -33,23 +34,23 @@ export default VerificationButton;
 const Card = ({ entry, onTap, SetTab }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const getInstitutedetail = async () => {
-    dispatch(getInstituteDetails(entry));
-  };
-  const {
-    data: result,
-    isLoading: isLoadingEntries,
-    error: errorEntries,
-  } = useQuery("dataEntries", getInstitutedetail);
 
-  const handleClick = () => {
-    // navigate("/institute-details-verify", { state: { entry } });
-    SetTab("institute-details-verify");
-  };
+  
+  console.log("entry : " ,entry)
   const instituteName = entry?.[1].institute_name?.[0] ?? "N/A";
   const instituteId = entry?.[1].institute_id?.[0].substr(0, 6) ?? "N/A";
   const instituteEmail = entry?.[1].email?.[0] ?? "N/A";
   const verificationStatus = entry?.[1].status?.[0] ?? "N/A";
+
+  const handleClick = () => {
+
+    dispatch(setInstituteId(instituteId));
+    
+    navigate("/institute-details-verify", { state: { entry } });
+    SetTab("institute-details-verify");
+
+  };
+
   return (
     <div className="grid grid-cols-5 py-[20px] border-t border-[#D9EBFF]">
       {isLoadingEntries}

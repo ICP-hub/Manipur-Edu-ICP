@@ -5,6 +5,7 @@ import InstituteDetailsEdit from "./StudentInstituteDetails";
 import { useAuth } from "../../utils/useAuthClient";
 import { useSelector } from 'react-redux';
 import Status from "../../components/student/status";
+
 const StudentDetailsEdit = () => {
   const [page, setPage] = useState("personal");
 
@@ -18,6 +19,12 @@ const StudentDetailsEdit = () => {
   const updateFormData = (newData) => {
     setFormData(newData);
   };
+
+  const ins = useSelector((state) => state.intituteId);
+  console.log(ins, "is the data in ins ")
+  let allStuds  = useSelector((state) => state.allStudentsReducer) ; 
+  console.log("is the data in allStuds  " , allStuds)
+
 
   return (
     <div className="bg-[#E5F1FF] min-h-screen flex justify-center px-[4%] lg1:px-[5%] ">

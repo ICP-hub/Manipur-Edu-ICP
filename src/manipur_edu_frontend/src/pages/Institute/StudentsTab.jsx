@@ -17,16 +17,6 @@ const StudentsTab = () => {
       >
         Student Verification Requests{" "}
       </button>
-      {/* <button
-        onClick={() => setPage("registeredbyinstitute")}
-        className={
-          page === "registeredbyinstitute"
-            ? "py-[10px] px-[22px] rounded-[10px] text-[#687DB2] bg-[#D9EBFF] mr-[16px]"
-            : "py-[10px] px-[22px] rounded-[10px] text-[#687DB2] border border-[#D9EBFF] mr-[16px]"
-        }
-      >
-        Students Registered by Institute
-      </button> */}
       <button
         onClick={() => setPage("allstudents")}
         className={
@@ -39,7 +29,6 @@ const StudentsTab = () => {
       </button>
 
       {page === "verification" && <StudentVerificationRequest  />}
-      {/* {page === "registeredbyinstitute" && <StudentRegisteredByInstitute  entries={entries} />} */}
       {page === "allstudents" && <AllRegisteredStudents />}
     </div>
   );

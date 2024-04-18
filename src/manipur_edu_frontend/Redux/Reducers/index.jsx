@@ -8,6 +8,8 @@ import allStudentsReducer from "./allStudentsReducer.jsx";
 import allScholarshipsReducer from "./allScholarshipsReducer.jsx";
 import WalletReducer from "./WalletReducer.jsx";
 import boolReducer from "./boolReducer.jsx";
+import idReducer from "./idReducer.jsx";
+
 const rootReducer = combineReducers({
     profileOpenCloseDropDownReducer,
     notificationOpenCloseDropDownReducer,
@@ -17,7 +19,9 @@ const rootReducer = combineReducers({
     allStudentsReducer,
     allScholarshipsReducer,
     WalletReducer,
-    bools : boolReducer
+    bools : boolReducer, 
+   intituteId : idReducer
+
 });
 
 export default rootReducer;

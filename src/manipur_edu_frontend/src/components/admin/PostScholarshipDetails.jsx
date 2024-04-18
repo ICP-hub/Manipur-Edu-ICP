@@ -6,7 +6,7 @@ const PostScholarshipDetails = ({ onBack }) => {
         <div className="px-[63px] py-[25px] flex flex-col gap-[25px]">
             <div className="flex justify-between ">
                 <div className="font-[600] font-[Segoe UI] text-4xl text-[#2D6BE4]">
-                    Enter Scholarship Details
+                    Enter Scholarship Details 
                 </div>
                 <div className="flex gap-[44px]">
                     <div className="flex gap-[23px]">

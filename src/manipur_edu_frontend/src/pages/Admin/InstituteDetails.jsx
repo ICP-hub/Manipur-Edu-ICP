@@ -2,20 +2,30 @@ import React, { useState } from "react";
 import VerifyModal from "../../components/VerifyModal";
 import RejectModal from "../../components/RejectModal";
 import { useAuth } from "../../utils/useAuthClient";
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
+
 import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
 
-const InstituteDetails = ({ onBack }) => {
+const InstituteDetails = ({ onBack  }) => {
   const [openModalReject, setOpenModalReject] = useState(false);
   const [openModalVerify, setOpenModalVerify] = useState(false);
   const { actor } = useAuth();
   console.log(actor);
   const navigate = useNavigate();
-  // let entry = useSelector((state) => state.allInstitutesReducer);
+  const ins = useSelector((state) => state.intituteId);
+  console.log("Insititute  id is : ", ins.instituteId)
+
   let entries = useSelector((state) => state.allInstitutesReducer);
-  let entry = entries[0];
-  console.log("institute details page ", entry);
-  console.log(entry[0]);
+  
+  let i ; 
+  for( i = 0; i < entries.length; i++){
+    if(entries[i][1].institute_id[0].substring(0, 6) === ins.instituteId){
+        console.log("Matching index:", i);
+        break ; 
+    }
+  }
+  let indexValue  = Number(i) ; 
+  let entry = entries[indexValue];
   const verifyInstitute = async () => {
     const result = await actor.verify_institute(entry[0]);
     setOpenModalVerify(false);
@@ -111,7 +121,6 @@ const InstituteDetails = ({ onBack }) => {
           <img className="w-[100px] h-[100px]" src="/student.svg" alt="" />
           <div className="flex flex-col justify-center pl-[1.8125rem]">
             <p className="font-[Noto Sans] text-[#00227A] text-[1.5625rem] leading-[2.125rem] font-[400] pb-[0.375rem]">
-              {/* {entry?.[1].institute_name?.[0] || "N/A"} */}
               {entry?.[1].institute_name || "N/A"}
             </p>
             <p className="font-[Noto Sans] text-[#687EB5] text-[0.9375rem] leading-[1.25rem] font-[500]">

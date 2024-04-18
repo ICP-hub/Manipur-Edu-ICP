@@ -8,7 +8,7 @@ const ScholarshipPostedAdmin = ({ onView, onEdit, onPost }) => {
   const entries = useSelector((state) => state.allScholarshipsReducer);
   return (
     <div>
-      {/* {isLoadingEntries && <Loader></Loader>} */}
+      {isLoadingEntries && <Loader></Loader>}
       <div className="flex flex-col gap-[35px]">
         {entries &&
           entries.map(

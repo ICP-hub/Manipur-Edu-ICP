@@ -23,6 +23,7 @@ import RejectModal from "./components/RejectModal";
 import StudentEditRequestRejectApproval from "./pages/Student/StudentEditRequestRejectApproval";
 import ScholarshipPostedAdmin from "./components/admin/ScholarshipPostedAdmin";
 import InstituteEditRequestRejectApprove from "./pages/Institute/InstituteEditRequestRejectApproval";
+import EditInstituteProfile from "./pages/Admin/EditInstituteDetails"
 import ScholarshipTab from "./pages/Institute/ScholarshipTab";
 
 // All Routes according to usertype
@@ -99,6 +100,20 @@ const routes = [
       appConstants.UNKNOWN,
     ],
   },
+  {
+    path: "/institute_edit",
+    component: <EditInstituteProfile />,
+    allowedUser: [
+      appConstants.INSTITUTE,
+      appConstants.ADMIN,
+      appConstants.STUDENT,
+      appConstants.UNKNOWN,
+    ],
+  },
+
+
+
+  // EditInstituteProfile
   {
     path: "/institute-student/result",
     component: <StudentResultScholarship />,
@@ -285,7 +300,7 @@ const routes = [
   },
   {
     path: "/institute-details-verify",
-    component: <InstituteDetails />,
+    component: <InstituteDetails  />,
     allowedUser: [
       appConstants.ADMIN,
       appConstants.INSTITUTE,

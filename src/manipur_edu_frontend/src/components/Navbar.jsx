@@ -59,9 +59,9 @@
 //   };
 
 //   // Handle drop down events
-//   const handleDropDown = () => {
-//     dispatch(profileOpenCloseDropDown(!isDropDownOpen));
-//   };
+  // const handleDropDown = () => {
+  //   dispatch(profileOpenCloseDropDown(!isDropDownOpen));
+  // };
 
 //   // Handle notification drop down events
 //   const handleNotificationDropDown = () => {
@@ -340,18 +340,18 @@ const Navbar = () => {
   //   };
   // }, [dropdownRef]);
   useEffect(() => {
-    // function handleClickOutside(event) {
-    //   const isOutsideDropdown =
-    //     dropdownRef.current &&
-    //     !dropdownRef.current.contains(event.target) &&
-    //     !profileButtonRef.current.contains(event.target) &&
-    //     !notificationButtonRef.current.contains(event.target);
+    function handleClickOutside(event) {
+      const isOutsideDropdown =
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target) &&
+        !profileButtonRef.current.contains(event.target) &&
+        !notificationButtonRef.current.contains(event.target);
 
-    //   if (isOutsideDropdown) {
-    //     dispatch(notificationOpenCloseDropDown(false));
-    //     dispatch(profileOpenCloseDropDown(false));
-    //   }
-    // }
+      if (isOutsideDropdown) {
+        dispatch(notificationOpenCloseDropDown(false));
+        dispatch(profileOpenCloseDropDown(false));
+      }
+    }
 
     function handleClickOutside(event) {
       if (
@@ -498,7 +498,8 @@ const Navbar = () => {
                   </div>
                   <li className="mr-4">
                     <button
-                      onClick={() => handleDropDown()}
+                      // onClick={() => handleDropDown()}
+                      onClick={() => handleProfileDropDown()}
                       ref={profileButtonRef}
                     >
                       <img className="w-14 h-14 " src="/student.svg" alt="" />

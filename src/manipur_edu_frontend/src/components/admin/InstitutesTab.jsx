@@ -1,5 +1,3 @@
-
-
 import React, { useState } from "react";
 import VerificationButton from "../../pages/Admin/InstitutesTabVerification";
 import AllRegisteredInstitutes from "../../pages/Admin/InstituteTabAllRegisteredInstitutes";
