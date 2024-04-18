@@ -6,6 +6,7 @@ import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/i
 import { ICountry, IState, City, State, Country } from "country-state-city";
 import Loader from "../../loader/Loader";
 import "../../../assets/main.css";
+import { MdUpload } from "react-icons/md";
 import { useQuery, useQueryClient, useMutation } from "react-query";
 import {
   generateAesKeyBase64,
@@ -433,8 +434,8 @@ const SignupStudents = () => {
                   </label>
                   <br />
                   <input
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
-                      errors.aadhar_no
+                    className={`w-full h-[45px] dxl:h-[45px] rounded-[10px] p-1 border ${
+                      errors.aadhar_upload
                         ? "border-[#FF0606] focus:outline-[#FF0606]"
                         : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
                     }`}
@@ -452,31 +453,6 @@ const SignupStudents = () => {
                   {errors && errors.aadhar_no && (
                     <span className="absolute grid text-xs text-[#FF0606]">
                       Please enter your Aadhar number.
-                    </span>
-                  )}
-                </div>
-                <div className="mt-[10px] dxl:mt-[15px]">
-                  <label className="text-[#00227A]" htmlFor="aadhar_upload">
-                    Upload Aadhar Card <span className="text-[#FF0606]">*</span>
-                  </label>
-                  <br />
-                  <input
-                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] p-1 border ${
-                      errors.aadhar_upload
-                        ? "border-[#FF0606] focus:outline-[#FF0606]"
-                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
-                    }`}
-                    type="file"
-                    id="aadhar_upload"
-                    name="aadhar_upload"
-                    onChange={handleFileChange}
-                    {...register("aadhar_upload", {
-                      required: "This field is required",
-                    })}
-                  />
-                  {errors && errors.aadhar_upload && (
-                    <span className="absolute grid text-xs text-[#FF0606]">
-                      Please upload your Aadhar document.
                     </span>
                   )}
                 </div>
@@ -576,7 +552,7 @@ const SignupStudents = () => {
                   </div>
                   <div className="w-full pl-1">
                     <label className="text-[#00227A]" htmlFor="zipcode">
-                      Zip code <span className="text-[#FF0606]">*</span>
+                      Pin Code <span className="text-[#FF0606]">*</span>
                     </label>
                     <br />
                     <input
@@ -603,9 +579,65 @@ const SignupStudents = () => {
                     )}
                   </div>
                 </div>
+                <div className="mt-[10px] dxl:mt-[15px]">
+                  <label className="text-[#00227A]" htmlFor="aadhar_upload">
+                    Upload KYC Documents{" "}
+                    <span className="text-[#FF0606]">*</span>
+                  </label>
+                  <br />
+                  {/* <input
+                    className={`w-1/2 h-[45px] dxl:h-[45px] rounded-[10px] p-1 border ${
+                      errors.aadhar_upload
+                        ? "border-[#FF0606] focus:outline-[#FF0606]"
+                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                    }`}
+                    type="file"
+                    id="kyc_upload"
+                    name="kyc_upload"
+                    onChange={handleFileChange}
+                    {...register("kyc_upload", {
+                      required: "This field is required",
+                    })}
+                  />
+                  <MdUpload /> */}
+                  <div className="w-1/2 relative flex items-center">
+                    {/* <label for="file-input">No file chosen</label> */}
+                    <input
+                      className={`h-[45px] dxl:h-[45px] rounded-[10px] p-1 border ${
+                        errors.aadhar_upload
+                          ? "border-[#FF0606] focus:outline-[#FF0606]"
+                          : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      }`}
+                      type="file"
+                      id="kyc_upload"
+                      name="kyc_upload"
+                      onChange={handleFileChange}
+                      {...register("kyc_upload", {
+                        required: "This field is required",
+                      })}
+                    />
+                    <div
+                      style={{
+                        backgroundColor: "#acbffd",
+                        border: "1px solid #acbffd",
+                        borderRadius: "0.375rem",
+                      }}
+                    >
+                      <MdUpload
+                        className="absolute top-0 mt-1 mr-1"
+                        size={28}
+                      />
+                    </div>
+                  </div>
+
+                  {errors && errors.kyc && (
+                    <span className="absolute grid text-xs text-[#FF0606]">
+                      Please upload your document.
+                    </span>
+                  )}
+                </div>
               </div>
               <div className="mt-[20px] dxl:mt-[30px] flex">
-                {/* previous button */}
                 <button
                   className="flex-1 mr-[10px] w-[40%] h-[40px] dxl:h-[45px] text-white text-[20px] bg-[#646ED6] rounded-[10px]"
                   type="button"

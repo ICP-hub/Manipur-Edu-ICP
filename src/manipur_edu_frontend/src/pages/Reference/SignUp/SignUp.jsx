@@ -4,8 +4,13 @@ import Login from "../../Login/StudInstituteLoginSignup";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const handleSubmit = (event) => {
-    console.log(event.target.value);
+  const handleSubmit = () => {
+    event.preventDefault();
+    console.log("in Handle SUbmit ");
+    // console.log(event.target.value);
+
+    // console.log("event" , event);
+
     navigate("/login");
   };
 
@@ -21,7 +26,7 @@ const SignUp = () => {
           <div className="mb-4">
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-              onClick={handleSubmit}
+              onClick={(handleSubmit)}
               value="student"
             >
               Student

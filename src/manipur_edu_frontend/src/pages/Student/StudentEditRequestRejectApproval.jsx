@@ -451,7 +451,7 @@ const StudentEditRequestRejectApproval = () => {
               <p className="px-[46px] py-[19px] text-[#00227A] text-[18px] font-[Noto Sans] font-[500]">
                 KYC Documents
               </p>
-              <div className="mr-[39px]">
+              <div className="mr-[39px] py-[19px]">
                 <button className="flex">
                   <svg
                     width="1.25rem"

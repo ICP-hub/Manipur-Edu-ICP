@@ -1,5 +1,7 @@
 import { AuthClient } from "@dfinity/auth-client";
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { useSelector } from 'react-redux';
+// import { walletModalSvg } from "../utils/Data/SvgData.jsx";
 import {
   createActor,
   manipur_edu_backend,
@@ -29,13 +31,29 @@ const defaultOptions = {
   /**
    * @type {import("@dfinity/auth-client").AuthClientLoginOptions}
    */
-  loginOptions: {
+  // loginOptions: {
+  //   identityProvider:
+  //     process.env.DFX_NETWORK === "ic"
+  //       ? "https://identity.ic0.app/#authorize"
+  //       : `http://rdmx6-jaaaa-aaaaa-aaadq-cai.localhost:4943`,
+  // },
+  loginOptionsii: {
     identityProvider:
       process.env.DFX_NETWORK === "ic"
         ? "https://identity.ic0.app/#authorize"
         : `http://rdmx6-jaaaa-aaaaa-aaadq-cai.localhost:4943`,
+        // : https://nfid.one/authenticate/?applicationName=my-ic-app#authorize,
+        // :https://nfid.one/authenticate/?applicationName=my-ic-app#authorize
   },
-};
+  loginOptionsnfid: {
+    identityProvider:
+      process.env.DFX_NETWORK === "ic"
+        // ? "https://identity.ic0.app/#authorize"
+        // : http://rdmx6-jaaaa-aaaaa-aaadq-cai.localhost:4943,
+        ? `https://nfid.one/authenticate/?applicationName=my-ic-app#authorize`
+        :`https://nfid.one/authenticate/?applicationName=my-ic-app#authorize`
+}
+}
 
 /**
  *
@@ -54,6 +72,10 @@ export const useAuthClient = (options = defaultOptions) => {
   const [backendActor, setBackendActor] = useState(null);
   const [accountId, setAccountId] = useState(null);
 
+
+  const val = useSelector(state => state.WalletReducer);
+
+
   useEffect(() => {
     // Initialize AuthClient
     AuthClient.create(options.createOptions).then((client) => {
@@ -67,7 +89,12 @@ export const useAuthClient = (options = defaultOptions) => {
     }).join("");
   }
 
+
   const login = () => {
+
+    console.log('val is : ' , val.clickedId)
+
+
     return new Promise(async (resolve, reject) => {
       try {
         if (
@@ -78,8 +105,9 @@ export const useAuthClient = (options = defaultOptions) => {
           updateClient(authClient);
           resolve(AuthClient);
         } else {
+          let loginOption = val.clickedId == "ii" ? defaultOptions.loginOptionsii : defaultOptions.loginOptionsnfid;
           authClient.login({
-            ...options.loginOptions,
+            ...loginOption,
             onError: (error) => reject(error),
             onSuccess: () => {
               updateClient(authClient);

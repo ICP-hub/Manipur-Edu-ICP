@@ -29,14 +29,15 @@ type Result_2 = variant { Ok : vec CertificateData; Err : text };
 type Result_3 = variant { Ok : vec UserResult; Err : text };
 type ScholarShip = record {
   status : text;
-  duration : text;
+  date : text;
   name : text;
+  education : text;
   description : text;
   deadline : text;
-  eligibility : text;
   scholarship_id : opt text;
+  gender : text;
+  offerby : text;
   amount : text;
-  institute : text;
   applicants : vec principal;
 };
 type UserData = record {
@@ -75,9 +76,7 @@ type UserResult = record {
 };
 service : {
   add_private_key : (text) -> (Result);
-  apply_scholarship : (text) -> ();
   approve_institute_profile_update : (text) -> (text);
-  approve_scholarship : (text) -> ();
   approve_student_profile_update : (text) -> (text);
   calculate_state_size : () -> (nat64) query;
   check_admin : () -> (bool) query;
@@ -96,8 +95,6 @@ service : {
   get_institute_students_by_id : (text) -> (opt vec text) query;
   get_institutes : () -> (vec record { text; InstituteData }) query;
   get_institutes_name_and_public_key : () -> (vec InstituteInfo) query;
-  get_scholarship : (text) -> (ScholarShip) query;
-  get_scholarship_by_institute : (text) -> () query;
   get_student_details : (text) -> (opt UserData) query;
   get_students : () -> (text) query;
   get_students_withdetails : () -> (vec record { text; UserData }) query;

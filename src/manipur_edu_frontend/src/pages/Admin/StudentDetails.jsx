@@ -307,7 +307,7 @@ const StudentDetails = ({ onBack }) => {
                     KYC Documents
                 </p>
                 <div className="mr-[39px]">
-                <button className="flex mt-[10px]">
+                <button className="flex py-[19px]">
                   <svg
                     width="1.25rem"
                     height="1.25rem"
@@ -346,7 +346,7 @@ const StudentDetails = ({ onBack }) => {
                   </div>
                 </div>
               </div>
-          <div className="flex flex-row-reverse">
+          <div className="flex flex-row-reverse py-[19px]">
             <button
               onClick={onBack}
               className="px-[2.5rem] py-[1rem] border border-[#00227A] text-[#00227A] rounded-[0.625rem] mt-[15px]"

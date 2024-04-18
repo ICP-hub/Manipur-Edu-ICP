@@ -129,7 +129,7 @@ const Card = ({ studentPrincipalId, entry, publicKey }) => {
             className="font-[700] underline flex justify-center bg-[#EEF6FF] text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px]"
             onClick={handleKyc}
           >
-            {"view kyc"}
+            {"View kyc"}
           </button>
         </div>
       </div>
