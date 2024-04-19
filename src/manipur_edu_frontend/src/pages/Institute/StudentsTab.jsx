@@ -18,6 +18,16 @@ const StudentsTab = () => {
         Student Verification Requests{" "}
       </button>
       <button
+        onClick={() => setPage("studentRegisteredByInstitute")}
+        className={
+          page === "studentRegisteredByInstitute"
+            ? "py-[10px] px-[22px] rounded-[10px] text-[#687DB2] bg-[#D9EBFF] mr-[16px]"
+            : "py-[10px] px-[22px] rounded-[10px] text-[#687DB2] border border-[#D9EBFF] mr-[16px]"
+        }
+      >
+           StudentRegisteredByInstitute
+      </button>
+      <button
         onClick={() => setPage("allstudents")}
         className={
           page === "allstudents"
@@ -27,15 +37,16 @@ const StudentsTab = () => {
       >
         All Registered Students
       </button>
+      
       <button
-        onClick={() => setPage("studentRegisteredByInstitute")}
+        onClick={() => setPage("studentEditRequest")}
         className={
-          page === "allstudents"
+          page === "studentEditRequest"
             ? "py-[10px] px-[22px] rounded-[10px] text-[#687DB2] bg-[#D9EBFF] mr-[16px]"
             : "py-[10px] px-[22px] rounded-[10px] text-[#687DB2] border border-[#D9EBFF] mr-[16px]"
         }
       >
-           StudentRegisteredByInstitute
+           Student Edit Request
       </button>
 
       {/* StudentRegisteredByInstitute */}
@@ -43,6 +54,8 @@ const StudentsTab = () => {
       {page === "verification" && <StudentVerificationRequest  />}
       {page === "allstudents" && <AllRegisteredStudents />}
       {page === "studentRegisteredByInstitute" && <StudentRegisteredByInstitute />}
+      {page === "studentEditRequest" && <StudentEditRequest />}
+
 
     </div>
   );
