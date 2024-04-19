@@ -218,6 +218,43 @@ pub fn edit_institute_profile(institute_data: InstituteData) -> String {
     })
 }
 
+// #[query]
+// pub fn get_all_students_edit_req() -> Vec<String> {
+//     STATE.with(|state| {
+//         let state = state.borrow();
+
+//         // Retrieve all keys (principal IDs) from the unapproved_student_profile map
+//         let edit_requests: Vec<String> = state.unapproved_student_profile.keys().cloned().collect();
+
+//         edit_requests
+//     })
+// }
+
+#[query]
+pub fn get_all_students_edit_req(institute_principal: Option<String>) -> Vec<String> {
+    STATE.with(|state| {
+        let state = state.borrow();
+        let institute_principal = institute_principal.unwrap_or(caller().to_string());
+        let mut edit_requests: Vec<String> = Vec::new();
+        if let Some(institute) = state.institute.get(&institute_principal) {
+            if let Some(institute_name) = &institute.institute_name {
+                // Assuming `institute_students` may contain both verified and unverified students
+                // and you have a separate mechanism to distinguish them, like an `unverified_students` list
+                if let Some(students) = state.institute_students.get(institute_name) {
+                    for student_id in students {
+                        if state.unapproved_student_profile.contains_key(student_id) {
+                            edit_requests.push(student_id.clone());
+                        }
+                    }
+                }
+            }
+        }
+        
+
+        edit_requests
+    })
+}
+
 //function to approve student profile update
 #[update]
 pub fn approve_student_profile_update(user_principal: String) -> String {

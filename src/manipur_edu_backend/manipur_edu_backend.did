@@ -90,6 +90,7 @@ service : {
   edit_student_profile : (UserData) -> (text);
   get_all_institute_students : () -> (text) query;
   get_all_scholarship : () -> (vec record { text; ScholarShip }) query;
+  get_all_students_edit_req : (opt text) -> (vec text) query;
   get_institute_details : (opt text) -> (opt InstituteData) query;
   get_institute_students : () -> (opt vec text) query;
   get_institute_students_by_id : (text) -> (opt vec text) query;
