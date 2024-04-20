@@ -264,7 +264,6 @@ pub fn get_student_profile_updated(user_principal: String) -> Option<UserData>{
         let state = state.borrow();
         state.unapproved_student_profile.get(&user_principal).cloned()
     })
-
 }
 
 
