@@ -223,12 +223,13 @@ pub fn edit_institute_profile(institute_data: InstituteData) -> String {
 //     STATE.with(|state| {
 //         let state = state.borrow();
 
-//         // Retrieve all keys (principal IDs) from the unapproved_student_profile map
+//         
 //         let edit_requests: Vec<String> = state.unapproved_student_profile.keys().cloned().collect();
 
 //         edit_requests
 //     })
 // }
+
 
 #[query]
 pub fn get_all_students_edit_req(institute_principal: Option<String>) -> Vec<String> {
@@ -254,6 +255,18 @@ pub fn get_all_students_edit_req(institute_principal: Option<String>) -> Vec<Str
         edit_requests
     })
 }
+  
+
+//get unapproved_student_profile userdata
+#[query]
+pub fn get_student_profile_updated(user_principal: String) -> Option<UserData>{
+    STATE.with(|state| {
+        let state = state.borrow();
+        state.unapproved_student_profile.get(&user_principal).cloned()
+    })
+
+}
+
 
 //function to approve student profile update
 #[update]
