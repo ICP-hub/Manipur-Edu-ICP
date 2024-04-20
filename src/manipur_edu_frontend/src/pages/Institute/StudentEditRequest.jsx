@@ -153,8 +153,44 @@ import React from "react";
 // import img from "../../assets/student.png";
 import { Outlet, useNavigate } from "react-router-dom";
 // import VerifyEditDetails from "../../components/institute pages/VerifyEditDetails";
+import { useAuth } from "../../utils/useAuthClient";
+// import { useDispatch, useSelector } from "react-redux";
+
 
 const StudentEditRequest = () => {
+
+  const { actor } = useAuth();
+
+  // let isDropDownOpen = useSelector(
+  //   (state) => state.profileOpenCloseDropDownReducer
+  // );
+
+  let data = actor.get_all_students_edit_req([])
+  console.log( "is data needed" , data)
+
+
+ async function getData () {
+  let data = await actor.get_all_students_edit_req([])
+  console.log( "is data needed" , ...data)
+
+  getUpdated(...data) ; 
+ }
+
+ async function getUpdated(data) {
+  console.log("passed data is " , data) ; 
+    let updated =   await actor.unapproved_student_profile(data)
+  console.log( "is updated data needed is : " , updated)
+ }
+ 
+ getData() ; 
+// let data2 = actor.unapproved_student_profile()
+
+
+
+  // 54d4fc
+
+
+
   const entries = [
     {
       name: "Student 1",
