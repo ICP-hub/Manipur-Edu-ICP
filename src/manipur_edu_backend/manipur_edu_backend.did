@@ -81,6 +81,7 @@ service : {
   calculate_state_size : () -> (nat64) query;
   check_admin : () -> (bool) query;
   check_user_type : () -> (text) query;
+  checkk_admin : () -> (bool) query;
   create_scholarship : (ScholarShip) -> (Result_1);
   create_user_certificate : (text, CertificateData) -> (Result_1);
   create_user_result : (text, UserResult) -> (Result_1);
@@ -88,15 +89,19 @@ service : {
   delete_student_record : (text) -> (text);
   edit_institute_profile : (InstituteData) -> (text);
   edit_student_profile : (UserData) -> (text);
+  get_admin : () -> (text) query;
+  get_all_institute_edit_req : () -> (vec text) query;
   get_all_institute_students : () -> (text) query;
   get_all_scholarship : () -> (vec record { text; ScholarShip }) query;
   get_all_students_edit_req : (opt text) -> (vec text) query;
   get_institute_details : (opt text) -> (opt InstituteData) query;
+  get_institute_profile_updated : (text) -> (opt InstituteData) query;
   get_institute_students : () -> (opt vec text) query;
   get_institute_students_by_id : (text) -> (opt vec text) query;
   get_institutes : () -> (vec record { text; InstituteData }) query;
   get_institutes_name_and_public_key : () -> (vec InstituteInfo) query;
   get_student_details : (text) -> (opt UserData) query;
+  get_student_profile_updated : (text) -> (opt UserData) query;
   get_students : () -> (text) query;
   get_students_withdetails : () -> (vec record { text; UserData }) query;
   get_unverified_institutes : () -> (vec text) query;
@@ -107,6 +112,7 @@ service : {
   institute_application_status : (text) -> (opt text) query;
   is_user_already_registered : () -> (bool) query;
   login : (text) -> (bool) query;
+  register_admin : () -> (text);
   register_institute : (InstituteData) -> (text);
   register_user : (UserData) -> (text);
   reject_institute : (text) -> (text);
