@@ -1,7 +1,46 @@
 import React from "react";
 import Background from "../../components/BackgroudPage";
+import {useSelector} from "react-redux" ; 
+import { useAuth } from "../../utils/useAuthClient";
+
+
 
 const StudentEditRequestRejectApproval = () => {
+
+  const { actor } = useAuth();
+
+  
+
+const studentId = useSelector((state) => state.studentId.studentPrincipalId);
+
+const studentIdsResponse =  actor.get_institute_students();
+
+async  function get(){
+  if (studentIdsResponse.length > 0 && studentIdsResponse[0].length > 0) {
+    console.log("Student Ids Resposnses is : ",studentIdsResponse)
+    const studentIds = studentIdsResponse[0]; 
+    console.log("student id are from rej approval : " ,studentIds);
+  }
+}
+   get() ; 
+
+
+  // let entries = useSelector((state) => state.studentDetailsReducer)  ; 
+
+  console.log("student id from store  is : ",studentId)
+
+  getStudentData(studentId) ; 
+ async function getStudentData(studentId) {
+  console.log("studentId in getStudent data is : ", studentId)
+    const entries =  await actor.get_student_details(studentId) ; 
+    console.log("entries is : " , entries)
+  }
+ 
+// console.log("entreis is " , entries)
+
+
+
+
   return (
     // <Background>
     <div className="px-[63px] py-[25px] flex flex-col gap-[25px] m-[60px] mt-[50px] bg-white">
@@ -82,6 +121,8 @@ const StudentEditRequestRejectApproval = () => {
           <div className="text-[#8CA3C3] text-[20px] font-[400] text-[Segoe UI]">
             Previous
           </div>
+
+
           <div className="px-[46px] py-[28px] flex items-center gap-[29px] rounded-[20px] border border-[#D8E1F8]">
             <img className="w-[100px] h-[100px]" src="student.jpg" alt="" />
             <div className="gap-[6px]">

@@ -37,7 +37,7 @@ const StudentResultScholarship = () => {
     const studentIdsResponse = await actor.get_institute_students(); // This returns an array containing a single element that is an array of student IDs
     if (studentIdsResponse.length > 0 && studentIdsResponse[0].length > 0) {
       const studentIds = studentIdsResponse[0]; // Access the first element to get the actual student IDs array
-      console.log(studentIds);
+      console.log("student id are : " ,studentIds);
 
       // Fetch details for each student
       const detailsPromises = studentIds.map(studentId => actor.get_student_details(studentId));

@@ -40,7 +40,7 @@ const InstituteProfileDropdown = ({ open }) => {
           </Link>
         </li>
         <li className="flex justify-center py-4  text-[#00227A] text-base font-[400] font-[Noto Sans] leading-6">
-          <Link>
+        <Link to={"/institute-student/scholarship"}>
             <button className="text-[#00227A] text-base font-[400] font-[Noto Sans] leading-6">
               Scholarship Applications
             </button>

@@ -116,4 +116,6 @@ service : {
   student_application_status : (text) -> (opt text) query;
   verify_institute : (text) -> (text);
   verify_student : (text) -> (text);
+  get_student_profile_updated : (text) -> (opt UserData) query; 
+
 }

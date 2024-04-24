@@ -240,6 +240,7 @@ const Login = () => {
 
   
   return (
+  <div className=''>
     <SignUpPage>
 
      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
@@ -291,6 +292,8 @@ const Login = () => {
 
 
     </SignUpPage>
+  </div>
+
   );
 };
 

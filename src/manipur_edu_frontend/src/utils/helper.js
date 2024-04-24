@@ -156,6 +156,30 @@ export async function generateAesKeyBase64() {
 }
 
 
+// export async function importAesKeyFromBase64(base64Key) {
+//     try {
+//         // Decode the Base64-encoded key to a binary string
+//         const binaryString = atob(base64Key.trim()); // Trim to remove any accidental whitespace
+
+//         // Convert the binary string to a Uint8Array
+//         const keyBytes = new Uint8Array(binaryString.length);
+//         for (let i = 0; i < binaryString.length; i++) {
+//             keyBytes[i] = binaryString.charCodeAt(i);
+//         }
+
+//         // Import the key for use with AES-GCM
+//         return await window.crypto.subtle.importKey(
+//             "raw",
+//             keyBytes,
+//             { name: "AES-GCM" },
+//             true,
+//             ["encrypt", "decrypt"] // Specify use for both encryption and decryption
+//         );
+//     } catch (error) {
+//         console.error("Error importing AES key from Base64:", error);
+//         throw error; // Rethrow to make it clear there was an issue
+//     }
+// }
 export async function importAesKeyFromBase64(base64Key) {
     try {
         // Decode the Base64-encoded key to a binary string
@@ -165,6 +189,11 @@ export async function importAesKeyFromBase64(base64Key) {
         const keyBytes = new Uint8Array(binaryString.length);
         for (let i = 0; i < binaryString.length; i++) {
             keyBytes[i] = binaryString.charCodeAt(i);
+        }
+
+        // Check if keyBytes length is 16, 24, or 32 bytes (128, 192, 256 bits)
+        if (![16, 24, 32].includes(keyBytes.length)) {
+            throw new Error(`Invalid AES key length: ${keyBytes.length * 8} bits. Must be 128, 192, or 256 bits.`);
         }
 
         // Import the key for use with AES-GCM
@@ -180,6 +209,7 @@ export async function importAesKeyFromBase64(base64Key) {
         throw error; // Rethrow to make it clear there was an issue
     }
 }
+
 
 export async function handleFileEncrypt(fileList, publicKey) {
     const file = fileList[0];
