@@ -9,16 +9,29 @@ const StudentVerificationRequest = () => {
   const principal_id = authClient.getIdentity().getPrincipal().toString();
   const [publicKey, setPublicKey] = React.useState('');
 
-  const result = useSelector((state) => state.instituteDetailsReducer);
-
+  // const result = useSelector((state) => state.instituteDetailsReducer);
+  // console.log('result :',result);
+  // React.useEffect(() => {
+  //   // Direct operations that don't involve hook calls can be placed here.
+  //   const publicKey = result[0]?.public_key[0]; // Safely access the property with optional chaining
+  //   if (publicKey) {
+  //     setPublicKey(publicKey);
+  //     console.log("public key", publicKey);
+  //   }
+  // }, [result]);
+  
   React.useEffect(() => {
-    // Direct operations that don't involve hook calls can be placed here.
-    const publicKey = result[0]?.public_key[0]; // Safely access the property with optional chaining
-    if (publicKey) {
-      setPublicKey(publicKey);
-      console.log("public key", publicKey);
+    const getPublicKey = async () => {
+      const result = await actor.get_institute_details([principal_id]);
+
+      console.log("result", result);
+      console.log('public key', result[0].public_key[0])
+      setPublicKey(result[0].public_key[0]);
     }
-  }, [result]);
+
+    getPublicKey();
+
+  }, []);
 
   let entries = useSelector(
     (state) => state.allStudentsReducer
@@ -65,15 +78,16 @@ const Card = ({ studentPrincipalId, entry, publicKey }) => {
     if (entry && entry[0]) {
       console.log("kyc", entry[0].kyc);
       console.log("public key", entry[0].public_key[0]);
-
-      const decryptedImage = await handleFileDecrypt(entry[0].kyc, publicKey);
+      console.log('public:', publicKey);
+      const decryptedImage = await handleFileDecrypt(entry[0].kyc,  publicKey);
       console.log(decryptedImage);
       console.log("decryptedImage", decryptedImage);
       const url = URL.createObjectURL(decryptedImage);
       setImage(url);
-      // setOpenModal(true);
+      setOpenModal(true);
     }
   };
+  
 
   console.log("checking", entry);
 

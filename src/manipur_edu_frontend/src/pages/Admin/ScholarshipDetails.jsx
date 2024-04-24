@@ -159,6 +159,7 @@ const ScholarshipDetails = ({ onBack, onView, onEdit}) => {
         <div className="w-[50%] p-[40px] pl-[80px] flex flex-col">
           <p className="text-[#1B1B1B] font-[Fraunces] font-[530] text-[36px] leading-[36px] pb-[30px]">
             ₹50,000 
+            {entry?.[1].name ?? 'N/A'}
             {/* {entry?.[1].name ?? 'N/A'} */}
           </p>
           <p className="pb-[15px] font-[Segoe UI] text-[15px] font-[700]">
