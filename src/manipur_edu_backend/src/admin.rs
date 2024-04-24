@@ -14,13 +14,6 @@ use std::cell::RefCell;
 use std::collections::HashMap;
 //function to check whether the caller is admin or not
 #[query]
-// fn check_admin() -> bool {
-//     if !(caller().to_string() == "2vxsx-fae") && !ic_cdk::api::is_controller(&ic_cdk::api::caller())
-//     {
-//         ic_cdk::api::trap("This user is unauthorised to use this function");
-//     }
-// }
-
 fn check_admin() -> bool {
     if ic_cdk::api::is_controller(&ic_cdk::api::caller()) {
         true // Authorized
@@ -28,6 +21,92 @@ fn check_admin() -> bool {
         false // Unauthorized
     }
 }
+
+
+//Temp check_admin for testing
+#[query]
+fn checkk_admin() -> bool {
+    let principal_id = caller().to_string();
+    // let principal_ref = caller();
+    STATE.with(|state| {
+        let state = state.borrow();
+        if state.admin.contains(&principal_id.clone()){
+            true
+        }
+        else{
+            false
+        }
+    })
+}
+// fn check_admin() -> bool {
+//     if !(caller().to_string() == "2vxsx-fae") && !ic_cdk::api::is_controller(&ic_cdk::api::caller())
+//     {
+//         ic_cdk::api::trap("This user is unauthorised to use this function");
+//     }
+// }
+#[update]
+pub fn register_admin() -> String {
+    let principal_id = caller().to_string();
+    STATE.with(|state| {
+        let mut state = state.borrow_mut();
+        if state.admin.contains(&principal_id) {
+           
+             format!("You have already sign up. Click on Login to login",)
+           
+        }
+         else{ 
+            state.admin.push(principal_id);
+            format!("You have successfully sign up as admin.",)
+         }
+    })
+}
+
+#[query]
+pub fn get_admin() -> String{
+       // check_admin();
+       STATE.with(|state| {
+        let state = state.borrow_mut();
+
+        format!("All admin - : {:?}", state.admin)
+    })
+
+}
+
+#[query]
+pub fn get_all_institute_edit_req() -> Vec<String> {
+    STATE.with(|state| {
+        let state = state.borrow();
+        // let principal = caller().to_string();
+        // let mut edit_requests: Vec<String> = Vec::new();
+       
+        // let mut institute = state.institute.keys();
+        // for institute_id in institutes {
+        //     if let Some(institute_data) = state.unapproved_institute_profile.contains_key(institute_id) {
+        //         edit_requests.push(institute_id.clone());
+        
+        //     }
+        // }
+        let mut unapproved_institutes: Vec<String> = Vec::new();
+
+    for (institute_id, _) in &state.unapproved_institute_profile {
+        unapproved_institutes.push(institute_id.clone());
+    }
+    unapproved_institutes
+        
+    })
+}
+  
+
+//get unapproved_institute_profile institute data
+#[query]
+pub fn get_institute_profile_updated(institute_principal: String) -> Option<InstituteData>{
+    STATE.with(|state| {
+        let state = state.borrow();
+        state.unapproved_institute_profile.get(&institute_principal).cloned()
+    })
+
+}
+
 
 //function to approve institute profile update
 #[update]
@@ -133,7 +212,7 @@ pub fn get_institute_students() -> Option<Vec<String>> {
 
 
 
-//mychange
+
 #[query]
 pub fn get_institute_students_by_id(institute_principal: String) -> Option<Vec<String>> {
     // let default_principal = caller().to_string();
@@ -154,7 +233,7 @@ pub fn get_institute_students_by_id(institute_principal: String) -> Option<Vec<S
     })
 }
 
-//mychanges
+
 #[query]
 pub fn get_students_withdetails() -> HashMap<String, UserData> {
     // check_admin();
