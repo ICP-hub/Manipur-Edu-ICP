@@ -19,25 +19,7 @@ const StudentPersonalDetailsEdit = ({ next , formData, updateFormData }) => {
   };
 
  
-  // const handleSave = () => {
-  //   const editStatusResponse = actor.edit_student_profile(formData);
-  //   console.log("Saving data:", formData);
-  //   setField(editStatusResponse);
-  //   setStatus(true);
-  //   // Reset currentPage if needed
-  // };
-  // const handleSave = async () => {
-  //   try {
-  //     const editStatusResponse = await actor.edit_student_profile(formData);
-  //     console.log("Saving data:", formData);
-  //     setField(editStatusResponse);
-  //     setStatus(true);
-  //     // Reset currentPage if needed
-  //   } catch (error) {
-  //     console.error("Error while saving data:", error);
-  //     // Handle error state if necessary
-  //   }
-  // };
+  
   const handleSave = async () => {
     // Assuming formData contains the Uint8Array for kyc
     const preparedData = {

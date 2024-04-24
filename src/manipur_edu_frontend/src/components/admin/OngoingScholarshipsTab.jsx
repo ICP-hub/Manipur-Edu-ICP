@@ -2,8 +2,11 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 const OngoingScholarshipsTab = ({ onView, onEdit }) => {
-    const entries = useSelector((state) => state.allScholarshipsReducer);
-    console.log('entries in ongoing',entries);
+    let data = useSelector((state) => state.allScholarshipsReducer);
+    // entries = entries.reverse() ; 
+    
+    const  entries = [...data].reverse();
+    console.log('entries in ongoing schloarships',entries);
    
     return (
         <div>

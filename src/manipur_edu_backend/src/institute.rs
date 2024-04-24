@@ -1,4 +1,5 @@
  use crate::UserData;
+ use std::collections::HashMap;
 
 use super::State;
 
@@ -232,25 +233,27 @@ pub fn edit_institute_profile(institute_data: InstituteData) -> String {
 
 
 #[query]
-pub fn get_all_students_edit_req(institute_principal: Option<String>) -> Vec<String> {
+pub fn get_all_students_edit_req(institute_principal: Option<String>) -> HashMap<String, UserData> {
     STATE.with(|state| {
         let state = state.borrow();
-        let institute_principal = institute_principal.unwrap_or(caller().to_string());
-        let mut edit_requests: Vec<String> = Vec::new();
+        let institute_principal = institute_principal.unwrap_or_else(|| caller().to_string());
+        let mut edit_requests: HashMap<String, UserData> = HashMap::new(); // Use HashMap to store student_id -> UserData
+
         if let Some(institute) = state.institute.get(&institute_principal) {
             if let Some(institute_name) = &institute.institute_name {
-                // Assuming `institute_students` may contain both verified and unverified students
-                // and you have a separate mechanism to distinguish them, like an `unverified_students` list
                 if let Some(students) = state.institute_students.get(institute_name) {
                     for student_id in students {
-                        if state.unapproved_student_profile.contains_key(student_id) {
-                            edit_requests.push(student_id.clone());
+                        if let Some(user_data) = state.users.get(student_id) {
+                           
+                            if state.unapproved_student_profile.contains_key(student_id) {
+                             
+                                edit_requests.insert(student_id.clone(), user_data.clone());
+                            }
                         }
                     }
                 }
             }
         }
-        
 
         edit_requests
     })

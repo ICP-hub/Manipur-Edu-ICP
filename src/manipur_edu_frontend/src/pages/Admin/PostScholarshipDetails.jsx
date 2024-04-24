@@ -4,7 +4,19 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom"; 
 // import Status from "../../components/student/status";
 const PostScholarshipDetails = ({ onBack }) => {
+
   const navigate = useNavigate();
+
+  const closeModal = () => {
+    console.log("in closed Modal function");
+    setModalOpen(false);
+//     try {
+//         navigate('/dsa');
+//     } catch (error) {
+//         console.error('Failed to navigate:', error);
+//     }
+    onBack();
+  };
   const {
     register,
     handleSubmit,
@@ -45,6 +57,9 @@ const PostScholarshipDetails = ({ onBack }) => {
       </div>
     );
   };
+
+
+  
   // const onSubmit = async (data) => {
   //   alert("Scholarship Posted SuccessFully !")
   //   navigate("/dsa");
@@ -97,11 +112,6 @@ const PostScholarshipDetails = ({ onBack }) => {
 
     // Open modal on success
     setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-    navigate('/dsa');
   };
 
   return (

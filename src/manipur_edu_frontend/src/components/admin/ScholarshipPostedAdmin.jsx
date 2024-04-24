@@ -1,14 +1,10 @@
 import React, { useState } from "react";
-
-// import { useAuth } from "../../utils/useAuthClient";
-// import { useQuery } from "react-query";
-// import Loader from "../../loader/Loader";
-import { useSelector } from "react-redux";
+import { useSelector , useDispatch } from "react-redux";
 const ScholarshipPostedAdmin = ({ onView, onEdit, onPost }) => {
   const entries = useSelector((state) => state.allScholarshipsReducer);
+
   return (
     <div>
-      {/* {isLoadingEntries && <Loader></Loader>} */}
       <div className="flex flex-col gap-[35px]">
         {entries &&
           entries.map(

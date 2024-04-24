@@ -1,7 +1,26 @@
-import React from "react";
-
+import React , {useState} from "react";
+import { useNavigate } from 'react-router-dom';
 
 const PostScholarshipDetails = ({ onBack }) => {
+
+    
+
+    const navigate  = useNavigate() ; 
+    
+    // Function to handle the posting operation
+    async function handlePost() {
+
+        await alert("sholaraship Posted") ; 
+        await navigate("/dsa"); 
+    }
+    // Function to close the modal and then navigate
+    const closeModal = () => {
+         // Hide the modal
+        console.log("navigating to dsa routes") // Show an alert or replace this with modal content
+        navigate("/dsa"); 
+    };
+    // Simple modal component
+    
     return (
         <div className="px-[63px] py-[25px] flex flex-col gap-[25px]">
             <div className="flex justify-between ">
@@ -228,7 +247,7 @@ const PostScholarshipDetails = ({ onBack }) => {
                     >
                         Cancel
                     </button>
-                    <button className="text-[white] font-[500] bg-[#0041E9] rounded-[10px] px-[40px] py-[14px]">
+                    <button className="text-[white] font-[500] bg-[#0041E9] rounded-[10px] px-[40px] py-[14px]" onClick={handlePost()}>
                         Post
                     </button>
                 </div>

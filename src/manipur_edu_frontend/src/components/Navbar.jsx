@@ -498,7 +498,6 @@ const Navbar = () => {
                   </div>
                   <li className="mr-4">
                     <button
-                      // onClick={() => handleDropDown()}
                       onClick={() => handleProfileDropDown()}
                       ref={profileButtonRef}
                     >

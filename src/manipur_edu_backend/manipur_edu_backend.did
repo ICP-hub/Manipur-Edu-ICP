@@ -2,10 +2,9 @@ type CertificateData = record {
   issued_by : text;
   issue_date : text;
   certificate_info : text;
-  certificate_link : vec nat8;
+  certificate_link : blob;
   certificate_id : text;
 };
-
 type InstituteData = record {
   status : opt text;
   zip_code : opt nat32;
@@ -23,7 +22,6 @@ type InstituteData = record {
   approval_authority : opt text;
   phone_no : opt text;
 };
-
 type InstituteInfo = record { public_key : text; name : text };
 type Result = variant { Ok; Err : text };
 type Result_1 = variant { Ok : text; Err : text };
@@ -43,7 +41,7 @@ type ScholarShip = record {
   applicants : vec principal;
 };
 type UserData = record {
-  kyc : vec nat8;
+  kyc : blob;
   status : opt text;
   result : opt vec text;
   mother_name : opt text;
@@ -70,7 +68,7 @@ type UserData = record {
   father_name : opt text;
 };
 type UserResult = record {
-  result : vec nat8;
+  result : blob;
   issued_by : text;
   semester : text;
   result_id : text;
@@ -95,7 +93,9 @@ service : {
   get_all_institute_edit_req : () -> (vec text) query;
   get_all_institute_students : () -> (text) query;
   get_all_scholarship : () -> (vec record { text; ScholarShip }) query;
-  get_all_students_edit_req : (opt text) -> (vec text) query;
+  get_all_students_edit_req : (opt text) -> (
+      vec record { text; UserData },
+    ) query;
   get_institute_details : (opt text) -> (opt InstituteData) query;
   get_institute_profile_updated : (text) -> (opt InstituteData) query;
   get_institute_students : () -> (opt vec text) query;
@@ -122,6 +122,4 @@ service : {
   student_application_status : (text) -> (opt text) query;
   verify_institute : (text) -> (text);
   verify_student : (text) -> (text);
-  get_student_profile_updated : (text) -> (opt UserData) query; 
-
 }
