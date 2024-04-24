@@ -1,44 +1,50 @@
-import React from "react";
-import Background from "../../components/BackgroudPage";
-import {useSelector} from "react-redux" ; 
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useAuth } from "../../utils/useAuthClient";
 
-
-
 const StudentEditRequestRejectApproval = () => {
-
   const { actor } = useAuth();
+  const [student, setStudent] = useState(null);
+  const[studentUpdatedData , setStudentUpdatedData] = useState(null) ; 
+  const studentId = useSelector((state) => state.studentId.studentPrincipalId);
+  // const someData = useSelector((state) => state.studentId.approve_student_profile_update)
 
-  
+  // async function someData() {
+  //   const data = await actor.get_student_profile_updated(studentId) ; 
+  //   console.log("data is : " , data) ; 
+  // }
+  // someData() ; 
 
-const studentId = useSelector((state) => state.studentId.studentPrincipalId);
+  console.log("Component rendered with studentId:", studentId);
+  useEffect(() => {
+    async function getData() {
+      console.log("sid is : ",studentId)
 
-const studentIdsResponse =  actor.get_institute_students();
+      const data = await actor.get_student_profile_updated(studentId) ; 
+      console.log("data is : " , data) ; 
+      setStudentUpdatedData(data[0]) ; 
 
-async  function get(){
-  if (studentIdsResponse.length > 0 && studentIdsResponse[0].length > 0) {
-    console.log("Student Ids Resposnses is : ",studentIdsResponse)
-    const studentIds = studentIdsResponse[0]; 
-    console.log("student id are from rej approval : " ,studentIds);
+
+      const response = await actor.get_student_details(studentId);
+      console.log("Fetched student data:", response);
+      setStudent(response[0]); // Assuming response is an array with the student object at the first index
+
+      
+
+    }
+    getData();
+  }, [actor, studentId]); // Dependency array to prevent unnecessary re-renders
+
+  if (!student) {
+    return <div>Loading...</div>; // Or any other loading state
   }
-}
-   get() ; 
 
-
-  // let entries = useSelector((state) => state.studentDetailsReducer)  ; 
-
-  console.log("student id from store  is : ",studentId)
-
-  getStudentData(studentId) ; 
- async function getStudentData(studentId) {
-  console.log("studentId in getStudent data is : ", studentId)
-    const entries =  await actor.get_student_details(studentId) ; 
-    console.log("entries is : " , entries)
+  async function handleApprove() {
+    const data = await actor.approve_student_profile_update(studentId) ; 
+    // console.log("data is : " , data) ; 
+    console.log("Profile updated.")
+    
   }
- 
-// console.log("entreis is " , entries)
-
-
 
 
   return (
@@ -46,7 +52,7 @@ async  function get(){
     <div className="px-[63px] py-[25px] flex flex-col gap-[25px] m-[60px] mt-[50px] bg-white">
       <div className="flex justify-between ">
         <div className="font-[600] font-[Segoe UI] text-4xl text-[#2D6BE4]">
-          Student Profile
+           Student Profile 
         </div>
         <div className="flex gap-[44px]">
           <div className="flex gap-[23px]">
@@ -102,10 +108,11 @@ async  function get(){
           <div className="flex justify-center">
             <div className="pr-[12px]">
               <p className="font-[600] font-[Segoe UI] text-[18px] text-[#00227A] leading-[27px] flex flex-row-reverse">
-                Name
+                {/* Name */}
+                {student.first_name} {student.last_name}
               </p>
               <p className="font-[400] font-[Segoe UI] text-[18px] text-[#8CA3C3] leading-[27px]">
-                123456789
+              {student.roll_no}
               </p>
             </div>
             <img
@@ -127,10 +134,10 @@ async  function get(){
             <img className="w-[100px] h-[100px]" src="student.jpg" alt="" />
             <div className="gap-[6px]">
               <p className="text-[#00227A] text-[25px] font-[Noto Sans] font-[400]">
-                Name
+              {student.first_name} {student.last_name}
               </p>
               <p className="text-[#687EB5] text-[15px] font-[Noto Sans] font-[500]">
-                Student #: 1234567
+              {student.roll_no}
               </p>
             </div>
           </div>
@@ -146,7 +153,8 @@ async  function get(){
                   DOB
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  12-3-2003
+                  {/* 12-3-2003 */}
+                  {student.date_of_birth}
                 </p>
               </div>
               <div>
@@ -154,7 +162,7 @@ async  function get(){
                   Gender
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  Female
+                {student.gender}
                 </p>
               </div>
               <div>
@@ -162,7 +170,7 @@ async  function get(){
                   Personal Email
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  email@email.com
+                  {student.personal_email}
                 </p>
               </div>
               <div>
@@ -170,7 +178,7 @@ async  function get(){
                   Phone Number
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  6876788700
+                  {student.phone_no}
                 </p>
               </div>
               <div>
@@ -178,7 +186,7 @@ async  function get(){
                   Personal Email
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  email@email.com
+                  {student.personal_email}
                 </p>
               </div>
               <div>
@@ -186,7 +194,7 @@ async  function get(){
                   Address
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  QW3G+VJM, Naoriya Pakhanglakpa, Imphal, <br /> Manipur 795003
+                  {student.address}<br />{student.city} {student.zip_code}
                 </p>
               </div>
               <div>
@@ -194,7 +202,7 @@ async  function get(){
                   State
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  Manipur
+                  {student.state}
                 </p>
               </div>
               <div>
@@ -202,7 +210,7 @@ async  function get(){
                   Zip Code
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  123456
+                 {student.zip_code}
                 </p>
               </div>
             </div>
@@ -219,7 +227,7 @@ async  function get(){
                   Mother Name
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  shaha
+                  {student.mother_name}
                 </p>
               </div>
               <div>
@@ -227,7 +235,7 @@ async  function get(){
                   Father Name
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  Tusha
+                  {student.father_name}
                 </p>
               </div>
               <div>
@@ -243,7 +251,7 @@ async  function get(){
                   Phone Number
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  6876788700
+                  {student.phone_no}
                 </p>
               </div>
               <div>
@@ -259,7 +267,7 @@ async  function get(){
                   Address
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  QW3G+VJM, Naoriya Pakhanglakpa, Imphal, <br /> Manipur 795003
+                  {student.address} <br /> {student.city} {student.zip_code}
                 </p>
               </div>
               <div>
@@ -267,7 +275,7 @@ async  function get(){
                   State
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  Manipur
+                  {student.city}
                 </p>
               </div>
               <div>
@@ -275,7 +283,7 @@ async  function get(){
                   Zip Code
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  123456
+                  {student.zip_code}
                 </p>
               </div>
             </div>
@@ -326,6 +334,7 @@ async  function get(){
             </div>
           </div>
         </div>
+
         <div className="w-[50%] flex flex-col gap-[27px]">
           <div className="text-[#8CA3C3] text-[20px] font-[400] text-[Segoe UI]">
             Edited by Institute
@@ -334,10 +343,10 @@ async  function get(){
             <img className="w-[100px] h-[100px]" src="student.jpg" alt="" />
             <div className="gap-[6px]">
               <p className="text-[#00227A] text-[25px] font-[Noto Sans] font-[400]">
-                Name
+              {studentUpdatedData.first_name} {studentUpdatedData.last_name}
               </p>
               <p className="text-[#687EB5] text-[15px] font-[Noto Sans] font-[500]">
-                Student #: 1234567
+                Student #: {studentUpdatedData.roll_no}
               </p>
             </div>
           </div>
@@ -353,7 +362,7 @@ async  function get(){
                   DOB
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  12-3-2003
+                  {studentUpdatedData.date_of_birth}
                 </p>
               </div>
               <div>
@@ -361,7 +370,7 @@ async  function get(){
                   Gender
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  Female
+                  {studentUpdatedData.gender}
                 </p>
               </div>
               <div>
@@ -369,7 +378,7 @@ async  function get(){
                   Personal Email
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  email@email.com
+                  {studentUpdatedData.personal_email}
                 </p>
               </div>
               <div>
@@ -377,7 +386,7 @@ async  function get(){
                   Phone Number
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  6876788700
+                 {studentUpdatedData.phone_no}
                 </p>
               </div>
               <div>
@@ -385,7 +394,7 @@ async  function get(){
                   Personal Email
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  email@email.com
+                  {studentUpdatedData.personal_email}
                 </p>
               </div>
               <div>
@@ -393,7 +402,7 @@ async  function get(){
                   Address
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  QW3G+VJM, Naoriya Pakhanglakpa, Imphal, <br /> Manipur 795003
+                  {studentUpdatedData.address}, <br />  {studentUpdatedData.city} {studentUpdatedData.zip_code}
                 </p>
               </div>
               <div>
@@ -401,7 +410,7 @@ async  function get(){
                   State
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  Manipur
+                  {studentUpdatedData.state}
                 </p>
               </div>
               <div>
@@ -409,7 +418,7 @@ async  function get(){
                   Zip Code
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  123456
+                  {studentUpdatedData.zip_code}
                 </p>
               </div>
             </div>
@@ -426,7 +435,7 @@ async  function get(){
                   Mother Name
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  shaha
+                  {studentUpdatedData.mother_name}
                 </p>
               </div>
               <div>
@@ -434,7 +443,7 @@ async  function get(){
                   Father Name
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  Tusha
+                  {studentUpdatedData.father_name}
                 </p>
               </div>
               <div>
@@ -442,7 +451,7 @@ async  function get(){
                   Personal Email
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  email@email.com
+                 {studentUpdatedData.personal_email}
                 </p>
               </div>
               <div>
@@ -450,7 +459,7 @@ async  function get(){
                   Phone Number
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  6876788700
+                  {studentUpdatedData.phone_no}
                 </p>
               </div>
               <div>
@@ -458,7 +467,7 @@ async  function get(){
                   Personal Email
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  email@email.com
+                  {studentUpdatedData.personal_email}
                 </p>
               </div>
               <div>
@@ -466,7 +475,7 @@ async  function get(){
                   Address
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  QW3G+VJM, Naoriya Pakhanglakpa, Imphal, <br /> Manipur 795003
+                  {studentUpdatedData.address}, <br /> {studentUpdatedData.city} {studentUpdatedData.zip_code}
                 </p>
               </div>
               <div>
@@ -474,7 +483,7 @@ async  function get(){
                   State
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  Manipur
+                  {studentUpdatedData.state}
                 </p>
               </div>
               <div>
@@ -482,7 +491,7 @@ async  function get(){
                   Zip Code
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  123456
+                  {studentUpdatedData.zip_code}
                 </p>
               </div>
             </div>
@@ -534,7 +543,7 @@ async  function get(){
           </div>
           <div className="flex flex-row-reverse gap-[16px] mb-[50px]">
             <div>
-              <button className="bg-[#0041E9] text-[white] py-[13px] px-[34px] rounded-[10px] text-[18px] font-[400]">
+              <button className="bg-[#0041E9] text-[white] py-[13px] px-[34px] rounded-[10px] text-[18px] font-[400]" onClick={handleApprove}>
                 Approve
               </button>
             </div>
@@ -558,5 +567,4 @@ async  function get(){
     // </Background>
   );
 };
-
 export default StudentEditRequestRejectApproval;
