@@ -3,6 +3,7 @@ import profileOpenCloseDropDownReducer from "./profileOpenCloseDropDownReducer.j
 import notificationOpenCloseDropDownReducer from "./notificationOpenCloseDropDownReducer.jsx";
 import studentDetailsReducer from "./studentDetailsReducer.jsx";
 import instituteDetailsReducer from "./instituteDetailsReducer.jsx";
+import scholarshipDetailsReducer from "./scholarshipDetailsReducer.jsx";
 import allInstitutesReducer from "./allInstitutesReducer.jsx";
 import allStudentsReducer from "./allStudentsReducer.jsx";
 import allScholarshipsReducer from "./allScholarshipsReducer.jsx";
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     notificationOpenCloseDropDownReducer,
     studentDetailsReducer,
     instituteDetailsReducer,
+    scholarshipDetailsReducer,
     allInstitutesReducer,
     allStudentsReducer,
     allScholarshipsReducer,

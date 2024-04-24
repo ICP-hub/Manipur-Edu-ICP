@@ -6,9 +6,14 @@
 
 // export default ScholarshipDetails;
 import React from "react";
+import { useSelector } from "react-redux";
 // import img from "../../assets/student.png";
+import { useAuth } from "../../utils/useAuthClient";
+const ScholarshipDetails = ({ onBack, onView, onEdit}) => {
+  const entry = useSelector((state) => state.scholarshipDetailsReducer);
+    console.log('entries in details',entry);
+    // console.log(entry);
 
-const ScholarshipDetails = ({ onBack, onView, onEdit }) => {
   return (
     <div>
       <div className=" px-[63px] py-[25px] flex justify-between ">
@@ -18,6 +23,7 @@ const ScholarshipDetails = ({ onBack, onView, onEdit }) => {
         <div className="flex gap-[44px]">
           <div className="flex gap-[23px]">
             <button>
+
               <svg
                 width="20"
                 height="20"
@@ -152,7 +158,8 @@ const ScholarshipDetails = ({ onBack, onView, onEdit }) => {
 
         <div className="w-[50%] p-[40px] pl-[80px] flex flex-col">
           <p className="text-[#1B1B1B] font-[Fraunces] font-[530] text-[36px] leading-[36px] pb-[30px]">
-            ₹50,000 Manipur Edu Scholarship
+            ₹50,000 
+            {/* {entry?.[1].name ?? 'N/A'} */}
           </p>
           <p className="pb-[15px] font-[Segoe UI] text-[15px] font-[700]">
             DEADLINE: February 29, 2024
