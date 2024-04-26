@@ -16,23 +16,46 @@ const DashboardTab = () => {
   const isXlScreen = useMediaQuery("(min-width: 1440px)");
   const [value, onChange] = useState(new Date());
   const [isOpen, setIsOpen] = useState(false);
-
+  const { actor } = useAuth();
+  const[registeredStudent , setRegisteredStudent] = useState(0)
+  const[institutecount , setInstituteCount] = useState(0) ; 
   const toggleSearchBar = () => {
     setIsOpen(!isOpen);
   };
   
   const scholarships = useSelector((state) => state.allScholarshipsReducer);
   let entries = useSelector((state) => state.allInstitutesReducer) || [];
+  // const entries = actor.get_institutes([]); 
   let studentEntries = useSelector((state) => state.studentDetailsReducer);
   console.log("enteries is  : " , entries)
   console.log("entries size" , entries?.length )
 
-  console.log(studentEntries)
-  let registeredStudent = studentEntries.length;
+  console.log("studentEntries is : " , studentEntries)   ; 
+  // let registeredStudent = studentEntries.length;
+
+
+  const get = async () => {
+    const allInstitutes = await actor.get_institutes();
+    console.log("allInstitutes from gi is : ", allInstitutes);
+    setInstituteCount(allInstitutes.length)
+  };
+
+  get() ; 
+
+
+
+  async function getSudents() {
+    const studentIdsResponse = await actor.get_students_withdetails();
+    console.log("studentIdsResponse", studentIdsResponse);
+    setRegisteredStudent(studentIdsResponse.length) ; 
+  }
+  
+  getSudents() ; 
+
+
   // if(registeredStudent > 1000) registeredStudent = registeredStudent/1000  + "K" ; 
   // let entries;
 
-  const { actor, authClient } = useAuth();
   const getEntries = async () => {
     const allScholarships = await actor.get_all_scholarship();
     console.log("allScholarship are below s", allScholarships);
@@ -159,7 +182,9 @@ const DashboardTab = () => {
             <div className="flex justify-between pt-10 px-9 ">
               <div className="rounded-[20px] bg-[#E7F4FF] flex w-[48%] md2:w-[30%] h-[131px] p-[10px] ">
                 <div className="font-[400] font-[Mukta] text-[#00227A] text-[40px] dxl:text-5xl flex items-center pr-[10px] ">
-                  {entries?.length}
+                  {/* {entries?.length} */}
+                  {institutecount}
+
                 </div>
                 <div className="font-[350] font-[Segoe UI] text-[#00227A] text-[13px] xxs1:text-lg flex flex-col justify-center ">
                   <p>

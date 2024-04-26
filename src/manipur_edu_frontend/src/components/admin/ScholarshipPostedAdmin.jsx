@@ -67,7 +67,7 @@ const Card = ({ index, entry, onView, onEdit }) => {
                 <p className="text-[Inter] text-[14px] font-[400] leading-[14px]">
                   {" "}
                   {/* {entry.institute} */}
-                  {entry?.[1].institute ?? "N/A"}{" "}
+                  {entry?.[1].institute ?? "Manipur Government"}{" "}
                 </p>
                 <svg
                   width="12"

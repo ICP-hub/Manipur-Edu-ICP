@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { Link } from "../../../../../node_modules/react-router-dom/dist/index";
 import { useAuth } from "../../utils/useAuthClient";
 import Status from "../../components/student/status";
+import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+
+
 
 import { useForm } from "react-hook-form";
 
@@ -10,7 +14,10 @@ const StudentPersonalDetailsEdit = ({ next , formData, updateFormData }) => {
   const { actor } = useAuth();
   const [status, setStatus] = React.useState(false);
   const [Field, setField] = React.useState("");
+  const navigate  = useNavigate() ; 
+
   console.log('formData',formData);
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -31,7 +38,7 @@ const StudentPersonalDetailsEdit = ({ next , formData, updateFormData }) => {
 
     try {
       const newData={
-        student_id :  preparedData.student_id,
+    student_id :  preparedData.student_id,
     first_name : [preparedData.first_name],
     last_name: preparedData.last_name,
     date_of_birth: preparedData.date_of_birth,
@@ -62,8 +69,13 @@ const StudentPersonalDetailsEdit = ({ next , formData, updateFormData }) => {
         const editStatusResponse = await actor.edit_student_profile(newData);
 
         console.log("API Response:", editStatusResponse);
+        const notify = () => toast.success('Edit requested successfully.');
+        notify() ; 
+        navigate("/profile-result") ;
     } catch (error) {
         console.error("Error while saving data:", error);
+        const notify = () => toast.error('Invalid Input.');
+        notify() ; 
     }
 };
 
