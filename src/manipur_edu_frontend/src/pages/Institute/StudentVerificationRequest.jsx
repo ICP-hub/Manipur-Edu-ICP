@@ -122,12 +122,12 @@ const Card = ({ studentPrincipalId, entry, publicKey }) => {
         </p>
         <p
           className={`flex justify-center bg-[#EEF6FF] font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px] ${verificationStatus === "approved"
-              ? "text-[#13BC24]"
-              : verificationStatus === "pending"
-                ? "text-[#C3A846]"
-                : verificationStatus === "rejected"
-                  ? "text-[#B26868]"
-                  : "text-[#687DB2]"
+            ? "text-[#13BC24]"
+            : verificationStatus === "pending"
+              ? "text-[#C3A846]"
+              : verificationStatus === "rejected"
+                ? "text-[#B26868]"
+                : "text-[#687DB2]"
             }`}
         >
           {verificationStatus} {/* Displaying the student ID */}
