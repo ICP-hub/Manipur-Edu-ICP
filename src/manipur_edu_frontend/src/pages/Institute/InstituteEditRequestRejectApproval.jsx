@@ -1,9 +1,73 @@
-import React from "react";
+import React,{useState, useEffect} from "react";
 // import img from "../../assets/student.png";
 
+import { useSelector } from "react-redux";
+import { useAuth } from "../../utils/useAuthClient";
+import { useQuery } from "react-query";
+import Loader from "../../loader/Loader";
+import ApproveProfileModal from "../../components/ApproveProfileModel"
 const InstituteEditRequestRejectApprove = ({ onBack }) => {
+  const { actor, authClient } = useAuth();
+  const [update, setUpdate] = useState([]);
+  const [openModalApprove, setOpenModalApprove] = useState(false);
+  const entry = useSelector((state) => state.instituteDetailsReducer);
+    console.log('previous entries',entry);
+    const institute_principal = entry[0];
+    // const instituteUpdates = actor.get_institute_profile_updated(institute_principal);
+    // const updates = Promise.all(instituteUpdates);
+    // // setUpdate(updates);
+    // console.log('update', updates);
+    // const getUpdates = async () => {
+    //   const instituteUpdates = await actor.get_institute_profile_updated(entry[0]);
+    //   console.log(" instituteUpdates",  instituteUpdates);
+    //   const updates = await Promise.all(instituteUpdates);
+    //   setUpdate(updates);
+    //   console.log('update', update);
+     
+  //   // };
+  //   console.log('previous entries',entry[0]);
+    const getUpdates = async () => {
+      try {
+        console.log('gv');
+        const instituteUpdates = await actor.get_institute_profile_updated(institute_principal);
+        console.log("instituteUpdates", instituteUpdates);
+        setUpdate(instituteUpdates);
+         console.log('update', update);
+      } catch (error) {
+        console.error("Error fetching updates:", error);
+      }
+    };
+   
+    const {
+      data: result,
+      isLoading: isLoadingEntries,
+      error: errorEntries,
+    } = useQuery("dataEntries", getUpdates);
+    console.log('result',result);
+    console.log('update', update);
+    const instituteName1 = update[0]?.institute_name;
+      console.log('city',instituteName1);
+     const instituteName = update.institute_name;
+      console.log('institute name',instituteName);
+    useEffect(() => {
+      
+      console.log('update', update);
+      console.log('update[0]', update[0]);
+      // const instituteName = update.institute_name;
+      // console.log(instituteName);
+      
+
+    }, [update]);
+    const handleApprove = async () => {
+      const result = await actor.approve_institute_profile_update(institute_principal);
+      setOpenModalApprove(false);
+      console.log(result);
+      onBack();
+      
+    };
   return (
     <div className="px-[63px] py-[25px] flex flex-col gap-[25px]">
+      {/* {isLoadingEntries && <Loader></Loader>} */}
       <div className="flex justify-between ">
         <div className="font-[600] font-[Segoe UI] text-4xl text-[#2D6BE4]">
           Institute Edit Request
@@ -100,7 +164,7 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
                   Institute Name
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  Institute Name
+                {entry?.[1].institute_name ?? 'N/A'}
                 </p>
               </div>
               <div>
@@ -108,7 +172,7 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
                   Institute-id
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  Institute-id
+                {entry?.[1].institute_id?.[0].substr(0, 6) ?? 'N/A'}
                 </p>
               </div>
               <div>
@@ -116,7 +180,7 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
                   Institute Type
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  College
+                {entry?.[1].institute_type?.[0] || "N/A"}
                 </p>
               </div>
               <div>
@@ -124,7 +188,7 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
                   Institute Size
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  2000
+                {entry?.[1].institute_size?.[0] || "N/A"}
                 </p>
               </div>
               <div>
@@ -132,7 +196,7 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
                   Email
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  email@email.com
+                  {entry?.[1].email?.[0] || "N/A"}
                 </p>
               </div>
               <div>
@@ -140,7 +204,7 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
                   Phone Number
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  1234567890
+                {entry?.[1].phone_no?.[0] || "N/A"}
                 </p>
               </div>
               <div>
@@ -148,7 +212,7 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
                   Address
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  QW3G+VJM, Naoriya Pakhanglakpa, Imphal, <br /> Manipur 795003
+                {entry?.[1].address?.[0] || "N/A"} <br/> {entry?.[1].state?.[0]} <br /> {entry?.[1].zip_code?.[0]}
                 </p>
               </div>
               <div>
@@ -156,7 +220,7 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
                   State
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  Manipur
+                {entry?.[1].state?.[0] || "N/A"}
                 </p>
               </div>
               <div>
@@ -164,7 +228,8 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
                   Zip Code
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  123456
+                {entry?.[1].zip_code?.[0] ||
+                    "N/A"}
                 </p>
               </div>
             </div>
@@ -197,7 +262,10 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
                   Institute Name
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  Institute Name
+                {/* {update?.[0].institute_name || 'N/A'} */}
+                {/* {update.institute_name[0] } */}
+                {update[0]?.institute_name}
+                {/* {console.log(update)} */}
                 </p>
               </div>
               <div>
@@ -205,7 +273,7 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
                   Institute-id
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  Institute-id
+                {entry?.[1].institute_id?.[0].substr(0, 6) ?? 'N/A'}
                 </p>
               </div>
               <div>
@@ -213,7 +281,7 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
                   Institute Type
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  College
+                {update[0]?.institute_type}
                 </p>
               </div>
               <div>
@@ -221,7 +289,7 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
                   Institute Size
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  2000
+                {update[0]?.institute_size}
                 </p>
               </div>
               <div>
@@ -229,7 +297,7 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
                   Email
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  email@email.com
+                {update[0]?.email}
                 </p>
               </div>
               <div>
@@ -237,7 +305,7 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
                   Phone Number
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  1234567890
+                {update[0]?.phone_no}
                 </p>
               </div>
               <div>
@@ -245,7 +313,7 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
                   Address
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  QW3G+VJM, Naoriya Pakhanglakpa, Imphal, <br /> Manipur 795003
+                {update[0]?.address} <br /> {update[0]?.state} <br/> {update[0]?.zip_code}
                 </p>
               </div>
               <div>
@@ -253,7 +321,7 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
                   State
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  Manipur
+                {update[0]?.state}
                 </p>
               </div>
               <div>
@@ -261,16 +329,31 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
                   Zip Code
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  123456
+                {update[0]?.zip_code}
                 </p>
               </div>
             </div>
           </div>
+          <div className="relative">
+          <ApproveProfileModal
+            open={openModalApprove}
+            // ref={verifyinstitute}
+            onClose={() => setOpenModalApprove(false)}
+            handleClick={handleApprove}
+          />
+          {/* <RejectModal
+            open={openModalReject}
+            onClose={() => setOpenModalReject(false)}
+            handleClick={rejectInstitute}
+          /> */}
+        </div>
           <div className="flex flex-row-reverse gap-[16px] mb-[50px]">
             <div>
-              <button className="bg-[#0041E9] text-[white] py-[13px] px-[34px] rounded-[10px] text-[18px] font-[400]">
+              <button className="bg-[#0041E9] text-[white] py-[13px] px-[34px] rounded-[10px] text-[18px] font-[400]"
+              onClick={() => setOpenModalApprove(true)}>
                 Approve
               </button>
+              
             </div>
             <div>
               <button className="bg-[#DF0C0C] text-[white] py-[13px] px-[45px] rounded-[10px] text-[18px] font-[400]">

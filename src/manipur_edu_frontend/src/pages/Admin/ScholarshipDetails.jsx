@@ -90,7 +90,7 @@ const ScholarshipDetails = ({ onBack, onView, onEdit}) => {
         <div className="bg-[#8CA6FF] h-[470px] w-[50%] flex flex-col items-center pt-[100px] pb-[60px] ">
           <div className="flex relative">
             <p className="text-[Franklin Gothic Demi Cond] text-[80px] font-[400]">
-              ₹50,000
+               {entry?.[1].amount ?? 'N/A'}
             </p>
             <svg
               className="absolute left-[250px] bottom-[67px]"
@@ -124,7 +124,7 @@ const ScholarshipDetails = ({ onBack, onView, onEdit}) => {
           </div>
 
           <p className="font-[Fraunces] text-[45px] font-[400] italic">
-            No Essay
+          {entry?.[1].name ?? 'N/A'}
           </p>
           <p className="font-[Fraunces] text-[45px] font-[400] italic">
             Scholarship
@@ -158,18 +158,21 @@ const ScholarshipDetails = ({ onBack, onView, onEdit}) => {
 
         <div className="w-[50%] p-[40px] pl-[80px] flex flex-col">
           <p className="text-[#1B1B1B] font-[Fraunces] font-[530] text-[36px] leading-[36px] pb-[30px]">
-            ₹50,000 
+            {/* ₹50,000  */}
+            {entry?.[1].amount ?? 'N/A'}
+            {" "}
             {entry?.[1].name ?? 'N/A'}
             {/* {entry?.[1].name ?? 'N/A'} */}
           </p>
           <p className="pb-[15px] font-[Segoe UI] text-[15px] font-[700]">
-            DEADLINE: February 29, 2024
+            DEADLINE: {entry?.[1].deadline ?? 'N/A'}
           </p>
           <p className="pb-[20px] text-[Segoe UI] text-[16px] font-[400]">
+           {entry?.[1].description ?? 'N/A'}
             Help cover the cost of college without writing a single essay!
           </p>
           <p className="pb-[28px] text-[Segoe UI] text-[16px] font-[400]">
-            Manipur Edu is giving one student ₹50,000 to help pay for
+            Manipur Edu is giving one student  {entry?.[1].amount ?? 'N/A'} to help pay for
             tuition,housing, books and other college expenses.
           </p>
           <p className="pb-[40px] text-[Segoe UI] text-[16px] font-[400]">
@@ -229,6 +232,8 @@ const ScholarshipDetails = ({ onBack, onView, onEdit}) => {
             Who Can Apply
           </p>
           <p>
+          {entry?.[1].education ?? 'N/A'}
+          Gender: {entry?.[1].gender ?? 'N/A'}
             All high school and college students, as well as anyone looking to
             attend college or graduate school in the next year. Please note: Not
             everyone is eligible for this scholarship. Manipur Edu sponsored
@@ -243,7 +248,7 @@ const ScholarshipDetails = ({ onBack, onView, onEdit}) => {
         <div className="flex flex-col gap-[8px]">
           <p className="text-[Fraunces] text-[32px] font-[600]">How It Works</p>
           <p>
-            The ₹50,000 “No Essay” Scholarship is an easy scholarship with no
+            The  {entry?.[1].amount ?? 'N/A'} “ {entry?.[1].name ?? 'N/A'}” Scholarship is an easy scholarship with no
             essay required! Only one entry allowed per person. The winner will
             be determined by random drawing and then contacted directly and
             announced in Manipur Edu's e-newsletter and on the{" "}
