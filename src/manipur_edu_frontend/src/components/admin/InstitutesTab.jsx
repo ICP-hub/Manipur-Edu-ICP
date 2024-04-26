@@ -7,6 +7,7 @@ import EditInstituteProfile from "../../pages/Admin/EditInstituteProfile";
 import EditInstituteDetails from "../../pages/Admin/EditInstituteDetails";
 import RegisteredStudents from "../../pages/Admin/RegisteredStudents";
 import StudentDetails from "../admin/StudentsTab";
+import InstituteProfileChanges from "../../pages/Institute/InstituteEditRequestRejectApproval.jsx";
 import InstituteEditRequest from "../../pages/Institute/InstituteEditRequest";
 import { useQuery } from "react-query";
 import { useAuth } from "../../utils/useAuthClient";
@@ -55,6 +56,8 @@ const InstitutesTab = ({ SetTab }) => {
         />
       ) : view === "studentdetails" ? (
         <StudentDetails onBack={() => SelectView("default")} />
+      ) : view === "view_verify" ? (
+        <InstituteProfileChanges onBack={() => SelectView("default")} />
       ) : (
         <div className="px-[63px] py-[25px] flex flex-col gap-[25px]">
           <div className="flex justify-between ">

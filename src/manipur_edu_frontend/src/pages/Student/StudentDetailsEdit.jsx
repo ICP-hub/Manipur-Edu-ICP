@@ -3,15 +3,21 @@ import StudentPersonalDetailsEdit from "./PersonalDetails";
 import ParentDetailsEdit from "./ParentsDetails";
 import InstituteDetailsEdit from "./StudentInstituteDetails";
 import { useAuth } from "../../utils/useAuthClient";
+import {
+ 
+  useLocation
+  
+} from "../../../../../node_modules/react-router-dom/dist/index";
 import { useSelector } from 'react-redux';
 import Status from "../../components/student/status";
 
 const StudentDetailsEdit = () => {
   const [page, setPage] = useState("personal");
-
-  let entry = useSelector(
-    (state) => state.studentDetailsReducer
-  );
+  const location = useLocation();
+  const entry = location.state.entries;
+  // let entry = useSelector(
+  //   (state) => state.studentDetailsReducer
+  // );
   console.log('entry',entry);
   console.log('entry update', entry[0]);
   const [formData, setFormData] = useState(entry[0]);

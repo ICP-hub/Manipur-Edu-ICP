@@ -23,3 +23,7 @@ export const getAllStudents = (studentDetails) => {
 export const getAllScholarships = (scholarshipDetails) => {
   return { type: constants.GET_ALL_SCHOLARSHIPS, payload: scholarshipDetails};
 };
+
+export const getScholarshipDetails = (scholarshipDetail) => {
+  return { type: constants.GET_SCHOLARSHIP_DETAILS, payload: scholarshipDetail };
+};

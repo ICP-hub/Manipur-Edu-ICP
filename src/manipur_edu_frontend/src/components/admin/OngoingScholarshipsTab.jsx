@@ -1,6 +1,9 @@
 import React from "react";
-import { useSelector } from "react-redux";
-
+import { useSelector, useDispatch } from "react-redux";
+import { getScholarshipDetails } from "../../../Redux/Action/index";
+import { useQuery } from "react-query";
+import Loader from "../../loader/Loader";
+import { useAuth } from "../../utils/useAuthClient";
 const OngoingScholarshipsTab = ({ onView, onEdit }) => {
     const entries = useSelector((state) => state.allScholarshipsReducer);
     console.log('entries in ongoing',entries);
@@ -28,9 +31,30 @@ const OngoingScholarshipsTab = ({ onView, onEdit }) => {
 export default OngoingScholarshipsTab;
 
 const Card = ({ index, entry, onView, onEdit }) => {
-    console.log('entry',entry);
+    console.log('entry[0]',entry[0]);
+    const dispatch = useDispatch();
+    const { actor, authClient } = useAuth();
+    // const getEntries = async () => {
+    //     const scholarshipDetails = await actor.get_scholarship(entry[0]);
+    //     console.log("ScholarshipDetails", scholarshipDetails);
+    //     // setEntries(allScholarships);
+    //     dispatch(getScholarshipDetails(scholarshipDetails));
+        
+    // }
+    // const {
+    //     data: result,
+    //     isLoading: isLoadingEntries,
+    //     error: errorEntries,
+    //   } = useQuery("dataEntries", getEntries);
+    const handleEdit = ({entry, onEdit}) =>{
+        console.log('entry:',entry);
+       
+        dispatch(getScholarshipDetails(entry));
+        onEdit();
+    }
     return (
         <div className="relative flex  ">
+            {/* {isLoadingEntries && <Loader></Loader>} */}
             <div className="absolute left-[-30px] top-[27px] rounded-[34px] bg-[white] w-[53px] h-[53px] ">
                 <div className="absolute top-[2.75px] rounded-[34px] bg-[#D9EBFF] w-[48px] h-[48px] flex justify-center items-center text-[#5D57FB] font-[600] text-[18px] ">
                     {index}
@@ -211,7 +235,7 @@ const Card = ({ index, entry, onView, onEdit }) => {
                     <div className="flex flex-col gap-[14px]">
                         <div>
                             <button
-                                onClick={onEdit}
+                                onClick={() => handleEdit({ entry , onEdit})}
                                 className="bg-[#5D57FB] w-full h-[38px] text-[white] rounded-[4px]"
                             >
                                 Edit Details

@@ -92,18 +92,47 @@
 //   );
 // };
 
-import React from "react";
-import { useSelector } from "react-redux";
+import React, {useState, useEffect} from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
+import { useAuth } from "../../utils/useAuthClient";
+import { useQuery } from "react-query";
+import { getInstituteDetails } from "../../../Redux/Action/index";
 import AdminDashboard from "../Admin/AdminDashboard";
-
 const InstituteEditRequest = ({ onView, SetTab }) => {
-  let entries = useSelector((state) => state.allInstitutesReducer);
+  const { actor } = useAuth();
+  const allInstitutes = useSelector((state) => state.allInstitutesReducer);
+  console.log('dfgh',allInstitutes);
 
 
-  console.log("entries size" , entries.length )
+
+  const [entries, setEntries] = useState([]);
+  
+     const fetchData = async () => {
+          try {
+            
+            const principalIds = await actor.get_all_institute_edit_req();
+            const detailsResults = await Promise.all(principalIds);
+            console.log('detailsResults',detailsResults);
+         
+            const filteredEntries = allInstitutes.filter(entry => detailsResults.includes(entry[0]));
+            setEntries(filteredEntries);
+          } catch (error) {
+            console.error("Error fetching principal IDs:", error);
+          }
+      };
+      const {
+        data: result,
+        isLoading: isLoadingEntries,
+        error: errorEntries,
+      } = useQuery("dataEntries", fetchData);
+        // fetchData();
+      
+
+  console.log("entries " , entries )
   return (
     <div>
+       {isLoadingEntries && <Loader></Loader>}
       <div className="border rounded-[10px] border-[#D9EBFF]">
         <div className="  grid grid-cols-5 py-[20px]   font-[600]  font-[Segoe UI] text-[15px] text-[#00227A] leading-[20px]">
           <div className="flex justify-center">INSTITUTE NAME</div>
@@ -112,7 +141,11 @@ const InstituteEditRequest = ({ onView, SetTab }) => {
           <div className="flex justify-center">STATUS</div>
           <div className="flex justify-center ">INSTITUTE DETAILS</div>
         </div>
-        {Array.isArray(entries) &&
+        {/* {Array.isArray(entries) &&
+          entries.map((entry, index) => (
+            <Card SetTab={SetTab} key={index} entry={entry} onView={onView} />
+          ))} */}
+          {Array.isArray(entries) &&
           entries.map((entry, index) => (
             <Card SetTab={SetTab} key={index} entry={entry} onView={onView} />
           ))}
@@ -129,18 +162,20 @@ const InstituteEditRequest = ({ onView, SetTab }) => {
 export default InstituteEditRequest;
 
 const Card = ({ entry, onView, SetTab }) => {
-  const navigate = useNavigate();
-  const handleClick = () => {
+  // const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handleClick = ({entry}) => {
+    console.log('entry:',entry);
+       
+        dispatch(getInstituteDetails(entry));
+        onView();
     // navigate("/instituteEditRequest", { state: { entry } });
-    navigate("/InstituteEditRequestRejectApprove", { state: { entry } });
-    SetTab("InstituteEditRequestRejectApprove");
     // SetTab("instituteEditRequest");
-    // InstituteEditRequestRejectApprove
   };
   const instituteName = entry?.[1].institute_name?.[0] ?? "N/A";
   const instituteId = entry?.[1].institute_id?.[0].substr(0, 6) ?? "N/A";
   const instituteEmail = entry?.[1].email?.[0] ?? "N/A";
-  const verificationStatus = entry?.[1].status?.[0] ?? "N/A";
+  const verificationStatus = "pending";
   return (
     // <div className=" grid grid-cols-5 py-[20px] border-t border-[#D9EBFF]">
     //   <div className=" flex justify-center  text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] rounded-[5px]">
@@ -221,7 +256,7 @@ const Card = ({ entry, onView, SetTab }) => {
       </p>
       <div className="flex items-center">
         <button
-          onClick={handleClick}
+          onClick={()=>handleClick({entry})}
           className="pt-[7px] pr-[15px] font-[700] underline flex justify-center text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px]"
         >
           Click to View/Verify

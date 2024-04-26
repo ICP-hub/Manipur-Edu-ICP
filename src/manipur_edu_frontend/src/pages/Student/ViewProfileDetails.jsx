@@ -6,8 +6,11 @@ import {
 } from "../../../../../node_modules/react-router-dom/dist/index";
 import Background from "../../components/BackgroudPage";
 import { useDispatch, useSelector } from "react-redux";
+
 const ViewProfileDetails = () => {
-  let entry = useSelector((state) => state.studentDetailsReducer);
+  const location = useLocation();
+  const entry = location.state.entries;
+  // let entry = useSelector((state) => state.studentDetailsReducer);
   console.log("entry here", entry);
 
   return (

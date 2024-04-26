@@ -184,10 +184,10 @@ pub async fn create_scholarship(mut scholarship_details: ScholarShip) -> Result<
 Ok(result)
 }
 
-// #[query]
-// pub fn get_scholarship(scholarship_id: String) -> ScholarShip {
-//     SCHOLARSHIP_STORE.with(|el| el.borrow().get(&scholarship_id).cloned().unwrap())
-// }
+#[query]
+pub fn get_scholarship(scholarship_id: String) -> ScholarShip {
+    SCHOLARSHIP_STORE.with(|el| el.borrow().get(&scholarship_id).cloned().unwrap())
+}
 
 // #[query]
 // pub fn get_scholarship_by_institute(id : String)  {

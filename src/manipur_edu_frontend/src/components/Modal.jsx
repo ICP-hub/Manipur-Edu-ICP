@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const Modal = ({ open, onClose, image }) => {
+const Modal = ({ open, onClose, image, message}) => {
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden';
@@ -29,12 +29,17 @@ const Modal = ({ open, onClose, image }) => {
 
   if (!open) return null;
   return (
-    <div className="bg-[#EEF6FF] absolute w-full z-50 -top-2 left-0 h-full">
-      <div className="flex flex-col justify-center items-center pt-[50px] ">
-        <div className="max-w-[50%] ">
-          <img className="aspect-square h-full" src={image} />
-        </div>
-        <div className="flex justify-center w-[50%] pt-[40px]">
+    // <div className="bg-[#EEF6FF] absolute w-full z-50 -top-2 left-0 h-full">
+    //   <div className="flex flex-col justify-center items-center pt-[50px] ">
+    //     <div className="max-w-[50%] ">
+    //       <img className="aspect-square h-full" src={image} />
+    //     </div>
+    //     <div className="flex justify-center w-[50%] pt-[40px]">
+    <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center z-50 bg-black bg-opacity-50">
+      <div className="bg-white rounded-lg overflow-hidden max-w-3xl p-4">
+        <img src={image} alt="Document" className="block w-full h-auto" />
+        {message && <p className="text-red-500">{message}</p>}
+        <div className="flex justify-center pt-4 pb-2">
           <button className="w-[190px] bg-[#0041E9] flex  rounded-[10px] py-[10px] pl-[25px] mr-[20px]" onClick={handleDownload}>
             <svg
               width="31"

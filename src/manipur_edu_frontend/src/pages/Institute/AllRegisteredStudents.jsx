@@ -119,7 +119,7 @@ export default AllRegisteredStudents;
 
 const Card = ({ studentPrincipalId, entry }) => {
   const [toggle, setToggle] = useState(false);
-
+  
   const toggleDropdown = () => {
     setToggle((prevToggle) => !prevToggle);
   };
@@ -145,6 +145,8 @@ const Card = ({ studentPrincipalId, entry }) => {
   const rollNo = entry?.[0].roll_no?.[0] ?? "N/A";
   const email = entry?.[0].personal_email?.[0] ?? "N/A";
   const phoneNo = entry?.[0].phone_no?.[0] ?? "N/A";
+  const data = entry;
+  console.log('gh',data);
   return (
     <div className=" grid grid-cols-[repeat(5,1fr)_50px] mt-4 h-[48px] rounded-[5px]  bg-[#EEF6FF] pt-[7px]">
       <div className="flex justify-center text-[#687DB2] font-[Segoe UI] font-[400] text-[0.9375rem] leading-[1.25rem] rounded-[0.3125rem]">
@@ -202,7 +204,7 @@ const Card = ({ studentPrincipalId, entry }) => {
       <VerifyEditDeleteDropdown
         open={toggle}
         onClose={() => setToggle(false)}
-        entries
+        entries={data}
       />
     </div>
   );
