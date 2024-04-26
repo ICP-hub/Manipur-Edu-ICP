@@ -11,6 +11,7 @@ const Certifications = () => {
   const [openModal, setOpenModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [imageUrl, setImageUrl] = useState('');
+  const [modalMessage, setModalMessage] = useState('');
   const { actor, authClient, userType } = useAuth();
   React.useEffect(() => {
     const checkLogin = async () => {
@@ -28,9 +29,16 @@ const Certifications = () => {
 
 
     const entry = await actor.get_student_details(principal_id);
-
+    
     const getCertificates = await actor.get_user_certificates(principal_id);
     console.log('getCertificates', getCertificates);
+    if (!getCertificates || !getCertificates.Ok || getCertificates.Ok.length === 0) {
+      // Handle case when no certificates are available or getCertificates is undefined
+      console.log('No certificates available');
+      setModalMessage("No certificates available"); // Set a message to display in the modal
+      setOpenModal(true); // Open the modal
+      return; // Exit the function
+    }
     const firstItem = getCertificates.Ok[0];
     console.log("firstItem", firstItem);
     console.log("certificate_link", firstItem.certificate_link);
@@ -51,7 +59,7 @@ const Certifications = () => {
 
   return (
     <Background>
-      <Modal open={openModal} onClose={() => setOpenModal(false)} image={imageUrl} />
+      <Modal open={openModal} onClose={() => setOpenModal(false)} image={imageUrl} message={modalMessage}/>
       <div className="relative pt-[100px] pb-[50px] flex justify-center items-center px-[4%] lg1:px-[5%] ">
         <div className=" w-full bg-white flex flex-col justify-between rounded-[10px]">
           <div className="  flex justify-center rounded-t-[10px]">
