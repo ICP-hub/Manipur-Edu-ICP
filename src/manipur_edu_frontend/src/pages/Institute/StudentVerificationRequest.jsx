@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useSelector} from "react";
 import { useAuth } from "../../utils/useAuthClient";
-import { Link, useNavigate } from "react-router-dom"; // Simplified import for clarity
+import { Link, useNavigate } from "react-router-dom";
 import { handleFileDecrypt, importAesKeyFromBase64 } from "../../utils/helper";
 import Modal from "../../components/Modal";
 

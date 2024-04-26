@@ -6,7 +6,7 @@ import StudentsTab from "../Institute/StudentsTab";
 import { useDispatch } from "react-redux";
 import { setInstituteId } from "../../../Redux/Action/idAction";
 
-const VerificationButton = ({ onTap, SetTab}) => {
+const VerificationButton = ({ onTap, SetTab }) => {
   let entries = useSelector((state) => state.allInstitutesReducer);
 
   return (
@@ -35,8 +35,7 @@ const Card = ({ entry, onTap, SetTab }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  
-  console.log("entry : " ,entry)
+  console.log("entry : ", entry)
   const instituteName = entry?.[1].institute_name?.[0] ?? "N/A";
   const instituteId = entry?.[1].institute_id?.[0].substr(0, 6) ?? "N/A";
   const instituteEmail = entry?.[1].email?.[0] ?? "N/A";
@@ -45,7 +44,7 @@ const Card = ({ entry, onTap, SetTab }) => {
   const handleClick = () => {
 
     dispatch(setInstituteId(instituteId));
-    
+
     navigate("/institute-details-verify", { state: { entry } });
     SetTab("institute-details-verify");
 
@@ -53,7 +52,6 @@ const Card = ({ entry, onTap, SetTab }) => {
 
   return (
     <div className="grid grid-cols-5 py-[20px] border-t border-[#D9EBFF]">
-      {isLoadingEntries}
       <div className="flex items-center justify-center text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] rounded-[5px]">
         <div className="flex items-center rounded-[5px] ml-[30px]">
           {" "}
@@ -73,15 +71,14 @@ const Card = ({ entry, onTap, SetTab }) => {
         {instituteEmail}
       </p>
       <p
-        className={`flex justify-center items-center font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px] ${
-          verificationStatus === "approved"
-            ? "text-[#13BC24]"
-            : verificationStatus === "pending"
+        className={`flex justify-center items-center font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px] ${verificationStatus === "approved"
+          ? "text-[#13BC24]"
+          : verificationStatus === "pending"
             ? "text-[#C3A846]"
             : verificationStatus === "rejected"
-            ? "text-[#B26868]"
-            : "text-[#687DB2]"
-        }`}
+              ? "text-[#B26868]"
+              : "text-[#687DB2]"
+          }`}
       >
         {verificationStatus}
       </p>
