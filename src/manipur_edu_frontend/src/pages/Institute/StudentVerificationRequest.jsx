@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom"; // Simplified import for c
 import { handleFileDecrypt, importAesKeyFromBase64 } from "../../utils/helper";
 import Modal from "../../components/Modal";
 
-const StudentVerificationRequest = ({ entries }) => {
+const StudentVerificationRequest = ({ }) => {
   const { actor, authClient } = useAuth();
   const principal_id = authClient.getIdentity().getPrincipal().toString();
   const [publicKey, setPublicKey] = React.useState('');
@@ -19,7 +19,7 @@ const StudentVerificationRequest = ({ entries }) => {
   //     console.log("public key", publicKey);
   //   }
   // }, [result]);
-  
+
   React.useEffect(() => {
     const getPublicKey = async () => {
       const result = await actor.get_institute_details([principal_id]);
@@ -81,7 +81,7 @@ const Card = ({ studentPrincipalId, entry, publicKey }) => {
       console.log("kyc", entry[0].kyc);
       console.log("public key", entry[0].public_key[0]);
       console.log('public:', publicKey);
-      const decryptedImage = await handleFileDecrypt(entry[0].kyc,  publicKey);
+      const decryptedImage = await handleFileDecrypt(entry[0].kyc, publicKey);
       console.log(decryptedImage);
       console.log("decryptedImage", decryptedImage);
       const url = URL.createObjectURL(decryptedImage);
@@ -89,7 +89,7 @@ const Card = ({ studentPrincipalId, entry, publicKey }) => {
       setOpenModal(true);
     }
   };
-  
+
 
   console.log("checking", entry);
 
@@ -121,15 +121,14 @@ const Card = ({ studentPrincipalId, entry, publicKey }) => {
           {rollNo} {/* Displaying the student ID */}
         </p>
         <p
-          className={`flex justify-center bg-[#EEF6FF] font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px] ${
-            verificationStatus === "approved"
+          className={`flex justify-center bg-[#EEF6FF] font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px] ${verificationStatus === "approved"
               ? "text-[#13BC24]"
               : verificationStatus === "pending"
-              ? "text-[#C3A846]"
-              : verificationStatus === "rejected"
-              ? "text-[#B26868]"
-              : "text-[#687DB2]"
-          }`}
+                ? "text-[#C3A846]"
+                : verificationStatus === "rejected"
+                  ? "text-[#B26868]"
+                  : "text-[#687DB2]"
+            }`}
         >
           {verificationStatus} {/* Displaying the student ID */}
         </p>
