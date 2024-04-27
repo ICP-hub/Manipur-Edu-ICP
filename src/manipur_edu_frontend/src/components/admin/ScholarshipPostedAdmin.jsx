@@ -8,7 +8,7 @@ const ScholarshipPostedAdmin = ({ onView, onEdit, onPost }) => {
   const entries = useSelector((state) => state.allScholarshipsReducer);
   return (
     <div>
-      {isLoadingEntries && <Loader></Loader>}
+      {/* {isLoadingEntries && <Loader></Loader>} */}
       <div className="flex flex-col gap-[35px]">
         {entries &&
           entries.map(
@@ -25,10 +25,7 @@ const ScholarshipPostedAdmin = ({ onView, onEdit, onPost }) => {
               />
             )
           )}
-        <div
-          // className="flex justify-between"
-          style={{ position: "absolute", bottom: "30px" }}
-        >
+        <div className="flex justify-between pt-[200px] ">
           <div>
             <button
               onClick={onPost}
@@ -37,9 +34,7 @@ const ScholarshipPostedAdmin = ({ onView, onEdit, onPost }) => {
               Post new Scholarship
             </button>
           </div>
-        </div>
-        <div style={{ position: "absolute", bottom: "30px", right: "40px" }}>
-          Page 1 of 100
+          <p>Page 1 of 100</p>
         </div>
       </div>
     </div>

@@ -124,16 +124,16 @@ const routes = [
       appConstants.UNKNOWN,
     ],
   },
-  {
-    path: "/institute-student",
-    component: <ScholarshipTab />,
-    allowedUser: [
-      appConstants.INSTITUTE,
-      appConstants.STUDENT,
-      appConstants.ADMIN,
-      appConstants.UNKNOWN,
-    ],
-  },
+  // {
+  //   path: "/institute-student",
+  //   component: <ScholarshipTab />,
+  //   allowedUser: [
+  //     appConstants.INSTITUTE,
+  //     appConstants.STUDENT,
+  //     appConstants.ADMIN,
+  //     appConstants.UNKNOWN,
+  //   ],
+  // },
   //mychanges
   //scholarship-institute
   {

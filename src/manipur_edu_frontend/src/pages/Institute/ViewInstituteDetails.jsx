@@ -23,7 +23,7 @@ const ViewInstituteDetailsInstitutePage = () => {
 
   const handleClick = () => {
 
-    navigate("/institute_edit");
+    navigate("/institute_detail_edit");
 
   };
 
@@ -45,7 +45,7 @@ const ViewInstituteDetailsInstitutePage = () => {
                   {data?.details?.[0]?.institute_name?.[0]}
                 </p>
                 <p className="font-[Noto Sans] text-[#687EB5] text-[0.9375rem] leading-[1.25rem] font-[500]">
-                  Institute-id: 1234567
+                  Institute-id: {data?.details?.[0]?.institute_id?.[0].substr(0, 6)}
                 </p>
               </div>
             </div>

@@ -258,4 +258,3 @@ const InstituteDetailsEditInstitutePage = () => {
   );
 };
 export default InstituteDetailsEditInstitutePage;
-

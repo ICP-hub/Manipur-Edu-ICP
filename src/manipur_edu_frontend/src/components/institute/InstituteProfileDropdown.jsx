@@ -26,7 +26,7 @@ const InstituteProfileDropdown = ({ open }) => {
           </Link>
         </li>
         <li className="flex justify-center py-4  text-[#00227A] text-base font-[400] font-[Noto Sans] leading-6">
-          <Link to={"/institute-student"}>
+          <Link to={"/institute-student/"}>
             <button className="text-[#00227A] text-base font-[400] font-[Noto Sans] leading-6">
               Verify/Register Students
             </button>

@@ -435,7 +435,7 @@ const SignupStudents = () => {
                   <br />
                   <input
                     className={`w-full h-[45px] dxl:h-[45px] rounded-[10px] p-1 border ${
-                      errors.aadhar_upload
+                      errors.aadhar_no
                         ? "border-[#FF0606] focus:outline-[#FF0606]"
                         : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
                     }`}
@@ -585,21 +585,7 @@ const SignupStudents = () => {
                     <span className="text-[#FF0606]">*</span>
                   </label>
                   <br />
-                  {/* <input
-                    className={`w-1/2 h-[45px] dxl:h-[45px] rounded-[10px] p-1 border ${
-                      errors.aadhar_upload
-                        ? "border-[#FF0606] focus:outline-[#FF0606]"
-                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
-                    }`}
-                    type="file"
-                    id="kyc_upload"
-                    name="kyc_upload"
-                    onChange={handleFileChange}
-                    {...register("kyc_upload", {
-                      required: "This field is required",
-                    })}
-                  />
-                  <MdUpload /> */}
+                  
                   <div className="w-1/2 relative flex items-center">
                     {/* <label for="file-input">No file chosen</label> */}
                     <input
@@ -609,10 +595,17 @@ const SignupStudents = () => {
                           : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
                       }`}
                       type="file"
-                      id="kyc_upload"
-                      name="kyc_upload"
-                      onChange={handleFileChange}
-                      {...register("kyc_upload", {
+                      // id="kyc_upload"
+                      // name="kyc_upload"
+                      // onChange={handleFileChange}
+                      // {...register("kyc_upload", {
+                        id="aadhar_upload"
+                        name="aadhar_upload"
+                        onChange={handleFileChange}
+                        {...register("aadhar_upload", {
+                        
+    
+    
                         required: "This field is required",
                       })}
                     />
@@ -630,7 +623,7 @@ const SignupStudents = () => {
                     </div>
                   </div>
 
-                  {errors && errors.kyc && (
+                  {errors && errors.aadhar_upload && (
                     <span className="absolute grid text-xs text-[#FF0606]">
                       Please upload your document.
                     </span>
