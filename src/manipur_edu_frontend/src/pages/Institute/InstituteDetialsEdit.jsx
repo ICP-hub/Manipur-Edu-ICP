@@ -56,11 +56,6 @@ const InstituteDetailsEditInstitutePage = () => {
 
   };
 
-  //todo:- fix this form. I have implemented the functions
-
-
-
-  //todo:- map over this and set data in value
   return (
     <div className="bg-[#E5F1FF] min-h-screen flex justify-center px-[4%] lg1:px-[5%] ">
       <div className="">
