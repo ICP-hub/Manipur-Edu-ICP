@@ -25,7 +25,7 @@ const StudentsTab = () => {
             : "py-[10px] px-[22px] rounded-[10px] text-[#687DB2] border border-[#D9EBFF] mr-[16px]"
         }
       >
-           StudentRegisteredByInstitute
+           Student Registered By Institute
       </button>
       <button
         onClick={() => setPage("allstudents")}

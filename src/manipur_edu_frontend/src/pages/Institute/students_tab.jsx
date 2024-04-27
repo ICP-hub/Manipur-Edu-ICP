@@ -25,7 +25,7 @@ const StudentsTab = () => {
             : "py-[10px] px-[22px] rounded-[10px] text-[#687DB2] border border-[#D9EBFF] mr-[16px]"
         }
       >
-        Students Edit Requestx
+        Students Edit Request
       </button>
       <button
         onClick={() => setPage("allstudents")}

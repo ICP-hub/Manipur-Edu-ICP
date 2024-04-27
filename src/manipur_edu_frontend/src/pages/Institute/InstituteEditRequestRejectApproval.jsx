@@ -145,10 +145,10 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
             {/* <img className="w-[100px] h-[100px]" src={img} alt="" /> */}
             <div className="gap-[6px]">
               <p className="text-[#00227A] text-[25px] font-[Noto Sans] font-[400]">
-                Name
+              {entry?.[1].institute_name ?? 'N/A'}
               </p>
               <p className="text-[#687EB5] text-[15px] font-[Noto Sans] font-[500]">
-                Student #: 1234567
+                Institute #: 1234567
               </p>
             </div>
           </div>
@@ -243,10 +243,10 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
             {/* <img className="w-[100px] h-[100px]" src={img} alt="" /> */}
             <div className="gap-[6px]">
               <p className="text-[#00227A] text-[25px] font-[Noto Sans] font-[400]">
-                Name
+              {update[0]?.institute_name}
               </p>
               <p className="text-[#687EB5] text-[15px] font-[Noto Sans] font-[500]">
-                Student #: 1234567
+                Institute #: 1234567
               </p>
             </div>
           </div>
@@ -262,10 +262,7 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
                   Institute Name
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                {/* {update?.[0].institute_name || 'N/A'} */}
-                {/* {update.institute_name[0] } */}
                 {update[0]?.institute_name}
-                {/* {console.log(update)} */}
                 </p>
               </div>
               <div>

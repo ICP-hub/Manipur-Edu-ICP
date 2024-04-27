@@ -88,7 +88,7 @@ const ProfileTab = () => {
                 <img className="w-[100px] h-[100px]" src="student.jpg" alt="" />
                 <div className="flex flex-col justify-center pl-[1.8125rem]">
                   <p className="font-[Noto Sans] text-[#00227A] text-[1.5625rem] leading-[2.125rem] font-[400] pb-[0.375rem]">
-                    Name
+                    Admin
                   </p>
                   <p className="font-[Noto Sans] text-[#687EB5] text-[0.9375rem] leading-[1.25rem] font-[500]">
                     Admin-id: 1234567

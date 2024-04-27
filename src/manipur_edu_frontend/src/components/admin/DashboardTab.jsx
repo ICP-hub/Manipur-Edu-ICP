@@ -65,12 +65,7 @@ const DashboardTab = () => {
   };
   getEntries();
 
-  const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-
-  const toggleSearchBar = () => {
-    setIsOpen(!isOpen);
-  };
 
   const handleInputChange = (e) => {
     setSearchValue(e.target.value);
