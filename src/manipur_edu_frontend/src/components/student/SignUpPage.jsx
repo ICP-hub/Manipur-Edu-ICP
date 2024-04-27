@@ -2,7 +2,7 @@ import React from "react";
 
 function SignUpPage({ children }) {
   return (
-    <div className="flex flex-wrap h-screen sm:bg-[#ACBFFD]">
+    <div className="flex flex-wrap h-screen sm:bg-[#ACBFFD] ">
       <div className=" w-full">
         <div className="sm:flex-col lg1:flex-row flex flex-col h-screen">
           <div className="flex flex-col justify-center lg1:w-1/2 w-full h-screen">

@@ -2,9 +2,18 @@ import React, { useState } from "react";
 import { useAuth } from "../../utils/useAuthClient";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom"; 
-// import Status from "../../components/student/status";
+
+import toast, { Toaster } from 'react-hot-toast';
+
+
+const notify = () => toast.success('Scholarship Posted Approved.');
+
+
 const PostScholarshipDetails = ({ onBack }) => {
+
   const navigate = useNavigate();
+
+
   const {
     register,
     handleSubmit,
@@ -18,33 +27,10 @@ const PostScholarshipDetails = ({ onBack }) => {
   };
 
 
-  const Modal = ({ isOpen, onClose, message }) => {
-    if (!isOpen) return null;
 
-    return (
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)'
-      }}>
-        <div style={{
-          backgroundColor: 'white',
-          padding: '20px',
-          borderRadius: '5px',
-          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
-        }}>
-          <p>{message}</p>
-          <button onClick={onClose}>X</button>
-        </div>
-      </div>
-    );
-  };
+
+
+  
   // const onSubmit = async (data) => {
   //   alert("Scholarship Posted SuccessFully !")
   //   navigate("/dsa");
@@ -71,7 +57,6 @@ const PostScholarshipDetails = ({ onBack }) => {
   //   console.log("Submitted Successfully");
   // };
 
-  const [isModalOpen, setModalOpen] = useState(false);
 
   const onSubmit = async (data) => {
     console.log(data);
@@ -96,12 +81,6 @@ const PostScholarshipDetails = ({ onBack }) => {
     console.log("result of backend", create_scholarship);
 
     // Open modal on success
-    setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-    navigate('/dsa');
   };
 
   return (
@@ -403,7 +382,6 @@ const PostScholarshipDetails = ({ onBack }) => {
               Post
             </button>
           </form>
-          <Modal isOpen={isModalOpen} onClose={closeModal} message="Scholarship Posted Successfully!" />
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import StudentPersonalDetailsEdit from "./PersonalDetails";
 import ParentDetailsEdit from "./ParentsDetails";
 import InstituteDetailsEdit from "./StudentInstituteDetails";
+import KycDocuments from "./KycDocuments";
 import { useAuth } from "../../utils/useAuthClient";
 import {
  
@@ -19,17 +20,20 @@ const StudentDetailsEdit = () => {
   //   (state) => state.studentDetailsReducer
   // );
   console.log('entry',entry);
-  console.log('entry update', entry[0]);
+  console.log('entry 0 index value is : ', entry[0]);
+  
+  console.log('entry 0 index aadhar value is : ', entry[0].aadhar_no[0]);
+
   const [formData, setFormData] = useState(entry[0]);
   console.log('initialformdata', formData)
   const updateFormData = (newData) => {
     setFormData(newData);
   };
 
-  const ins = useSelector((state) => state.intituteId);
-  console.log(ins, "is the data in ins ")
-  let allStuds  = useSelector((state) => state.allStudentsReducer) ; 
-  console.log("is the data in allStuds  " , allStuds)
+  // const ins = useSelector((state) => state.intituteId);
+  // console.log(ins, "is the data in ins ")
+  // let allStuds  = useSelector((state) => state.allStudentsReducer) ; 
+  // console.log("is the data in allStuds  " , allStuds)
 
 
   return (
@@ -41,7 +45,9 @@ const StudentDetailsEdit = () => {
           </div>
           <div className="pl-[30px]">
             <p className="text-[Noto Sans] text-[#00227A] text-[26px] leading-[35px] font-[500] pb-[6px]">
-              Name
+              {/* Name */}
+              {entry?.[0]?.first_name?.[0] + " " + entry?.[0]?.last_name?.[0] ?? "N/A"}
+
             </p>
             <p className="text-[Noto Sans] text-[#687EB5] text-[15px] leading-[20px] font-[500] pb-[14px]">
               Student #: 1234567
@@ -100,15 +106,12 @@ const StudentDetailsEdit = () => {
             />
           )}
           {page === "parents" && (
-            <ParentDetailsEdit
-              next={() => setPage("institute")}
-              prev={() => setPage("personal")}
-              formData={formData} updateFormData={updateFormData}/>
+            <ParentDetailsEdit next={() => setPage("institute")} prev={() => setPage("personal")} formData={formData} updateFormData={updateFormData}/>
           )}
           {page === "institute" && (
             <InstituteDetailsEdit prev={() => setPage("parents")} formData={formData} updateFormData={updateFormData}/>
           )}
-          {page === "kyc" && <KycDocuments prev={() => setPage("institute")} />}
+          {page === "kyc" && <KycDocuments prev={() => setPage("institute")}  formData={formData}  />}
         </div>
       </div>
       {/* <div className="">

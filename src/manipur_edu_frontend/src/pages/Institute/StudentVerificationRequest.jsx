@@ -36,6 +36,9 @@ const StudentVerificationRequest = () => {
   let entries = useSelector(
     (state) => state.allStudentsReducer
   );
+  console.log("entries is : " , entries); 
+
+
 
   return (
     <div className="w-full self-center">

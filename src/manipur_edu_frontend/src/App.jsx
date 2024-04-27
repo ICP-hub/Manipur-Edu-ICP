@@ -4,6 +4,7 @@ import { useAuth, AuthProvider } from "./utils/useAuthClient";
 import UserBasedRoute from "./UserBasedRoute";
 import routes from "./routes";
 import ErrorPage from "../error/ErrorPage";
+import toast, { Toaster } from 'react-hot-toast';
 
 function App() {
   const { reloadLogin } = useAuth();
@@ -38,5 +39,6 @@ function App() {
 export default () => (
   <AuthProvider>
     <App />
+    <Toaster/>
   </AuthProvider>
 );

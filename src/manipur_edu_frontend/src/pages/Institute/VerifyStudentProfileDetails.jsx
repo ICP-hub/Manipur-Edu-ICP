@@ -22,6 +22,8 @@ const VerifyRejectStudentProfile = () => {
 
   const verifyStudent = async () => {
     const verified = await actor.verify_student(studentPrincipalId);
+
+
     navigate("/institute-student")
     console.log(verified);
   };

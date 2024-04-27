@@ -83,7 +83,12 @@ const SignupStudents = () => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setFileName(file.name);
+      const validExtensions = ['image/png', 'image/jpeg', 'image/svg+xml'];
+      if (validExtensions.includes(file.type)) {
+        setFileName(file.name);
+      } else {
+        alert("Invalid file type. Please upload an image file (.png, .jpeg, .svg).");
+      }
     } else {
       setFileName("");
     }
@@ -453,6 +458,32 @@ const SignupStudents = () => {
                   {errors && errors.aadhar_no && (
                     <span className="absolute grid text-xs text-[#FF0606]">
                       Please enter your Aadhar number.
+                    </span>
+                  )}
+                </div>
+                <div className="mt-[10px] dxl:mt-[15px]">
+                  <label className="text-[#00227A]" htmlFor="aadhar_upload">
+                    Upload Aadhar Card <span className="text-[#FF0606]">*</span>
+                  </label>
+                  <br />
+                  <input
+                    className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] p-1 border ${
+                      errors.aadhar_upload
+                        ? "border-[#FF0606] focus:outline-[#FF0606]"
+                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                    }`}
+                    type="file"
+                    id="aadhar_upload"
+                    name="aadhar_upload"
+                    accept="image/png, image/jpeg, image/svg+xml" 
+                    onChange={handleFileChange}
+                    {...register("aadhar_upload", {
+                      required: "This field is required",
+                    })}
+                  />
+                  {errors && errors.aadhar_upload && (
+                    <span className="absolute grid text-xs text-[#FF0606]">
+                      Please upload your Aadhar document.
                     </span>
                   )}
                 </div>

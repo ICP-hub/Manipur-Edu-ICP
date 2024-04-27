@@ -24,6 +24,7 @@ import StudentEditRequestRejectApproval from "./pages/Student/StudentEditRequest
 import ScholarshipPostedAdmin from "./components/admin/ScholarshipPostedAdmin";
 import InstituteEditRequestRejectApprove from "./pages/Institute/InstituteEditRequestRejectApproval";
 import EditInstituteProfile from "./pages/Admin/EditInstituteDetails"
+// import ScholarshipApplicationsTab from ""
 import ScholarshipTab from "./pages/Institute/ScholarshipTab";
 
 // All Routes according to usertype
@@ -189,6 +190,16 @@ const routes = [
   {
     path: "/verify",
     component: <VerifyRejectStudentProfile />,
+    allowedUser: [
+      appConstants.ADMIN,
+      appConstants.INSTITUTE,
+      appConstants.STUDENT,
+      appConstants.UNKNOWN,
+    ],
+  },
+  {
+    path: "/verify-edit-detials",
+    component: <StudentEditRequestRejectApproval/>,
     allowedUser: [
       appConstants.ADMIN,
       appConstants.INSTITUTE,
