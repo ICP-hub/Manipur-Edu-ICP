@@ -14,7 +14,10 @@ const StudentDetailsEdit = () => {
     (state) => state.studentDetailsReducer
   );
   console.log('entry',entry);
-  console.log('entry update', entry[0]);
+  console.log('entry 0 index value is : ', entry[0]);
+  
+  console.log('entry 0 index aadhar value is : ', entry[0].aadhar_no[0]);
+
   const [formData, setFormData] = useState(entry[0]);
   console.log('initialformdata', formData)
   const updateFormData = (newData) => {
@@ -102,7 +105,7 @@ const StudentDetailsEdit = () => {
           {page === "institute" && (
             <InstituteDetailsEdit prev={() => setPage("parents")} formData={formData} updateFormData={updateFormData}/>
           )}
-          {page === "kyc" && <KycDocuments prev={() => setPage("institute")} />}
+          {page === "kyc" && <KycDocuments prev={() => setPage("institute")}  formData={formData}  />}
         </div>
       </div>
       {/* <div className="">
