@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useAuth } from "../../utils/useAuthClient";
 import Status from "../../components/student/status";
+import toast, { Toaster } from 'react-hot-toast';
+
 const InstituteDetailsEditInstitutePage = () => {
   const { actor, authClient } = useAuth();
   const {
@@ -24,10 +26,10 @@ const InstituteDetailsEditInstitutePage = () => {
  
 
   const onSubmit = async (entry) => {
+
+   const loader =  toast.loading('Request is getting created.');
     console.log(entry);
 
-    // window.location.href = '/login';
-    // Replace "/success" with the route you want to redirect to
 
     const newentry = {
       institute_id: [data.details[0].institute_id[0]],
@@ -50,6 +52,7 @@ const InstituteDetailsEditInstitutePage = () => {
     const register_institute = await actor.edit_institute_profile(newentry);
     console.log('backend fn',register_institute);
     console.log("Submitted requested");
+    toast.dismiss(loader) ; 
     setField("Wait for your request to get approved");
     setModelStatus(true);
 
@@ -72,7 +75,7 @@ const InstituteDetailsEditInstitutePage = () => {
             <img src='/student.svg' alt="" />
             <div className="flex flex-col justify-center pl-[1.8125rem]">
               <p className="font-[Noto Sans] text-[#00227A] text-[1.5625rem] leading-[2.125rem] font-[400] pb-[0.375rem]">
-                Institute Name  {data.details[0].institute_name[0]}
+                {data.details[0].institute_name[0]}
               </p>
               <p className="font-[Noto Sans] text-[#687EB5] text-[0.9375rem] leading-[1.25rem] font-[500] pb-[14px]">
                 Institute-id: {data.details[0].institute_id[0].substr(0, 6)}

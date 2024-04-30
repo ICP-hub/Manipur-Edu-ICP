@@ -4,7 +4,9 @@ import RejectModal from "../../components/RejectModal";
 import { useAuth } from "../../utils/useAuthClient";
 import { useSelector } from 'react-redux';
 
-import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
+import toast, { Toaster } from 'react-hot-toast';
+// import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
+import {useNavigate} from "react-router-dom" ; 
 
 const InstituteDetails = ({ onBack  }) => {
   const [openModalReject, setOpenModalReject] = useState(false);
@@ -27,8 +29,11 @@ const InstituteDetails = ({ onBack  }) => {
   let indexValue  = Number(i) ; 
   let entry = entries[indexValue];
   const verifyInstitute = async () => {
-    const result = await actor.verify_institute(entry[0]);
     setOpenModalVerify(false);
+    const loader = toast.loading('wait institute is getting verified.');
+    const result = await actor.verify_institute(entry[0]);
+    toast.dismiss(loader)
+    toast.success('Institute Verified.');
     console.log(result);
     navigate("/dsa");
   };
@@ -42,6 +47,11 @@ const InstituteDetails = ({ onBack  }) => {
     navigate("/dsa");
   };
 
+
+  function handleBack() {
+    // onBack() ;
+    navigate("/dsa")
+  }
   return (
     <div className="py-[25px] px-[63px]">
       <div className="flex flex-col ">
@@ -237,7 +247,7 @@ const InstituteDetails = ({ onBack  }) => {
             </>
           )}
           <button
-            onClick={onBack}
+            onClick={handleBack}
             className="px-[2.75rem] py-[1rem] border border-[#00227A] text-[#00227A] rounded-[0.625rem]"
           >
             Back

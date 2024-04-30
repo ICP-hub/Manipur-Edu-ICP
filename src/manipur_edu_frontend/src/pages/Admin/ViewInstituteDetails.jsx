@@ -1,9 +1,17 @@
 import React from "react";
-import { useLocation, useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
+import { useLocation} from "../../../../../node_modules/react-router-dom/dist/index";
+import { useNavigate } from "react-router-dom";
+
 const ViewInstituteDetails = ({ onBack }) => {
+
   const location = useLocation();
   const { entry } = location.state;
   console.log('entry',entry);
+  const navigate = useNavigate() ; 
+
+  function handleBack() {
+    navigate("/dsa") ; 
+  }
   return (
     <div className="py-[25px] px-[63px]">
       <div className="flex flex-col ">
@@ -181,7 +189,7 @@ const ViewInstituteDetails = ({ onBack }) => {
             Delete
           </button>
           <button
-            onClick={onBack}
+            onClick={handleBack}
             className="px-[2.75rem] py-[1rem] border border-[#00227A] text-[#00227A] rounded-[0.625rem]"
           >
             Back

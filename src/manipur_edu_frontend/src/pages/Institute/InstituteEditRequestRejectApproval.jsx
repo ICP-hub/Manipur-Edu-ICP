@@ -6,6 +6,10 @@ import { useAuth } from "../../utils/useAuthClient";
 import { useQuery } from "react-query";
 import Loader from "../../loader/Loader";
 import ApproveProfileModal from "../../components/ApproveProfileModel"
+import toast, { Toaster } from 'react-hot-toast';
+
+
+
 const InstituteEditRequestRejectApprove = ({ onBack }) => {
   const { actor, authClient } = useAuth();
   const [update, setUpdate] = useState([]);
@@ -13,19 +17,7 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
   const entry = useSelector((state) => state.instituteDetailsReducer);
     console.log('previous entries',entry);
     const institute_principal = entry[0];
-    // const instituteUpdates = actor.get_institute_profile_updated(institute_principal);
-    // const updates = Promise.all(instituteUpdates);
-    // // setUpdate(updates);
-    // console.log('update', updates);
-    // const getUpdates = async () => {
-    //   const instituteUpdates = await actor.get_institute_profile_updated(entry[0]);
-    //   console.log(" instituteUpdates",  instituteUpdates);
-    //   const updates = await Promise.all(instituteUpdates);
-    //   setUpdate(updates);
-    //   console.log('update', update);
-     
-  //   // };
-  //   console.log('previous entries',entry[0]);
+   
     const getUpdates = async () => {
       try {
         console.log('gv');
@@ -59,9 +51,11 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
 
     }, [update]);
     const handleApprove = async () => {
-      const result = await actor.approve_institute_profile_update(institute_principal);
       setOpenModalApprove(false);
-      console.log(result);
+      const loader = toast.loading("Please wait institute profile is getting update.") ; 
+      const result = await actor.approve_institute_profile_update(institute_principal);
+      toast.dismiss(loader) ; 
+      toast.success('Institute profile updated.');
       onBack();
       
     };

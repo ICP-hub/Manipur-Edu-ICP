@@ -88,12 +88,30 @@
 
 
 import React, { useRef, useState } from "react";
-
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from 'react-hot-toast';
+import loadingimg from "../../../assets/loading.gif"
+
+const Overlay = () => (
+  <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+      zIndex: 1000, // Ensures it covers other content
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+  }}>
+      <img src={loadingimg} alt="Loading..." style={{ width: '100px', height: '100px' }} />
+  </div>
+);
 
 
 const KycDocuments = ({ prev , formData }) => {
+  const [isLoading, setIsLoading] = useState(false);
 
 
   const {
@@ -134,6 +152,8 @@ const KycDocuments = ({ prev , formData }) => {
   }
 
   const onSubmit = async (entry) => {
+
+    setIsLoading(true); // Start loading
     console.log("entry from handleSave is : ", entry);
     try {
       const newData = {
@@ -175,12 +195,17 @@ const KycDocuments = ({ prev , formData }) => {
       console.error("Error while saving data:", error);
       const notify = () => toast.error('Invalid Input.');
       notify();
-    }
+    }finally {
+      setIsLoading(false); // End loading
+  }
+
+
   }
 
 
   return (
     <div className="border-l border-[#D8E1F8] ml-[55px] flex flex-col justify-between pl-[47px] w-full pt-[45px] pr-[45px] ">
+             {isLoading && <Overlay />}
       <div className="pb-[45px]">
         <p className="text-[Segoe UI] text-[#00227A] text-[24px] leading-[32px] font-[400]">
           KYC Documents

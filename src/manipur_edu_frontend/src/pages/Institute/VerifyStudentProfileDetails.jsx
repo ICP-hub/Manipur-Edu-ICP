@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import VerifyModal from "../../components/VerifyModal";
 import RejectModal from "../../components/RejectModal";
 import Background from "../../components/BackgroudPage";
+import toast, { Toaster } from 'react-hot-toast';
+
 import {
   Link,
   useLocation,
@@ -21,15 +23,19 @@ const VerifyRejectStudentProfile = () => {
   console.log(entry);
 
   const verifyStudent = async () => {
+    const loadingToast = toast.loading('Student is getting verified...');
+
     const verified = await actor.verify_student(studentPrincipalId);
-
-
+    toast.dismiss(loadingToast);
+    toast.success('Student Verfied.');
     navigate("/institute-student")
     console.log(verified);
   };
 
   const rejectStudent = async () => {
     const rejected = await actor.reject_student(studentPrincipalId);
+    toast.dismiss(loadingToast);
+    toast.success('Student Rejected.');
     navigate("/institute-student")
     console.log(rejected);
   };

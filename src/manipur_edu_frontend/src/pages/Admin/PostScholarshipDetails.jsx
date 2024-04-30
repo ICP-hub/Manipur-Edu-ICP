@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../../utils/useAuthClient";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -30,7 +30,7 @@ const PostScholarshipDetails = ({ onBack }) => {
 
 
 
-  
+
   // const onSubmit = async (data) => {
   //   alert("Scholarship Posted SuccessFully !")
   //   navigate("/dsa");
@@ -58,37 +58,96 @@ const PostScholarshipDetails = ({ onBack }) => {
   // };
 
 
+  // const onSubmit = async (data) => {
+  //   console.log(data);
+
+  //   const newScholarship = {
+  //     scholarship_id: [""],
+  //     name: data.name,
+  //     description: data.description,
+  //     amount: data.amount,
+  //     date: data.date,
+  //     deadline: data.deadline,
+  //     education: data.education,
+  //     institute: "",
+  //     gender: data.gender,
+  //     status: "pending",
+  //     offerby: "",
+  //     applicants: [],
+  //   };
+
+  //   console.log("newScholarship", newScholarship);
+  //   const create_scholarship = await actor.create_scholarship(newScholarship);
+  //   console.log("result of backend", create_scholarship);
+
+  //   // Open modal on success
+  // };
   const onSubmit = async (data) => {
     console.log(data);
+    const loadingToast = toast.loading('Scholarship is getting posted...');
+
+
+    // Check for empty fields
+    const requiredFields = ['name', 'description', 'amount', 'date', 'deadline', 'education', 'gender'];
+    const emptyFields = requiredFields.filter(field => !data[field]);
+
+    if (emptyFields.length > 0) {
+        // If there are empty required fields, alert the user
+        // alert(`The following fields are empty: ${emptyFields.join(', ')}`);
+        toast.dismiss(loadingToast);
+        toast.error(`The following fields are empty: ${emptyFields.join(', ')}`);
+        return; // Stop the submission process
+    }
 
     const newScholarship = {
-      scholarship_id: [""],
-      name: data.name,
-      description: data.description,
-      amount: data.amount,
-      date: data.date,
-      deadline: data.deadline,
-      education: data.education,
-      institute: "",
-      gender: data.gender,
-      status: "pending",
-      offerby: "",
-      applicants: [],
+        scholarship_id: [""],
+        name: data.name,
+        description: data.description,
+        amount: data.amount,
+        date: data.date,
+        deadline: data.deadline,
+        education: data.education,
+        institute: "",
+        gender: data.gender,
+        status: "pending",
+        offerby: "",
+        applicants: [],
     };
 
     console.log("newScholarship", newScholarship);
-    const create_scholarship = await actor.create_scholarship(newScholarship);
-    console.log("result of backend", create_scholarship);
+    
+    try {
+        const create_scholarship = await actor.create_scholarship(newScholarship);
+        console.log("result of backend", create_scholarship);
+        // alert("Done"); // Alert 'Done' on successful creation
+        toast.dismiss(loadingToast);
+        // const scPosted = () => toast.success(`Scholarship Posted successfully`);
+        toast.success('Scholarship Posted successfully');
+        // scPosted() ; 
+        onBack() ; 
+        // navigate("/")
 
-    // Open modal on success
-  };
+
+
+    } catch (error) {
+        console.error("Failed to create scholarship", error);
+        // alert("Failed to create scholarship"); // Alert failure message
+        toast.dismiss(loadingToast);
+        toast.error("Failed to create scholarship");
+        // const scNotPosted = () => toast.error("Failed to create scholarship");
+        // scNotPosted() ; 
+    }
+
+    // Open modal on success (you might want to place this inside the try block after successful creation)
+};
+
 
   return (
     <div className="px-[63px] py-[25px] flex flex-col gap-[25px]">
 
       <div className="flex justify-between ">
         <div className="font-[600] font-[Segoe UI] text-4xl text-[#2D6BE4]">
-          Enter Scholarship Details  
+          Enter Scholarship Details
         </div>
         <div className="flex gap-[44px]">
           <div className="flex gap-[23px]">
@@ -160,7 +219,7 @@ const PostScholarshipDetails = ({ onBack }) => {
       </div>
       <div className="flex flex-col gap-[17px]">
         <div className="flex flex-col gap-[30px]">
-          <div className="w-[50%]">
+          <div className="w-[50%] relative">
             <label
               className="text-[17px] text-[Noto Sans] font-[400] text-[#00227A] "
               htmlFor=""
@@ -180,7 +239,7 @@ const PostScholarshipDetails = ({ onBack }) => {
               </span>
             )}
           </div>
-          <div className="w-full">
+          <div className="w-full relative">
             <label
               className="text-[17px] text-[Noto Sans] font-[400] text-[#00227A] "
               htmlFor=""
@@ -195,7 +254,13 @@ const PostScholarshipDetails = ({ onBack }) => {
               {...register("description", {
                 required: "This field is required",
               })}
-            ></input>
+            />
+             {errors && errors.description && (
+              <span className="absolute grid text-xs text-[#FF0606]">
+                Please enter scholarship description.
+              </span>
+              
+            )}
           </div>
         </div>
         <div className="flex gap-[30px]">
@@ -208,8 +273,8 @@ const PostScholarshipDetails = ({ onBack }) => {
               <div className="relative">
                 <input
                   className={`Date w-full h-[56px] dxl:h-[45px] border rounded-[10px] px-1 border-[#ACBFFD] focus:outline-[#ACBFFD]  ${errors.date
-                      ? "border-[#FF0606] focus:outline-[#FF0606]"
-                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                    ? "border-[#FF0606] focus:outline-[#FF0606]"
+                    : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
                     }`}
                   type="date"
                   id="date"
@@ -255,8 +320,8 @@ const PostScholarshipDetails = ({ onBack }) => {
               <div className="relative">
                 <input
                   className={`Date w-full h-[56px] dxl:h-[45px] border rounded-[10px] px-1 border-[#ACBFFD] focus:outline-[#ACBFFD]  ${errors.deadline
-                      ? "border-[#FF0606] focus:outline-[#FF0606]"
-                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                    ? "border-[#FF0606] focus:outline-[#FF0606]"
+                    : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
                     }`}
                   type="date"
                   id="deadline"
@@ -292,7 +357,7 @@ const PostScholarshipDetails = ({ onBack }) => {
           </div>
         </div>
         <div className="flex gap-[30px]">
-          <div className="w-[50%]">
+          <div className="w-[50%] relative ">
             <label
               className="text-[17px] text-[Noto Sans] font-[400] text-[#00227A]"
               htmlFor=""
@@ -302,17 +367,22 @@ const PostScholarshipDetails = ({ onBack }) => {
             <br />
             <input
               className="w-full h-[56px] border border-[#CCD9FA] rounded-[10px] focus:outline-none px-[10px] mt-[5px]"
-              type="text"
+              type="number"
               name="amount"
               {...register("amount", { required: "This field is required" })}
             ></input>
+            {errors && errors.amount && (
+              <span className="absolute grid text-xs text-[#FF0606]">
+                Please enter scholarship title.
+              </span>
+            )}
           </div>
         </div>
         <h1 className="text-[20px] text-[Noto Sans] font-[500] text-[#00227A]">
           Eligibility Criteria
         </h1>
         <div className="flex gap-[30px]">
-          <div className="w-[50%]">
+          <div className="w-[50%] relative ">
             <label
               className="text-[17px] text-[Noto Sans] font-[400] text-[#00227A]"
               htmlFor=""
@@ -326,23 +396,38 @@ const PostScholarshipDetails = ({ onBack }) => {
               name="education"
               {...register("education", { required: "This field is required", })}
             ></input>
+            {errors && errors.education && (
+              <span className="absolute grid text-xs text-[#FF0606]">
+                Please enter your highest education level.
+              </span>
+            )}
+            
           </div>
-          <div className="w-[50%]">
+          <div className="w-[50%] relative">
             <label
               className="text-[17px] text-[Noto Sans] font-[400] text-[#00227A]"
-              htmlFor=""
+              htmlFor="gender"
             >
               Gender
-            </label>{" "}
-            <br />
-            <input
+            </label> <br />
+            <select
               className="w-full h-[56px] border border-[#CCD9FA] rounded-[10px] focus:outline-none px-[10px] mt-[5px]"
-              type="text"
               id="gender"
               name="gender"
-              {...register("gender", { required: "This field is required", })}
-            ></input>
+              {...register("gender", { required: "This field is required" })}
+            >
+              <option value="">Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+            {errors && errors.gender && (
+              <span className="absolute grid text-xs text-[#FF0606]">
+                Please select your gender.
+              </span>
+            )}
           </div>
+
         </div>
       </div>
       <div className="flex flex-col gap-[17px]">

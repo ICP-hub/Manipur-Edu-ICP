@@ -1,10 +1,3 @@
-// import React from "react";
-
-// const ScholarshipDetails = ({ onBack }) => {
-//   return <div>ScholarshipDetails</div>;
-// };
-
-// export default ScholarshipDetails;
 import React from "react";
 import { useSelector } from "react-redux";
 // import img from "../../assets/student.png";

@@ -3,6 +3,9 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useSelector } from "react-redux";
 import { useAuth } from "../../utils/useAuthClient";
 import { useNavigate } from 'react-router-dom';
+import loadingimg  from "../../../../manipur_edu_frontend/assets/loading.gif"; 
+
+// /Users/shivamgupta/Devlopment/Manipur/Manipur-Edu-ICP/src/manipur_edu_frontend/assets/loading.gif
 
 const notify = () => toast.success('Edits Approved.');
 
@@ -13,31 +16,19 @@ const StudentEditRequestRejectApproval = () => {
   const [studentUpdatedData, setStudentUpdatedData] = useState(null);
   const studentId = useSelector((state) => state.studentId.studentPrincipalId);
   const navigate  = useNavigate() ; 
+  const [isLoading, setIsLoading] = useState(false);
 
-  // const someData = useSelector((state) => state.studentId.approve_student_profile_update)
-
-  // async function someData() {
-  //   const data = await actor.get_student_profile_updated(studentId) ; 
-  //   console.log("data is : " , data) ; 
-  // }
-  // someData() ; 
 
   console.log("Component rendered with studentId:", studentId);
   useEffect(() => {
     async function getData() {
       console.log("sid is : ", studentId)
-
       const data = await actor.get_student_profile_updated(studentId);
       console.log("data is : ", data);
       setStudentUpdatedData(data[0]);
-
-
       const response = await actor.get_student_details(studentId);
       console.log("Fetched student data:", response);
       setStudent(response[0]); // Assuming response is an array with the student object at the first index
-
-
-
     }
     getData();
   }, [actor, studentId]); // Dependency array to prevent unnecessary re-renders
@@ -45,21 +36,49 @@ const StudentEditRequestRejectApproval = () => {
   if (!student) {
     return <div>Loading...</div>; // Or any other loading state
   }
+ 
+  const Overlay = () => (
+    <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+        zIndex: 1000, // Ensures it covers other content
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    }}>
+        <img src={loadingimg} alt="Loading..." style={{ width: '100px', height: '100px' }} />
+    </div>
+);
 
 
   async function handleApprove() {
-    const data = await actor.approve_student_profile_update(studentId) ; 
-    console.log("data is : " , data) ; 
-    console.log("Profile updated.")
-    notify() ; 
-    navigate("/institute-student"); 
+    setIsLoading(true); // Start loading
+    
+    try {
+        const data = await actor.approve_student_profile_update(studentId);
+        console.log("Profile updated.");
+        toast.success("Student profile approved.");
+        notify();
+        navigate("/institute-student");
+    } catch (error) {
+        console.error("Failed to approve:", error);
+        toast.error("Approval failed.");
+    } finally {
+        setIsLoading(false); // End loading
+    }
+}
 
-  }
-
+function onBack() {
+  navigate("/institute-student/") ; 
+}
 
   return (
-    // <Background>
     <div className="px-[63px] py-[25px] flex flex-col gap-[25px] m-[60px] mt-[50px] bg-white">
+       {isLoading && <Overlay />}
       <div className="flex justify-between ">
         <div className="font-[600] font-[Segoe UI] text-4xl text-[#2D6BE4]">
           Student Profile
@@ -564,7 +583,7 @@ const StudentEditRequestRejectApproval = () => {
             </div>
             <div>
               <button
-                // onClick={onBack}
+                onClick={onBack}
                 className="border border-[#00227A] text-[#00227A] py-[13px] px-[50px] rounded-[10px] text-[18px] font-[400]"
               >
                 Back

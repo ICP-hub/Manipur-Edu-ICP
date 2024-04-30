@@ -37,7 +37,7 @@ const DashboardTab = () => {
   const get = async () => {
     const allInstitutes = await actor.get_institutes();
     console.log("allInstitutes from gi is : ", allInstitutes);
-    setInstituteCount(allInstitutes.length)
+    setInstituteCount( allInstitutes.filter(institute => institute[1].status[0] === "approved").length) ; 
   };
 
   get() ; 

@@ -8,6 +8,7 @@ import { setInstituteId } from "../../../Redux/Action/idAction";
 
 const VerificationButton = ({ onTap, SetTab }) => {
   let entries = useSelector((state) => state.allInstitutesReducer);
+  const pendingEntries = entries?.filter(entry => entry?.[1].status?.[0] === "pending");
 
   return (
     <div>
@@ -19,7 +20,7 @@ const VerificationButton = ({ onTap, SetTab }) => {
           <div className="flex justify-center">STATUS</div>
           <div className="flex justify-center">INSTITUTE DETAILS</div>
         </div>
-        {entries?.map((entry, index) => (
+        {pendingEntries?.map((entry, index) => (
           <Card SetTab={SetTab} key={index} entry={entry} onTap={onTap} />
         ))}
       </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useState} from "react";
 import {
   Link,
   useLocation,
@@ -7,11 +7,30 @@ import { useForm } from "react-hook-form";
 import toast, { Toaster } from 'react-hot-toast';
 import { useAuth } from "../../utils/useAuthClient";
 import { useNavigate } from 'react-router-dom';
+import loadingimg from "../../../assets/loading.gif"
 
+
+  const Overlay = () => (
+    <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+        zIndex: 1000, // Ensures it covers other content
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    }}>
+        <img src={loadingimg} alt="Loading..." style={{ width: '100px', height: '100px' }} />
+    </div>
+);
 
 
 
 const InstituteDetailsEdit = ({ prev ,formData , updateFormData }) => {
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -25,6 +44,7 @@ const InstituteDetailsEdit = ({ prev ,formData , updateFormData }) => {
 
   
   const onSubmit = async (entry) => {
+    setIsLoading(true); // Start loading
     console.log("entry from handleSave is : " , entry); 
     
 
@@ -69,10 +89,13 @@ const InstituteDetailsEdit = ({ prev ,formData , updateFormData }) => {
       console.error("Error while saving data:", error);
       const notify = () => toast.error('Invalid Input.');
       notify();
-    }
+    }finally {
+      setIsLoading(false); // End loading
+  }
   };
   return (
     <div className="px-[4%] lg1:px-[5%] flex flex-col justify-between w-full ">
+        {isLoading && <Overlay />}
       <div className="w-full my-[3.125rem] rounded-[0.625rem] bg-white px-[4.125rem] py-[2.625rem]">
         <div className="pb-[45px]">
           <p className="text-[Segoe UI] text-[#00227A] text-[24px] leading-[32px] font-[400]">

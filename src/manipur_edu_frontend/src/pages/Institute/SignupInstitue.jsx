@@ -346,7 +346,7 @@ const SignupInstitute = () => {
               <div className="flex flex-col">
                 <div className="mt-[10px] dxl:mt-[15px]">
                   <label className="text-[#00227A]" htmlFor="email">
-                    Email-id <span className="text-[#FF0606]">*</span>
+                    Email Id <span className="text-[#FF0606]">*</span>
                   </label>
                   <br />
                   <input
