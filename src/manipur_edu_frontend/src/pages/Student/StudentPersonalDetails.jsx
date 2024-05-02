@@ -1042,27 +1042,27 @@ const SignupStudents = () => {
             <div className="flex flex-col">
               {/* User Profile */}
               <div className="mb-[20px]">
-                <p>Profile Photo</p>
+                <p className="mb-[10px] text-[#00227A]">Profile Photo</p>
                 <div className="flex flex-row">
-                  <div className="flex justify-center items-center">
+                  <div className="flex justify-center items-center w-[100px] h-[100px]">
                     <img
-                      class="w-[100px] h-[100px] border-2 border-[#8CA3C3] rounded-full"
-                      src="userPicture.png"
+                      class="ring-2 ring-[#8CA3C3] rounded-full"
+                      src="/student.svg"
                       alt="user profile picture"
                     />
                   </div>
 
                   <div className="flex flex-col">
-                    <p className="ml-[10px] text-[#ACBFFD] mb-[10px]">
+                    <p className="ml-[20px] text-[15px] sm1:text-[13px] text-[#ACBFFD] mb-[10px]">
                       Needs to be a formal passport size photo.
                       <br />
                       Photo Size should be less than 1 MB.
                     </p>
                     <div className="flex flex-row">
-                      <button className="flex-1 ml-[10px] w-[119px] h-[45px] dxl:h-[45px] text-[#00227A] text-[20px] bg-transparent border border-[#ACBFFD] rounded-[10px]">
+                      <button className="flex-1 ml-[20px] w-[119px] h-[45px] text-[#00227A] text-[15px] sm1:w-[99px] sm1:h-[37px] sm1:text-[14px] border border-[#ACBFFD] rounded-[10px]">
                         Upload
                       </button>
-                      <button className="flex-1 ml-[10px] w-[119px] h-[45px] dxl:h-[45px] text-[#00227A] text-[20px] bg-transparent border border-[#ACBFFD] rounded-[10px]">
+                      <button className="flex-1 ml-[20px] w-[119px] h-[45px] text-[#00227A] text-[15px] sm1:w-[99px] sm1:h-[37px] sm1:text-[14px] border border-[#ACBFFD] rounded-[10px]">
                         Remove
                       </button>
                     </div>
