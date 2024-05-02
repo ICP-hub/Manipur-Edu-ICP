@@ -89,8 +89,8 @@ fn calculate_state_size() -> usize {
 }
 
 #[update]
-fn add_private_key(private_key: String, principal_id: String) -> Result<(), String> {
-    // let principal_id = caller().to_string();
+fn add_private_key(private_key: String) -> Result<(), String> {
+    let principal_id = caller().to_string();
     STATE.with(|state| {
         let mut state = state.borrow_mut();
         if state.private_keys.contains_key(&principal_id) {

@@ -75,7 +75,7 @@ type UserResult = record {
   issued_date : text;
 };
 service : {
-  add_private_key : (text, text) -> (Result);
+  add_private_key : (text) -> (Result);
   approve_institute_profile_update : (text) -> (text);
   approve_student_profile_update : (text) -> (text);
   calculate_state_size : () -> (nat64) query;
