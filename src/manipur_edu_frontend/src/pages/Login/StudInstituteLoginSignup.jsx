@@ -240,7 +240,7 @@ const Login = () => {
 
   
   return (
-  <div className=''>
+  <div>
     <SignUpPage>
 
      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
@@ -255,7 +255,7 @@ const Login = () => {
 
 
       <div className="flex flex-col items-center justify-center w-full">
-        <div className=" text-[#00227A] text-2xl md2:text-4xl font-medium p ">
+        <div className=" text-[#00227A] text-2xl md2:text-4xl font-medium">
           Log in/Sign up as
         </div>
         <div className="mt-[48px] w-full flex flex-col  items-center gap-4 px-10">

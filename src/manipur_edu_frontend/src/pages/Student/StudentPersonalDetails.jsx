@@ -941,11 +941,13 @@ const SignupStudents = () => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const validExtensions = ['image/png', 'image/jpeg', 'image/svg+xml'];
+      const validExtensions = ["image/png", "image/jpeg", "image/svg+xml"];
       if (validExtensions.includes(file.type)) {
         setFileName(file.name);
       } else {
-        alert("Invalid file type. Please upload an image file (.png, .jpeg, .svg).");
+        alert(
+          "Invalid file type. Please upload an image file (.png, .jpeg, .svg)."
+        );
       }
     } else {
       setFileName("");
@@ -1038,6 +1040,36 @@ const SignupStudents = () => {
             </div>
 
             <div className="flex flex-col">
+              {/* User Profile */}
+              <div className="mb-[20px]">
+                <p>Profile Photo</p>
+                <div className="flex flex-row">
+                  <div className="flex justify-center items-center">
+                    <img
+                      class="w-[100px] h-[100px] border-2 border-[#8CA3C3] rounded-full"
+                      src="userPicture.png"
+                      alt="user profile picture"
+                    />
+                  </div>
+
+                  <div className="flex flex-col">
+                    <p className="ml-[10px] text-[#ACBFFD] mb-[10px]">
+                      Needs to be a formal passport size photo.
+                      <br />
+                      Photo Size should be less than 1 MB.
+                    </p>
+                    <div className="flex flex-row">
+                      <button className="flex-1 ml-[10px] w-[119px] h-[45px] dxl:h-[45px] text-[#00227A] text-[20px] bg-transparent border border-[#ACBFFD] rounded-[10px]">
+                        Upload
+                      </button>
+                      <button className="flex-1 ml-[10px] w-[119px] h-[45px] dxl:h-[45px] text-[#00227A] text-[20px] bg-transparent border border-[#ACBFFD] rounded-[10px]">
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div className="flex justify-between">
                 <div className="w-full pr-1">
                   <label className="text-[#00227A]" htmlFor="first_name">
@@ -1199,7 +1231,9 @@ const SignupStudents = () => {
                     required: "This field is required",
                   })}
                 >
-                  <option value="">Select Gender</option>{" "}
+                  <option className="text-slate-500" value="">
+                    Select Gender
+                  </option>
                   {/* Provides a default prompt to select, can be used for validation to ensure a choice is made */}
                   <option value="male">Male</option>
                   <option value="female">Female</option>
@@ -1339,7 +1373,7 @@ const SignupStudents = () => {
                     type="file"
                     id="aadhar_upload"
                     name="aadhar_upload"
-                    accept="image/png, image/jpeg, image/svg+xml" 
+                    accept="image/png, image/jpeg, image/svg+xml"
                     onChange={handleFileChange}
                     {...register("aadhar_upload", {
                       required: "This field is required",
