@@ -75,7 +75,7 @@ type UserResult = record {
   issued_date : text;
 };
 service : {
-  add_private_key : (text) -> (Result);
+  add_private_key : (text, text) -> (Result);
   approve_institute_profile_update : (text) -> (text);
   approve_student_profile_update : (text) -> (text);
   calculate_state_size : () -> (nat64) query;
@@ -96,12 +96,14 @@ service : {
   get_all_students_edit_req : (opt text) -> (
       vec record { text; UserData },
     ) query;
+  get_image : (nat32, nat32) -> (opt blob) query;
   get_institute_details : (opt text) -> (opt InstituteData) query;
   get_institute_profile_updated : (text) -> (opt InstituteData) query;
   get_institute_students : () -> (opt vec text) query;
   get_institute_students_by_id : (text) -> (opt vec text) query;
   get_institutes : () -> (vec record { text; InstituteData }) query;
   get_institutes_name_and_public_key : () -> (vec InstituteInfo) query;
+  get_private_key : (text) -> (Result_1) query;
   get_scholarship : (text) -> (ScholarShip) query;
   get_student_details : (text) -> (opt UserData) query;
   get_student_profile_updated : (text) -> (opt UserData) query;
@@ -121,6 +123,7 @@ service : {
   reject_institute : (text) -> (text);
   reject_student : (text) -> (text);
   student_application_status : (text) -> (opt text) query;
+  upload_image : (nat32, nat32, blob) -> (opt blob);
   verify_institute : (text) -> (text);
   verify_student : (text) -> (text);
 }
