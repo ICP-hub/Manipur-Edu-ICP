@@ -14,6 +14,13 @@ use sha2::{Digest, Sha256};
 use std::cell::RefCell;
 
 #[derive(Serialize, CandidType, Deserialize, Debug, Clone, Default)]
+pub struct Image {
+    image_id: String,
+    chunk_id: String,
+    num_chunks: usize,
+}
+
+#[derive(Serialize, CandidType, Deserialize, Debug, Clone, Default)]
 pub struct UserData {
     student_id: Option<String>,
     first_name: Option<String>,
@@ -39,7 +46,7 @@ pub struct UserData {
     certificates: Option<Vec<String>>,
     result: Option<Vec<String>>,
     pub status: Option<String>,
-    pub kyc: Vec<u8>,
+    pub kyc: Vec<Image>,
 }
 
 impl UserData {
