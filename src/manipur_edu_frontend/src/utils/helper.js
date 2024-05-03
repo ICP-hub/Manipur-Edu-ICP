@@ -211,42 +211,160 @@ export async function importAesKeyFromBase64(base64Key) {
 }
 
 
-export async function handleFileEncrypt(fileList, publicKey) {
+const generateKeys = async () => {
+    try {
+      const aesKey = await window.crypto.subtle.generateKey(
+        { name: "AES-CBC", length: 256 }, true, ["encrypt", "decrypt"]
+      );
+  
+      return aesKey;
+    } catch (error) {
+      console.error("Error generating key:", error);
+      throw error;  // Ensure errors are propagated
+    }
+  };
+  
+  // Example usage of generateKeys
+//   generateKeys().then(aesKey => {
+//     console.log('AES Key:', aesKey);
+//   }).catch(error => {
+//     console.error('Failed to generate AES key:', error);
+//   });
+  
+
+
+// export async function handleFileEncrypt(fileList, publicKey) {
+//     const file = fileList[0];
+
+//     // const key = await importAesKeyFromBase64(publicKey);
+//     const key = await generateKeys() ; 
+//     console.log(key);
+//     console.log(file);
+//     const arrayBuffer = await file.arrayBuffer();
+//     console.log(arrayBuffer);
+
+//     // Initialization vector for AES-GCM
+//     const iv = window.crypto.getRandomValues(new Uint8Array(12));
+
+//     // Encrypt the data
+//     const encrypted = await window.crypto.subtle.encrypt(
+//         { name: "AES-GCM", iv },
+//         key,
+//         arrayBuffer
+//     );
+//     console.log(encrypted);
+
+//     // Convert encrypted data to Blob for easier handling/display
+//     const encryptedDataWithIV = new Uint8Array(iv.length + encrypted.byteLength);
+//     encryptedDataWithIV.set(new Uint8Array(iv), 0); // Set IV bytes
+//     encryptedDataWithIV.set(new Uint8Array(encrypted), iv.length); // Set encrypted data bytes
+
+//     console.log(encryptedDataWithIV);
+
+//     return encryptedDataWithIV;
+
+
+// }
+// export async function handleFileEncrypt(fileList, publicKey) {
+//     const file = fileList[0];
+
+//     // Generate the correct type of key and await its creation
+//     const key = await generateKeys();
+//     console.log(key);
+//     console.log(file);
+
+//     // const arrayBuffer = await file.arrayBuffer();
+//     // console.log(arrayBuffer);
+
+//     // Initialization vector for AES-GCM
+//     const iv = window.crypto.getRandomValues(new Uint8Array(16));
+
+//     // Encrypt the data using AES-GCM
+//     try {
+//         const encrypted = await window.crypto.subtle.encrypt(
+//             { name: "AES-GCM", iv },
+//             key,
+//             // arrayBuffer
+//       new TextEncoder().encode(file)
+
+//         );
+//         console.log(encrypted);
+
+//         // Convert encrypted data to Blob for easier handling/display
+//         const encryptedDataWithIV = new Uint8Array(iv.length + encrypted.byteLength);
+//         encryptedDataWithIV.set(new Uint8Array(iv), 0); // Set IV bytes
+//         encryptedDataWithIV.set(new Uint8Array(encrypted), iv.length); // Set encrypted data bytes
+
+//         console.log(encryptedDataWithIV);
+
+//         return encryptedDataWithIV;
+//     } catch (error) {
+//         console.error("Encryption failed:", error);
+//         throw error;
+//     }
+// }
+
+export async function handleFileEncrypt(fileList, publicKeyJwk) {
     const file = fileList[0];
 
-    const key = await importAesKeyFromBase64(publicKey);
+    if (typeof publicKeyJwk === 'string') {
+        publicKeyJwk = JSON.parse(publicKeyJwk);
+    }
 
 
-    console.log(key);
-    console.log(file);
+    // Import the RSA public key from JWK
+    const rsaPublicKey = await window.crypto.subtle.importKey(
+        "jwk",
+        publicKeyJwk,
+        {
+            name: "RSA-OAEP",
+            hash: { name: "SHA-256" },
+        },
+        true,
+        ["encrypt"]
+    );
+
+    // Generate an AES-GCM key
+    const aesKey = await window.crypto.subtle.generateKey(
+        { name: "AES-GCM", length: 256 },
+        true,
+        ["encrypt", "decrypt"]
+    );
+
+    // Encrypt the AES key using the RSA public key
+    const exportedAesKey = await window.crypto.subtle.exportKey("raw", aesKey);
+    const encryptedAesKey = await window.crypto.subtle.encrypt(
+        { name: "RSA-OAEP" },
+        rsaPublicKey,
+        exportedAesKey
+    );
+
+    // Read the file as ArrayBuffer
     const arrayBuffer = await file.arrayBuffer();
-    console.log(arrayBuffer);
 
     // Initialization vector for AES-GCM
-    const iv = window.crypto.getRandomValues(new Uint8Array(12));
+    const iv = window.crypto.getRandomValues(new Uint8Array(16));
 
-    // Encrypt the data
-    const encrypted = await window.crypto.subtle.encrypt(
+    // Encrypt the file data using AES-GCM
+    const encryptedData = await window.crypto.subtle.encrypt(
         { name: "AES-GCM", iv },
-        key,
+        aesKey,
         arrayBuffer
     );
-    console.log(encrypted);
 
-
-
-
-    // Convert encrypted data to Blob for easier handling/display
-    const encryptedDataWithIV = new Uint8Array(iv.length + encrypted.byteLength);
+    // Bundle encrypted AES key and IV with the encrypted file data
+    const encryptedDataWithIV = new Uint8Array(iv.length + encryptedData.byteLength + encryptedAesKey.byteLength);
     encryptedDataWithIV.set(new Uint8Array(iv), 0); // Set IV bytes
-    encryptedDataWithIV.set(new Uint8Array(encrypted), iv.length); // Set encrypted data bytes
+    encryptedDataWithIV.set(new Uint8Array(encryptedAesKey), iv.length); // Set encrypted AES key bytes
+    encryptedDataWithIV.set(new Uint8Array(encryptedData), iv.length + encryptedAesKey.byteLength); // Set encrypted data bytes
 
-    console.log(encryptedDataWithIV);
+    console.log("Encrypted Data with IV:", encryptedDataWithIV);
 
+
+    
     return encryptedDataWithIV;
-
-
 }
+
 
 export async function handleFileDecrypt(encryptedDataWithIV, privateKey) {
     try {

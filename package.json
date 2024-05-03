@@ -44,7 +44,8 @@
     "react-query": "^3.39.3",
     "react-redux": "^8.1.3",
     "react-router-dom": "^6.22.3",
-    "redux": "^4.2.1"
+    "redux": "^4.2.1",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "assert": "2.0.0",

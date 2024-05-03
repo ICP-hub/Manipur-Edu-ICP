@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState  , useEffect} from "react";
 import { useForm } from "react-hook-form";
 import SignUpPage from "../../components/student/SignUpPage"; // Import SignUp Page ui
 import { useAuth } from "../../utils/useAuthClient";
@@ -10,6 +10,9 @@ import { getKeysForInstitute, generateAesKeyBase64 } from "../../utils/helper";
 import Loader from "../../loader/Loader";
 
 const SignupInstitute = () => {
+  useEffect(() => {
+    generateKeys();
+}, [])
   const {
     register,
     handleSubmit,
@@ -21,6 +24,10 @@ const SignupInstitute = () => {
   const [selectedCountry, setSelectedCountry] = useState("IN");
   const [selectedState, setSelectedState] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [publicKey, setPublicKey] = useState("") ; 
+  const [privateKey, setPrivateKey] = useState("")  ;
+  const [rsaKeyPair, setRsaKeyPair] = useState(null);
+
   const handleCountryChange = (e) => {
     setSelectedCountry(e.target.value);
 
@@ -31,16 +38,16 @@ const SignupInstitute = () => {
   };
   const [step, setStep] = useState(0);
   const { actor } = useAuth();
-  const {
-    data: key,
-    isLoading: isLoadingkey,
-    error: errorkey,
-  } = useQuery("key", generateAesKeyBase64);
+  // const {
+  //   data: key,
+  //   isLoading: isLoadingkey,
+  //   error: errorkey,
+  // } = useQuery("key", generateAesKeyBase64);
 
-  if (!isLoadingkey && !errorkey) {
-    console.log(key);
-    console.log("base64String", key);
-  }
+  // if (!isLoadingkey && !errorkey) {
+  //   console.log(key);
+  //   console.log("base64String", key);
+  // }
   const handlePrevious = () => {
     setStep((prevStep) => prevStep - 1);
   };
@@ -48,6 +55,40 @@ const SignupInstitute = () => {
   const handlePrevious1 = () => {
     navigate("/login"); // Navigate to the signup component
   };
+
+
+  const generateKeys = async () => {
+
+    const rsaKeyPair = await window.crypto.subtle.generateKey(
+      {
+        name: "RSA-OAEP",
+        modulusLength: 2048,
+        publicExponent: new Uint8Array([1, 0, 1]),
+        hash: "SHA-256",
+      },
+      true,
+      ["encrypt", "decrypt"]
+    );
+    setRsaKeyPair(rsaKeyPair);
+    const exportedPublicKey = await window.crypto.subtle.exportKey("jwk", rsaKeyPair.publicKey);
+      console.log("RSA Public Key (JWK):", JSON.stringify(exportedPublicKey, null, 2));
+
+      // Export RSA private key in JWK format (Alternatively, use 'pkcs8' for a more standardized format)
+      const exportedPrivateKey = await window.crypto.subtle.exportKey("jwk", rsaKeyPair.privateKey);
+      console.log("RSA Private Key (JWK):", JSON.stringify(exportedPrivateKey, null, 2));
+
+
+      const rsaPublicKeyString = JSON.stringify(exportedPublicKey);
+      const rsaPrivateKeyString = JSON.stringify(exportedPrivateKey);
+
+      console.log("rsa pub nd priv", rsaPublicKeyString)
+      console.log("rsa priv ", rsaPrivateKeyString)
+
+      setPublicKey(rsaPublicKeyString)
+      setPrivateKey(rsaPrivateKeyString); 
+  };
+
+
   const onSubmit = async (data) => {
     console.log(data);
     setStep((prevStep) => prevStep + 1);
@@ -55,9 +96,12 @@ const SignupInstitute = () => {
       // window.location.href = '/login';
       // Replace "/success" with the route you want to redirect to
 
+      
+
+      console.log("public key is : " , publicKey)
       const newData = {
         institute_id: [""],
-        public_key: [key],
+        public_key: [publicKey],
         zip_code: [Number(data.zip_code)],
         city: [data.city],
         email: [data.email],
@@ -71,9 +115,11 @@ const SignupInstitute = () => {
         institute_size: [Number(data.instituteSize)],
         institute_type: [data.institute_type],
         status: ["pending"],
+
       };
       setIsLoading(true);
       const register_institute = await actor.register_institute(newData);
+      const add_private_key = await actor.add_private_key(privateKey)
 
       console.log(register_institute);
       // const addedPrivateKey = await actor.add_private_key(keyPair.privateKey);
