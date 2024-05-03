@@ -1,4 +1,7 @@
 use candid::{CandidType, Deserialize};
+use ic_stable_structures::memory_manager::{MemoryId, MemoryManager, VirtualMemory};
+use ic_stable_structures::storable::Bound;
+use ic_stable_structures::{DefaultMemoryImpl, StableBTreeMap, Storable};
 use ic_cdk::api;
 use ic_cdk::api::caller;
 use ic_cdk::storage;
@@ -23,6 +26,8 @@ use certificate::*;
 pub mod scholarship;
 use scholarship::*;
 
+
+type Memory = VirtualMemory<DefaultMemoryImpl>;
 // State of the Canister
 #[derive(Serialize, CandidType, Deserialize, Debug, Clone, Default)]
 pub struct State {
@@ -46,6 +51,26 @@ pub struct State {
 
 thread_local! {
     pub static STATE: RefCell<State> = RefCell::new(State::default());
+
+    static MEMORY_MANAGER: RefCell<MemoryManager<DefaultMemoryImpl>> =
+    RefCell::new(MemoryManager::init(DefaultMemoryImpl::default()));
+
+    static FILE_STABLE_STATE: RefCell<StableBTreeMap<(u32,u32), Vec<u8>, Memory>> = RefCell::new(
+        StableBTreeMap::init(
+            MEMORY_MANAGER.with(|m| m.borrow().get(MemoryId::new(1))),
+        )
+    );
+}
+
+#[ic_cdk_macros::query]
+fn get_image(key1: u32, key2: u32) -> Option<Vec<u8>> {
+    FILE_STABLE_STATE.with(|p| p.borrow().get(&(key1, key2)))
+}
+
+// Inserts an entry into the map and returns the previous value of the key if it exists.
+#[ic_cdk_macros::update]
+fn upload_image(key1: u32, key2: u32, value: Vec<u8>) -> Option<Vec<u8>> {
+    FILE_STABLE_STATE.with(|p| p.borrow_mut().insert((key1, key2), value))
 }
 
 #[query]
@@ -76,6 +101,26 @@ fn add_private_key(private_key: String) -> Result<(), String> {
         }
     })
 }
+
+#[query]
+fn get_private_key(principal_id: String) -> Result<String, String> {
+    let caller_id = caller().to_string();
+
+    if caller_id != principal_id {
+        return Err("Access denied. Caller is not authorized to access the private key.".to_string());
+    }
+
+    STATE.with(|state| {
+        let state = state.borrow();
+
+        if let Some(private_key) = state.private_keys.get(&principal_id) {
+            Ok(private_key.clone())
+        } else {
+            Err("User not found.".to_string())
+        }
+    })
+}
+
 // Login function
 #[query]
 fn login(user_type: String) -> bool {
