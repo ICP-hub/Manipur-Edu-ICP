@@ -3,10 +3,28 @@ import VerifyModal from "../../components/VerifyModal";
 import RejectModal from "../../components/RejectModal";
 import { useAuth } from "../../utils/useAuthClient";
 import { useSelector } from 'react-redux';
-
 import toast, { Toaster } from 'react-hot-toast';
-// import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
 import {useNavigate} from "react-router-dom" ; 
+import loadingimg from "../../../assets/loading.gif"
+
+const Overlay = () => (
+  <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+      zIndex: 1000, // Ensures it covers other content
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+  }}>
+      <img src={loadingimg} alt="Loading..." style={{ width: '100px', height: '100px' }} />
+  </div>
+);
+
+
 
 const InstituteDetails = ({ onBack  }) => {
   const [openModalReject, setOpenModalReject] = useState(false);
@@ -15,6 +33,7 @@ const InstituteDetails = ({ onBack  }) => {
   console.log(actor);
   const navigate = useNavigate();
   const ins = useSelector((state) => state.intituteId);
+  const [isLoading, setIsLoading] = useState(false);
   console.log("Insititute  id is : ", ins.instituteId)
 
   let entries = useSelector((state) => state.allInstitutesReducer);
@@ -30,9 +49,9 @@ const InstituteDetails = ({ onBack  }) => {
   let entry = entries[indexValue];
   const verifyInstitute = async () => {
     setOpenModalVerify(false);
-    const loader = toast.loading('wait institute is getting verified.');
+    setIsLoading(true); // Start loading
     const result = await actor.verify_institute(entry[0]);
-    toast.dismiss(loader)
+    setIsLoading(false); 
     toast.success('Institute Verified.');
     console.log(result);
     navigate("/dsa");
@@ -41,7 +60,9 @@ const InstituteDetails = ({ onBack  }) => {
     navigate("/dsa");
   };
   const rejectInstitute = async () => {
+    setIsLoading(true); // Start loading
     const rejected = await actor.reject_institute(entry[0]);
+    setIsLoading(false); 
     setOpenModalReject(false);
     console.log(rejected);
     navigate("/dsa");
@@ -54,6 +75,7 @@ const InstituteDetails = ({ onBack  }) => {
   }
   return (
     <div className="py-[25px] px-[63px]">
+        {isLoading && <Overlay />}
       <div className="flex flex-col ">
         <div className="flex justify-between ">
           <div className="font-[600] font-[Segoe UI] text-4xl text-[#2D6BE4]">

@@ -2,16 +2,17 @@ import React, { useState } from "react";
 import {
   Link,
   useLocation,
-  useNavigate,
 } from "../../../../../node_modules/react-router-dom/dist/index";
 import Background from "../../components/BackgroudPage";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const ViewProfileDetails = () => {
   const location = useLocation();
-  const entry = location.state.entries;
-  // let entry = useSelector((state) => state.studentDetailsReducer);
+  // const entry = location.state.entries;
+  let entry = useSelector((state) => state.studentDetailsReducer);
   console.log("entry here", entry);
+  const navigate  = useNavigate() ; 
 
   return (
     <Background>
@@ -297,7 +298,7 @@ const ViewProfileDetails = () => {
               </Link> */}
               {/* My Changes Want this Back to go back to all regisered students */}
               <Link to="/institute-student">
-                <button className="px-[2.25rem] py-[1rem] border border-[#00227A] text-[#00227A] rounded-[0.625rem]">
+                <button className="px-[2.25rem] py-[1rem] border border-[#00227A] text-[#00227A] rounded-[0.625rem]" onClick={navigate("/")}>
                   Back
                 </button>
               </Link>

@@ -50,6 +50,10 @@ const StudentPersonalDetailsEdit = ({ next, formData, updateFormData }) => {
 
 
 
+  function handleCancel() {
+    console.log("hancle clicked")
+    navigate("/")
+  }
 
 
 
@@ -344,7 +348,7 @@ const StudentPersonalDetailsEdit = ({ next, formData, updateFormData }) => {
             Next
           </button>
           <Link to="/view-profileDetail">
-            <button className="border border-[#00227A] py-[16px] px-[48px] rounded-[10px] text-[#00227A]">
+            <button className="border border-[#00227A] py-[16px] px-[48px] rounded-[10px] text-[#00227A]" onClick={handleCancel}>
               Cancel
             </button>
           </Link>
