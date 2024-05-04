@@ -260,7 +260,7 @@ const Login = () => {
         </div>
         <div className="mt-[48px] w-full flex flex-col  items-center gap-4 px-10">
           <button
-            className="sm:w-1/2 w-full h-14 text-white text-xl rounded-xl bg-[#646ED6]"
+            className="sm:w-1/2 w-full h-14 text-[#00227A] sm1:text-white text-xl rounded-xl bg-[#ACBFFD] sm1:bg-[#646ED6]"
             value="student"
             onClick={()=>{handleLogin() ; setChoosed("stud") }}
           >
@@ -268,7 +268,7 @@ const Login = () => {
           </button>
 
           <button
-            className="sm:w-1/2 w-full h-14 text-white text-xl rounded-xl bg-[#646ED6]"
+            className="sm:w-1/2 w-full h-14 text-[#00227A] sm1:text-white text-xl rounded-xl bg-[#ACBFFD] sm1:bg-[#646ED6]"
             value="institute"
             // onClick={handleLogin}
             onClick={()=>{handleLogin() ;setChoosed("inst") }}
@@ -277,7 +277,7 @@ const Login = () => {
             Institute
           </button>
           <button
-            className="sm:w-1/2 w-full h-14 text-white text-xl rounded-xl bg-[#646ED6]"
+            className="sm:w-1/2 w-full h-14 text-[#00227A] sm1:text-white text-xl rounded-xl bg-[#ACBFFD] sm1:bg-[#646ED6]"
             value="admin"
             onClick={()=>{handleLogin() ; setChoosed("admin")  }}
 

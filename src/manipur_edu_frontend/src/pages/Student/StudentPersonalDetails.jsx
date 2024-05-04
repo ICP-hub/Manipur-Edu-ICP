@@ -1034,7 +1034,7 @@ const SignupStudents = () => {
       </div>
       <>
         {step === 0 && (
-          <div className="flex flex-col justify-center items-center px-[2%] m-auto w-fit md:px-[15%]">
+          <div className="flex flex-col justify-center items-center px-[2%] h-auto sm1:my-auto w-fit md:px-[15%]">
             <div className="text-[#00227A] text-3xl font-[500] pb-8">
               Sign up: Personal Details
             </div>
@@ -1053,16 +1053,16 @@ const SignupStudents = () => {
                   </div>
 
                   <div className="flex flex-col">
-                    <p className="ml-[20px] text-[15px] sm1:text-[13px] text-[#ACBFFD] mb-[10px]">
+                    <p className="ml-[20px] text-[13px] sm1:text-[15px] text-[#ACBFFD] mb-[10px]">
                       Needs to be a formal passport size photo.
                       <br />
                       Photo Size should be less than 1 MB.
                     </p>
                     <div className="flex flex-row">
-                      <button className="flex-1 ml-[20px] w-[119px] h-[45px] text-[#00227A] text-[15px] sm1:w-[99px] sm1:h-[37px] sm1:text-[14px] border border-[#ACBFFD] rounded-[10px]">
+                      <button className="flex-1 ml-[20px] w-[99px] h-[37px] text-[#00227A] text-[14px] sm1:w-[119px] sm1:h-[45px] sm1:text-[15px] border border-[#ACBFFD] rounded-[10px]">
                         Upload
                       </button>
-                      <button className="flex-1 ml-[20px] w-[119px] h-[45px] text-[#00227A] text-[15px] sm1:w-[99px] sm1:h-[37px] sm1:text-[14px] border border-[#ACBFFD] rounded-[10px]">
+                      <button className="flex-1 ml-[20px] w-[99px] h-[37px] text-[#00227A] text-[14px] sm1:w-[199px] sm1:h-[45px] sm1:text-[15px] border border-[#ACBFFD] rounded-[10px]">
                         Remove
                       </button>
                     </div>
@@ -1183,6 +1183,7 @@ const SignupStudents = () => {
                     id="date_of_birth"
                     max="2009-12-31"
                     name="date_of_birth"
+                    placeholder="DD/MM/YYYY"
                     {...register("date_of_birth", {
                       required: "This field is required",
                     })}
@@ -1196,7 +1197,7 @@ const SignupStudents = () => {
                 <div className="flex-none pt-[24px]">
                   <div
                     className="w-full h-[43px] rounded-[10px] px-1 p-1 focus:outline-[#ACBFFD] border-[#ACBFFD] border cursor-pointer"
-                    // onClick={toggleDatePicker}
+                    onClick={toggleDatePicker}
                   >
                     <img src="/calander.svg" alt="calendar" />
                   </div>
