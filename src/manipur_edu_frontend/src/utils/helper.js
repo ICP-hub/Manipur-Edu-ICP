@@ -213,24 +213,24 @@ export async function importAesKeyFromBase64(base64Key) {
 
 const generateKeys = async () => {
     try {
-      const aesKey = await window.crypto.subtle.generateKey(
-        { name: "AES-CBC", length: 256 }, true, ["encrypt", "decrypt"]
-      );
-  
-      return aesKey;
+        const aesKey = await window.crypto.subtle.generateKey(
+            { name: "AES-CBC", length: 256 }, true, ["encrypt", "decrypt"]
+        );
+
+        return aesKey;
     } catch (error) {
-      console.error("Error generating key:", error);
-      throw error;  // Ensure errors are propagated
+        console.error("Error generating key:", error);
+        throw error;  // Ensure errors are propagated
     }
-  };
-  
-  // Example usage of generateKeys
+};
+
+// Example usage of generateKeys
 //   generateKeys().then(aesKey => {
 //     console.log('AES Key:', aesKey);
 //   }).catch(error => {
 //     console.error('Failed to generate AES key:', error);
 //   });
-  
+
 
 
 // export async function handleFileEncrypt(fileList, publicKey) {
@@ -304,13 +304,73 @@ const generateKeys = async () => {
 //     }
 // }
 
+// export async function handleFileEncrypt(fileList, publicKeyJwk) {
+//     const file = fileList[0];
+
+//     if (typeof publicKeyJwk === 'string') {
+//         publicKeyJwk = JSON.parse(publicKeyJwk);
+//     }
+
+
+//     // Import the RSA public key from JWK
+//     const rsaPublicKey = await window.crypto.subtle.importKey(
+//         "jwk",
+//         publicKeyJwk,
+//         {
+//             name: "RSA-OAEP",
+//             hash: { name: "SHA-256" },
+//         },
+//         true,
+//         ["encrypt"]
+//     );
+
+//     // Generate an AES-GCM key
+//     const aesKey = await window.crypto.subtle.generateKey(
+//         { name: "AES-GCM", length: 256 },
+//         true,
+//         ["encrypt", "decrypt"]
+//     );
+
+//     // Encrypt the AES key using the RSA public key
+//     const exportedAesKey = await window.crypto.subtle.exportKey("raw", aesKey);
+//     const encryptedAesKey = await window.crypto.subtle.encrypt(
+//         { name: "RSA-OAEP" },
+//         rsaPublicKey,
+//         exportedAesKey
+//     );
+
+//     // Read the file as ArrayBuffer
+//     const arrayBuffer = await file.arrayBuffer();
+
+//     // Initialization vector for AES-GCM
+//     const iv = window.crypto.getRandomValues(new Uint8Array(16));
+
+//     // Encrypt the file data using AES-GCM
+//     const encryptedData = await window.crypto.subtle.encrypt(
+//         { name: "AES-GCM", iv },
+//         aesKey,
+//         arrayBuffer
+//     );
+
+//     // Bundle encrypted AES key and IV with the encrypted file data
+//     const encryptedDataWithIV = new Uint8Array(iv.length + encryptedData.byteLength + encryptedAesKey.byteLength);
+//     encryptedDataWithIV.set(new Uint8Array(iv), 0); // Set IV bytes
+//     encryptedDataWithIV.set(new Uint8Array(encryptedAesKey), iv.length); // Set encrypted AES key bytes
+//     encryptedDataWithIV.set(new Uint8Array(encryptedData), iv.length + encryptedAesKey.byteLength); // Set encrypted data bytes
+
+//     console.log("Encrypted Data with IV:", encryptedDataWithIV);
+
+
+
+//     return encryptedDataWithIV;
+// }
+
 export async function handleFileEncrypt(fileList, publicKeyJwk) {
     const file = fileList[0];
 
     if (typeof publicKeyJwk === 'string') {
         publicKeyJwk = JSON.parse(publicKeyJwk);
     }
-
 
     // Import the RSA public key from JWK
     const rsaPublicKey = await window.crypto.subtle.importKey(
@@ -360,14 +420,51 @@ export async function handleFileEncrypt(fileList, publicKeyJwk) {
 
     console.log("Encrypted Data with IV:", encryptedDataWithIV);
 
+    // Export the AES key in JWK format for external use
+    const aesKeyJwk = await window.crypto.subtle.exportKey("jwk", aesKey);
 
-    
-    return encryptedDataWithIV;
+    // Return both the encrypted data with IV and the AES key
+    return {
+        encryptedFile: encryptedDataWithIV,
+        aesKey: aesKeyJwk
+    };
 }
 
-
-export async function handleFileDecrypt(encryptedDataWithIV, privateKey) {
+const getImage = async (kyc) => {
     try {
+        let i = 1;
+        let data;
+        const newChunks = [];
+        // do {
+        //     console.log("Fetching chunk", i);
+        // data = await actor.get_image(kyc[0].image_id, i);
+        //     if (data.length > 0) {
+        //         data = Buffer.from(data?.[0]);
+        //         newChunks.push(data);
+        //         i += 1;
+        //     }
+        // } while (data.byteLength);
+        
+        for (let i = 0; i < kyc[0].num_chunks; i++) {
+            const getImgfunct = await actor.get_image(kyc[0].image_id,kyc[0].chunk_id );
+            console.log("getImgfunct data :  ", getImgfunct)
+
+            // const {chunk_id , chunk_data } = await actor.get_image(kyc[0].image_id,kyc[0].chunk_id );
+
+            // console.log("")
+        }
+        setChunks(newChunks);
+        console.log("All chunks fetched:", newChunks);
+    } catch (error) {
+        console.error("Failed to fetch chunks:", error);
+    }
+};
+
+
+
+export async function handleFileDecrypt(kyc, privateKey) {
+    try {
+        // const encryptImg = getImage(kyc)
         const key = await importAesKeyFromBase64(privateKey);
         console.log('key', key);
         const iv = encryptedDataWithIV.slice(0, 12);
@@ -384,7 +481,12 @@ export async function handleFileDecrypt(encryptedDataWithIV, privateKey) {
 
         // for blob
         const decryptedBlob = new Blob([decrypted], { type: "application/octet-stream" });
-        return decryptedBlob;
+        // return decryptedBlob;
+        return {
+            // encryptedDataWithIV: encryptedDataWithIV,
+            encryptedDataWithIV: decryptedBlob,
+            aesKey: exportedAesKeyForReturn
+        };
 
 
         // const decryptedBase64 = btoa(String.fromCharCode.apply(null, new Uint8Array(decrypted)));

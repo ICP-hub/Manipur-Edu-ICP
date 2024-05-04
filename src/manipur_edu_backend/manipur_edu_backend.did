@@ -5,6 +5,12 @@ type CertificateData = record {
   certificate_link : blob;
   certificate_id : text;
 };
+type Image = record {
+  chunk_id : text;
+  image_id : text;
+  num_chunks : nat64;
+  aes_key : text;
+};
 type InstituteData = record {
   status : opt text;
   zip_code : opt nat32;
@@ -41,7 +47,7 @@ type ScholarShip = record {
   applicants : vec principal;
 };
 type UserData = record {
-  kyc : blob;
+  kyc : vec Image;
   status : opt text;
   result : opt vec text;
   mother_name : opt text;
@@ -103,7 +109,7 @@ service : {
   get_institute_students_by_id : (text) -> (opt vec text) query;
   get_institutes : () -> (vec record { text; InstituteData }) query;
   get_institutes_name_and_public_key : () -> (vec InstituteInfo) query;
-  get_private_key : (text) -> (Result_1) query;
+  get_private_key : (opt text) -> (Result_1) query;
   get_scholarship : (text) -> (ScholarShip) query;
   get_student_details : (text) -> (opt UserData) query;
   get_student_profile_updated : (text) -> (opt UserData) query;
