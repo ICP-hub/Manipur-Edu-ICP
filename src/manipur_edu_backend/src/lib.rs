@@ -62,15 +62,32 @@ pub struct Chunk {
     next_chunkid: u32,
    
 }
+
 impl Storable for Chunk {
     fn to_bytes(&self) -> std::borrow::Cow<[u8]> {
         Cow::Owned(Encode!(self).unwrap())
     }
 
-    fn from_bytes(bytes: Vec<u8>) -> Self {
+    fn from_bytes(bytes: Cow<[u8]>) -> Self {
         Decode!(&bytes, Self).unwrap()
     }
+
+    const BOUND: Bound = Bound::Bounded {
+        max_size: MAX_VALUE_SIZE,
+        is_fixed_size: false,
+    };
 }
+
+
+// impl Storable for Chunk {
+//     fn to_bytes(&self) -> std::borrow::Cow<[u8]> {
+//         Cow::Owned(Encode!(self).unwrap())
+//     }
+
+//     fn from_bytes(bytes: Vec<u8>) -> Self {
+//         Decode!(&bytes, Self).unwrap()
+//     }
+// }
 
 // impl Storable for Chunk {
 //     // const BOUND: Bound = 1024;
@@ -107,15 +124,13 @@ thread_local! {
 
 }
 
+
 #[ic_cdk_macros::query]
-fn get_image(key1: u32, key2: u32) -> (Option<Vec<u8>>, Option<u32>) {
+fn get_image(key1: u32, key2: u32) -> Option<Chunk> {
     FILE_STABLE_STATE.with(|p| {
         let map_ref = p.borrow();
-        let value = map_ref.get(&(key1, key2)).map(|(v, next)| (v.clone(), next));
-        match value {
-            Some((vec, next)) => (Some(vec), Some(next)),
-            None => (None, None),
-        }
+        let value = map_ref.get(&(key1, key2));
+        value
     })
 }
 // fn get_image(key1: u32, key2: u32) -> Option<Vec<u8>,u32> {
@@ -124,9 +139,9 @@ fn get_image(key1: u32, key2: u32) -> (Option<Vec<u8>>, Option<u32>) {
 
 // Inserts an entry into the map and returns the previous value of the key if it exists.
 #[ic_cdk_macros::update]
-fn upload_image(key1: u32, key2: u32, value: Vec<u8>, next: u32) -> String{
+fn upload_image(key1: u32, key2: u32, chunk: Chunk) -> String{
     
-    FILE_STABLE_STATE.with(|p| p.borrow_mut().insert((key1, key2), (value, next)));
+    FILE_STABLE_STATE.with(|p| p.borrow_mut().insert((key1, key2), chunk));
     "Successful".to_string()
 }
 
