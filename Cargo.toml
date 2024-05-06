@@ -1,5 +1,6 @@
 [workspace]
 members = [
     "src/manipur_edu_backend",
+    "src/manipur_edu_image_store",
 ]
 resolver= "2"

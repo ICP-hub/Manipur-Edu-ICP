@@ -1,0 +1,5 @@
+type Chunk = record { next_chunkid : nat32; chunk_value : blob };
+service : {
+  get_image : (nat32, nat32) -> (opt Chunk) query;
+  upload_image : (nat32, nat32, Chunk) -> (text);
+}

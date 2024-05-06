@@ -5,6 +5,12 @@
       "package": "manipur_edu_backend",
       "type": "rust"
     },
+    "manipur_edu_image_store": {
+      "candid": "src/manipur_edu_image_store/manipur_edu_image_store.did",
+      "package":"manipur_edu_image_store",
+      "type": "rust"
+    },
+
     "internet_identity": {
       "type": "pull",
       "id": "rdmx6-jaaaa-aaaaa-aaadq-cai"

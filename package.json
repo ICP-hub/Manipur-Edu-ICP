@@ -14,7 +14,7 @@
     "start": "webpack serve --mode development --env development",
     "deploy:local": "dfx deploy --network=local",
     "deploy:ic": "dfx deploy --network=ic",
-    "generate": "scripts/did.sh && dfx generate manipur_edu_backend"
+    "generate": "scripts/did.sh && dfx generate manipur_edu_backend && generate manipur_edu_image_store"
   },
   "dependencies": {
     "@dfinity/agent": "^1.2.0",
