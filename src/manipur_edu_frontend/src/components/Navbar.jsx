@@ -533,7 +533,7 @@ const Navbar = () => {
             </ul>
           </div>
           {/* hamburger-icon */}
-          <div onClick={HamburgerMenuOpenHandler}>
+          <div className="sm1:hidden" onClick={HamburgerMenuOpenHandler}>
             <img src="Menu.svg" alt="hamburger-menu" />
           </div>
         </div>
