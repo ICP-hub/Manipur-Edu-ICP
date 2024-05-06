@@ -59,22 +59,27 @@ function FAQ() {
             {faqs.map((faq, index) => (
               <details
                 key={index}
-                className="group rounded-lg bg-gray-50 p-6 [&_summary::-webkit-details-marker]:hidden"
-                
+                className="group rounded-lg border border-[#A7AAE4] bg-gray-50 p-6 [&_summary::-webkit-details-marker]:hidden"
               >
                 <summary className="flex cursor-pointer items-center justify-between gap-1.5 text-gray-900">
-                  <h2 className="font-medium">
-                  {faq.question} 
-                  </h2>
+                  <h2 className="font-medium">{faq.question}</h2>
                   <span className="relative size-5 shrink-0">
-                    <img src="ArrowUp.svg" alt="arrow-up" className="absolute inset-0 size-5 opacity-100 group-open:opacity-0"/>
-                    <img src="ArrowDown.svg" className="absolute inset-0 size-5 opacity-0 group-open:opacity-100" alt="arrow-down" />
+                    <img
+                      src="ArrowUp.svg"
+                      alt="arrow-up"
+                      className="absolute inset-0 size-5 opacity-100 group-open:opacity-0"
+                    />
+                    <img
+                      src="ArrowDown.svg"
+                      className="absolute inset-0 size-5 opacity-0 group-open:opacity-100"
+                      alt="arrow-down"
+                    />
                   </span>
                 </summary>
-                <hr className="bg-[#CBDAFF] mt-4"/>
+                <hr className="bg-[#CBDAFF] mt-4" />
 
                 <p className="mt-4 leading-relaxed text-gray-700">
-                {faq.answer}
+                  {faq.answer}
                 </p>
               </details>
             ))}
