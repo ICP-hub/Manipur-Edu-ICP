@@ -39,7 +39,7 @@ function FAQ() {
               key={index}
               className="md:flex md:justify-between border-b border-[#DAEAFF] pb-4"
             >
-              <dt className="text-2xl w-[50%] text-[#13375B] font-bold">
+              <dt className="text-2xl w-[50%] text-[#00227A] font-bold">
                 {faq.question}
               </dt>
               <dd className="mt-2 w-[50%] md:mt-0 md:ml-4 text-base text-[#00227A]">
@@ -51,7 +51,7 @@ function FAQ() {
       </div>
 
       {/* mobile-faqs */}
-      <div className="block sm1:hidden">
+      <div className="block sm1:hidden mb-[45px] -mt-12">
         {/* wrapper */}
         <div className="flex flex-col justify-center items-center gap-2">
           <img src="Faqs.svg" alt="faqs-header" className="h-[45px] w-[85px]" />

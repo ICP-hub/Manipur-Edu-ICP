@@ -532,7 +532,10 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
-          {/* hamburger-icon */}
+          {/* hamburger-icon-with-notification */}
+          <div className="sm1:hidden h-[20px] w-[20px] mr-2" onClick={HamburgerMenuOpenHandler}>
+            <img src="bell.svg" alt="notification" />
+          </div>
           <div className="sm1:hidden" onClick={HamburgerMenuOpenHandler}>
             <img src="Menu.svg" alt="hamburger-menu" />
           </div>
@@ -541,7 +544,7 @@ const Navbar = () => {
 
       {/* hamburger-menu */}
       <div
-        className={`bg-[#86ABF3] p-6 w-[315px] h-screen absolute top-0 ${hamburgerMenu} sm1:hidden z-10 h-auto flex flex-col justify-between`}
+        className={`bg-[#86ABF3] p-6 w-[315px] h-screen absolute top-0 ${hamburgerMenu} sm1:hidden z-10 h-auto flex flex-col justify-between shadow-md`}
       >
         {/* wrapper-menu */}
         <div>
