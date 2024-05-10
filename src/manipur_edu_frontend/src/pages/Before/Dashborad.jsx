@@ -66,7 +66,6 @@ function Dashboard() {
         <Navbar />
         <div className="sm1:m-4 mb-0 relative rounded-3xl sm1:bg-gradient-to-r from-[#E5F1FF] to-[#E5F1FF00] ">
           <div className="absolute right-0 -top-[10%] transform translate-x-1/3 w-[80vw] h-[1000px] rounded-full bg-gradient-to-b from-[#cfe5ff] to-[#DCECFF00] sm1:block hidden"></div>
-
           <div className="relative">
             <div className="sm1:px-[4%] sm1:lg1:px-[5%]">
               <div className="flex bg-[#86ABF3] sm1:bg-inherit">
@@ -84,32 +83,36 @@ function Dashboard() {
                         </div>
                       </div>
                     </div>
-                    <img className="relative" src="wave.svg" alt="wave-design" />
+                    <img
+                      className="relative w-[500px]"
+                      src="wave.svg"
+                      alt="wave-design"
+                    />
                     <h6 className="text-[19.07px] font-[Noto Sans] text-[#13375B] px-6 font-light text-center bg-white">
                       We provide a user-friendly platform for students to
                       conveniently retrieve academic results and certificates
                       and apply for scholarships.
                     </h6>
                     <div className="bg-white pt-4 flex justify-center">
-                    {userType === "institute" && isLoggedIn ? (
-                      <Link to="/institute-student">
-                        <button className="bg-[#00227A] whitespace-nowrap py-2 px-4 text-white rounded-md  text-md">
-                          View Scholarship Applications
-                        </button>
-                      </Link>
-                    ) : userType === "student" && isLoggedIn ? (
-                      <Link to="/login">
-                        <button className="bg-[#00227A] whitespace-nowrap py-2 px-4 text-white rounded-md  text-md">
-                          Explore Scholarships
-                        </button>
-                      </Link>
-                    ) : (
-                      <Link to="/login">
-                        <button className="bg-[#00227A] whitespace-nowrap py-2 px-4 text-white rounded-md text-md">
-                          Get started
-                        </button>
-                      </Link>
-                    )}
+                      {userType === "institute" && isLoggedIn ? (
+                        <Link to="/institute-student">
+                          <button className="bg-[#00227A] whitespace-nowrap py-2 px-4 text-white rounded-md  text-md">
+                            View Scholarship Applications
+                          </button>
+                        </Link>
+                      ) : userType === "student" && isLoggedIn ? (
+                        <Link to="/login">
+                          <button className="bg-[#00227A] whitespace-nowrap py-2 px-4 text-white rounded-md  text-md">
+                            Explore Scholarships
+                          </button>
+                        </Link>
+                      ) : (
+                        <Link to="/login">
+                          <button className="bg-[#00227A] whitespace-nowrap py-2 px-4 text-white rounded-md text-md">
+                            Get started
+                          </button>
+                        </Link>
+                      )}
                     </div>
                   </div>
 
@@ -145,13 +148,13 @@ function Dashboard() {
                   </div>
                 </div>
                 {/* image-web-view */}
-                <div className="sm1:block hidden">
-                  <div className="w-[50%] sm1:flex justify-center pt-20 [90px]">
-                    <div className="w-[80%]">
+                
+                  <div className="w-[50%] sm1:block hidden  pt-20 [90px]">
+                    <div className="w-[80%] ">
                       <img src="mainPage.svg" alt="main image" />
                     </div>
                   </div>
-                </div>
+                
               </div>
 
               {/* Information Cards */}
@@ -219,7 +222,7 @@ function Dashboard() {
               {/* scholarships Part */}
 
               <div>
-                <div className="sm1:w-[50%] p-8">
+                <div className="md1:w-[50%] p-8">
                   <h2 className="sm1:text-[#13375B] text-[#00227A] sm1:text-5xl text-[30px] font-bold">
                     Uncover the right scholarships
                     <span className="sm1:text-[#0041E9] text-[#575EDD] font-medium ">
@@ -249,20 +252,18 @@ function Dashboard() {
                       </div>
                       <div className="bg-[#DFEEFF] my-2 rounded-xl ml-2 shadow-sm p-4">
                         <h4 className="text-xl text-[#13375B] font-semibold p-3">
-                          Create your profile
+                        Get instant scholarship matches
                         </h4>
                         <p className="text-lg text-[#00227A] font-normal p-3 pt-0">
-                          After signing up, you'll customize your profile by
-                          answering a few questions.
+                        Browse and apply for scholarships that match your qualifications and aspirations and keep track of them with ease.
                         </p>
                       </div>
                       <div className="bg-[#DFEEFF] my-2 rounded-xl ml-2 shadow-sm p-4">
                         <h4 className="text-xl text-[#13375B] font-semibold p-3">
-                          Create your profile
+                        Apply. Get money for college!
                         </h4>
                         <p className="text-lg text-[#00227A] font-normal p-3 pt-0">
-                          After signing up, you'll customize your profile by
-                          answering a few questions.
+                        Using your unique profile, you'll get a list of scholarships you qualify for based upon your strengths, interests, student activities and skills.
                         </p>
                       </div>
                     </div>
@@ -323,7 +324,7 @@ function Dashboard() {
                 <h2 className="text-[#13375B] sm1:text-4xl text-[27px] font-bold sm1:pt-8">
                   Unlock Your Potential: Explore Scholarships!
                 </h2>
-                <p className="text-[#00227A] text-[27px] text-center sm1:text-xl font-normal py-8 hidden sm1:block">
+                <p className="text-[#00227A] text-[27px] text-center sm1:text-left md1:text-center sm1:text-xl font-normal py-8 hidden sm1:block">
                   Our platform offers access to thousands of carefully-reviewed
                   scholarships matched to you.
                 </p>
@@ -360,7 +361,7 @@ function Dashboard() {
                       <img src="critira.svg" alt="image" className="w-full" />
                     </div>
                     <div className="sm1:w-[50%] sm1:bg-[#B8D8FF] text-left pl-[25px] sm1:pl-16 pt-16 whitespace-nowrap shadow-sm sm1:rounded-tr-[6rem]">
-                      <h1 className="sm1:text-5xl text-[27px] text-[#13375B] font-bold">
+                      <h1 className="md1:text-5xl sm1:text-3xl text-[27px] text-[#13375B] font-bold">
                         How you match
                       </h1>
                       <p className="text-[#00227A] font-semibold text-[20px] sm1:text-xl pt-3">

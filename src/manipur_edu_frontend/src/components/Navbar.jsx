@@ -533,7 +533,10 @@ const Navbar = () => {
             </ul>
           </div>
           {/* hamburger-icon-with-notification */}
-          <div className="sm1:hidden h-[20px] w-[20px] mr-2" onClick={HamburgerMenuOpenHandler}>
+          <div
+            className="sm1:hidden h-[20px] w-[20px] mr-2"
+            onClick={HamburgerMenuOpenHandler}
+          >
             <img src="bell.svg" alt="notification" />
           </div>
           <div className="sm1:hidden" onClick={HamburgerMenuOpenHandler}>
@@ -544,14 +547,14 @@ const Navbar = () => {
 
       {/* hamburger-menu */}
       <div
-        className={`bg-[#86ABF3] p-6 w-[315px] h-screen absolute top-0 ${hamburgerMenu} sm1:hidden z-10 h-auto flex flex-col justify-between shadow-md`}
+        className={`bg-[#86ABF3] p-6 w-[75%] h-screen absolute top-0 ${hamburgerMenu} sm1:hidden z-10 h-auto flex flex-col justify-between shadow-md`}
       >
         {/* wrapper-menu */}
         <div>
-          <div className="flex flex-row justify-between items-center w-full mb-10">
+          <div className="flex flex-row justify-between items-center w-full mb-[76px] mt-[45px] ml-2">
             {/* menu-header */}
             <div>
-              <a href="/" className="text-white text-[22px] font-[Philosopher]">
+              <a href="/" className="text-white text-[24px] font-[Philosopher]">
                 Manipur Edu
               </a>
             </div>
@@ -559,18 +562,18 @@ const Navbar = () => {
               <img
                 src="Close.svg"
                 alt="hamburger-close"
-                className="w-[20px] h-[20px]"
+                className="w-[20px] h-[20px] mr-2"
               />
             </div>
           </div>
           {/* menu */}
           <div className="text-white w-full flex justify-center">
             <ul>
-              <li className="flex flex-row items-center gap-2 mb-4">
+              <li className="flex flex-row items-center gap-2 mb-6">
                 <img src="Home.svg" alt="Home" className="w-[30px] h-[30px]" />
                 <a className="text-[18px]">Home</a>
               </li>
-              <li className="flex flex-row items-center gap-2 mb-4">
+              <li className="flex flex-row items-center gap-2 mb-6">
                 <img
                   src="Graduation.svg"
                   alt="Graduation"
@@ -578,7 +581,7 @@ const Navbar = () => {
                 />
                 <a className="text-[18px]">Scholarships</a>
               </li>
-              <li className="flex flex-row items-center gap-2 mb-4">
+              <li className="flex flex-row items-center gap-2 mb-6">
                 <img
                   src="Certificate.svg"
                   alt="Certificates"
@@ -586,7 +589,7 @@ const Navbar = () => {
                 />
                 <a className="text-[18px]">Certificates</a>
               </li>
-              <li className="flex flex-row items-center gap-2 mb-4">
+              <li className="flex flex-row items-center gap-2 mb-6">
                 <img
                   src="Student Reading.svg"
                   alt="Results"
@@ -594,7 +597,7 @@ const Navbar = () => {
                 />
                 <a className="text-[18px]">Results</a>
               </li>
-              <li className="flex flex-row items-center gap-2 mb-4">
+              <li className="flex flex-row items-center gap-2 mb-6">
                 <img
                   src="Form.svg"
                   alt="Scholarship"
@@ -602,7 +605,7 @@ const Navbar = () => {
                 />
                 <a className="text-[18px]">Scholarship Applications</a>
               </li>
-              <li className="flex flex-row items-center gap-2 mb-4">
+              <li className="flex flex-row items-center gap-2 mb-6">
                 <img
                   src="profile.svg"
                   alt="Profile"
@@ -613,8 +616,8 @@ const Navbar = () => {
             </ul>
           </div>
         </div>
-        <div className="flex flex-col items-center">
-          <a className="text-white text-[18px] mb-[157px] flex flex-row gap-2">
+        <div className="flex flex-col">
+          <a className="text-white text-[18px] mb-[80px] flex flex-row gap-2 ml-2">
             <img
               src="log out.svg"
               alt="log-out"
