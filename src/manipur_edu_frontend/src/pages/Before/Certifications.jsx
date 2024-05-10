@@ -5,6 +5,7 @@ import { useAuth } from "../../utils/useAuthClient";
 import Modal from "../../components/Modal";
 import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
 import { handleFileDecrypt } from "../../utils/helper";
+import { colorStar } from "../../utils/Data/SvgData";
 
 
 const Certifications = () => {
@@ -27,11 +28,14 @@ const Certifications = () => {
   const navigate = useNavigate();
   const handleStudentCertificate = async () => {
 
+    console.log("principal_id is " , principal_id)
 
     const entry = await actor.get_student_details(principal_id);
+
+    console.log("entry is " , entry)
     
     const getCertificates = await actor.get_user_certificates(principal_id);
-    console.log('getCertificates', getCertificates);
+    console.log('getCertificate from get_user_certificates is :', getCertificates);
     if (!getCertificates || !getCertificates.Ok || getCertificates.Ok.length === 0) {
       // Handle case when no certificates are available or getCertificates is undefined
       console.log('No certificates available');
@@ -40,7 +44,7 @@ const Certifications = () => {
       return; // Exit the function
     }
     const firstItem = getCertificates.Ok[0];
-    console.log("firstItem", firstItem);
+    console.log("firstItem is ", firstItem);
     console.log("certificate_link", firstItem.certificate_link);
 
     //todo:- there should be a method to display multiple certificates

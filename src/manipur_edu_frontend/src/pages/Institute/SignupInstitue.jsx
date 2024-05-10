@@ -78,6 +78,15 @@ const SignupInstitute = () => {
       console.log("RSA Private Key (JWK):", JSON.stringify(exportedPrivateKey, null, 2));
 
 
+
+      if (!exportedPublicKey.kty || !exportedPrivateKey.kty) {
+        console.error("Error: Missing 'kty' in exported keys");
+    } else {
+        console.log("RSA Public Key (JWK):", JSON.stringify(exportedPublicKey, null, 2));
+        console.log("RSA Private Key (JWK):", JSON.stringify(exportedPrivateKey, null, 2));
+    }
+
+    
       const rsaPublicKeyString = JSON.stringify(exportedPublicKey);
       const rsaPrivateKeyString = JSON.stringify(exportedPrivateKey);
 

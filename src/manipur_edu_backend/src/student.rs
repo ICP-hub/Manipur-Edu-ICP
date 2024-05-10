@@ -15,6 +15,7 @@ use std::cell::RefCell;
 
 #[derive(Serialize, CandidType, Deserialize, Debug, Clone, Default)]
 pub struct Image {
+    iv:String ,
     aes_key: String,
     image_id: String,
     chunk_id: String,

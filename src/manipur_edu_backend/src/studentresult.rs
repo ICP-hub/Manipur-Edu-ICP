@@ -16,8 +16,9 @@ use std::result;
 
 #[derive(Serialize, CandidType, Deserialize, Debug, Clone)]
 pub struct UserResult {
+    aes_key : String , 
+    chunk_id : String , 
     result_id: String,
-    result: Vec<u8>,
     issued_by: String,
     issued_date: String,
     semester: String,

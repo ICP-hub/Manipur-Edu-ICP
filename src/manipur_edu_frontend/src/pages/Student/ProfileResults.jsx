@@ -22,6 +22,7 @@ const ProfileResult = () => {
 
   const handleView = async () => {
 
+    console.log("princi id " , principal_id)
     const getResult = await actor.get_user_result(principal_id);
     console.log('getresult', getResult);
     const firstItem = getResult.Ok[0];

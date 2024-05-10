@@ -9,10 +9,11 @@ import "../../../assets/main.css";
 import { useQuery, useQueryClient, useMutation } from "react-query";
 import {
   generateAesKeyBase64,
+  aes_Decrypt,
   handleFileEncrypt,
-  handleFileEncryption,
 } from "../../utils/helper";
 import Status from "../../components/student/status";
+import KycDocuments from "./KycDocuments";
 // import { v4 as uuidv4 } from 'uuid';
 const { v4: uuidv4 } = require('uuid'); // Import UUIDv4
 const crc32 = require('crc-32');
@@ -151,154 +152,86 @@ const SignupStudents = () => {
     console.log("base64String", key);
   }
 
-
   function uuidToNat32(uuid) {
     const crc32 = require('crc-32'); // npm install crc-32
     return crc32.str(uuid) >>> 0; // Use unsigned right shift to ensure a positive number
-}
-
-
-
-  // const imgId = uuidToNat32(uuid())
-  const imgUuid = uuidv4();
-  const imgId = uuidToNat32(imgUuid);
-  
-
-
-
-  // const onSubmit = async (data) => {
-  //   console.log(data);
-  //   console.log(data.aadhar_upload);
-
-  //   setStep((prevStep) => prevStep + 1);
-  //   if (step === 2) {
-  //     setIsRendering(true);
-  //     // window.location.href = '/login';
-  //     // Replace "/success" with the route you want to redirect to
-  //     console.log("control reached");
-
-  //     const obj = findObjectByName(data.institute_name);
-  //     console.log(obj);
-
-  //     const encryptedFile = await handleFileEncrypt(
-  //       data.aadhar_upload,
-  //       obj.public_key
-  //     );
-  //     // console.log("encryptedFile", encryptedFile);
-
-  //     let chunkLength = 0 ,   chunkId ; 
-  //     const divideBufferIntoChunks = async (buffer) => {
-
-  //       const chunkSize = 1 * 1024 * 1024; // 1MB chunk size
-  //       // let j = 0; // chunk id 
-        
-        
-  //       for (let i = 0; i < buffer.byteLength; i += chunkSize) {
-  //           chunkLength += 1;
-  //           chunkId = uuidv4();
-  //           let nat32ChunkId = uuidToNat32(chunkId);
-  //           let chunk = buffer.slice(i, i + chunkSize);
-  //           chunk = Array.from(new Uint8Array(chunk));
-  //           await actor.upload_image(imgId,  nat32ChunkId, chunk);
-  //       }
-  //       // At this point, the chunks have all been uploaded
-  //       console.log("All chunks uploaded");
-  //   };
-
-  //   divideBufferIntoChunks(encryptedFile) ; 
-
-
-  //           let nat32ChunkId = uuidToNat32(chunkId);
-
-
-  //     const kycData = {nat32ChunkId, imgId , chunkLength}
-
-  //     console.log(data);
-  //     const newData = {
-  //       student_id: [""],
-  //       result: [[""]],
-  //       certificates: [[""]],
-  //       public_key: [key],
-  //       mother_name: [data.mother_name],
-  //       zip_code: [Number(data.zip_code)],
-  //       cgpa: [Number(data.cgpa)],
-  //       city: [data.city],
-  //       roll_no: [data.roll_no],
-  //       student_institute_email: [data.student_institute_email] || [""],
-  //       program_enrolled: [data.program_enrolled],
-  //       personal_email: [data.personal_email],
-  //       state: [data.state],
-  //       institute_name: [data.institute_name],
-  //       graduation_year: [Number(data.graduation_year)],
-  //       aadhar_no: [data.aadhar_no],
-  //       address: [data.address],
-  //       gender: [data.gender],
-  //       first_name: [data.first_name],
-  //       last_name: [data.last_name],
-  //       date_of_birth: [data.date_of_birth],
-  //       phone_no: [data.phone_no],
-  //       father_name: [data.father_name],
-  //       status: ["pending"],
-  //       kyc:[ kycData],
-  //     };
-
-  //     const register_student = await actor.register_user(newData);
-  //     const add_private_key = await actor.add_private_key(privateKey)
-
-  //     console.log(register_student);
-  //     // const addPrivateKey = await actor.
-  //     setIsRendering(false);
-  //     console.log("Submitted Successfully");
-  //     setField("Wait for your request to get approved");
-  //     await setModelStatus(true);
-  //     // await navigate("/");
-  //   }
-  // };
+  }
 
 
   const onSubmit = async (data) => {
     console.log(data);
     console.log(data.aadhar_upload);
-  
+
     setStep((prevStep) => prevStep + 1);
     if (step === 2) {
       setIsRendering(true);
       console.log("control reached");
-  
+
       const obj = findObjectByName(data.institute_name);
-      console.log(obj);
-  
-      // const encryptedFile = await handleFileEncrypt(data.aadhar_upload, obj.public_key);
-      // const {encryptedFile , aesKey } = await handleFileEncrypt(data.aadhar_upload, obj.public_key);
-      const { encryptedFile, aesKey } = await handleFileEncrypt(data.aadhar_upload, obj.public_key);
+      console.log("object is ", obj);
+
+      const { iv, encryptedFile, aesKey } = await handleFileEncrypt(data.aadhar_upload, obj.public_key);
+
+      console.log("aesKey in student profile rturnded id  ", aesKey)
+      console.log("iv in signup student is ", iv)
+
+      // >>>>>>>>>>>- CODE STARTS  TO UPLOAD DATA IN CHUNKS <<<<<<<<<
+      const imgUuid = uuidv4();
+      const imgId = uuidToNat32(imgUuid);
 
 
-      
-      let chunks = []; // Array to hold the chunks information
-      const chunkSize = 1 * 1024 * 1024; // 1MB chunk size
+      let chunks = [];
+      const chunkSize = 1 * 1024 * 1024;
+      let nextChunk = uuidv4();
+      let nat32nextChunk = uuidToNat32(nextChunk);
+
+      let chunkId = uuidv4();
+      let nat32ChunkId = uuidToNat32(chunkId);
+
+
       for (let i = 0; i < encryptedFile.byteLength; i += chunkSize) {
-        const chunkId = uuidv4();
-        let nat32ChunkId = uuidToNat32(chunkId);
         let chunk = encryptedFile.slice(i, i + chunkSize);
         chunk = Array.from(new Uint8Array(chunk));
-        await actor.upload_image(imgId, nat32ChunkId, chunk);
+
+        let chunkVec = {
+          chunk_value: chunk,
+          next_chunkid: nat32nextChunk,
+        };
+
+        await actor.upload_image(imgId, nat32ChunkId, chunkVec);
         chunks.push({ chunk_id: nat32ChunkId.toString(), image_id: imgId.toString() }); // Ensure proper string conversion
+
+        if (i + chunkSize < encryptedFile.byteLength) {
+          chunkId = nextChunk; // current nextChunk becomes new chunkId
+          nat32ChunkId = nat32nextChunk; // update nat32ChunkId
+          nextChunk = uuidv4(); // generate new nextChunk
+          nat32nextChunk = uuidToNat32(nextChunk); // convert new nextChunk
+        } else {
+          nextChunk = null;
+          nat32nextChunk = null;
+        }
       }
       console.log("All chunks uploaded");
-  
+
+      // >>>>>>>>>>>- CODE ENDS TO UPLOAD DATA IN CHUNKS <<<<<<<<<
+
+
       const kycData = {
+        // aes_key: JSON.stringify(aesKey),
+        iv: iv,
+        aes_key: aesKey,
         chunk_id: chunks[0].chunk_id,
         image_id: chunks[0].image_id,
-        num_chunks: chunks.length,
-        aes_key:JSON.stringify(aesKey) 
-
+        num_chunks: chunks.length
       };
-  
+
+      console.log("kyc Data is ", kycData)
+
       const newData = {
         student_id: [""],
         result: [[""]],
         certificates: [[""]],
-        public_key: [key],
+        public_key: [publicKey],
         mother_name: [data.mother_name],
         zip_code: [Number(data.zip_code)],
         cgpa: [Number(data.cgpa)],
@@ -321,16 +254,20 @@ const SignupStudents = () => {
         status: ["pending"],
         kyc: [kycData], // kycData is added as an array element
       };
-  
+
       const register_student = await actor.register_user(newData);
       console.log(register_student);
       setIsRendering(false);
       console.log("Submitted Successfully");
       setField("Wait for your request to get approved");
       await setModelStatus(true);
+    } else {
+      console.log("notu 2")
     }
   };
-  
+
+
+
   return (
     <SignUpPage>
       {isRendering && <Loader></Loader>}
@@ -356,8 +293,8 @@ const SignupStudents = () => {
                   </label>
                   <input
                     className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.first_name
-                        ? "border-[#FF0606] focus:outline-[#FF0606]"
-                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      ? "border-[#FF0606] focus:outline-[#FF0606]"
+                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
                       }`}
                     type="text"
                     id="first_name"
@@ -379,8 +316,8 @@ const SignupStudents = () => {
                   <br />
                   <input
                     className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.last_name
-                        ? "border-[#FF0606] focus:outline-[#FF0606]"
-                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      ? "border-[#FF0606] focus:outline-[#FF0606]"
+                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
                       }`}
                     type="text"
                     id="last_name"
@@ -403,8 +340,8 @@ const SignupStudents = () => {
                 <br />
                 <input
                   className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.father_name
-                      ? "border-[#FF0606] focus:outline-[#FF0606]"
-                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                    ? "border-[#FF0606] focus:outline-[#FF0606]"
+                    : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
                     }`}
                   type="text"
                   id="father_name"
@@ -426,8 +363,8 @@ const SignupStudents = () => {
                 <br />
                 <input
                   className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.mother_name
-                      ? "border-[#FF0606] focus:outline-[#FF0606]"
-                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                    ? "border-[#FF0606] focus:outline-[#FF0606]"
+                    : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
                     }`}
                   type="text"
                   id="mother_name"
@@ -450,8 +387,8 @@ const SignupStudents = () => {
                   <br />
                   <input
                     className={`Date w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.date_of_birth
-                        ? "border-[#FF0606] focus:outline-[#FF0606]"
-                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      ? "border-[#FF0606] focus:outline-[#FF0606]"
+                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
                       }`}
                     type="date"
                     id="date_of_birth"
@@ -495,8 +432,8 @@ const SignupStudents = () => {
                 <br />
                 <select
                   className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.gender
-                      ? "border-[#FF0606] focus:outline-[#FF0606]"
-                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                    ? "border-[#FF0606] focus:outline-[#FF0606]"
+                    : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
                     }`}
                   id="gender"
                   name="gender"
@@ -553,8 +490,8 @@ const SignupStudents = () => {
                   <br />
                   <input
                     className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] lowercase px-1 border ${errors.personal_email
-                        ? "border-[#FF0606] focus:outline-[#FF0606]"
-                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      ? "border-[#FF0606] focus:outline-[#FF0606]"
+                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
                       }`}
                     type="email"
                     id="personal_email"
@@ -580,8 +517,8 @@ const SignupStudents = () => {
                   <br />
                   <input
                     className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.phone_no
-                        ? "border-[#FF0606] focus:outline-[#FF0606]"
-                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      ? "border-[#FF0606] focus:outline-[#FF0606]"
+                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
                       }`}
                     type="tel"
                     id="phone_no"
@@ -607,8 +544,8 @@ const SignupStudents = () => {
                   <br />
                   <input
                     className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.aadhar_no
-                        ? "border-[#FF0606] focus:outline-[#FF0606]"
-                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      ? "border-[#FF0606] focus:outline-[#FF0606]"
+                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
                       }`}
                     type="text"
                     id="aadhar_no"
@@ -634,8 +571,8 @@ const SignupStudents = () => {
                   <br />
                   <input
                     className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] p-1 border ${errors.aadhar_upload
-                        ? "border-[#FF0606] focus:outline-[#FF0606]"
-                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      ? "border-[#FF0606] focus:outline-[#FF0606]"
+                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
                       }`}
                     type="file"
                     id="aadhar_upload"
@@ -659,8 +596,8 @@ const SignupStudents = () => {
                   <br />
                   <input
                     className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.address
-                        ? "border-[#FF0606] focus:outline-[#FF0606]"
-                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      ? "border-[#FF0606] focus:outline-[#FF0606]"
+                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
                       }`}
                     type="text"
                     id="address"
@@ -683,8 +620,8 @@ const SignupStudents = () => {
                     <br />
                     <select
                       className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.state && !selectedState
-                          ? "border-[#FF0606] focus:outline-[#FF0606]"
-                          : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                        ? "border-[#FF0606] focus:outline-[#FF0606]"
+                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
                         }`}
                       id="state"
                       name="state"
@@ -717,8 +654,8 @@ const SignupStudents = () => {
                     <br />
                     <select
                       className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.city
-                          ? "border-[#FF0606] focus:outline-[#FF0606]"
-                          : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                        ? "border-[#FF0606] focus:outline-[#FF0606]"
+                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
                         }`}
                       id="city"
                       name="city"
@@ -750,8 +687,8 @@ const SignupStudents = () => {
                     <br />
                     <input
                       className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.zip_code
-                          ? "border-[#FF0606] focus:outline-[#FF0606]"
-                          : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                        ? "border-[#FF0606] focus:outline-[#FF0606]"
+                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
                         }`}
                       type="text"
                       id="zip_code"
@@ -805,8 +742,8 @@ const SignupStudents = () => {
                   <br />
                   <select
                     className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.institute_name
-                        ? "border-[#FF0606] focus:outline-[#FF0606]"
-                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      ? "border-[#FF0606] focus:outline-[#FF0606]"
+                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
                       }`}
                     id="institute_name"
                     name="institute_name"
@@ -840,8 +777,8 @@ const SignupStudents = () => {
                   <br />
                   <input
                     className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.roll_no
-                        ? "border-[#FF0606] focus:outline-[#FF0606]"
-                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      ? "border-[#FF0606] focus:outline-[#FF0606]"
+                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
                       }`}
                     type="text"
                     id="roll_no"
@@ -863,8 +800,8 @@ const SignupStudents = () => {
                     </label>
                     <input
                       className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.cgpa
-                          ? "border-[#FF0606] focus:outline-[#FF0606]"
-                          : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                        ? "border-[#FF0606] focus:outline-[#FF0606]"
+                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
                         }`}
                       type="text"
                       id="cgpa"
@@ -890,8 +827,8 @@ const SignupStudents = () => {
                     <br />
                     <input
                       className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.graduation_year
-                          ? "border-[#FF0606] focus:outline-[#FF0606]"
-                          : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                        ? "border-[#FF0606] focus:outline-[#FF0606]"
+                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
                         }`}
                       type="text"
                       id="graduation_year"
@@ -920,8 +857,8 @@ const SignupStudents = () => {
                   <br />
                   <input
                     className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.program_enrolled
-                        ? "border-[#FF0606] focus:outline-[#FF0606]"
-                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      ? "border-[#FF0606] focus:outline-[#FF0606]"
+                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
                       }`}
                     type="text"
                     id="program_enrolled"
@@ -946,8 +883,8 @@ const SignupStudents = () => {
                   <br />
                   <input
                     className={`w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.student_institute_email
-                        ? "border-[#FF0606] focus:outline-[#FF0606]"
-                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                      ? "border-[#FF0606] focus:outline-[#FF0606]"
+                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
                       }`}
                     type="email"
                     id="student_institute_email"

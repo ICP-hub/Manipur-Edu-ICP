@@ -6,8 +6,8 @@ type CertificateData = record {
   certificate_id : text;
 };
 type Chunk = record { next_chunkid : nat32; chunk_value : blob };
-type Image = record { chunk_id : nat32; image_id : nat32; num_chunks : nat64 };
 type Image = record {
+  iv : text;
   chunk_id : text;
   image_id : text;
   num_chunks : nat64;
@@ -109,7 +109,6 @@ service : {
   get_institute_profile_updated : (text) -> (opt InstituteData) query;
   get_institute_students : () -> (opt vec text) query;
   get_institute_students_by_id : (text) -> (opt vec text) query;
-  get_institute_students_page : (nat32, nat32) -> (vec text) query;
   get_institutes : () -> (vec record { text; InstituteData }) query;
   get_institutes_name_and_public_key : () -> (vec InstituteInfo) query;
   get_private_key : (opt text) -> (Result_1) query;

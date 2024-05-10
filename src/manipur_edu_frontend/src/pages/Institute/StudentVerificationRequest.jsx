@@ -1,25 +1,19 @@
 import React from "react";
 import { useAuth } from "../../utils/useAuthClient";
 import { Link, useNavigate } from "react-router-dom"; // Simplified import for clarity
-import { handleFileDecrypt, importAesKeyFromBase64 } from "../../utils/helper";
+import { handleFileDecrypt, importAesKeyFromBase64, decrypted_Img, aes_Decrypt } from "../../utils/helper";
 import Modal from "../../components/Modal";
 import { useDispatch, useSelector } from "react-redux";
 const StudentVerificationRequest = () => {
   const { actor, authClient } = useAuth();
   const principal_id = authClient.getIdentity().getPrincipal().toString();
   const [publicKey, setPublicKey] = React.useState('');
+  let data = useSelector(
+    (state) => state.instituteDetailsReducer
+  );
 
-  // const result = useSelector((state) => state.instituteDetailsReducer);
-  // console.log('result :',result);
-  // React.useEffect(() => {
-  //   // Direct operations that don't involve hook calls can be placed here.
-  //   const publicKey = result[0]?.public_key[0]; // Safely access the property with optional chaining
-  //   if (publicKey) {
-  //     setPublicKey(publicKey);
-  //     console.log("public key", publicKey);
-  //   }
-  // }, [result]);
-  
+  console.log("entries from redux", data)
+
   React.useEffect(() => {
     const getPublicKey = async () => {
       const result = await actor.get_institute_details([principal_id]);
@@ -30,45 +24,77 @@ const StudentVerificationRequest = () => {
     }
 
     getPublicKey();
-    
+
   }, []);
 
   let entries = useSelector(
     (state) => state.allStudentsReducer
   );
-  console.log("entries is : " , entries); 
+  console.log("entries is : ", entries);
 
-  const getImage = async (kyc) => {
+
+
+  const getImage = async (decryptedAes, kyc) => {
     try {
-        let i = 1;
-        let data;
-        const newChunks = [];
-        // do {
-        //     console.log("Fetching chunk", i);
-        // data = await actor.get_image(kyc[0].image_id, i);
-        //     if (data.length > 0) {
-        //         data = Buffer.from(data?.[0]);
-        //         newChunks.push(data);
-        //         i += 1;
-        //     }
-        // } while (data.byteLength);
+      let i = 1;
+      let data;
+      const newChunks = [];
+
+      const chunk_id_val = kyc[0].chunk_id;
+      const no_Of_chunks = kyc[0].num_chunks;
+
+      console.log("num_chunks is ", no_Of_chunks)
+
+
+      console.log("chunk_id_val is ", chunk_id_val)
+      for (let i = 0; i < Number(kyc[0].num_chunks); i++) {
+        console.log("Fetching chunks at i = ", i);
+        console.log("kyc[0].image_id is  in for  ", kyc[0].image_id)
+
+        const imageId = parseInt(kyc[0].image_id, 10);
+        let chunkId = parseInt(chunk_id_val, 10);
+        console.log("chunkId is in for", chunkId)
+        console.log("kyc[0].image_id is  in for  ", imageId)
+
+        // const { chunk_id, chunk_data } = await actor.get_image(imageId , chunkId);
+        const res = await actor.get_image(imageId, chunkId);
+        console.log("res is ", res)
+        console.log("res[0] is ", res[0])
+        const chunk_data = res[0]["chunk_value"];
+        const next_chunk_id = res[0]["next_chunkid"]
+
+        console.log("chunk_data is ", chunk_data)
+        console.log("next_chunk_id is ", next_chunk_id)
+        console.log("chunk_data.length is ", chunk_data.length)
+        if (chunk_data.length > 0) {
         
-        console.log(kyc[0].num_chunks , "chunknums")
-        for (let i = 0; i < kyc[0].num_chunks; i++) {
-            const getImgfunct = await actor.get_image(kyc[0].image_id,kyc[0].chunk_id );
-            console.log("getImgfunct data :  ", getImgfunct)
-  
-            // const {chunk_id , chunk_data } = await actor.get_image(kyc[0].image_id,kyc[0].chunk_id );
-  
-            // console.log("")
+          newChunks.push(new Uint8Array(chunk_data));
+          chunkId = next_chunk_id;  // Update chunkId to fetch the next chunk
         }
-        setChunks(newChunks);
-        console.log("All chunks fetched:", newChunks);
+      }
+    
+      // Calculate the total length of all chunks combined
+      let totalLength = newChunks.reduce((acc, val) => val ? acc + val.length : acc, 0);
+      let combinedData = new Uint8Array(totalLength);
+      
+      let offset = 0;
+      newChunks.forEach(chunk => {
+          if (chunk) {  // Ensure chunk is not null
+              combinedData.set(chunk, offset);
+              offset += chunk.length;
+          }
+      });
+      
+
+
+      // Now you have a single Uint8Array containing all the data
+      console.log("Combined data is:", combinedData);
+      return combinedData;
+
     } catch (error) {
-        console.error("Failed to fetch chunks:", error);
+      console.error("Failed to fetch chunks:", error);
     }
   };
-  
 
   const Card = ({ studentPrincipalId, entry, publicKey }) => {
     const navigate = useNavigate();
@@ -79,39 +105,47 @@ const StudentVerificationRequest = () => {
       navigate("/verify", { state: { studentPrincipalId, entry } });
     };
     const [image, setImage] = React.useState("");
-  
+
     const handleKyc = async () => {
-  
-      const privateKey =  await actor.get_private_key([]) ; 
+
+      const privateKey = await actor.get_private_key([data.instituteId]);
       // console.log(entry?.[0].public_key?.[0])
-      console.log("privateKey is : "  , privateKey)
-      getImage(entry[0].kyc) ; 
-  
+      console.log("privateKey is : ", privateKey)
+      // getImage(entry[0].kyc);
+
       if (entry && entry[0]) {
         console.log("kyc", entry[0].kyc);
         console.log("public key", entry[0].public_key[0]);
         console.log('public:', publicKey);
-        const decryptedImage = await handleFileDecrypt(entry[0].kyc,  privateKey);
-        console.log(decryptedImage);
-        console.log("decryptedImage", decryptedImage);
-        const url = URL.createObjectURL(decryptedImage);
-        setImage(url);
-        setOpenModal(true);
+        const decryptedAes = await aes_Decrypt(entry[0].kyc, privateKey);
+        console.log(" decryptedAes : ", decryptedAes);
+        const imgEncrypted = await getImage(decryptedAes, entry[0].kyc); // failed to fetch chunks 
+        console.log("imgEncrypted in return is ", imgEncrypted)
+        const url = await decrypted_Img(entry[0].kyc, imgEncrypted, decryptedAes, privateKey); // error iv not defined 
+        const reader = new FileReader();
+        reader.onload = () => {
+          const imageDataUrl = reader.result;
+          setImage(imageDataUrl);
+          setOpenModal(true);
+          // document.getElementById('imagePreview').src = imageDataUrl;
+      };
+      reader.readAsDataURL(url);
+       
       }
     };
-    
-  
+
+
     console.log("checking", entry);
-  
+
     const studentName =
       entry?.[0].first_name?.[0] + " " + entry?.[0].last_name?.[0] ?? "N/A";
     const studentId = entry?.[0].student_id?.[0].substr(0, 6) ?? "N/A";
     const rollNo = entry?.[0].roll_no?.[0] ?? "N/A";
     const verificationStatus = entry?.[0].status?.[0] ?? "N/A"; // Example for accessing student_id
-  
+
     return (
       <div>
-  
+
         <Modal open={openModal} image={image} onClose={() => setOpenModal(false)} />
         <div className="grid grid-cols-5 mt-4 h-[48px] rounded-[5px] bg-[#EEF6FF] pt-[7px]">
           <div className="flex justify-center text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] rounded-[5px]">
@@ -128,15 +162,14 @@ const StudentVerificationRequest = () => {
             {rollNo} {/* Displaying the student ID */}
           </p>
           <p
-            className={`flex justify-center bg-[#EEF6FF] font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px] ${
-              verificationStatus === "approved"
-                ? "text-[#13BC24]"
-                : verificationStatus === "pending"
+            className={`flex justify-center bg-[#EEF6FF] font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px] ${verificationStatus === "approved"
+              ? "text-[#13BC24]"
+              : verificationStatus === "pending"
                 ? "text-[#C3A846]"
                 : verificationStatus === "rejected"
-                ? "text-[#B26868]"
-                : "text-[#687DB2]"
-            }`}
+                  ? "text-[#B26868]"
+                  : "text-[#687DB2]"
+              }`}
           >
             {verificationStatus} {/* Displaying the student ID */}
           </p>
@@ -146,7 +179,7 @@ const StudentVerificationRequest = () => {
               onClick={handleClick}>
               {'Check'}
             </button>
-  
+
             <button className="font-[700] underline flex justify-center bg-[#EEF6FF] text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px]"
               onClick={handleKyc}>
               {'view kyc'}

@@ -33,7 +33,7 @@ use scholarship::*;
 type Memory = VirtualMemory<DefaultMemoryImpl>;
 
 const MAX_KEY_SIZE: u32 = 8;
-const MAX_VALUE_SIZE: u32 = 100;
+const MAX_VALUE_SIZE: u32 = 1048576;
 
 // State of the Canister
 #[derive(Serialize, CandidType, Deserialize, Debug, Clone, Default)]
