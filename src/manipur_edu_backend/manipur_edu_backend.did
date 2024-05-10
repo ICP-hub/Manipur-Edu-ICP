@@ -5,6 +5,8 @@ type CertificateData = record {
   certificate_link : blob;
   certificate_id : text;
 };
+type Chunk = record { next_chunkid : nat32; chunk_value : blob };
+type Image = record { chunk_id : nat32; image_id : nat32; num_chunks : nat64 };
 type Image = record {
   chunk_id : text;
   image_id : text;
@@ -102,11 +104,12 @@ service : {
   get_all_students_edit_req : (opt text) -> (
       vec record { text; UserData },
     ) query;
-  get_image : (nat32, nat32) -> (opt blob) query;
+  get_image : (nat32, nat32) -> (opt Chunk) query;
   get_institute_details : (opt text) -> (opt InstituteData) query;
   get_institute_profile_updated : (text) -> (opt InstituteData) query;
   get_institute_students : () -> (opt vec text) query;
   get_institute_students_by_id : (text) -> (opt vec text) query;
+  get_institute_students_page : (nat32, nat32) -> (vec text) query;
   get_institutes : () -> (vec record { text; InstituteData }) query;
   get_institutes_name_and_public_key : () -> (vec InstituteInfo) query;
   get_private_key : (opt text) -> (Result_1) query;
@@ -129,7 +132,7 @@ service : {
   reject_institute : (text) -> (text);
   reject_student : (text) -> (text);
   student_application_status : (text) -> (opt text) query;
-  upload_image : (nat32, nat32, blob) -> (opt blob);
+  upload_image : (nat32, nat32, Chunk) -> (text);
   verify_institute : (text) -> (text);
   verify_student : (text) -> (text);
 }
