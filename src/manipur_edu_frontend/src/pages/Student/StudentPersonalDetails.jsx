@@ -1174,7 +1174,7 @@ const SignupStudents = () => {
                   </label>
                   <br />
                   <input
-                    className={`Date w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
+                  className={`Date w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
                       errors.date_of_birth
                         ? "border-[#FF0606] focus:outline-[#FF0606]"
                         : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
