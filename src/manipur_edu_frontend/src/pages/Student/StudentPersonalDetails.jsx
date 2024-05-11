@@ -1174,7 +1174,7 @@ const SignupStudents = () => {
                   </label>
                   <br />
                   <input
-                  className={`Date w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${
+                    className={`Date w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1  border ${
                       errors.date_of_birth
                         ? "border-[#FF0606] focus:outline-[#FF0606]"
                         : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
@@ -1183,7 +1183,7 @@ const SignupStudents = () => {
                     id="date_of_birth"
                     max="2009-12-31"
                     name="date_of_birth"
-                    placeholder="DD/MM/YYYY"
+                    placeholder="DD-MM-YYYY"
                     {...register("date_of_birth", {
                       required: "This field is required",
                     })}
@@ -1197,9 +1197,13 @@ const SignupStudents = () => {
                 <div className="flex-none pt-[24px]">
                   <div
                     className="w-full h-[43px] rounded-[10px] px-1 p-1 focus:outline-[#ACBFFD] border-[#ACBFFD] border cursor-pointer"
-                    onClick={toggleDatePicker}
+                    // onClick={toggleDatePicker}
                   >
-                    <img src="/calander.svg" alt="calendar" />
+                    <img
+                      src="/calander.svg"
+                      alt="calendar"
+                      id="date_of_birth"
+                    />
                   </div>
                 </div>
                 {/* Date Picker */}
