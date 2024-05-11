@@ -7,10 +7,6 @@ import { useForm } from "react-hook-form";
 import toast, { Toaster } from 'react-hot-toast';
 import { useAuth } from "../../utils/useAuthClient";
 import { useNavigate } from 'react-router-dom';
-
-
-
-
 const InstituteDetailsEdit = ({ prev ,formData , updateFormData }) => {
 
   const {

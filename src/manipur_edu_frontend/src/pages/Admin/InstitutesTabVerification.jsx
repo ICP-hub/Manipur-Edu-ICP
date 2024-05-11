@@ -35,19 +35,17 @@ const Card = ({ entry, onTap, SetTab }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  console.log("entry : ", entry)
+  console.log("entry : ", entry);
   const instituteName = entry?.[1].institute_name?.[0] ?? "N/A";
   const instituteId = entry?.[1].institute_id?.[0].substr(0, 6) ?? "N/A";
   const instituteEmail = entry?.[1].email?.[0] ?? "N/A";
   const verificationStatus = entry?.[1].status?.[0] ?? "N/A";
 
   const handleClick = () => {
-
     dispatch(setInstituteId(instituteId));
 
     navigate("/institute-details-verify", { state: { entry } });
     SetTab("institute-details-verify");
-
   };
 
   return (
@@ -71,23 +69,28 @@ const Card = ({ entry, onTap, SetTab }) => {
         {instituteEmail}
       </p>
       <p
-        className={`flex justify-center items-center font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px] ${verificationStatus === "approved"
-          ? "text-[#13BC24]"
-          : verificationStatus === "pending"
+        className={`flex justify-center items-center font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px] ${
+          verificationStatus === "approved"
+            ? "text-[#13BC24]"
+            : verificationStatus === "pending"
             ? "text-[#C3A846]"
             : verificationStatus === "rejected"
-              ? "text-[#B26868]"
-              : "text-[#687DB2]"
-          }`}
+            ? "text-[#B26868]"
+            : "text-[#687DB2]"
+        }`}
       >
         {verificationStatus}
       </p>
-
       <button
+        className="bg-blue-500 text-white font-segoe-ui text-11 rounded-lg ml-6"
         onClick={handleClick}
-        className="pt-[7px] font-[700] underline flex justify-center items-center text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px]"
+        style={{
+          backgroundColor: "#355389",
+          height: "40px",
+          width: "110px",
+        }}
       >
-        {"check"}
+        {"View/Verify"}
       </button>
     </div>
   );

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import Loader from "../../loader/Loader";
 import { useAuth } from "../../utils/useAuthClient";
-import { useQuery } from 'react-query';
+import { useQuery } from "react-query";
 import Modal from "../../components/Modal";
 import Background from "../../components/BackgroudPage";
 import {
-  Link, useNavigate,
+  Link,
+  useNavigate,
 } from "../../../../../node_modules/react-router-dom/dist/index";
 import { handleFileDecrypt } from "../../utils/helper";
 import { useSelector } from "react-redux";
@@ -14,41 +15,42 @@ const ProfileResult = () => {
   const navigate = useNavigate();
   const { actor, authClient } = useAuth();
   const principal_id = authClient.getIdentity().getPrincipal().toString();
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState("");
 
-  let entry = useSelector(
-    (state) => state.studentDetailsReducer
-  );
+  let entry = useSelector((state) => state.studentDetailsReducer);
 
   const handleView = async () => {
-
     const getResult = await actor.get_user_result(principal_id);
-    console.log('getresult', getResult);
+    console.log("getresult", getResult);
     const firstItem = getResult.Ok[0];
     console.log("firstItem", firstItem);
     console.log("result", firstItem.result);
-    const decryptedFile = await handleFileDecrypt(firstItem.result, entry?.[0]?.public_key?.[0]);
+    const decryptedFile = await handleFileDecrypt(
+      firstItem.result,
+      entry?.[0]?.public_key?.[0]
+    );
     console.log(decryptedFile);
     const url = URL.createObjectURL(decryptedFile);
     setImageUrl(url);
 
-
-
     setOpenModal(true);
-  }
-//  if (isLoadingEntry) {
-//     return <Loader />; // Render loader if data is still loading
-//   }
+  };
   return (
     <Background>
       <div className="relative pt-10">
-        <Modal open={openModal} onClose={() => setOpenModal(false)} image={imageUrl} />
+        <Modal
+          open={openModal}
+          onClose={() => setOpenModal(false)}
+          image={imageUrl}
+        />
         <div className="flex min-h-screen justify-evenly  ">
           <div className="w-[30%] bg-white mt-[80px] mb-[40px] rounded-[10px] flex flex-col">
             <div className="flex flex-col items-center border-b border-[#D8E1F8] mx-[20px]">
               <img className="pt-[50px]" src="/student.svg" />
               <p className="text-[Noto Sans] text-[#00227A] text-[26px] font-[400] leading-[35px] pt-[10px] ">
-                {entry?.[0]?.first_name?.[0] + " " + entry?.[0]?.last_name?.[0] ?? "N/A"}
+                {entry?.[0]?.first_name?.[0] +
+                  " " +
+                  entry?.[0]?.last_name?.[0] ?? "N/A"}
               </p>
               <p className="text-[Noto Sans] text-[#687EB5] text-[15px] font-[500] leading-[21px] mb-[30px]">
                 Student #: 1234567
@@ -104,7 +106,8 @@ const ProfileResult = () => {
                 {entry?.[0]?.address?.[0] ?? "N/A"}{" "}
               </p>
               <p className="text-[Segoe UI] text-[#4B64A4] font-[400] text-[14px] leading-[19px] pt-[4px] pb-[21px]">
-                {entry?.[0]?.state?.[0] + " " + entry?.[0]?.zip_code?.[0] ?? "N/A"}
+                {entry?.[0]?.state?.[0] + " " + entry?.[0]?.zip_code?.[0] ??
+                  "N/A"}
               </p>
             </div>
             <div className="mx-[25px] border-b border-[#D8E1F8]">
@@ -245,22 +248,28 @@ const ProfileResult = () => {
               </div>
             </div>
             <div className="flex justify-evenly">
-              <div className=" bg-[#EEF6FF] w-[40%] flex flex-col border border-[#89C1FF] rounded-[10px] px-[35px] pt-[24px]">
+              <div className=" bg-[#EEF6FF] w-[40%] flex flex-col border border-[#89C1FF] rounded-[10px] pt-[24px]">
                 <img
-                  className="w-[30px] h-[30px]"
-                  src="/certificate.svg"
+                  className="w-[30px] h-[30px] ml-[10px]"
+                  src={"Test.png"}
                   alt="certificate"
                 />
-                <p className="text-[Segoe UI] text-[#00227A] font-[600] text-[20px] leading-[27px] pt-[11px]">
+                <p className="text-[Segoe UI] text-[#00227A] font-[600] text-center text-[19px] leading-[27px] pt-[9px]">
                   First Year Result
                 </p>
-                <p className="text-[Segoe UI] text-[#00227A] font-[400] text-[15px] leading-[20px] pt-[10px]">
+                <p className="text-[Segoe UI] text-[#00227A] font-[400] text-center text-[15px] leading-[20px] pt-[10px]">
                   Semester: 1
                 </p>
-                <p className="text-[Segoe UI] text-[#00227A] font-[400] text-[15px] leading-[20px] pt-[8px]">
+                <p className="text-[Segoe UI] text-[#00227A] font-[400] text-center  text-[15px] leading-[20px] pt-[8px]">
                   Academic Year: 2020-2021
                 </p>
-                <div className="flex flex-row-reverse pt-[27px] pb-[14px]">
+                <div className="flex justify-between px-[16px] pt-[27px] pb-[14px]">
+                  <button
+                    onClick={handleView}
+                    className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[30px] py-[5px]"
+                  >
+                    Download
+                  </button>
                   <button
                     onClick={handleView}
                     className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[30px] py-[5px]"
@@ -269,22 +278,29 @@ const ProfileResult = () => {
                   </button>
                 </div>
               </div>
-              <div className=" bg-[#EEF6FF] w-[40%] flex flex-col border border-[#89C1FF] rounded-[10px] px-[35px] pt-[24px] ">
+              <div className=" bg-[#EEF6FF] w-[40%] flex flex-col border border-[#89C1FF] rounded-[10px] pt-[24px] ">
                 <img
-                  className="w-[30px] h-[30px]"
-                  src="certificate.svg"
+                  className="w-[30px] h-[30px] ml-[10px]"
+                  src={"Test.png"}
                   alt="certificate"
                 />
-                <p className="text-[Segoe UI] text-[#00227A] font-[600] text-[20px] leading-[27px] pt-[11px]">
+                <p className="text-[Segoe UI] text-[#00227A] text-center font-[600] text-[20px] leading-[27px] pt-[11px]">
                   First Year Result
                 </p>
-                <p className="text-[Segoe UI] text-[#00227A] font-[400] text-[15px] leading-[20px] pt-[10px]">
+                <p className="text-[Segoe UI] text-[#00227A] text-center font-[400] text-[15px] leading-[20px] pt-[10px]">
                   Semester: 1(Backlog)
                 </p>
-                <p className="text-[Segoe UI] text-[#00227A] font-[400] text-[15px] leading-[20px] pt-[8px]">
+                <p className="text-[Segoe UI] text-[#00227A] text-center font-[400] text-[15px] leading-[20px] pt-[8px]">
                   Academic Year: 2020-2021
                 </p>
-                <div className="flex flex-row-reverse pt-[27px] pb-[14px]">
+                <div className="flex justify-between px-[16px] pt-[27px] pb-[14px]">
+                  {" "}
+                  <button
+                    onClick={handleView}
+                    className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[30px] py-[5px]"
+                  >
+                    Download
+                  </button>
                   <button
                     onClick={handleView}
                     className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[30px] py-[5px]"

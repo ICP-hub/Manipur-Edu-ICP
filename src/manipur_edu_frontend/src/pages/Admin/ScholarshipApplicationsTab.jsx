@@ -83,12 +83,12 @@ const Card = ({ entry, onTap }) => {
       >
         {entry.scholarship_detail}
       </p>
-
       <button
+        className="bg-blue-500 text-white font-segoe-ui text-11 rounded-lg h-9 w-30 ml-10"
         onClick={onTap}
-        className="pt-[7px] font-[700] underline flex justify-center  text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] "
+        style={{ backgroundColor: "#355389" }}
       >
-        {entry.view_approve}
+        {"View/Approve"}
       </button>
     </div>
   );

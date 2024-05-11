@@ -37,18 +37,6 @@ const Card = ({ index, entry, onView, onEdit }) => {
     console.log('entry[0]',entry[0]);
     const dispatch = useDispatch();
     const { actor, authClient } = useAuth();
-    // const getEntries = async () => {
-    //     const scholarshipDetails = await actor.get_scholarship(entry[0]);
-    //     console.log("ScholarshipDetails", scholarshipDetails);
-    //     // setEntries(allScholarships);
-    //     dispatch(getScholarshipDetails(scholarshipDetails));
-        
-    // }
-    // const {
-    //     data: result,
-    //     isLoading: isLoadingEntries,
-    //     error: errorEntries,
-    //   } = useQuery("dataEntries", getEntries);
     const handleEdit = ({entry, onEdit}) =>{
         console.log('entry:',entry);
        
@@ -57,7 +45,6 @@ const Card = ({ index, entry, onView, onEdit }) => {
     }
     return (
         <div className="relative flex  ">
-            {/* {isLoadingEntries && <Loader></Loader>} */}
             <div className="absolute left-[-30px] top-[27px] rounded-[34px] bg-[white] w-[53px] h-[53px] ">
                 <div className="absolute top-[2.75px] rounded-[34px] bg-[#D9EBFF] w-[48px] h-[48px] flex justify-center items-center text-[#5D57FB] font-[600] text-[18px] ">
                     {index}
@@ -81,8 +68,7 @@ const Card = ({ index, entry, onView, onEdit }) => {
                                 </p>
                                 <p className="text-[Inter] text-[14px] font-[400] leading-[14px]">
                                     {" "}
-                                    {/* {entry.institute_name} */}
-                                    {/* {entry?.[1].institute ?? 'N/A'} */}
+                
                                     Manipur Government
                                     {" "}
                                 </p>

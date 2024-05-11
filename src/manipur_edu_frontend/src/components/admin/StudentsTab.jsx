@@ -193,9 +193,6 @@ const StudentsTab = () => {
                 entries.map((entry, index) => (
                   <Card key={index} entry={entry} onView={onView} />
                 ))}
-              {/* {entries.map((entry, index) => (
-                <Card key={index} entry={entry} onView={onView} />
-              ))} */}
             </div>
             <div
               style={{ position: "absolute", bottom: "20px", right: "30px" }}

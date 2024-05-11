@@ -77,8 +77,8 @@ function Dashboard() {
                     </h2>
                     <h6 className="leading-[27.24px] text-[#13375B] mb-4 font-semibold">
                       We provide a user-friendly platform for students to
-                      conveniently retrieve academic results and certificates
-                      and apply for scholarships.
+                      conveniently retrieve academic results and documents and
+                      apply for scholarships.
                     </h6>
                     {userType === "institute" && isLoggedIn ? (
                       <Link to="/institute-student">
@@ -129,8 +129,8 @@ function Dashboard() {
                   </Card>
                   <Card
                     stepNumber="2"
-                    title="Get academic results and certificates"
-                    description="We provide a user-friendly platform for students to retrieve and access their academic results and certificates hassle-free."
+                    title="Get academic results and documents"
+                    description="We provide a user-friendly platform for students to retrieve and access their academic results and documents hassle-free."
                   >
                     <div className="flex top-0 left-0 absolute items-center justify-center w-12 h-12 bg-[#0041E9] rounded-full">
                       <span className="text-3xl font-medium text-white">2</span>
