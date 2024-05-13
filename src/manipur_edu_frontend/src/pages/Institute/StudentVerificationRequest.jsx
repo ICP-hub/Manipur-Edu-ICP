@@ -34,7 +34,7 @@ const StudentVerificationRequest = () => {
 
 
 
-  const getImage = async (decryptedAes, kyc) => {
+  const getImage = async ( kyc) => {
     try {
       let i = 1;
       let data;
@@ -108,7 +108,7 @@ const StudentVerificationRequest = () => {
 
     const handleKyc = async () => {
 
-      const privateKey = await actor.get_private_key([data.instituteId]);
+      const privateKey = await actor.get_private_key();
       // console.log(entry?.[0].public_key?.[0])
       console.log("privateKey is : ", privateKey)
       // getImage(entry[0].kyc);
@@ -117,11 +117,11 @@ const StudentVerificationRequest = () => {
         console.log("kyc", entry[0].kyc);
         console.log("public key", entry[0].public_key[0]);
         console.log('public:', publicKey);
-        const decryptedAes = await aes_Decrypt(entry[0].kyc, privateKey);
-        console.log(" decryptedAes : ", decryptedAes);
-        const imgEncrypted = await getImage(decryptedAes, entry[0].kyc); // failed to fetch chunks 
+        // const decryptedAes = await aes_Decrypt(entry[0].kyc, privateKey);
+        // console.log(" decryptedAes : ", decryptedAes);
+        const imgEncrypted = await getImage( entry[0].kyc); // failed to fetch chunks 
         console.log("imgEncrypted in return is ", imgEncrypted)
-        const url = await decrypted_Img(entry[0].kyc, imgEncrypted, decryptedAes, privateKey); // error iv not defined 
+        const url = await decrypted_Img(entry[0].kyc, imgEncrypted, privateKey); // error iv not defined 
         const reader = new FileReader();
         reader.onload = () => {
           const imageDataUrl = reader.result;

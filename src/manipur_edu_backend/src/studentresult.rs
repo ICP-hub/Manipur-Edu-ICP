@@ -16,8 +16,10 @@ use std::result;
 
 #[derive(Serialize, CandidType, Deserialize, Debug, Clone)]
 pub struct UserResult {
+    iv : String  , 
     aes_key : String , 
     chunk_id : String , 
+    num_chunks :  usize,
     result_id: String,
     issued_by: String,
     issued_date: String,

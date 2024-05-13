@@ -256,6 +256,8 @@ const SignupStudents = () => {
       };
 
       const register_student = await actor.register_user(newData);
+      const add_private_key = await actor.add_private_key(privateKey)
+
       console.log(register_student);
       setIsRendering(false);
       console.log("Submitted Successfully");

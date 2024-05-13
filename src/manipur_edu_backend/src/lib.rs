@@ -174,52 +174,48 @@ fn add_private_key(private_key: String) -> Result<(), String> {
     })
 }
 
-// #[query]
-// fn get_private_key(principal_id: String) -> Result<String, String> {
-//     let caller_id = caller().to_string();
-
-//     if caller_id != principal_id {
-//         return Err("Access denied. Caller is not authorized to access the private key.".to_string());
-//     }
-
-//     STATE.with(|state| {
-//         let state = state.borrow();
-
-//         if let Some(private_key) = state.private_keys.get(&principal_id) {
-//             Ok(private_key.clone())
-//         } else {
-//             Err("User not found.".to_string())
-//         }
-//     })
-// }
 #[query]
-fn get_private_key(principal_id: Option<String>) -> Result<String, String> {
+fn get_private_key() -> Result<String, String> {
     let caller_id = caller().to_string();
 
-    // Check if a principal_id is provided and if it matches the caller's ID.
-    match principal_id {
-        Some(ref id) if *id == caller_id => {
-            STATE.with(|state| {
-                let state = state.borrow();
-                // If the principal_id is provided and matches the caller, try to retrieve the private key.
-                if let Some(private_key) = state.private_keys.get(id) {
-                    Ok(private_key.clone())
-                } else {
-                    Err("User not found.".to_string())
-                }
-            })
-        },
-        Some(_) => {
-            // If a principal_id is provided but does not match the caller's ID, deny access.
-            Err("Access denied. Caller is not authorized to access the private key.".to_string())
-        },
-        None => {
-            // If no principal_id is provided, you can choose how to handle this case.
-            // For instance, you might want to default to using the caller_id, or return an error.
-            Err("No principal ID provided.".to_string())
+    STATE.with(|state| {
+        let state = state.borrow();
+
+        if let Some(private_key) = state.private_keys.get(&caller_id) {
+            Ok(private_key.clone())
+        } else {
+            Err("User not found.".to_string())
         }
-    }
+    })
 }
+// #[query]
+// fn get_private_key(principal_id: Option<String>) -> Result<String, String> {
+//     let caller_id = caller().to_string();
+
+//     // Check if a principal_id is provided and if it matches the caller's ID.
+//     match principal_id {
+//         Some(ref id) if *id == caller_id => {
+//             STATE.with(|state| {
+//                 let state = state.borrow();
+//                 // If the principal_id is provided and matches the caller, try to retrieve the private key.
+//                 if let Some(private_key) = state.private_keys.get(id) {
+//                     Ok(private_key.clone())
+//                 } else {
+//                     Err("User not found.".to_string())
+//                 }
+//             })
+//         },
+//         Some(_) => {
+//             // If a principal_id is provided but does not match the caller's ID, deny access.
+//             Err("Access denied. Caller is not authorized to access the private key.".to_string())
+//         },
+//         None => {
+//             // If no principal_id is provided, you can choose how to handle this case.
+//             // For instance, you might want to default to using the caller_id, or return an error.
+//             Err("No principal ID provided.".to_string())
+//         }
+//     }
+// }
 
 // Login function
 #[query]

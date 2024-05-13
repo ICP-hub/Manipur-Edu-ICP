@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import { useAuth } from "../../utils/useAuthClient";
-import { handleFileEncrypt, handleResultEncrypt } from "../../utils/helper";
+import { handleFileEncrypt } from "../../utils/helper";
+import { useSelector } from "react-redux";
+
 const { v4: uuidv4 } = require('uuid'); // Import UUIDv4
 const crc32 = require('crc-32');
-
-function uuidToNat32(uuid) {
-  return crc32.str(uuid) >>> 0; // Use unsigned right shift to ensure a positive number
-}
-
 
 const EditResult = ({ open, onClose, publicKey, principalId }) => {
   const { actor } = useAuth();
@@ -15,10 +12,20 @@ const EditResult = ({ open, onClose, publicKey, principalId }) => {
 
   if (!open) return null;
 
-  const handleFileChange = (event) => {
+  console.log("PUblic key is " , publicKey)
+
+  function uuidToNat32(uuid) {
+    return crc32.str(uuid) >>> 0; // Use unsigned right shift to ensure a positive number
+  }
+
+
+  const handleFileChange = async (event) => {
     if (event.target.files) {
       setFile(event.target.files);
     }
+    console.log("in HANDLE FILE CHANGE ")
+
+
   }
   const handleSave = async (event) => {
     event.preventDefault();
@@ -30,35 +37,22 @@ const EditResult = ({ open, onClose, publicKey, principalId }) => {
     console.log("public key is ", publicKey)
     console.log("type of pub key ", typeof (publicKey))
     // const encryptedFile = await handleResultEncrypt(file, publicKey);
+
     const { iv, encryptedFile, aesKey } = await handleFileEncrypt(file, publicKey);
+
     console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
 
     console.log("iv is ", iv)
     console.log("encryptedFile is ", encryptedFile)
     console.log("aesKey is ", aesKey)
 
-    // console.log(encryptedFile);
-
-    // if (encryptedFile) {
-    //   console.log("encryptedFile", encryptedFile)
-
-    //   const resultData = {
-    //     result_id: crypto.randomUUID(),
-    //     result: encryptedFile,
-    //     issued_by: 'institute',
-    //     issued_date: Date.now().toString(),
-    //     semester: "1",
-    //   }
-    //   const uploadFile = await actor.create_user_result(principalId, resultData)
-    //   console.log(uploadFile);
-    // }
-
 
 
     // >>>>>>>>>>>- CODE STARTS  TO UPLOAD DATA IN CHUNKS <<<<<<<<<
 
     const imgUuid = uuidv4();
-    const imgId = uuidToNat32(imgUuid);
+    let imgId = uuidToNat32(imgUuid);
+
     let chunks = [];
     const chunkSize = 1 * 1024 * 1024;
     let nextChunk = uuidv4();
@@ -97,7 +91,30 @@ const EditResult = ({ open, onClose, publicKey, principalId }) => {
 
 
 
+    // console.log(encryptedFile);
+    console.log("imgId is ", imgId)
+    console.log("imgId is type ", typeof (imgId))
+
+    if (encryptedFile) {
+      console.log("encryptedFile", encryptedFile)
+      // storing img_id as rsult id 
+      const resultData = {
+        iv: iv,
+        aes_key: aesKey,
+        chunk_id: chunkId,
+        result_id: imgId.toString(),
+        num_chunks: chunks.length,
+        result: encryptedFile,
+        issued_by: 'institute',
+        issued_date: Date.now().toString(),
+        semester: "1",
+      }
+      const uploadFile = await actor.create_user_result(principalId, resultData)
+      console.log(" Data uploadFile is  ", uploadFile);
+    }
+
     onClose();
+
   };
   return (
     <div className="shadow-lg fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#EEF6FF] h-[32.5rem] mt-[50px] w-[70%] rounded-xl">

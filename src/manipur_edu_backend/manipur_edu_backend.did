@@ -76,11 +76,14 @@ type UserData = record {
   father_name : opt text;
 };
 type UserResult = record {
-  result : blob;
+  iv : text;
   issued_by : text;
   semester : text;
+  chunk_id : text;
   result_id : text;
   issued_date : text;
+  num_chunks : nat64;
+  aes_key : text;
 };
 service : {
   add_private_key : (text) -> (Result);
@@ -111,7 +114,7 @@ service : {
   get_institute_students_by_id : (text) -> (opt vec text) query;
   get_institutes : () -> (vec record { text; InstituteData }) query;
   get_institutes_name_and_public_key : () -> (vec InstituteInfo) query;
-  get_private_key : (opt text) -> (Result_1) query;
+  get_private_key : () -> (Result_1) query;
   get_scholarship : (text) -> (ScholarShip) query;
   get_student_details : (text) -> (opt UserData) query;
   get_student_profile_updated : (text) -> (opt UserData) query;

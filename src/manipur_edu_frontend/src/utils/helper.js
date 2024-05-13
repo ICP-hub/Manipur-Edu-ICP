@@ -1,19 +1,48 @@
 import { json } from "../../../../node_modules/react-router-dom/dist/index";
 import { colorStar } from "./Data/SvgData";
 
-export async function generateKeyPair() {
-    return await window.crypto.subtle.generateKey(
-        {
-            name: "RSA-OAEP",
-            modulusLength: 2048,
-            publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
-            hash: { name: "SHA-256" },
-        },
-        true,
-        ["encrypt", "decrypt"]
-    );
-}
 
+export async function generateKey (){
+
+    const rsaKeyPair = await window.crypto.subtle.generateKey(
+      {
+        name: "RSA-OAEP",
+        modulusLength: 2048,
+        publicExponent: new Uint8Array([1, 0, 1]),
+        hash: "SHA-256",
+      },
+      true,
+      ["encrypt", "decrypt"]
+    );
+    setRsaKeyPair(rsaKeyPair);
+    const exportedPublicKey = await window.crypto.subtle.exportKey("jwk", rsaKeyPair.publicKey);
+      console.log("RSA Public Key (JWK):", JSON.stringify(exportedPublicKey, null, 2));
+
+      // Export RSA private key in JWK format (Alternatively, use 'pkcs8' for a more standardized format)
+      const exportedPrivateKey = await window.crypto.subtle.exportKey("jwk", rsaKeyPair.privateKey);
+      console.log("RSA Private Key (JWK):", JSON.stringify(exportedPrivateKey, null, 2));
+
+
+
+      if (!exportedPublicKey.kty || !exportedPrivateKey.kty) {
+        console.error("Error: Missing 'kty' in exported keys");
+    } else {
+        console.log("RSA Public Key (JWK):", JSON.stringify(exportedPublicKey, null, 2));
+        console.log("RSA Private Key (JWK):", JSON.stringify(exportedPrivateKey, null, 2));
+    }
+
+    
+      const rsaPublicKeyString = JSON.stringify(exportedPublicKey);
+      const rsaPrivateKeyString = JSON.stringify(exportedPrivateKey);
+
+      console.log("rsa pub nd priv", rsaPublicKeyString)
+      console.log("rsa priv ", rsaPrivateKeyString)
+
+      setPublicKey(rsaPublicKeyString)
+      setPrivateKey(rsaPrivateKeyString); 
+  };
+
+  
 export async function decryptAESKeyWithRSA(encryptedKey, privateKey) {
     privateKey = JSON.parse(privateKey)
     console.log("privateKey is ", privateKey)
@@ -90,18 +119,6 @@ export async function generateAesKeyBase64() {
     return base64Key;
 }
 
-const generateKeys = async () => {
-    try {
-        const aesKey = await window.crypto.subtle.generateKey(
-            { name: "AES-CBC", length: 256 }, true, ["encrypt", "decrypt"]
-        );
-
-        return aesKey;
-    } catch (error) {
-        console.error("Error generating key:", error);
-        throw error;  // Ensure errors are propagated
-    }
-};
 
 function arrayBufferToString(buffer) {
     const uint8Array = new Uint8Array(buffer);
@@ -298,7 +315,7 @@ function convertStringToBufferSource(inputString) {
     return encoder.encode(inputString);
 }
 
-export async function decrypted_Img(kyc , imgEncrypted, decryptedAesKey, rsaString) {
+export async function decrypted_Img(kyc , imgEncrypted, rsaString) {
 
     // imgEncrypted  = convertStringToBufferSource(imgEncrypted);
     console.log(".......................................................")
@@ -548,7 +565,8 @@ function stringToArrayBuffer(str) {
 export async function aes_Decrypt(kyc, rsaString) {
     
     console.log("kyc is ", kyc)
-    console.log("kyc  kyc[0].aes_key is ", kyc[0]);
+    console.log("kyc  kyc[0] is ", kyc[0]);
+    console.log("kyc  kyc.aes_key is ", kyc["aes_key"]);
     console.log("kyc  kyc[0].aes_key is ", kyc[0]["aes_key"]);
 
     const encryptedAesKeyString = kyc[0]["aes_key"];
@@ -618,3 +636,5 @@ export async function aes_Decrypt(kyc, rsaString) {
 function isValidBase64(base64) {
     return /^[A-Za-z0-9+/]+={0,2}$/.test(base64);
 }
+
+export async function handleFileDecrypt() {}

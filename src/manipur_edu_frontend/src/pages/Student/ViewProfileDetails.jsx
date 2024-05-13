@@ -9,9 +9,9 @@ import { useNavigate } from "react-router-dom";
 
 const ViewProfileDetails = () => {
   const location = useLocation();
-  // const entry = location.state.entries;
-  let entry = useSelector((state) => state.studentDetailsReducer);
-  console.log("entry here", entry);
+  const entry = location.state.entries;
+  // const data  = useSelector((state) => state.studentDetailsReducer);
+  // console.log("data here", data);
   const navigate  = useNavigate() ; 
 
   return (

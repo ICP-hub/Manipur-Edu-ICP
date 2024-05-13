@@ -7,7 +7,7 @@ import Background from "../../components/BackgroudPage";
 import {
   Link, useNavigate,
 } from "../../../../../node_modules/react-router-dom/dist/index";
-import { handleFileDecrypt } from "../../utils/helper";
+import { aes_Decrypt, handleFileDecrypt,decrypted_Img } from "../../utils/helper";
 import { useSelector } from "react-redux";
 const ProfileResult = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -20,6 +20,74 @@ const ProfileResult = () => {
     (state) => state.studentDetailsReducer
   );
 
+  const getImage = async (kyc) => {
+    try {
+      let i = 1;
+      let data;
+      const newChunks = [];
+
+      console.log("kyc in getImg funct is " , kyc)
+      console.log("kyc 0  in getImg funct is " , kyc[0])
+      // const chunk_id = kyc[0]["chunk_id"];
+      // console.log("chunk_id is " , chunk_id)
+
+
+      const chunk_id_val = kyc[0]["chunk_id"];
+      const no_Of_chunks = kyc[0]["num_chunks"];
+
+      console.log("num_chunks is ", no_Of_chunks)
+
+
+      console.log("chunk_id_val is ", chunk_id_val)
+      for (let i = 0; i < Number(kyc[0]["num_chunks"]); i++) {
+        console.log("Fetching chunks at i = ", i);
+        console.log("kyc[0].result_id is  in for  ", kyc[0]["result_id"])
+
+        const imageId = parseInt(kyc[0]["result_id"], 10);
+        let chunkId = parseInt(chunk_id_val, 10);
+        console.log("chunkId is in for", chunkId)
+        console.log("kyc[0].result_id is  in for  ", imageId)
+
+        // const { chunk_id, chunk_data } = await actor.get_image(imageId , chunkId);
+        const res = await actor.get_image(imageId, chunkId);
+        console.log("res is ", res)
+        console.log("res[0] is ", res[0])
+        const chunk_data = res[0]["chunk_value"];
+        const next_chunk_id = res[0]["next_chunkid"]
+
+        console.log("chunk_data is ", chunk_data)
+        console.log("next_chunk_id is ", next_chunk_id)
+        console.log("chunk_data.length is ", chunk_data.length)
+        if (chunk_data.length > 0) {
+        
+          newChunks.push(new Uint8Array(chunk_data));
+          chunkId = next_chunk_id;  // Update chunkId to fetch the next chunk
+        }
+      }
+    
+      // Calculate the total length of all chunks combined
+      let totalLength = newChunks.reduce((acc, val) => val ? acc + val.length : acc, 0);
+      let combinedData = new Uint8Array(totalLength);
+      
+      let offset = 0;
+      newChunks.forEach(chunk => {
+          if (chunk) {  // Ensure chunk is not null
+              combinedData.set(chunk, offset);
+              offset += chunk.length;
+          }
+      });
+      
+
+
+      // Now you have a single Uint8Array containing all the data
+      console.log("Combined data is:", combinedData);
+      return combinedData;
+
+    } catch (error) {
+      console.error("Failed to fetch chunks:", error);
+    }
+  };
+
   const handleView = async () => {
 
     console.log("princi id " , principal_id)
@@ -27,15 +95,29 @@ const ProfileResult = () => {
     console.log('getresult', getResult);
     const firstItem = getResult.Ok[0];
     console.log("firstItem", firstItem);
-    console.log("result", firstItem.result);
-    const decryptedFile = await handleFileDecrypt(firstItem.result, entry?.[0]?.public_key?.[0]);
-    console.log(decryptedFile);
-    const url = URL.createObjectURL(decryptedFile);
-    setImageUrl(url);
+    // console.log("result", firstItem.result);
+    const privateKey = await actor.get_private_key();
+    console.log("privateKey is " , privateKey )
 
+    const kyc = {} ; 
+    kyc["0"] = firstItem ; 
 
+    const imgEncrypted = await  getImage( kyc)
+    // const decryptedFile = await handleFileDecrypt(firstItem, entry?.[0]?.public_key?.[0]);
 
-    setOpenModal(true);
+    console.log("imgEncyrpted is " , imgEncrypted)
+    
+    const url = await decrypted_Img(kyc, imgEncrypted,  privateKey); // error iv not defined 
+
+    // setOpenModal(true);
+    const reader = new FileReader();
+        reader.onload = () => {
+          const imageDataUrl = reader.result;
+          setImageUrl(imageDataUrl);
+          setOpenModal(true);
+          // document.getElementById('imagePreview').src = imageDataUrl;
+      };
+      reader.readAsDataURL(url);
   }
 //  if (isLoadingEntry) {
 //     return <Loader />; // Render loader if data is still loading
