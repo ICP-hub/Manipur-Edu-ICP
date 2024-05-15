@@ -23,14 +23,13 @@ const VerifyRejectStudentProfile = () => {
   const verifyStudent = async () => {
     const verified = await actor.verify_student(studentPrincipalId);
 
-
-    navigate("/institute-student")
+    navigate("/institute-student");
     console.log(verified);
   };
 
   const rejectStudent = async () => {
     const rejected = await actor.reject_student(studentPrincipalId);
-    navigate("/institute-student")
+    navigate("/institute-student");
     console.log(rejected);
   };
   console.log("entry", entry);
@@ -299,7 +298,7 @@ const VerifyRejectStudentProfile = () => {
                   </button>
                 </div>
               </div>
-              <div className="py-[30px] px-[46px] gap-[76px]">
+              <div className="flex py-[30px] px-[46px] gap-[76px]">
                 <div>
                   <p className="text-[#8CA3C3] text-[16px] font-[Noto Sans] font-[300] pb-[20px]">
                     Aadhaar Card

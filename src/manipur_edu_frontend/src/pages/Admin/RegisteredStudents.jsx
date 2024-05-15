@@ -14,8 +14,6 @@ const RegisteredStudents = ({ onBack, onView }) => {
   let entry = useSelector((state) => state.allInstitutesReducer);
 
   const getEntries = async () => {
-    //get_inst_students wala func humme caller ke student id list de raha hai
-    // const studentIdsResponse = await actor.get_institute_students(); // This returns an array containing a single element that is an array of student IDs
     var institute_id = entry[0].toString();
     console.log("institute id : ", institute_id);
     const studentIdsResponse = await actor.get_institute_students_by_id(

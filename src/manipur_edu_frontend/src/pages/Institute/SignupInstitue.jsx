@@ -81,7 +81,7 @@ const SignupInstitute = () => {
       console.log("Submitted Successfully");
       // await navigate("/");
       setIsLoading(false);
-      setField("Wait for your request to get approved");
+      setField("Wait for  your request to get approved");
       setModelStatus(true);
       console.log("Submitted Successfully");
     }
@@ -102,7 +102,7 @@ const SignupInstitute = () => {
         {step === 0 && (
           <div className="flex flex-col justify-center items-center px-[2%] m-auto w-full md:px-[15%]">
             <div className="text-[#00227A] text-3xl font-[500] pb-8">
-              Sign up: Institute Details
+              Institute Details
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className="w-full">
               <div className="flex flex-col">
@@ -340,7 +340,7 @@ const SignupInstitute = () => {
         {step === 1 && (
           <div className="flex flex-col justify-center items-center px-[2%] m-auto w-full md:px-[15%]">
             <div className="text-[#00227A] text-3xl font-[500] pb-8">
-              Sign up: Institute Details
+              Institute Details
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className="w-full">
               <div className="flex flex-col">

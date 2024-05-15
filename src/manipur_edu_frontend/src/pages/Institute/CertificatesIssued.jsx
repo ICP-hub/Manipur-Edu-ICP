@@ -6,15 +6,11 @@ import { useQuery } from "react-query";
 import { useAuth } from "../../utils/useAuthClient";
 import UploadStudentCertificate from "../../components/institute/UploadCertificatePopup";
 import Loader from "../../loader/Loader";
-//todo:- remove this and fix it. Make ui same as result type show students and add button to upload certificates
 const CertificatesIssued = ({ institutePrincipalId }) => {
   const [popupState, setPopupState] = useState(false);
-  const [publicKey, setPublicKey] = useState('');
-  const [principalId, setPrincipalId] = useState('');
+  const [publicKey, setPublicKey] = useState("");
+  const [principalId, setPrincipalId] = useState("");
   const { actor } = useAuth();
-
-
-
 
   const getEntries = async () => {
     const studentIdsResponse = await actor.get_institute_students(); // This returns an array containing a single element that is an array of student IDs
@@ -23,7 +19,9 @@ const CertificatesIssued = ({ institutePrincipalId }) => {
       console.log(studentIds);
 
       // Fetch details for each student
-      const detailsPromises = studentIds.map(studentId => actor.get_student_details(studentId));
+      const detailsPromises = studentIds.map((studentId) =>
+        actor.get_student_details(studentId)
+      );
       const detailsResults = await Promise.all(detailsPromises);
 
       console.log(detailsResults);
@@ -31,12 +29,12 @@ const CertificatesIssued = ({ institutePrincipalId }) => {
       // Combine student IDs and their details into an array of objects
       const combinedResult = detailsResults.map((details, index) => ({
         studentId: studentIds[index], // Now correctly matches each detail with its student ID
-        details: details
+        details: details,
       }));
 
-      return combinedResult // Update the state with the combined data
+      return combinedResult; // Update the state with the combined data
     }
-  }
+  };
 
   const {
     data: entries,
@@ -44,14 +42,9 @@ const CertificatesIssued = ({ institutePrincipalId }) => {
     error: errorEntries,
   } = useQuery("dataEntries", getEntries);
   if (!isLoadingEntries && !errorEntries) {
-    console.log("entries", entries)
-
+    console.log("entries", entries);
   }
-  //  if (isLoadingEntries) {
-  //   return <Loader />; // Render loader if data is still loading
-  // }
   return (
- 
     <div className="w-[85%] self-center  pt-[27px]">
       <div className="grid grid-cols-[repeat(5,1fr)_50px]  py-[15px] mt-[27px] rounded-md bg-[#D9EBFF] font-[600] font-[Segoe UI] text-[15px] text-[#00227A] leading-[20px]">
         <div className="flex justify-center col-span-1">NAME</div>
@@ -59,8 +52,6 @@ const CertificatesIssued = ({ institutePrincipalId }) => {
         <div className="flex justify-center col-span-1">EMAIL</div>
         <div className="flex justify-center col-span-1">ROLL NUMBER</div>
         <div className="flex justify-center col-span-1">RESULT</div>
-
-
       </div>
       {entries?.map(({ studentId, details }, index) => (
         <Card
@@ -73,7 +64,6 @@ const CertificatesIssued = ({ institutePrincipalId }) => {
         />
       ))}
       <div className="relative">
-
         <UploadStudentCertificate
           open={popupState}
           onClose={() => setPopupState(false)}
@@ -83,7 +73,6 @@ const CertificatesIssued = ({ institutePrincipalId }) => {
       </div>
 
       <div className="  flex justify-between pt-[50px] pb-[100px]">
-
         <p>Page 1 of 100</p>
       </div>
     </div>
@@ -92,21 +81,26 @@ const CertificatesIssued = ({ institutePrincipalId }) => {
 
 export default CertificatesIssued;
 
-
-const Card = ({ studentPrincipalId, entry, setPopupState, setPublicKey, setPrincipalId }) => {
-
-  const studentName = entry?.[0].first_name?.[0] + " " + entry?.[0].last_name?.[0] ?? 'N/A';
-  const studentId = entry?.[0].student_id?.[0].substr(0, 6) ?? 'N/A';
-  const rollNo = entry?.[0].roll_no?.[0] ?? 'N/A';
-  const verificationStatus = entry?.[0].status?.[0] ?? 'N/A';
-  const email = entry?.[0].personal_email?.[0] ?? 'N/A';
+const Card = ({
+  studentPrincipalId,
+  entry,
+  setPopupState,
+  setPublicKey,
+  setPrincipalId,
+}) => {
+  const studentName =
+    entry?.[0].first_name?.[0] + " " + entry?.[0].last_name?.[0] ?? "N/A";
+  const studentId = entry?.[0].student_id?.[0].substr(0, 6) ?? "N/A";
+  const rollNo = entry?.[0].roll_no?.[0] ?? "N/A";
+  const verificationStatus = entry?.[0].status?.[0] ?? "N/A";
+  const email = entry?.[0].personal_email?.[0] ?? "N/A";
   return (
     <div className="grid grid-cols-[repeat(5,1fr)_3.125rem] mt-4 h-[3rem] rounded-[0.3125rem] bg-[#EEF6FF] pt-[0.4375rem]">
       <div className="flex justify-center text-[#687DB2] font-[Segoe UI] font-[400] text-[0.9375rem] leading-[1.25rem] rounded-[0.3125rem]">
         <div className="flex rounded-[0.3125rem]">
           <img
             className="w-[2.0625rem] h-[2.0625rem]"
-            src='/student.svg'
+            src="/student.svg"
             alt=""
           />
           <p className="pt-[0.375rem] pl-[0.8125rem]">{studentName}</p>
@@ -127,10 +121,9 @@ const Card = ({ studentPrincipalId, entry, setPopupState, setPublicKey, setPrinc
           setPrincipalId(studentPrincipalId);
           setPublicKey(entry?.[0].public_key?.[0]);
         }}
-
         className="pt-[0.4375rem] font-[700] underline flex justify-center bg-[#EEF6FF] text-[#687DB2] font-[Segoe UI] font-[400] text-[0.9375rem] leading-[1.25rem]"
       >
-        Click to Upload Certificate
+        Click to Upload Document
       </button>
       <button className="mb-[0.5rem]">
         <svg
@@ -160,6 +153,3 @@ const Card = ({ studentPrincipalId, entry, setPopupState, setPublicKey, setPrinc
     </div>
   );
 };
-
-
-

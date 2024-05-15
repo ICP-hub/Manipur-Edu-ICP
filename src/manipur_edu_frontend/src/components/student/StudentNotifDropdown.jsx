@@ -30,7 +30,7 @@ const StudentNotifDropdown = ({ open }) => {
         <li className="flex  py-4 border-b border-[white] ">
           <img className="w-[30px] h-[30px]" src='/student.svg' alt="" />
           <p className="text-[#00227A] text-base font-[400] font-[Segoe UI] leading-[20px] pl-2">
-            Your certificate have been uploaded.
+            Your Document have been uploaded.
           </p>
         </li>
         <li className="flex pt-4 pb-2  ">

@@ -48,27 +48,6 @@ const UploadStudentCertificate = ({ open, onClose, publicKey, principalId }) => 
     };
 
     return (
-        // <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#EEF6FF] h-[32.5rem] mt-[50px] w-[70%] rounded-xl">
-        //     {/* Rest of the component */}
-        //     <div className="flex justify-center pt-[2.5rem]">
-
-        //         <input type="file" onChange={handleFileChange} accept="image/*" />
-        //     </div>
-        //     <div className="flex justify-center pt-[2.5rem]">
-        //         <button
-        //             onClick={handleSave}
-        //             className="w-[7.3125rem] bg-[#0041E9] rounded-[0.625rem] h-[3.125rem] mr-[1.5rem] text-[white] font-[Segoe UI] font-[400] text-[0.9375rem] leading-[1.25rem]"
-        //         >
-        //             Save
-        //         </button>
-        //         <button
-        //             onClick={onClose}
-        //             className="w-[7.3125rem] rounded-[0.625rem] h-[3.125rem] border border-[#00227A] text-[#00227A] font-[Segoe UI] font-[400] text-[0.9375rem] leading-[1.25rem]"
-        //         >
-        //             Cancel
-        //         </button>
-        //     </div>
-        // </div>
         <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#EEF6FF] h-[32.5rem] mt-[50px] w-[70%] rounded-xl">
             <div className="flex flex-col items-center justify-center h-full">
                 <input 

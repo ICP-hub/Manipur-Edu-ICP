@@ -7,10 +7,6 @@ const SignUp = () => {
   const handleSubmit = () => {
     event.preventDefault();
     console.log("in Handle SUbmit ");
-    // console.log(event.target.value);
-
-    // console.log("event" , event);
-
     navigate("/login");
   };
 
@@ -20,13 +16,13 @@ const SignUp = () => {
         <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <div className="mb-4">
             <h1 className="text-center text-2xl font-bold text-blue-800">
-              Log in/Sign up as
+              Authenticate as
             </h1>
           </div>
           <div className="mb-4">
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-              onClick={(handleSubmit)}
+              onClick={handleSubmit}
               value="student"
             >
               Student

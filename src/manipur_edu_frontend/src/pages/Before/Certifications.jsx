@@ -6,12 +6,11 @@ import Modal from "../../components/Modal";
 import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
 import { handleFileDecrypt } from "../../utils/helper";
 
-
 const Certifications = () => {
   const [openModal, setOpenModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const [imageUrl, setImageUrl] = useState('');
-  const [modalMessage, setModalMessage] = useState('');
+  const [imageUrl, setImageUrl] = useState("");
+  const [modalMessage, setModalMessage] = useState("");
   const { actor, authClient, userType } = useAuth();
   React.useEffect(() => {
     const checkLogin = async () => {
@@ -26,15 +25,17 @@ const Certifications = () => {
   const principal_id = authClient.getIdentity().getPrincipal().toString();
   const navigate = useNavigate();
   const handleStudentCertificate = async () => {
-
-
     const entry = await actor.get_student_details(principal_id);
-    
+
     const getCertificates = await actor.get_user_certificates(principal_id);
-    console.log('getCertificates', getCertificates);
-    if (!getCertificates || !getCertificates.Ok || getCertificates.Ok.length === 0) {
+    console.log("getCertificates", getCertificates);
+    if (
+      !getCertificates ||
+      !getCertificates.Ok ||
+      getCertificates.Ok.length === 0
+    ) {
       // Handle case when no certificates are available or getCertificates is undefined
-      console.log('No certificates available');
+      console.log("No certificates available");
       setModalMessage("No certificates available"); // Set a message to display in the modal
       setOpenModal(true); // Open the modal
       return; // Exit the function
@@ -44,22 +45,25 @@ const Certifications = () => {
     console.log("certificate_link", firstItem.certificate_link);
 
     //todo:- there should be a method to display multiple certificates
-    const decryptedFile = await handleFileDecrypt(firstItem.certificate_link, entry?.[0]?.public_key?.[0]);
+    const decryptedFile = await handleFileDecrypt(
+      firstItem.certificate_link,
+      entry?.[0]?.public_key?.[0]
+    );
     console.log(decryptedFile);
     const url = URL.createObjectURL(decryptedFile);
     setImageUrl(url);
 
-
-
     setOpenModal(true);
-
-
-  }
-
+  };
 
   return (
     <Background>
-      <Modal open={openModal} onClose={() => setOpenModal(false)} image={imageUrl} message={modalMessage}/>
+      <Modal
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        image={imageUrl}
+        message={modalMessage}
+      />
       <div className="relative pt-[100px] pb-[50px] flex justify-center items-center px-[4%] lg1:px-[5%] ">
         <div className=" w-full bg-white flex flex-col justify-between rounded-[10px]">
           <div className="  flex justify-center rounded-t-[10px]">
@@ -67,7 +71,7 @@ const Certifications = () => {
               <div className="w-[70%] border-r border-[#BED0FF] flex ">
                 {" "}
                 <p className=" border-b-2 border-[#00227A] text-[#00227A] text-[18px] font-[500] leading-[25px] ">
-                  Your Certificates
+                  Your Documents
                 </p>{" "}
               </div>
               <div className="w-[15%] border-r border-[#BED0FF]  flex justify-between">
@@ -148,27 +152,87 @@ const Certifications = () => {
             </>
           ) : userType === "student" && isLoggedIn ? (
             <>
-              <div className="flex w-[80%] py-8 self-center">
-                <div className=" bg-[#EEF6FF] w-1/3 flex flex-col border border-[#89C1FF] rounded-[10px] px-[35px] pt-[24px]">
+              <div className="flex gap-5 flex-wrap px-[45px] pt-[20px]">
+                <div className=" bg-[#EEF6FF] w-[30%] flex flex-col border border-[#89C1FF] rounded-[10px] pt-[24px] ">
                   <img
-                    className="w-[30px] h-[30px]"
-                    src="/certificate.svg"
+                    className="w-[30px] h-[30px] ml-[10px]"
+                    src={"Certificate.png"}
                     alt="certificate"
                   />
-                  <p className="text-[Segoe UI] text-[#00227A] font-[600] text-[20px] leading-[27px] pt-[11px]">
-                    First Year Result
+                  <p className="text-[Segoe UI] text-[#00227A] text-center font-[600] text-[20px] leading-[27px] pt-[11px]">
+                    Document Name
                   </p>
-                  <p className="text-[Segoe UI] text-[#00227A] font-[400] text-[15px] leading-[20px] pt-[10px]">
-                    Semester: 1
+                  <p className="text-[Segoe UI] text-[#00227A] text-center font-[400] text-[15px] leading-[20px] pt-[10px]">
+                    Issued by : Name
                   </p>
-                  <p className="text-[Segoe UI] text-[#00227A] font-[400] text-[15px] leading-[20px] pt-[8px]">
-                    Academic Year: 2020-2021
+                  <p className="text-[Segoe UI] text-[#00227A] text-center font-[400] text-[15px] leading-[20px] pt-[8px]">
+                    Issued Date : 11-11-2023
                   </p>
-                  <div className="flex flex-row-reverse pt-[27px] pb-[14px]">
-                    <button
-                      onClick={handleStudentCertificate}
-                      className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[30px] py-[5px]"
-                    >
+                  <div className="flex justify-center px-[16px] pt-[27px] pb-[14px]">
+                    <button className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[30px] py-[5px]">
+                      View
+                    </button>
+                  </div>
+                </div>
+                <div className=" bg-[#EEF6FF] w-[30%] flex flex-col border border-[#89C1FF] rounded-[10px] pt-[24px] ">
+                  <img
+                    className="w-[30px] h-[30px] ml-[10px]"
+                    src={"Certificate.png"}
+                    alt="certificate"
+                  />
+                  <p className="text-[Segoe UI] text-[#00227A] text-center font-[600] text-[20px] leading-[27px] pt-[11px]">
+                    Document Name
+                  </p>
+                  <p className="text-[Segoe UI] text-[#00227A] text-center font-[400] text-[15px] leading-[20px] pt-[10px]">
+                    Issued by : Name
+                  </p>
+                  <p className="text-[Segoe UI] text-[#00227A] text-center font-[400] text-[15px] leading-[20px] pt-[8px]">
+                    Issued Date : 11-11-2023
+                  </p>
+                  <div className="flex justify-center px-[16px] pt-[27px] pb-[14px]">
+                    <button className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[30px] py-[5px]">
+                      View
+                    </button>
+                  </div>
+                </div>
+                <div className=" bg-[#EEF6FF] w-[30%] flex flex-col border border-[#89C1FF] rounded-[10px] pt-[24px] ">
+                  <img
+                    className="w-[30px] h-[30px] ml-[10px]"
+                    src={"Certificate.png"}
+                    alt="certificate"
+                  />
+                  <p className="text-[Segoe UI] text-[#00227A] text-center font-[600] text-[20px] leading-[27px] pt-[11px]">
+                    Document Name
+                  </p>
+                  <p className="text-[Segoe UI] text-[#00227A] text-center font-[400] text-[15px] leading-[20px] pt-[10px]">
+                    Issued by : Name
+                  </p>
+                  <p className="text-[Segoe UI] text-[#00227A] text-center font-[400] text-[15px] leading-[20px] pt-[8px]">
+                    Issued Date : 11-11-2023
+                  </p>
+                  <div className="flex justify-center px-[16px] pt-[27px] pb-[14px]">
+                    <button className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[30px] py-[5px]">
+                      View
+                    </button>
+                  </div>
+                </div>
+                <div className=" bg-[#EEF6FF] w-[30%] flex flex-col border border-[#89C1FF] rounded-[10px] pt-[24px] ">
+                  <img
+                    className="w-[30px] h-[30px] ml-[10px]"
+                    src={"Certificate.png"}
+                    alt="certificate"
+                  />
+                  <p className="text-[Segoe UI] text-[#00227A] text-center font-[600] text-[20px] leading-[27px] pt-[11px]">
+                    Document Name
+                  </p>
+                  <p className="text-[Segoe UI] text-[#00227A] text-center font-[400] text-[15px] leading-[20px] pt-[10px]">
+                    Issued by : Name
+                  </p>
+                  <p className="text-[Segoe UI] text-[#00227A] text-center font-[400] text-[15px] leading-[20px] pt-[8px]">
+                    Issued Date : 11-11-2023
+                  </p>
+                  <div className="flex justify-center px-[16px] pt-[27px] pb-[14px]">
+                    <button className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[30px] py-[5px]">
                       View
                     </button>
                   </div>
@@ -182,14 +246,17 @@ const Certifications = () => {
               </div>
               <div className=" flex justify-center pb-[28px]">
                 <p className=" text-[#032068] text-[32px] font-[600] leading-[28px] font-[Fraunces]">
-                  Create a Manipur Edu account to check your certificates.
+                  Create a Manipur Edu account to check your documents.
                 </p>
               </div>
               <div className="  flex justify-center items-center pb-[50px]">
                 <p className="text-[#032068] text-[16px] font-[600] leading-[24px] font-[Source Sans Pro]">
                   Already have an account?
                 </p>{" "}
-                <button onClick={() => navigate('/login')} className=" ml-[3px] text-[12px] font-[600] leading-[24px] text-[#346DC2] pt-[3px]">
+                <button
+                  onClick={() => navigate("/login")}
+                  className=" ml-[3px] text-[12px] font-[600] leading-[24px] text-[#346DC2] pt-[3px]"
+                >
                   Signin
                 </button>
               </div>
