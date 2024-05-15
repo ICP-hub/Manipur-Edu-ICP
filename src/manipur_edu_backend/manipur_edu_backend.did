@@ -1,8 +1,11 @@
 type CertificateData = record {
+  iv : text;
   issued_by : text;
+  chunk_id : text;
+  num_chunks : nat64;
+  aes_key : text;
   issue_date : text;
   certificate_info : text;
-  certificate_link : blob;
   certificate_id : text;
 };
 type Chunk = record { next_chunkid : nat32; chunk_value : blob };

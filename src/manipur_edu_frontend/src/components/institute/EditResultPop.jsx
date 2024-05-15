@@ -40,75 +40,83 @@ const EditResult = ({ open, onClose, publicKey, principalId }) => {
 
     const { iv, encryptedFile, aesKey } = await handleFileEncrypt(file, publicKey);
 
-    console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
-
-    console.log("iv is ", iv)
-    console.log("encryptedFile is ", encryptedFile)
-    console.log("aesKey is ", aesKey)
-
-
-
-    // >>>>>>>>>>>- CODE STARTS  TO UPLOAD DATA IN CHUNKS <<<<<<<<<
-
-    const imgUuid = uuidv4();
-    let imgId = uuidToNat32(imgUuid);
-
-    let chunks = [];
-    const chunkSize = 1 * 1024 * 1024;
-    let nextChunk = uuidv4();
-    let nat32nextChunk = uuidToNat32(nextChunk);
-
-    let chunkId = uuidv4();
-    let nat32ChunkId = uuidToNat32(chunkId);
-
-
-    for (let i = 0; i < encryptedFile.byteLength; i += chunkSize) {
-      let chunk = encryptedFile.slice(i, i + chunkSize);
-      chunk = Array.from(new Uint8Array(chunk));
-
-      let chunkVec = {
-        chunk_value: chunk,
-        next_chunkid: nat32nextChunk,
-      };
-
-      await actor.upload_image(imgId, nat32ChunkId, chunkVec);
-      chunks.push({ chunk_id: nat32ChunkId.toString(), image_id: imgId.toString() }); // Ensure proper string conversion
-
-      if (i + chunkSize < encryptedFile.byteLength) {
-        chunkId = nextChunk; // current nextChunk becomes new chunkId
-        nat32ChunkId = nat32nextChunk; // update nat32ChunkId
-        nextChunk = uuidv4(); // generate new nextChunk
-        nat32nextChunk = uuidToNat32(nextChunk); // convert new nextChunk
-      } else {
-        nextChunk = null;
-        nat32nextChunk = null;
-      }
-    }
-    console.log("All chunks uploaded");
-
-    // >>>>>>>>>>>- CODE ENDS TO UPLOAD DATA IN CHUNKS <<<<<<<<<
-
-
-
-
-    // console.log(encryptedFile);
-    console.log("imgId is ", imgId)
-    console.log("imgId is type ", typeof (imgId))
-
+   
     if (encryptedFile) {
+
+      console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+
+      console.log("iv is ", iv)
+      console.log("encryptedFile is ", encryptedFile)
+      console.log("aesKey is ", aesKey)
+  
+  
+  
+      // >>>>>>>>>>>- CODE STARTS  TO UPLOAD DATA IN CHUNKS <<<<<<<<<
+  
+      const imgUuid = uuidv4();
+      let imgId = uuidToNat32(imgUuid);
+  
+      let chunks = [];
+      const chunkSize = 1 * 1024 * 1024;
+      let nextChunk = uuidv4();
+      let nat32nextChunk = uuidToNat32(nextChunk);
+  
+      let chunkId = uuidv4();
+      let nat32ChunkId = uuidToNat32(chunkId);
+  
+  
+      for (let i = 0; i < encryptedFile.byteLength; i += chunkSize) {
+        let chunk = encryptedFile.slice(i, i + chunkSize);
+        chunk = Array.from(new Uint8Array(chunk));
+  
+        let chunkVec = {
+          chunk_value: chunk,
+          next_chunkid: nat32nextChunk,
+        };
+  
+        await actor.upload_image(imgId, nat32ChunkId, chunkVec);
+        chunks.push({ chunk_id: nat32ChunkId.toString(), image_id: imgId.toString() }); // Ensure proper string conversion
+  
+        if (i + chunkSize < encryptedFile.byteLength) {
+          chunkId = nextChunk; // current nextChunk becomes new chunkId
+          nat32ChunkId = nat32nextChunk; // update nat32ChunkId
+          nextChunk = uuidv4(); // generate new nextChunk
+          nat32nextChunk = uuidToNat32(nextChunk); // convert new nextChunk
+        } else {
+          nextChunk = null;
+          nat32nextChunk = null;
+        }
+      }
+      console.log("All chunks uploaded");
+  
+      // >>>>>>>>>>>- CODE ENDS TO UPLOAD DATA IN CHUNKS <<<<<<<<<
+  
+  
+  
+  
+      // console.log(encryptedFile);
+      console.log("imgId is ", imgId)
+      console.log("imgId is type ", typeof (imgId))
+  
+      console.log("chunks.length is " , chunks.length)
+      console.log("encryptedFile, " , encryptedFile)
+
+
       console.log("encryptedFile", encryptedFile)
       // storing img_id as rsult id 
       const resultData = {
         iv: iv,
         aes_key: aesKey,
-        chunk_id: chunkId,
-        result_id: imgId.toString(),
+        chunk_id: chunks[0].chunk_id,
+        result_id: chunks[0].image_id,
         num_chunks: chunks.length,
         result: encryptedFile,
         issued_by: 'institute',
         issued_date: Date.now().toString(),
         semester: "1",
       }
+
+      console.log("resultData is " , resultData)
       const uploadFile = await actor.create_user_result(principalId, resultData)
       console.log(" Data uploadFile is  ", uploadFile);
     }

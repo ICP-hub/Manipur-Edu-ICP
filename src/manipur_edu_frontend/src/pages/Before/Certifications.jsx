@@ -50,6 +50,9 @@ const Certifications = () => {
     //todo:- there should be a method to display multiple certificates
     const decryptedFile = await handleFileDecrypt(firstItem.certificate_link, entry?.[0]?.public_key?.[0]);
     console.log(decryptedFile);
+
+
+    
     const url = URL.createObjectURL(decryptedFile);
     setImageUrl(url);
 

@@ -15,12 +15,17 @@ use sha2::{Digest, Sha256};
 use std::cell::RefCell;
 #[derive(Serialize, CandidType, Deserialize, Debug, Clone)]
 pub struct CertificateData {
+	iv : String , 
+	aes_key : String , 
+	chunk_id : String , 
+	num_chunks: usize, 
     certificate_id: String,
     certificate_info: String,
-    certificate_link: Vec<u8>,
+    // certificate_link: Vec<u8>,
     issued_by: String,
     issue_date: String,
 }
+
 
 // #[update]
 // pub fn upload_certificate(

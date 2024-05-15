@@ -20,6 +20,7 @@ const ProfileResult = () => {
     (state) => state.studentDetailsReducer
   );
 
+  
   const getImage = async (kyc) => {
     try {
       let i = 1;
@@ -31,29 +32,32 @@ const ProfileResult = () => {
       // const chunk_id = kyc[0]["chunk_id"];
       // console.log("chunk_id is " , chunk_id)
 
-
       const chunk_id_val = kyc[0]["chunk_id"];
       const no_Of_chunks = kyc[0]["num_chunks"];
 
       console.log("num_chunks is ", no_Of_chunks)
-
-
+      console.log("&&&&&((((((((((((((((((((((((((((((((((((&")
+      console.log("  chunk_id_val is " , chunk_id_val , typeof(chunk_id_val))
       console.log("chunk_id_val is ", chunk_id_val)
       for (let i = 0; i < Number(kyc[0]["num_chunks"]); i++) {
         console.log("Fetching chunks at i = ", i);
-        console.log("kyc[0].result_id is  in for  ", kyc[0]["result_id"])
+        console.log("kyc[0].result_id is  in for  ", kyc[0]["result_id"] , typeof(kyc[0]["result_id"]))
+
 
         const imageId = parseInt(kyc[0]["result_id"], 10);
-        let chunkId = parseInt(chunk_id_val, 10);
-        console.log("chunkId is in for", chunkId)
-        console.log("kyc[0].result_id is  in for  ", imageId)
+        // let chunkId = parseInt(kyc[0]["chunk_id"], 10);
+        let chunkId =parseInt(kyc[0]["chunk_id"] , 10)
+
+        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+        console.log("chunkId is in for", chunkId , typeof(chunkId))
+        console.log("kyc[0].result_id is  in for  ", imageId , typeof(imageId))
 
         // const { chunk_id, chunk_data } = await actor.get_image(imageId , chunkId);
         const res = await actor.get_image(imageId, chunkId);
         console.log("res is ", res)
         console.log("res[0] is ", res[0])
-        const chunk_data = res[0]["chunk_value"];
-        const next_chunk_id = res[0]["next_chunkid"]
+        let chunk_data = res[0]["chunk_value"];
+        let next_chunk_id = res[0]["next_chunkid"]
 
         console.log("chunk_data is ", chunk_data)
         console.log("next_chunk_id is ", next_chunk_id)
@@ -93,7 +97,9 @@ const ProfileResult = () => {
     console.log("princi id " , principal_id)
     const getResult = await actor.get_user_result(principal_id);
     console.log('getresult', getResult);
-    const firstItem = getResult.Ok[0];
+    const sizeOfRes = getResult.Ok.length ; 
+    console.log("sizeOfRes is "   , sizeOfRes)
+    const firstItem = getResult.Ok[sizeOfRes -1 ];
     console.log("firstItem", firstItem);
     // console.log("result", firstItem.result);
     const privateKey = await actor.get_private_key();

@@ -172,8 +172,12 @@ const SignupStudents = () => {
 
       const { iv, encryptedFile, aesKey } = await handleFileEncrypt(data.aadhar_upload, obj.public_key);
 
+    console.log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+
       console.log("aesKey in student profile rturnded id  ", aesKey)
       console.log("iv in signup student is ", iv)
+    console.log("encryptedFile is ", encryptedFile)
+
 
       // >>>>>>>>>>>- CODE STARTS  TO UPLOAD DATA IN CHUNKS <<<<<<<<<
       const imgUuid = uuidv4();

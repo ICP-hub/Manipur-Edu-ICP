@@ -45,11 +45,14 @@ const StudentVerificationRequest = () => {
 
       console.log("num_chunks is ", no_Of_chunks)
 
+      console.log("  chunk_id_val is " , chunk_id_val , typeof(chunk_id_val))
+
+
 
       console.log("chunk_id_val is ", chunk_id_val)
       for (let i = 0; i < Number(kyc[0].num_chunks); i++) {
         console.log("Fetching chunks at i = ", i);
-        console.log("kyc[0].image_id is  in for  ", kyc[0].image_id)
+        console.log("kyc[0].image_id is  in for  ", kyc[0].image_id , typeof( kyc[0].image_id))
 
         const imageId = parseInt(kyc[0].image_id, 10);
         let chunkId = parseInt(chunk_id_val, 10);
