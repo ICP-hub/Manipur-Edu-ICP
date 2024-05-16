@@ -126,15 +126,17 @@ const Card = ({ studentPrincipalId, entry, publicKey }) => {
           >
             {verificationStatus}
           </p>
-          <div className="flex">
-            <button
-              className="bg-blue-500 text-white font-segoe-ui text-11 rounded-lg h-9 w-40 ml-2"
-              onClick={handleClick}
-              style={{ backgroundColor: "#355389" }}
-            >
-              {"View/Verify"}
-            </button>
-          </div>
+          <button
+            className="bg-blue-500 text-white font-segoe-ui text-11 rounded-lg ml-6"
+            onClick={handleClick}
+            style={{
+              backgroundColor: "#355389",
+              height: "40px",
+              width: "110px",
+            }}
+          >
+            {"View/Verify"}
+          </button>
         </div>
       </div>
     </div>

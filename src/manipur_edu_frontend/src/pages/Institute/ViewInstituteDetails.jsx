@@ -1,34 +1,25 @@
 import React, { useState } from "react";
 import { useAuth } from "../../utils/useAuthClient";
 import Background from "../../components/BackgroudPage";
-import { Link, useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
+import {
+  Link,
+  useNavigate,
+} from "../../../../../node_modules/react-router-dom/dist/index";
 import { useSelector, useDispatch } from "react-redux";
 import { getInstituteDetails } from "../../../Redux/Action/index";
 const ViewInstituteDetailsInstitutePage = () => {
-
-
   const { actor, authClient, identity, principal } = useAuth();
   console.log("identity", identity);
   console.log("principal", principal);
-  let data = useSelector(
-    (state) => state.instituteDetailsReducer
-  );
+  let data = useSelector((state) => state.instituteDetailsReducer);
 
-
-
-  console.log("entries from redux", data)
-
+  console.log("entries from redux", data);
 
   const navigate = useNavigate();
 
   const handleClick = () => {
-
     navigate("/institute_detail_edit");
-
   };
-
-
-
 
   return (
     <Background>
@@ -39,13 +30,14 @@ const ViewInstituteDetailsInstitutePage = () => {
               Institute Profile
             </h1>
             <div className="flex px-[2.875rem] py-[1.8125rem] border border-[#BED0FF] rounded-[1.25rem] mb-[1.6875rem]">
-              <img src='/student.svg' alt="" />
+              <img src="/student.svg" alt="" />
               <div className="flex flex-col justify-center pl-[1.8125rem]">
                 <p className="font-[Noto Sans] text-[#00227A] text-[1.5625rem] leading-[2.125rem] font-[400] pb-[0.375rem]">
                   {data?.details?.[0]?.institute_name?.[0]}
                 </p>
                 <p className="font-[Noto Sans] text-[#687EB5] text-[0.9375rem] leading-[1.25rem] font-[500]">
-                  Institute-id: {data?.details?.[0]?.institute_id?.[0].substr(0, 6)}
+                  Institute-id:{" "}
+                  {data?.details?.[0]?.institute_id?.[0].substr(0, 6)}
                 </p>
               </div>
             </div>
@@ -56,7 +48,7 @@ const ViewInstituteDetailsInstitutePage = () => {
                   <p className="font-[Noto Sans] text-[#00227A] text-[1.125rem] leading-[1.5rem] font-[500]">
                     Institute Details
                   </p>
-                  <button className="flex"  onClick={handleClick}>
+                  <button className="flex" onClick={handleClick}>
                     <svg
                       width="1.25rem"
                       height="1.25rem"
@@ -69,7 +61,6 @@ const ViewInstituteDetailsInstitutePage = () => {
                         fill="#00227A"
                       />
                     </svg>
-
                   </button>
                 </div>
               </div>
@@ -117,7 +108,9 @@ const ViewInstituteDetailsInstitutePage = () => {
                       {data?.details?.[0]?.address?.[0]}
                     </p>
                     <p className="font-[Noto Sans] text-[#00227A] text-[1.125rem] leading-[1.53125rem] font-[400]">
-                      {data?.details?.[0]?.state?.[0] + " " + data?.details?.[0]?.zip_code?.[0]}
+                      {data?.details?.[0]?.state?.[0] +
+                        " " +
+                        data?.details?.[0]?.zip_code?.[0]}
                     </p>
                   </div>
                   <div className="w-[50%] flex justify-between">
@@ -131,7 +124,7 @@ const ViewInstituteDetailsInstitutePage = () => {
                     </div>
                     <div className="w-[50%]">
                       <p className="font-[Noto Sans] text-[#8CA3C3] text-[1rem] leading-[1.375rem] font-[300] pb-[0.1875rem]">
-                        Zip code
+                        Pin Code
                       </p>
                       <p className="font-[Noto Sans] text-[#00227A] text-[1.125rem] leading-[1.53125rem] font-[400]">
                         {data?.details?.[0]?.zip_code?.[0]}
@@ -143,8 +136,10 @@ const ViewInstituteDetailsInstitutePage = () => {
             </div>
 
             <div className="flex flex-row-reverse pt-[1.25rem] pb-[1.875rem]">
-              <button className="px-[2.75rem] py-[1rem] bg-[#0041E9]   rounded-[0.625rem] text-[white]"
-                onClick={handleClick}>
+              <button
+                className="px-[2.75rem] py-[1rem] bg-[#0041E9]   rounded-[0.625rem] text-[white]"
+                onClick={handleClick}
+              >
                 Edit
               </button>
             </div>

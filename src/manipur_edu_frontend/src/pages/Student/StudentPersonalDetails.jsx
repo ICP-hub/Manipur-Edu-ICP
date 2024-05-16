@@ -13,6 +13,30 @@ import {
   handleFileEncryption,
 } from "../../utils/helper";
 import Status from "../../components/student/status";
+import loadingimg from "../../../assets/loading.gif";
+
+const Overlay = () => (
+  <div
+    style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
+      zIndex: 1000, // Ensures it covers other content
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    }}
+  >
+    <img
+      src={loadingimg}
+      alt="Loading..."
+      style={{ width: "100px", height: "100px" }}
+    />
+  </div>
+);
 
 const SignupStudents = () => {
   const {

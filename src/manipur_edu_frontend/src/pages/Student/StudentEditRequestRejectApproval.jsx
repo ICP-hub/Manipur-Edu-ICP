@@ -1,43 +1,38 @@
 import React, { useState, useEffect } from "react";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useAuth } from "../../utils/useAuthClient";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
-const notify = () => toast.success('Edits Approved.');
-
+const notify = () => toast.success("Edits Approved.");
 
 const StudentEditRequestRejectApproval = () => {
   const { actor } = useAuth();
   const [student, setStudent] = useState(null);
   const [studentUpdatedData, setStudentUpdatedData] = useState(null);
   const studentId = useSelector((state) => state.studentId.studentPrincipalId);
-  const navigate  = useNavigate() ; 
+  const navigate = useNavigate();
 
   // const someData = useSelector((state) => state.studentId.approve_student_profile_update)
 
   // async function someData() {
-  //   const data = await actor.get_student_profile_updated(studentId) ; 
-  //   console.log("data is : " , data) ; 
+  //   const data = await actor.get_student_profile_updated(studentId) ;
+  //   console.log("data is : " , data) ;
   // }
-  // someData() ; 
+  // someData() ;
 
   console.log("Component rendered with studentId:", studentId);
   useEffect(() => {
     async function getData() {
-      console.log("sid is : ", studentId)
+      console.log("sid is : ", studentId);
 
       const data = await actor.get_student_profile_updated(studentId);
       console.log("data is : ", data);
       setStudentUpdatedData(data[0]);
 
-
       const response = await actor.get_student_details(studentId);
       console.log("Fetched student data:", response);
       setStudent(response[0]); // Assuming response is an array with the student object at the first index
-
-
-
     }
     getData();
   }, [actor, studentId]); // Dependency array to prevent unnecessary re-renders
@@ -46,16 +41,13 @@ const StudentEditRequestRejectApproval = () => {
     return <div>Loading...</div>; // Or any other loading state
   }
 
-
   async function handleApprove() {
-    const data = await actor.approve_student_profile_update(studentId) ; 
-    console.log("data is : " , data) ; 
-    console.log("Profile updated.")
-    notify() ; 
-    navigate("/institute-student"); 
-
+    const data = await actor.approve_student_profile_update(studentId);
+    console.log("data is : ", data);
+    console.log("Profile updated.");
+    notify();
+    navigate("/institute-student");
   }
-
 
   return (
     // <Background>
@@ -139,7 +131,6 @@ const StudentEditRequestRejectApproval = () => {
             Previous
           </div>
 
-
           <div className="px-[46px] py-[28px] flex items-center gap-[29px] rounded-[20px] border border-[#D8E1F8]">
             <img className="w-[100px] h-[100px]" src="student.jpg" alt="" />
             <div className="gap-[6px]">
@@ -204,7 +195,9 @@ const StudentEditRequestRejectApproval = () => {
                   Address
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  {student.address}<br />{student.city} {student.zip_code}
+                  {student.address}
+                  <br />
+                  {student.city} {student.zip_code}
                 </p>
               </div>
               <div>
@@ -217,7 +210,7 @@ const StudentEditRequestRejectApproval = () => {
               </div>
               <div>
                 <p className="text-[#8CA3C3] text-[16px] font-[Noto Sans] font-[300]">
-                  Zip Code
+                  Pin Code
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
                   {student.zip_code}
@@ -290,7 +283,7 @@ const StudentEditRequestRejectApproval = () => {
               </div>
               <div>
                 <p className="text-[#8CA3C3] text-[16px] font-[Noto Sans] font-[300]">
-                  Zip Code
+                  Pin Code
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
                   {student.zip_code}
@@ -412,7 +405,8 @@ const StudentEditRequestRejectApproval = () => {
                   Address
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  {studentUpdatedData.address}, <br />  {studentUpdatedData.city} {studentUpdatedData.zip_code}
+                  {studentUpdatedData.address}, <br /> {studentUpdatedData.city}{" "}
+                  {studentUpdatedData.zip_code}
                 </p>
               </div>
               <div>
@@ -425,7 +419,7 @@ const StudentEditRequestRejectApproval = () => {
               </div>
               <div>
                 <p className="text-[#8CA3C3] text-[16px] font-[Noto Sans] font-[300]">
-                  Zip Code
+                  Pin Code
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
                   {studentUpdatedData.zip_code}
@@ -485,7 +479,8 @@ const StudentEditRequestRejectApproval = () => {
                   Address
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  {studentUpdatedData.address}, <br /> {studentUpdatedData.city} {studentUpdatedData.zip_code}
+                  {studentUpdatedData.address}, <br /> {studentUpdatedData.city}{" "}
+                  {studentUpdatedData.zip_code}
                 </p>
               </div>
               <div>
@@ -498,7 +493,7 @@ const StudentEditRequestRejectApproval = () => {
               </div>
               <div>
                 <p className="text-[#8CA3C3] text-[16px] font-[Noto Sans] font-[300]">
-                  Zip Code
+                  Pin Code
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
                   {studentUpdatedData.zip_code}
@@ -553,7 +548,10 @@ const StudentEditRequestRejectApproval = () => {
           </div>
           <div className="flex flex-row-reverse gap-[16px] mb-[50px]">
             <div>
-              <button className="bg-[#0041E9] text-[white] py-[13px] px-[34px] rounded-[10px] text-[18px] font-[400]" onClick={handleApprove}>
+              <button
+                className="bg-[#0041E9] text-[white] py-[13px] px-[34px] rounded-[10px] text-[18px] font-[400]"
+                onClick={handleApprove}
+              >
                 Approve
               </button>
             </div>
