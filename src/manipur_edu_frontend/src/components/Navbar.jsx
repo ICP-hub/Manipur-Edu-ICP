@@ -337,7 +337,7 @@ const Navbar = () => {
                   alt="Certificates"
                   className="w-[30px] h-[30px]"
                 />
-                <a className="text-[18px]">Certificates</a>
+                <a className="text-[18px]">Documents</a>
               </li>
               <li className="flex flex-row items-center gap-2 mb-6">
                 <img

@@ -153,89 +153,173 @@ const Certifications = () => {
           ) : userType === "student" && isLoggedIn ? (
             <>
               <div className="flex gap-5 flex-wrap px-[45px] pt-[20px]">
-                <div className=" bg-[#EEF6FF] w-[30%] flex flex-col border border-[#89C1FF] rounded-[10px] pt-[24px] ">
+                <div className="bg-[#EEF6FF] w-[30%] flex flex-col rounded-[10px] pt-[24px] box-border relative">
                   <img
-                    className="w-[30px] h-[30px] ml-[10px]"
+                    className="w-[30px] h-[30px] ml-[3px] mt-[-20px]"
                     src={"Certificate.png"}
                     alt="certificate"
                   />
-                  <p className="text-[Segoe UI] text-[#00227A] text-center font-[600] text-[20px] leading-[27px] pt-[11px]">
+                  <p className="text-[Segoe UI] text-[#00227A] font-[600] text-center text-[19px] leading-[27px] pt-[9px] box-border">
                     Document Name
                   </p>
-                  <p className="text-[Segoe UI] text-[#00227A] text-center font-[400] text-[15px] leading-[20px] pt-[10px]">
+                  <p className="text-[Segoe UI] text-[#00227A] font-[400] text-center text-[15px] leading-[20px] pt-[10px] box-border">
                     Issued by : Name
                   </p>
-                  <p className="text-[Segoe UI] text-[#00227A] text-center font-[400] text-[15px] leading-[20px] pt-[8px]">
+                  <p className="text-[Segoe UI] text-[#00227A] font-[400] text-center text-[15px] leading-[20px] pt-[8px] box-border">
                     Issued Date : 11-11-2023
                   </p>
+                  <p
+                    style={{
+                      borderBottom: "1.5px solid #C7E2FF",
+                      marginBottom: "0px",
+                      marginTop: "18px",
+                      marginLeft: "30px",
+                      marginRight: "30px",
+                    }}
+                    className="box-border"
+                  ></p>
                   <div className="flex justify-center px-[16px] pt-[27px] pb-[14px]">
                     <button className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[30px] py-[5px]">
                       View
                     </button>
                   </div>
+                  <div
+                    className="absolute inset-0 border-[#89C1FF] rounded-[10px] pointer-events-none"
+                    style={{
+                      borderWidth: "1px 1px 1px 1px",
+                      borderStyle: "solid",
+                      top: "0px",
+                      left: "0px",
+                      right: "6px",
+                      bottom: "6px",
+                    }}
+                  ></div>
                 </div>
-                <div className=" bg-[#EEF6FF] w-[30%] flex flex-col border border-[#89C1FF] rounded-[10px] pt-[24px] ">
+                <div className="bg-[#EEF6FF] w-[30%] flex flex-col rounded-[10px] pt-[24px] box-border relative">
                   <img
-                    className="w-[30px] h-[30px] ml-[10px]"
+                    className="w-[30px] h-[30px] ml-[3px] mt-[-20px]"
                     src={"Certificate.png"}
                     alt="certificate"
                   />
-                  <p className="text-[Segoe UI] text-[#00227A] text-center font-[600] text-[20px] leading-[27px] pt-[11px]">
+                  <p className="text-[Segoe UI] text-[#00227A] font-[600] text-center text-[19px] leading-[27px] pt-[9px] box-border">
                     Document Name
                   </p>
-                  <p className="text-[Segoe UI] text-[#00227A] text-center font-[400] text-[15px] leading-[20px] pt-[10px]">
+                  <p className="text-[Segoe UI] text-[#00227A] font-[400] text-center text-[15px] leading-[20px] pt-[10px] box-border">
                     Issued by : Name
                   </p>
-                  <p className="text-[Segoe UI] text-[#00227A] text-center font-[400] text-[15px] leading-[20px] pt-[8px]">
+                  <p className="text-[Segoe UI] text-[#00227A] font-[400] text-center text-[15px] leading-[20px] pt-[8px] box-border">
                     Issued Date : 11-11-2023
                   </p>
+                  <p
+                    style={{
+                      borderBottom: "1.5px solid #C7E2FF",
+                      marginBottom: "0px",
+                      marginTop: "18px",
+                      marginLeft: "30px",
+                      marginRight: "30px",
+                    }}
+                    className="box-border"
+                  ></p>
                   <div className="flex justify-center px-[16px] pt-[27px] pb-[14px]">
                     <button className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[30px] py-[5px]">
                       View
                     </button>
                   </div>
+                  <div
+                    className="absolute inset-0 border-[#89C1FF] rounded-[10px] pointer-events-none"
+                    style={{
+                      borderWidth: "1px 1px 1px 1px",
+                      borderStyle: "solid",
+                      top: "0px",
+                      left: "0px",
+                      right: "6px",
+                      bottom: "6px",
+                    }}
+                  ></div>
                 </div>
-                <div className=" bg-[#EEF6FF] w-[30%] flex flex-col border border-[#89C1FF] rounded-[10px] pt-[24px] ">
+                <div className="bg-[#EEF6FF] w-[30%] flex flex-col rounded-[10px] pt-[24px] box-border relative">
                   <img
-                    className="w-[30px] h-[30px] ml-[10px]"
+                    className="w-[30px] h-[30px] ml-[3px] mt-[-20px]"
                     src={"Certificate.png"}
                     alt="certificate"
                   />
-                  <p className="text-[Segoe UI] text-[#00227A] text-center font-[600] text-[20px] leading-[27px] pt-[11px]">
+                  <p className="text-[Segoe UI] text-[#00227A] font-[600] text-center text-[19px] leading-[27px] pt-[9px] box-border">
                     Document Name
                   </p>
-                  <p className="text-[Segoe UI] text-[#00227A] text-center font-[400] text-[15px] leading-[20px] pt-[10px]">
+                  <p className="text-[Segoe UI] text-[#00227A] font-[400] text-center text-[15px] leading-[20px] pt-[10px] box-border">
                     Issued by : Name
                   </p>
-                  <p className="text-[Segoe UI] text-[#00227A] text-center font-[400] text-[15px] leading-[20px] pt-[8px]">
+                  <p className="text-[Segoe UI] text-[#00227A] font-[400] text-center text-[15px] leading-[20px] pt-[8px] box-border">
                     Issued Date : 11-11-2023
                   </p>
+                  <p
+                    style={{
+                      borderBottom: "1.5px solid #C7E2FF",
+                      marginBottom: "0px",
+                      marginTop: "18px",
+                      marginLeft: "30px",
+                      marginRight: "30px",
+                    }}
+                    className="box-border"
+                  ></p>
                   <div className="flex justify-center px-[16px] pt-[27px] pb-[14px]">
                     <button className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[30px] py-[5px]">
                       View
                     </button>
                   </div>
+                  <div
+                    className="absolute inset-0 border-[#89C1FF] rounded-[10px] pointer-events-none"
+                    style={{
+                      borderWidth: "1px 1px 1px 1px",
+                      borderStyle: "solid",
+                      top: "0px",
+                      left: "0px",
+                      right: "6px",
+                      bottom: "6px",
+                    }}
+                  ></div>
                 </div>
-                <div className=" bg-[#EEF6FF] w-[30%] flex flex-col border border-[#89C1FF] rounded-[10px] pt-[24px] ">
+                <div className="bg-[#EEF6FF] w-[30%] flex flex-col rounded-[10px] pt-[24px] box-border relative">
                   <img
-                    className="w-[30px] h-[30px] ml-[10px]"
+                    className="w-[30px] h-[30px] ml-[3px] mt-[-20px]"
                     src={"Certificate.png"}
                     alt="certificate"
                   />
-                  <p className="text-[Segoe UI] text-[#00227A] text-center font-[600] text-[20px] leading-[27px] pt-[11px]">
+                  <p className="text-[Segoe UI] text-[#00227A] font-[600] text-center text-[19px] leading-[27px] pt-[9px] box-border">
                     Document Name
                   </p>
-                  <p className="text-[Segoe UI] text-[#00227A] text-center font-[400] text-[15px] leading-[20px] pt-[10px]">
+                  <p className="text-[Segoe UI] text-[#00227A] font-[400] text-center text-[15px] leading-[20px] pt-[10px] box-border">
                     Issued by : Name
                   </p>
-                  <p className="text-[Segoe UI] text-[#00227A] text-center font-[400] text-[15px] leading-[20px] pt-[8px]">
+                  <p className="text-[Segoe UI] text-[#00227A] font-[400] text-center text-[15px] leading-[20px] pt-[8px] box-border">
                     Issued Date : 11-11-2023
                   </p>
+                  <p
+                    style={{
+                      borderBottom: "1.5px solid #C7E2FF",
+                      marginBottom: "0px",
+                      marginTop: "18px",
+                      marginLeft: "30px",
+                      marginRight: "30px",
+                    }}
+                    className="box-border"
+                  ></p>
                   <div className="flex justify-center px-[16px] pt-[27px] pb-[14px]">
                     <button className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[30px] py-[5px]">
                       View
                     </button>
                   </div>
+                  <div
+                    className="absolute inset-0 border-[#89C1FF] rounded-[10px] pointer-events-none"
+                    style={{
+                      borderWidth: "1px 1px 1px 1px",
+                      borderStyle: "solid",
+                      top: "0px",
+                      left: "0px",
+                      right: "6px",
+                      bottom: "6px",
+                    }}
+                  ></div>
                 </div>
               </div>
             </>
