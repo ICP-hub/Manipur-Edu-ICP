@@ -560,6 +560,7 @@ fn get_institute_details(institute_principal: Option<String>) -> Option<Institut
     })
 }
 
+//func to get students registered under the caller institute 
 #[query]
 pub fn get_institute_students() -> Option<Vec<String>> {
     // // check_admin();
@@ -588,7 +589,7 @@ pub fn get_institute_students() -> Option<Vec<String>> {
 
 
 
-
+//func to get students registered under the institute by its id
 #[query]
 pub fn get_institute_students_by_id(institute_principal: String) -> Option<Vec<String>> {
     // let default_principal = caller().to_string();
@@ -609,7 +610,10 @@ pub fn get_institute_students_by_id(institute_principal: String) -> Option<Vec<S
     })
 }
 
+//func to get students registered under the institute page
 
+
+//func to get all students list with details
 #[query]
 pub fn get_students_withdetails() -> HashMap<String, UserData> {
     // check_admin();
@@ -620,6 +624,29 @@ pub fn get_students_withdetails() -> HashMap<String, UserData> {
     })
 }
 
+//students list pagination
+#[query]
+pub fn get_students_withdetails_page(page: u32, page_size: u32) -> HashMap<String, UserData> {
+    STATE.with(|state| {
+        let state = state.borrow();
+
+        let all_students = state.users.clone();
+        let total_students = all_students.len() as u32;
+        let total_pages = (total_students + page_size - 1) / page_size; 
+
+        
+        let offset = (page - 1) * page_size;
+        let limit = page_size.min(total_students - offset);
+
+        // Fetch the subset of students for the current page
+        let mut students_page: HashMap<String, UserData> = HashMap::new();
+        for (key, value) in all_students.iter().skip(offset as usize).take(limit as usize) {
+            students_page.insert(key.clone(), value.clone());
+        }
+
+        students_page
+    })
+}
 
 
 
@@ -638,6 +665,32 @@ pub fn get_institutes() -> HashMap<String, InstituteData> {
         state.institute.clone()
     })
 }
+
+// institute list page wise
+#[query]
+pub fn get_institutes_page(page: u32, page_size: u32) -> HashMap<String, InstituteData> {
+    STATE.with(|state| {
+        let state = state.borrow();
+
+        let all_institutes = state.institute.clone();
+        let total_institutes = all_institutes.len() as u32;
+        let total_pages = (total_institutes + page_size - 1) / page_size; // Calculate total number of pages
+
+        // Calculate offset and limit for fetching the current page of data
+        let offset = (page - 1) * page_size;
+        let limit = page_size.min(total_institutes - offset);
+
+        // Fetch the subset of institutes for the current page
+        let mut institutes_page: HashMap<String, InstituteData> = HashMap::new();
+        for (key, value) in all_institutes.iter().skip(offset as usize).take(limit as usize) {
+            institutes_page.insert(key.clone(), value.clone());
+        }
+
+        institutes_page
+    })
+}
+
+
 //function to delete institute record
 #[update]
 fn delete_institute_record(institute_principal: String) -> String {
@@ -688,6 +741,28 @@ fn get_all_institute_students() -> String {
         format!("all data:- {:?}", state.institute_students)
     })
 }
+
+//institute_students list pagination
+#[query]
+fn get_allinstitute_students_page(page: u32, page_size: u32) -> Vec<String> {
+    STATE.with(|state| {
+        let state = state.borrow();
+
+        let all_students = state.institute_students.values().flatten().cloned().collect::<Vec<String>>();
+        let total_students = all_students.len() as u32;
+        let total_pages = (total_students + page_size - 1) / page_size; // Calculate total number of pages
+
+        // Calculate offset and limit for fetching the current page of data
+        let offset = (page - 1) * page_size;
+        let limit = page_size.min(total_students - offset);
+
+        // Fetch the subset of institute students for the current page
+        let students_page: Vec<String> = all_students.iter().skip(offset as usize).take(limit as usize).cloned().collect();
+
+        students_page
+    })
+}
+
 #[update]
 pub fn reject_institute(user_principal: String) -> String {
     // check_admin();
@@ -719,3 +794,4 @@ pub fn get_unverified_institutes() -> Vec<String> {
         state.unapproved_institute.clone()
     })
 }
+

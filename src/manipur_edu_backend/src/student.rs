@@ -1,10 +1,10 @@
 use super::State;
 use super::STATE;
-use candid::types::principal;
+// use candid::types::principal;
 use candid::CandidType;
 
-use crate::certificate::*;
-use crate::studentresult::*;
+// use crate::certificate::*;
+// use crate::studentresult::*;
 use ic_cdk::api::caller;
 use ic_cdk::api::management_canister::main::raw_rand;
 use ic_cdk_macros::*;
@@ -46,7 +46,9 @@ pub struct UserData {
     certificates: Option<Vec<String>>,
     result: Option<Vec<String>>,
     pub status: Option<String>,
+    //vec of canister id where user doc has stored
     pub kyc: Vec<Image>,
+
 }
 
 impl UserData {
@@ -268,6 +270,8 @@ pub fn student_application_status(user_principal: String) -> Option<String> {
 //function for student to register
 #[update]
 pub async fn register_user(mut user_data: UserData) -> String {
+
+    
     let principal_id = caller().to_string();
     let uid = raw_rand().await.unwrap().0;
     let uid = format!("{:x}", Sha256::digest(&uid));

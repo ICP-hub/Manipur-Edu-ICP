@@ -69,6 +69,12 @@ checksum = "f1fdabc7756949593fe60f30ec81974b613357de856987752631dea1e3394c80"
 
 [[package]]
 name = "base64"
+version = "0.13.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9e1b586273c5702936fe7b7d6896644d8be71e6314cfe09d3167c95f712589e8"
+
+[[package]]
+name = "base64"
 version = "0.21.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9d297deb1925b89f2ccc13d7635fa0714f12c87adce1c75356b39ca9b7178567"
@@ -715,6 +721,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "ic-ledger-types"
+version = "0.9.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b1fea91d351eca80ffa8427e77df3210e37d292c6c75afbe1ca5e6437418e022"
+dependencies = [
+ "candid",
+ "crc32fast",
+ "hex",
+ "ic-cdk",
+ "serde",
+ "serde_bytes",
+ "sha2",
+]
+
+[[package]]
 name = "ic-stable-structures"
 version = "0.6.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -887,12 +908,14 @@ dependencies = [
 name = "manipur_edu_backend"
 version = "0.1.0"
 dependencies = [
+ "base64 0.13.1",
  "candid",
  "candid-extractor",
  "chrono",
  "ic-cdk",
  "ic-cdk-macros",
  "ic-cdk-timers",
+ "ic-ledger-types",
  "ic-stable-structures",
  "regex",
  "serde",
@@ -1593,7 +1616,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "31561fbbaa86d3c042696940bc9601146bf4aaec39ae725c86b5f1358d8d7023"
 dependencies = [
  "anyhow",
- "base64",
+ "base64 0.21.7",
  "bincode",
  "directories-next",
  "file-per-thread-logger",

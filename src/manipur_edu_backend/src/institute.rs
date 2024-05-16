@@ -22,7 +22,7 @@ pub struct InstituteData {
     pub institute_name: Option<String>,
     pub institute_size: Option<u32>,
     pub email: Option<String>,
-    pub address: Option<String>,
+    pub address: Option<String>, 
     pub website: Option<String>,
     pub city: Option<String>,
     pub state: Option<String>,
@@ -176,6 +176,7 @@ pub async fn register_institute(mut institute_data: InstituteData) -> String {
                 Ok(_) => {
                     println!("Validation passed!");
                     institute_data.status = Some("pending".to_string());
+                    
                     state.institute.insert(principal_id.clone(), institute_data);
                     state.unapproved_institute.push(principal_id.clone());
                     format!("Institute registered successfully with data",)

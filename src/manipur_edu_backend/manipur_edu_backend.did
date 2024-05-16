@@ -1,3 +1,53 @@
+type CanisterChange = record {
+  timestamp_nanos : nat64;
+  canister_version : nat64;
+  origin : CanisterChangeOrigin;
+  details : CanisterChangeDetails;
+};
+type CanisterChangeDetails = variant {
+  creation : CreationRecord;
+  code_deployment : CodeDeploymentRecord;
+  controllers_change : CreationRecord;
+  code_uninstall;
+};
+type CanisterChangeOrigin = variant {
+  from_user : FromUserRecord;
+  from_canister : FromCanisterRecord;
+};
+type CanisterIdRecord = record { canister_id : principal };
+type CanisterInfoRequest = record {
+  canister_id : principal;
+  num_requested_changes : opt nat64;
+};
+type CanisterInfoResponse = record {
+  controllers : vec principal;
+  module_hash : opt blob;
+  recent_changes : vec CanisterChange;
+  total_num_changes : nat64;
+};
+type CanisterInstallMode = variant {
+  reinstall;
+  upgrade : opt opt bool;
+  install;
+};
+type CanisterSettings = record {
+  freezing_threshold : opt nat;
+  controllers : opt vec principal;
+  reserved_cycles_limit : opt nat;
+  memory_allocation : opt nat;
+  compute_allocation : opt nat;
+};
+type CanisterStatusResponse = record {
+  status : CanisterStatusType;
+  memory_size : nat;
+  cycles : nat;
+  settings : DefiniteCanisterSettings;
+  query_stats : QueryStats;
+  idle_cycles_burned_per_day : nat;
+  module_hash : opt blob;
+  reserved_cycles : nat;
+};
+type CanisterStatusType = variant { stopped; stopping; running };
 type CertificateData = record {
   issued_by : text;
   issue_date : text;
@@ -5,8 +55,32 @@ type CertificateData = record {
   certificate_link : blob;
   certificate_id : text;
 };
-type Chunk = record { next_chunkid : nat32; chunk_value : blob };
+type CodeDeploymentMode = variant { reinstall; upgrade; install };
+type CodeDeploymentRecord = record {
+  mode : CodeDeploymentMode;
+  module_hash : blob;
+};
+type CreateCanisterArgument = record { settings : opt CanisterSettings };
+type CreationRecord = record { controllers : vec principal };
+type DefiniteCanisterSettings = record {
+  freezing_threshold : nat;
+  controllers : vec principal;
+  reserved_cycles_limit : nat;
+  memory_allocation : nat;
+  compute_allocation : nat;
+};
+type FromCanisterRecord = record {
+  canister_version : opt nat64;
+  canister_id : principal;
+};
+type FromUserRecord = record { user_id : principal };
 type Image = record { chunk_id : nat32; image_id : nat32; num_chunks : nat64 };
+type InstallCodeArgument = record {
+  arg : blob;
+  wasm_module : blob;
+  mode : CanisterInstallMode;
+  canister_id : principal;
+};
 type InstituteData = record {
   status : opt text;
   zip_code : opt nat32;
@@ -25,10 +99,43 @@ type InstituteData = record {
   phone_no : opt text;
 };
 type InstituteInfo = record { public_key : text; name : text };
+type QueryStats = record {
+  response_payload_bytes_total : nat;
+  num_instructions_total : nat;
+  num_calls_total : nat;
+  request_payload_bytes_total : nat;
+};
+type RejectionCode = variant {
+  NoError;
+  CanisterError;
+  SysTransient;
+  DestinationInvalid;
+  Unknown;
+  SysFatal;
+  CanisterReject;
+};
 type Result = variant { Ok; Err : text };
-type Result_1 = variant { Ok : text; Err : text };
-type Result_2 = variant { Ok : vec CertificateData; Err : text };
-type Result_3 = variant { Ok : vec UserResult; Err : text };
+type Result_1 = variant {
+  Ok : record { CanisterInfoResponse };
+  Err : record { RejectionCode; text };
+};
+type Result_2 = variant {
+  Ok : record { CanisterStatusResponse };
+  Err : record { RejectionCode; text };
+};
+type Result_3 = variant { Ok : principal; Err : text };
+type Result_4 = variant {
+  Ok : record { CanisterIdRecord };
+  Err : record { RejectionCode; text };
+};
+type Result_5 = variant { Ok : text; Err : text };
+type Result_6 = variant { Ok; Err : record { RejectionCode; text } };
+type Result_7 = variant { Ok : vec CertificateData; Err : text };
+type Result_8 = variant { Ok : vec UserResult; Err : text };
+type Result_9 = variant {
+  Ok : record { blob };
+  Err : record { RejectionCode; text };
+};
 type ScholarShip = record {
   status : text;
   date : text;
@@ -41,6 +148,10 @@ type ScholarShip = record {
   offerby : text;
   amount : text;
   applicants : vec principal;
+};
+type UpdateSettingsArgument = record {
+  canister_id : principal;
+  settings : CanisterSettings;
 };
 type UserData = record {
   kyc : vec Image;
@@ -75,20 +186,27 @@ type UserResult = record {
   semester : text;
   result_id : text;
   issued_date : text;
+  canisterid : opt principal;
 };
 service : {
   add_private_key : (text) -> (Result);
   approve_institute_profile_update : (text) -> (text);
   approve_student_profile_update : (text) -> (text);
   calculate_state_size : () -> (nat64) query;
+  canister_info : (CanisterInfoRequest) -> (Result_1);
+  canister_status : (CanisterIdRecord) -> (Result_2);
   check_admin : () -> (bool) query;
+  check_canister : (CanisterIdRecord) -> (Result_3);
   check_user_type : () -> (text) query;
   checkk_admin : () -> (bool) query;
-  create_scholarship : (ScholarShip) -> (Result_1);
-  create_user_certificate : (text, CertificateData) -> (Result_1);
-  create_user_result : (text, UserResult) -> (Result_1);
+  create_canister : (CreateCanisterArgument) -> (Result_4);
+  create_scholarship : (ScholarShip) -> (Result_5);
+  create_user_certificate : (text, CertificateData) -> (Result_5);
+  create_user_result : (text, UserResult) -> (Result_5);
+  delete_canister : (CanisterIdRecord) -> (Result_6);
   delete_institute_record : (text) -> (text);
   delete_student_record : (text) -> (text);
+  deposit_cycles : (CanisterIdRecord, nat) -> (Result_6);
   edit_institute_profile : (InstituteData) -> (text);
   edit_student_profile : (UserData) -> (text);
   get_admin : () -> (text) query;
@@ -98,35 +216,45 @@ service : {
   get_all_students_edit_req : (opt text) -> (
       vec record { text; UserData },
     ) query;
-  get_image : (nat32, nat32) -> (opt Chunk) query;
+  get_allinstitute_students_page : (nat32, nat32) -> (vec text) query;
   get_institute_details : (opt text) -> (opt InstituteData) query;
   get_institute_profile_updated : (text) -> (opt InstituteData) query;
   get_institute_students : () -> (opt vec text) query;
   get_institute_students_by_id : (text) -> (opt vec text) query;
-  get_institute_students_page : (nat32, nat32) -> (vec text) query;
   get_institutes : () -> (vec record { text; InstituteData }) query;
   get_institutes_name_and_public_key : () -> (vec InstituteInfo) query;
-  get_private_key : (text) -> (Result_1) query;
+  get_institutes_page : (nat32, nat32) -> (
+      vec record { text; InstituteData },
+    ) query;
+  get_private_key : () -> (Result_5) query;
   get_scholarship : (text) -> (ScholarShip) query;
   get_student_details : (text) -> (opt UserData) query;
   get_student_profile_updated : (text) -> (opt UserData) query;
   get_students : () -> (text) query;
   get_students_withdetails : () -> (vec record { text; UserData }) query;
+  get_students_withdetails_page : (nat32, nat32) -> (
+      vec record { text; UserData },
+    ) query;
   get_unverified_institutes : () -> (vec text) query;
   get_unverified_students : (opt text) -> (vec text) query;
-  get_user_certificates : (text) -> (Result_2) query;
-  get_user_result : (text) -> (Result_3) query;
+  get_user_certificates : (text) -> (Result_7) query;
+  get_user_result : (text) -> (Result_8) query;
   greet : () -> (text) query;
+  install_code : (InstallCodeArgument) -> (Result_6);
   institute_application_status : (text) -> (opt text) query;
   is_user_already_registered : () -> (bool) query;
   login : (text) -> (bool) query;
+  raw_rand : () -> (Result_9);
   register_admin : () -> (text);
   register_institute : (InstituteData) -> (text);
   register_user : (UserData) -> (text);
   reject_institute : (text) -> (text);
   reject_student : (text) -> (text);
+  start_canister : (CanisterIdRecord) -> (Result_6);
+  stop_canister : (CanisterIdRecord) -> (Result_6);
   student_application_status : (text) -> (opt text) query;
-  upload_image : (nat32, nat32, Chunk) -> (text);
+  uninstall_code : (CanisterIdRecord) -> (Result_6);
+  update_settings : (UpdateSettingsArgument) -> (Result_6);
   verify_institute : (text) -> (text);
   verify_student : (text) -> (text);
 }

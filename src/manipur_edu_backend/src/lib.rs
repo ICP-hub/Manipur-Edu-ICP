@@ -1,4 +1,4 @@
-// use candid::{CandidType, Deserialize};
+
 use candid::{CandidType, Deserialize};
 
 use std::cell::RefCell;
@@ -26,6 +26,18 @@ use certificate::*;
 pub mod scholarship;
 use scholarship::*;
 
+pub mod types;
+pub mod testing;
+pub mod canister;
+use types::*;
+
+use crate::api::call::CallResult;
+
+use candid::Principal;
+
+fn get_canister_id() -> Principal {
+    api::id()
+}
 
 // State of the Canister
 #[derive(Serialize, CandidType, Deserialize, Debug, Clone, Default)]
@@ -39,12 +51,13 @@ pub struct State {
     pub admin: Vec<String>,
     pub unapproved_student_profile: HashMap<String, UserData>,
     pub unapproved_institute_profile: HashMap<String, InstituteData>,
-    pub student_result: HashMap<String, Vec<UserResult>>,
+    pub student_result: HashMap<String, Vec<UserResult>>, //option
     pub student_certificate: HashMap<String, Vec<CertificateData>>,
     pub institute_students: HashMap<String, Vec<String>>,
     pub students_registered_by_institute: Vec<String>,
     pub institutes_registered_by_admin: Vec<String>,
     pub private_keys: HashMap<String, String>,
+    // pub canister_map: HashMap<String, Principal>, //remove
     
 }  
 
@@ -205,6 +218,7 @@ fn post_upgrade() {
             students_registered_by_institute: Vec::new(),
             institutes_registered_by_admin: Vec::new(),
             private_keys: HashMap::new(),
+            // canister_map: HashMap::new(),
             // Reset the users HashMap
         };
     });
