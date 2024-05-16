@@ -4,6 +4,14 @@ import { useSelector } from "react-redux";
 
 const AllRegisteredInstitutes = ({ onView, onEdit, onStudent, SetTab }) => {
   let entries = useSelector((state) => state.allInstitutesReducer);
+  if (!entries || entries.length === 0) {
+    return (
+      <NoDataComponent
+        message={"No Institutes registered yet!"}
+        imageSrc="NoData.png"
+      ></NoDataComponent>
+    );
+  }
   return (
     <div>
       <div className="border rounded-[10px] border-[#D9EBFF]">

@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom"; // Simplified import for c
 import { handleFileDecrypt, importAesKeyFromBase64 } from "../../utils/helper";
 import Modal from "../../components/Modal";
 import { useDispatch, useSelector } from "react-redux";
+import NoDataComponent from "./NoData";
 const StudentVerificationRequest = () => {
   const { actor, authClient } = useAuth();
   const principal_id = authClient.getIdentity().getPrincipal().toString();
@@ -23,6 +24,14 @@ const StudentVerificationRequest = () => {
 
   let entries = useSelector((state) => state.allStudentsReducer);
   console.log("entries is : ", entries);
+  if (!entries || entries.length === 0) {
+    return (
+      <NoDataComponent
+        message="No Student Verification Requests yet!"
+        imageSrc="NoData.png"
+      />
+    );
+  }
 
   return (
     <div className="w-full self-center">

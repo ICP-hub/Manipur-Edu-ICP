@@ -5,10 +5,18 @@ import { useQuery } from "react-query";
 import StudentsTab from "../Institute/StudentsTab";
 import { useDispatch } from "react-redux";
 import { setInstituteId } from "../../../Redux/Action/idAction";
+import NoDataComponent from "../Institute/NoData";
 
 const VerificationButton = ({ onTap, SetTab }) => {
   let entries = useSelector((state) => state.allInstitutesReducer);
-
+  if (!entries || entries.length === 0) {
+    return (
+      <NoDataComponent
+        message={"No Institute Verification Requests yet!"}
+        imageSrc="NoData.png"
+      ></NoDataComponent>
+    );
+  }
   return (
     <div>
       <div className="border rounded-[10px] border-[#D9EBFF]">

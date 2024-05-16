@@ -1,37 +1,44 @@
 import React from "react";
-
+import NoDataComponent from "../Institute/NoData";
 const ScholarshipApplicationsTab = ({ onTap }) => {
   const entries = [
-    {
-      id: "STU-12345",
-      email: "email@email.com",
-      status: "Approved",
-      scholarship_detail: "Manipur Scholarship",
-      view_approve: "Click to View/Approve",
-    },
-    {
-      id: "STU-12345",
-      email: "email@email.com",
-      status: "Rejected",
-      scholarship_detail: "Manipur Scholarship",
-      view_approve: "Click to View/Approve",
-    },
-
-    {
-      id: "STU-12345",
-      email: "email@email.com",
-      status: "Approved",
-      scholarship_detail: "Manipur Scholarship",
-      view_approve: "Click to View/Approve",
-    },
-    {
-      id: "STU-12345",
-      email: "email@email.com",
-      status: "Pending",
-      scholarship_detail: "Manipur Scholarship",
-      view_approve: "Click to View/Approve",
-    },
+    // {
+    //   id: "STU-12345",
+    //   email: "email@email.com",
+    //   status: "Approved",
+    //   scholarship_detail: "Manipur Scholarship",
+    //   view_approve: "Click to View/Approve",
+    // },
+    // {
+    //   id: "STU-12345",
+    //   email: "email@email.com",
+    //   status: "Rejected",
+    //   scholarship_detail: "Manipur Scholarship",
+    //   view_approve: "Click to View/Approve",
+    // },
+    // {
+    //   id: "STU-12345",
+    //   email: "email@email.com",
+    //   status: "Approved",
+    //   scholarship_detail: "Manipur Scholarship",
+    //   view_approve: "Click to View/Approve",
+    // },
+    // {
+    //   id: "STU-12345",
+    //   email: "email@email.com",
+    //   status: "Pending",
+    //   scholarship_detail: "Manipur Scholarship",
+    //   view_approve: "Click to View/Approve",
+    // },
   ];
+  if (!entries || entries.length === 0) {
+    return (
+      <NoDataComponent
+        message={"No Scholarship Applications yet!"}
+        imageSrc="NoScholarship.png"
+      ></NoDataComponent>
+    );
+  }
   return (
     <div>
       <div className="border rounded-[10px] border-[#D9EBFF]">

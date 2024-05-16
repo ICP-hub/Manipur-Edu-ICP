@@ -2,12 +2,21 @@ import React, { useState } from "react";
 import EditResult from "../../components/institute/EditResultPop";
 import UploadResult from "../../components/institute/UploadResultPopup";
 import { useSelector } from "react-redux";
+import NoDataComponent from "./NoData";
 const ResultTab = () => {
   const [editresultpopup, seteditresultpopup] = useState(false);
   const [uploadresultpopup, setuploadresultpopup] = useState(false);
   const [publicKey, setPublicKey] = useState("");
   const [principalId, setPrincipalId] = useState("");
   let entries = useSelector((state) => state.allStudentsReducer);
+  if (!entries || entries.length === 0) {
+    return (
+      <NoDataComponent
+        message={"No Results posted yet!"}
+        imageSrc="NoResult.png"
+      ></NoDataComponent>
+    );
+  }
 
   return (
     <div className="w-[85%] self-center  pt-[27px]">
@@ -100,7 +109,7 @@ const Card = ({
         className="pt-2 ml-9 font-semibold underline flex justify-center bg-[#EEF6FF] text-[#687DB2] font-[Segoe UI] text-sm leading-5"
         style={{
           width: "90px",
-          height: "40px",
+          height: "35px",
           backgroundColor: "#355389",
           borderRadius: "8px",
           color: "#FFFFFF",

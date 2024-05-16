@@ -2,10 +2,19 @@ import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import VerifyEditDeleteDropdown from "./VerifyEditDeleteDropdown";
+import NoDataComponent from "./NoData";
 const AllRegisteredStudents = () => {
   
   let entries = useSelector((state) => state.allStudentsReducer);
   console.log(entries);
+  if (!entries || entries.length === 0) {
+    return (
+      <NoDataComponent
+        message="No Students registered yet!"
+        imageSrc="NoData.png"
+      />
+    );
+  }
   return (
     <div className="w-full self-center">
       <div className="grid grid-cols-[repeat(5,1fr)_3.125rem] py-[0.9375rem] mt-[1.6875rem] rounded-md bg-[#D9EBFF] font-[600] font-[Segoe UI] text-[0.9375rem] text-[#00227A] leading-[1.25rem]">

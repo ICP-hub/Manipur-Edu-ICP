@@ -1,5 +1,5 @@
 import React from "react";
-// import img from "../../assets/student.png";
+import NoDataComponent from "./NoData";
 
 const ScholarshipTab = () => {
   const entries = [
@@ -64,6 +64,14 @@ const ScholarshipTab = () => {
       status: "Rejected",
     },
   ];
+  if (!entries || entries.length === 0) {
+    return (
+      <NoDataComponent
+        message={"No Scholarship Applications yet!"}
+        imageSrc="NoScholarship.png"
+      ></NoDataComponent>
+    );
+  }
   return (
     <div className="w-[85%] self-center  pt-[27px]">
       <div className="grid grid-cols-5  py-[15px] mt-[27px] rounded-md bg-[#D9EBFF] font-[600] font-[Segoe UI] text-[15px] text-[#00227A] leading-[20px]">

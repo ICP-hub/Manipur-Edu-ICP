@@ -1,8 +1,16 @@
 import React, { useState } from "react";
 import { useSelector , useDispatch } from "react-redux";
+import NoDataComponent from "../../pages/Institute/NoData";
 const ScholarshipPostedAdmin = ({ onView, onEdit, onPost }) => {
   const entries = useSelector((state) => state.allScholarshipsReducer);
-
+if (!entries || entries.length === 0) {
+  return (
+    <NoDataComponent
+      message={"No Scholarships posted yet!"}
+      imageSrc={"OngoingSchp.png"}
+    ></NoDataComponent>
+  );
+}
   return (
     <div>
       <div className="flex flex-col gap-[35px]">
