@@ -20,7 +20,7 @@ const ProfileResult = () => {
     (state) => state.studentDetailsReducer
   );
 
-  
+  //STARTS :-  CODE TO  ACCUMULATE CHUNKS 
   const getImage = async (kyc) => {
     try {
       let i = 1;
@@ -91,6 +91,8 @@ const ProfileResult = () => {
       console.error("Failed to fetch chunks:", error);
     }
   };
+  //ENDS :-  CODE TO  ACCUMULATE CHUNKS 
+
 
   const handleView = async () => {
 

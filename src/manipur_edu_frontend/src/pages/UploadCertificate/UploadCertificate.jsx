@@ -21,8 +21,15 @@ const UploadCertificate = () => {
             const certificateLink = Array.from(new Uint8Array(byteArray)); // Convert ArrayBuffer to Uint8Array
 
             const upload_certificate = await actor.upload_certificate("2vxsx-fae", {
+
+                //             iv : String , 
+                // aes_key : String , 
+                // chunk_id : String , 
+                // num_chunks: usize, 
+                // certificate_id: String,
+                // certificate_info: String,
                 certificate_info: 'hello bacchon',
-                certificate_link: certificateLink,
+                // certificate_link: certificateLink,
                 issued_by: 'Rohan',
                 issue_date: Date.now().toString(),
 

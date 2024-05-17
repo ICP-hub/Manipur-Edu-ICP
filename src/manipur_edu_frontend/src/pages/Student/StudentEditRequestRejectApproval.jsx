@@ -352,14 +352,14 @@ function onBack() {
                   Aadhaar Card
                 </button>
               </div>
-              <div>
+              {/* <div>
                 <p className="text-[#8CA3C3] text-[16px] font-[Noto Sans] font-[300] pb-[20px]">
                   PAN Card
                 </p>
                 <button className="rounded-[5px] py-[14px] px-[50px] border border-[#00227A] text-[#00227A] text-[16px] font-[500] text-[Noto Sans]">
                   PAN Card
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -560,14 +560,14 @@ function onBack() {
                   Aadhaar Card
                 </button>
               </div>
-              <div>
+              {/* <div>
                 <p className="text-[#8CA3C3] text-[16px] font-[Noto Sans] font-[300] pb-[20px]">
                   PAN Card
                 </p>
                 <button className="rounded-[5px] py-[14px] px-[50px] border border-[#00227A] text-[#00227A] text-[16px] font-[500] text-[Noto Sans]">
                   PAN Card
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="flex flex-row-reverse gap-[16px] mb-[50px]">

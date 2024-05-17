@@ -4,7 +4,7 @@ import CertificatesIssued from "../Institute/CertificatesIssued";
 import { useAuth } from "../../utils/useAuthClient";
 import Modal from "../../components/Modal";
 import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
-import { handleFileDecrypt } from "../../utils/helper";
+import { decrypted_Img} from "../../utils/helper";
 import { colorStar } from "../../utils/Data/SvgData";
 
 
@@ -24,6 +24,81 @@ const Certifications = () => {
 
     checkLogin();
   }, [userType, actor]);
+
+
+   //STARTS :-  CODE TO  ACCUMULATE CHUNKS 
+   const getDoc = async (getCertificates) => {
+    const kyc  = getCertificates.Ok ; 
+    try {
+      let i = 1;
+      let data;
+      const newChunks = [];
+
+      console.log("kyc in getImg funct is " , kyc)
+      console.log("kyc 0  in getImg funct is " , kyc[0])
+      // const chunk_id = kyc[0]["chunk_id"];
+      // console.log("chunk_id is " , chunk_id)
+
+      const chunk_id_val = kyc[0]["chunk_id"];
+      const no_Of_chunks = kyc[0]["num_chunks"];
+
+      console.log("num_chunks is ", no_Of_chunks)
+      console.log("&&&&&((((((((((((((((((((((((((((((((((((&")
+      console.log("  chunk_id_val is " , chunk_id_val , typeof(chunk_id_val))
+      console.log("chunk_id_val is ", chunk_id_val)
+      for (let i = 0; i < Number(kyc[0]["num_chunks"]); i++) {
+        console.log("Fetching chunks at i = ", i);
+        console.log("kyc[0].certificate_id is  in for  ", kyc[0]["certificate_id"] , typeof(kyc[0]["certificate_id"]))
+
+
+        const imageId = parseInt(kyc[0]["certificate_id"], 10);
+        // let chunkId = parseInt(kyc[0]["chunk_id"], 10);
+        let chunkId =parseInt(kyc[0]["chunk_id"] , 10)
+
+        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+        console.log("chunkId is in for", chunkId , typeof(chunkId))
+        console.log("kyc[0].certificate_id is  in for  ", imageId , typeof(imageId))
+
+        // const { chunk_id, chunk_data } = await actor.get_image(imageId , chunkId);
+        const res = await actor.get_image(imageId, chunkId);
+        console.log("res is ", res)
+        console.log("res[0] is ", res[0])
+        let chunk_data = res[0]["chunk_value"];
+        let next_chunk_id = res[0]["next_chunkid"]
+
+        console.log("chunk_data is ", chunk_data)
+        console.log("next_chunk_id is ", next_chunk_id)
+        console.log("chunk_data.length is ", chunk_data.length)
+        if (chunk_data.length > 0) {
+        
+          newChunks.push(new Uint8Array(chunk_data));
+          chunkId = next_chunk_id;  // Update chunkId to fetch the next chunk
+        }
+      }
+    
+      // Calculate the total length of all chunks combined
+      let totalLength = newChunks.reduce((acc, val) => val ? acc + val.length : acc, 0);
+      let combinedData = new Uint8Array(totalLength);
+      
+      let offset = 0;
+      newChunks.forEach(chunk => {
+          if (chunk) {  // Ensure chunk is not null
+              combinedData.set(chunk, offset);
+              offset += chunk.length;
+          }
+      });
+      
+
+
+      // Now you have a single Uint8Array containing all the data
+      console.log("Combined data is:", combinedData);
+      return combinedData;
+
+    } catch (error) {
+      console.error("Failed to fetch chunks:", error);
+    }
+  };
+  //ENDS :-  CODE TO  ACCUMULATE CHUNKS 
   const principal_id = authClient.getIdentity().getPrincipal().toString();
   const navigate = useNavigate();
   const handleStudentCertificate = async () => {
@@ -36,6 +111,14 @@ const Certifications = () => {
     
     const getCertificates = await actor.get_user_certificates(principal_id);
     console.log('getCertificate from get_user_certificates is :', getCertificates);
+
+    const privateKey = await actor.get_private_key();
+    console.log("privateKey is " , privateKey )
+
+    const docEncrypted  = await  getDoc( getCertificates)
+
+    console.log("docEncrypted is " , docEncrypted)
+
     if (!getCertificates || !getCertificates.Ok || getCertificates.Ok.length === 0) {
       // Handle case when no certificates are available or getCertificates is undefined
       console.log('No certificates available');
@@ -45,20 +128,40 @@ const Certifications = () => {
     }
     const firstItem = getCertificates.Ok[0];
     console.log("firstItem is ", firstItem);
-    console.log("certificate_link", firstItem.certificate_link);
+    // console.log("entry?.[0]?.public_key?.[0] is " , entry?.[0]?.public_key?.[0])
+    // console.log("certificate_link", firstItem.certificate_link);
 
     //todo:- there should be a method to display multiple certificates
-    const decryptedFile = await handleFileDecrypt(firstItem.certificate_link, entry?.[0]?.public_key?.[0]);
-    console.log(decryptedFile);
+    // const decryptedFile = await handleFileDecrypt(firstItem.certificate_link, entry?.[0]?.public_key?.[0]);
+    // const decryptedFile = await handleFileDecrypt(getCertificates.Ok[0], entry?.[0]?.public_key?.[0]);
+
+    // console.log(decryptedFile);
 
 
     
-    const url = URL.createObjectURL(decryptedFile);
-    setImageUrl(url);
+    // const url = URL.createObjectURL(decryptedFile);
+
+
+    const kyc = {} ; 
+    kyc["0"] = firstItem ; 
+    const url = await decrypted_Img(kyc, docEncrypted,  privateKey); // error iv not defined 
+
+
+    const reader = new FileReader();
+        reader.onload = () => {
+          const imageDataUrl = reader.result;
+          setImageUrl(imageDataUrl);
+          setOpenModal(true);
+          // document.getElementById('imagePreview').src = imageDataUrl;
+      };
+      reader.readAsDataURL(url);
+
+
+    // setImageUrl(url);
 
 
 
-    setOpenModal(true);
+    // setOpenModal(true);
 
 
   }

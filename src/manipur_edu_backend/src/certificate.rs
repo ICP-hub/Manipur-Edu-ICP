@@ -27,23 +27,23 @@ pub struct CertificateData {
 }
 
 
-// #[update]
-// pub fn upload_certificate(
-//     student_principal: String,
-//     certificate_data: CertificateData,
-// ) -> Result<(), String> {
-//     STATE.with(|state| {
-//         let mut state = state.borrow_mut();
+#[update]
+pub fn upload_certificate(
+    student_principal: String,
+    certificate_data: CertificateData,
+) -> Result<(), String> {
+    STATE.with(|state| {
+        let mut state = state.borrow_mut();
 
-//         match state.users.get_mut(&student_principal) {
-//             Some(user_data) => match user_data.add_certificate(certificate_data.certificate_id) {
-//                 Ok(()) => Ok(()),
-//                 Err(err) => Err(err),
-//             },
-//             None => Err("User not found".to_string()),
-//         }
-//     })
-// }
+        match state.users.get_mut(&student_principal) {
+            Some(user_data) => match user_data.add_certificate(certificate_data.certificate_id) {
+                Ok(()) => Ok(()),
+                Err(err) => Err(err),
+            },
+            None => Err("User not found".to_string()),
+        }
+    })
+}
 
 
 //function for institutes to upload certificates

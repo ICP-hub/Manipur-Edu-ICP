@@ -68,7 +68,7 @@ const ParentDetailsEdit = ({ next, prev, formData, updateFormData }) => {
         certificates: [entry.certificates ? entry.certificates : formData.certificates[0]],
         result: [entry.result ? entry.result : formData.result[0]],
         status: [formData.status[0]],
-        kyc: []
+        kyc: [formData.kyc[0]]
       };
       console.log("newData data is ", newData)
       const editStatusResponse = await actor.edit_student_profile(newData);

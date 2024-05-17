@@ -320,6 +320,12 @@ export async function decrypted_Img(kyc , imgEncrypted, rsaString) {
     // imgEncrypted  = convertStringToBufferSource(imgEncrypted);
     console.log(".......................................................")
 
+    console.log("kyc is " , kyc)
+    console.log("imgEncrypted is " , imgEncrypted)
+    console.log("rsaString is " , rsaString)
+
+
+
     const encryptedAesKeyString = kyc[0]["aes_key"];
     console.log("encryptedAesKeyString", encryptedAesKeyString)
     const encryptedAesKey = stringToArrayBuffer(encryptedAesKeyString);

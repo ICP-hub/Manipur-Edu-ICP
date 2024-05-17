@@ -4,17 +4,16 @@ import ParentDetailsEdit from "./ParentsDetails";
 import InstituteDetailsEdit from "./StudentInstituteDetails";
 import KycDocuments from "./KycDocuments";
 import { useAuth } from "../../utils/useAuthClient";
-import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Status from "../../components/student/status";
 
 const StudentDetailsEdit = () => {
   const [page, setPage] = useState("personal");
-  const location = useLocation();
-  const entry = location.state.entries;
-  // let entry = useSelector(
-  //   (state) => state.studentDetailsReducer
-  // );
+  // const location = useLocation();
+  // const entry = location.state.entries;
+  let entry = useSelector(
+    (state) => state.studentDetailsReducer
+  );
   // console.log('entry',entry);
   // console.log('entry 0 index value is : ', entry[0]);
   
