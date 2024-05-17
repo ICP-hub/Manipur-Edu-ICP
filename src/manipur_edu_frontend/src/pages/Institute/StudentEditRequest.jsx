@@ -3,7 +3,7 @@ import { useAuth } from "../../utils/useAuthClient";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setStudentPrincipalId } from "../../../Redux/Action/studentIdAction";
-
+import NoDataComponent from "./NoData";
 const StudentEditRequest = () => {
   const { actor } = useAuth();
   const [students, setStudents] = useState([]);
@@ -35,7 +35,10 @@ const StudentEditRequest = () => {
           <Card key={index} student={student[1]} studentId={student[0]} />
         ))
       ) : (
-        <p>No data available</p>
+        <NoDataComponent
+          message="No Edit Requests yet!"
+          imageSrc="NoData.png"
+        />
       )}
       <div className="flex flex-row-reverse pt-[50px] pb-[100px]">
         Page 1 of 100
@@ -77,10 +80,14 @@ const Card = ({ student, studentId }) => {
         {student.status[0]}
       </p>
       <button
-        className="pt-[7px] font-[700] underline flex justify-center bg-[#EEF6FF] text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px]  "
-        onClick={handleVerify}
+        className="bg-blue-500 text-white font-segoe-ui text-11 rounded-lg ml-10"
+        style={{
+          backgroundColor: "#355389",
+          height: "40px",
+          width: "110px",
+        }}
       >
-        Click to View/Verify
+        {"View/Verify"}
       </button>
     </div>
   );

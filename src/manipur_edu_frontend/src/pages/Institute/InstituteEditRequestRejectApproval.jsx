@@ -208,7 +208,7 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
               </div>
               <div>
                 <p className="text-[#8CA3C3] text-[16px] font-[Noto Sans] font-[300]">
-                  Zip Code
+                  Pin Code
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
                   {entry?.[1].zip_code?.[0] || "N/A"}
@@ -306,7 +306,7 @@ const InstituteEditRequestRejectApprove = ({ onBack }) => {
               </div>
               <div>
                 <p className="text-[#8CA3C3] text-[16px] font-[Noto Sans] font-[300]">
-                  Zip Code
+                  Pin Code
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
                   {update[0]?.zip_code}

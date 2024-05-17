@@ -162,7 +162,7 @@ const ProfileTab = () => {
                       </div>
                       <div className="w-[50%]">
                         <p className="font-[Noto Sans] text-[#8CA3C3] text-[1rem] leading-[1.375rem] font-[300] pb-[0.1875rem]">
-                          Zip code
+                          Pin Code
                         </p>
                         <p className="font-[Noto Sans] text-[#00227A] text-[1.125rem] leading-[1.53125rem] font-[400]">
                           123456

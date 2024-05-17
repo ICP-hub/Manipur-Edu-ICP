@@ -5,13 +5,13 @@ import { useAuth } from "../../utils/useAuthClient";
 import { useQuery } from "react-query";
 import { getInstituteDetails } from "../../../Redux/Action/index";
 import AdminDashboard from "../Admin/AdminDashboard";
+import NoDataComponent from "./NoData";
 const InstituteEditRequest = ({ onView, SetTab }) => {
   const { actor } = useAuth();
   const allInstitutes = useSelector((state) => state.allInstitutesReducer);
   console.log("dfgh", allInstitutes);
 
   const [entries, setEntries] = useState([]);
-
   const fetchData = async () => {
     try {
       const principalIds = await actor.get_all_institute_edit_req();
@@ -34,6 +34,14 @@ const InstituteEditRequest = ({ onView, SetTab }) => {
   // fetchData();
 
   console.log("entries ", entries);
+  if (!entries || entries.length === 0) {
+    return (
+      <NoDataComponent
+        message={"No Edit Requests yet!"}
+        imageSrc="NoData.png"
+      ></NoDataComponent>
+    );
+  }
   return (
     <div>
       {isLoadingEntries && <Loader></Loader>}

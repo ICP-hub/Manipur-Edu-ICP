@@ -129,7 +129,7 @@ function StudentSignUpForm() {
         )}
       </label>
       <label className="text-gray-700 text-sm font-bold flex-1">
-        Zip Code
+        Pin Code
         <input
           className="border rounded w-full py-1 px-2 font-normal"
           {...register("zip_code", { required: true })}

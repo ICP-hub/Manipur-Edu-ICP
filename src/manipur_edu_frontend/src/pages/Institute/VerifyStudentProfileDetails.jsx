@@ -120,7 +120,7 @@ const VerifyRejectStudentProfile = () => {
                     </div>
                     <div className="w-1/2">
                       <p className="font-[Noto Sans] text-[#8CA3C3] text-[1rem] leading-[1.375rem] font-[300] pb-[0.1875rem]">
-                        Zip code
+                        Pin Code
                       </p>
                       <p className="font-[Noto Sans] text-[#00227A] text-[1.125rem] leading-[1.53125rem] font-[400]">
                         {entry?.[0].zip_code?.[0]}
@@ -157,22 +157,6 @@ const VerifyRejectStudentProfile = () => {
                       {entry?.[0].father_name?.[0]}
                     </p>
                   </div>
-                  {/* <div className="w-1/3">
-                    <p className="font-[Noto Sans] text-[#8CA3C3] text-[1rem] leading-[1.375rem] font-[300] pb-[0.1875rem]">
-                      Email
-                    </p>
-                    <p className="font-[Noto Sans] text-[#00227A] text-[1.125rem] leading-[1.53125rem] font-[400]">
-                      {entry?.[0].personal_email?.[0]}
-                    </p>
-                  </div>
-                  <div className="w-1/3">
-                    <p className="font-[Noto Sans] text-[#8CA3C3] text-[1rem] leading-[1.375rem] font-[300] pb-[0.1875rem]">
-                      Phone Number
-                    </p>
-                    <p className="font-[Noto Sans] text-[#00227A] text-[1.125rem] leading-[1.53125rem] font-[400]">
-                      1234567890
-                    </p>
-                  </div> */}
                 </div>
                 <div className="flex justify-between pt-[2rem] ">
                   <div className="w-1/2">
@@ -197,7 +181,8 @@ const VerifyRejectStudentProfile = () => {
                     </div>
                     <div className="w-1/2">
                       <p className="font-[Noto Sans] text-[#8CA3C3] text-[1rem] leading-[1.375rem] font-[300] pb-[0.1875rem]">
-                        Zip code
+                        Pin Code
+                        
                       </p>
                       <p className="font-[Noto Sans] text-[#00227A] text-[1.125rem] leading-[1.53125rem] font-[400]">
                         {entry?.[0].zip_code?.[0]}

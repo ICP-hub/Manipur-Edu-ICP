@@ -218,7 +218,7 @@ const InstituteDetailsEditInstitutePage = () => {
                 </div>
                 <div className="w-full pl-1">
                   <label className="text-[#00227A]" htmlFor="zip_code">
-                    Zip code <span className="text-[#FF0606]">*</span>
+                    Pin Code <span className="text-[#FF0606]">*</span>
                   </label>
                   <br />
                   <input
@@ -232,8 +232,8 @@ const InstituteDetailsEditInstitutePage = () => {
                     name="zip_code"
                     {...register("zip_code", {
                       pattern: {
-                        value: /^\d{6}(?:[-\s]\d{4})?$/, // Regular expression for validating zip code format
-                        message: "Invalid zip code format",
+                        value: /^\d{6}(?:[-\s]\d{4})?$/,
+                        message: "Invalid pin code format",
                       },
                     })}
                     defaultValue={data.details[0].zip_code[0]}

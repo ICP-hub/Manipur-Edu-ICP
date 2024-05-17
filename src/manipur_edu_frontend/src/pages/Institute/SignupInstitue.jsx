@@ -8,7 +8,30 @@ import { ICountry, IState, City, State, Country } from "country-state-city";
 import Status from "../../components/student/status";
 import { getKeysForInstitute, generateAesKeyBase64 } from "../../utils/helper";
 import Loader from "../../loader/Loader";
+import loadingimg from "../../../assets/loading.gif";
 
+const Overlay = () => (
+  <div
+    style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
+      zIndex: 1000, // Ensures it covers other content
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    }}
+  >
+    <img
+      src={loadingimg}
+      alt="Loading..."
+      style={{ width: "100px", height: "100px" }}
+    />
+  </div>
+);
 const SignupInstitute = () => {
   const {
     register,
@@ -89,7 +112,7 @@ const SignupInstitute = () => {
 
   return (
     <SignUpPage>
-      {isLoading && <Loader></Loader>}
+      {isLoading && <Overlay />}
 
       <div className="">
         <Status
@@ -290,7 +313,7 @@ const SignupInstitute = () => {
                 </div>
                 <div className="w-full pl-1">
                   <label className="text-[#00227A]" htmlFor="zip_code">
-                    Zip code <span className="text-[#FF0606]">*</span>
+                    Pin Code <span className="text-[#FF0606]">*</span>
                   </label>
                   <br />
                   <input
@@ -305,14 +328,14 @@ const SignupInstitute = () => {
                     {...register("zip_code", {
                       required: "This field is required",
                       pattern: {
-                        value: /^\d{6}(?:[-\s]\d{4})?$/, // Regular expression for validating zip code format
-                        message: "Invalid zip code format",
+                        value: /^\d{6}(?:[-\s]\d{4})?$/, 
+                        message: "Invalid pin code format",
                       },
                     })}
                   />
                   {errors && errors.zip_code && (
                     <span className="absolute grid text-xs text-[#FF0606]">
-                      Please enter a valid zip code.
+                      Please enter a valid pin code.
                     </span>
                   )}
                 </div>

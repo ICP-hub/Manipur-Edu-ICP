@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom"; // Simplified import for c
 import { handleFileDecrypt, importAesKeyFromBase64 } from "../../utils/helper";
 import Modal from "../../components/Modal";
 import { useDispatch, useSelector } from "react-redux";
+import NoDataComponent from "./NoData";
 const StudentVerificationRequest = () => {
   const { actor, authClient } = useAuth();
   const principal_id = authClient.getIdentity().getPrincipal().toString();
@@ -23,6 +24,14 @@ const StudentVerificationRequest = () => {
 
   let entries = useSelector((state) => state.allStudentsReducer);
   console.log("entries is : ", entries);
+  if (!entries || entries.length === 0) {
+    return (
+      <NoDataComponent
+        message="No Student Verification Requests yet!"
+        imageSrc="NoData.png"
+      />
+    );
+  }
 
   return (
     <div className="w-full self-center">
@@ -117,15 +126,17 @@ const Card = ({ studentPrincipalId, entry, publicKey }) => {
           >
             {verificationStatus}
           </p>
-          <div className="flex">
-            <button
-              className="bg-blue-500 text-white font-segoe-ui text-11 rounded-lg h-9 w-40 ml-2"
-              onClick={handleClick}
-              style={{ backgroundColor: "#355389" }}
-            >
-              {"View/Verify"}
-            </button>
-          </div>
+          <button
+            className="bg-blue-500 text-white font-segoe-ui text-11 rounded-lg ml-6"
+            onClick={handleClick}
+            style={{
+              backgroundColor: "#355389",
+              height: "40px",
+              width: "110px",
+            }}
+          >
+            {"View/Verify"}
+          </button>
         </div>
       </div>
     </div>

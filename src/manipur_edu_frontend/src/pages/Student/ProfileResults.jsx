@@ -4,6 +4,8 @@ import { useAuth } from "../../utils/useAuthClient";
 import { useQuery } from "react-query";
 import Modal from "../../components/Modal";
 import Background from "../../components/BackgroudPage";
+import { TbArrowBarToDown } from "react-icons/tb";
+import NoDataComponent from "../Institute/NoData";
 import {
   Link,
   useNavigate,
@@ -18,7 +20,14 @@ const ProfileResult = () => {
   const [imageUrl, setImageUrl] = useState("");
 
   let entry = useSelector((state) => state.studentDetailsReducer);
-
+  if (!entry || entry.length === 0) {
+    return (
+      <NoDataComponent
+        message={"No Result to View!"}
+        imageSrc={"ResultNoStu.png"}
+      ></NoDataComponent>
+    );
+  }
   const handleView = async () => {
     const getResult = await actor.get_user_result(principal_id);
     console.log("getresult", getResult);
@@ -248,66 +257,111 @@ const ProfileResult = () => {
               </div>
             </div>
             <div className="flex justify-evenly">
-              <div className=" bg-[#EEF6FF] w-[40%] flex flex-col border border-[#89C1FF] rounded-[10px] pt-[24px]">
+              <div className="bg-[#EEF6FF] w-[40%] flex flex-col rounded-[10px] pt-[24px] box-border relative">
                 <img
-                  className="w-[30px] h-[30px] ml-[10px]"
+                  className="w-[30px] h-[30px] ml-[8px] mt-[-14px]"
                   src={"Test.png"}
                   alt="certificate"
                 />
-                <p className="text-[Segoe UI] text-[#00227A] font-[600] text-center text-[19px] leading-[27px] pt-[9px]">
+                <p className="text-[Segoe UI] text-[#00227A] font-[600] text-center text-[19px] leading-[27px] pt-[9px] box-border">
                   First Year Result
                 </p>
-                <p className="text-[Segoe UI] text-[#00227A] font-[400] text-center text-[15px] leading-[20px] pt-[10px]">
+                <p className="text-[Segoe UI] text-[#00227A] font-[400] text-center text-[15px] leading-[20px] pt-[10px] box-border">
                   Semester: 1
                 </p>
-                <p className="text-[Segoe UI] text-[#00227A] font-[400] text-center  text-[15px] leading-[20px] pt-[8px]">
+                <p className="text-[Segoe UI] text-[#00227A] font-[400] text-center text-[15px] leading-[20px] pt-[8px] box-border">
                   Academic Year: 2020-2021
                 </p>
-                <div className="flex justify-between px-[16px] pt-[27px] pb-[14px]">
+                <p
+                  style={{
+                    borderBottom: "1.5px solid #C7E2FF",
+                    marginBottom: "0px",
+                    marginTop: "18px",
+                    marginLeft: "30px",
+                    marginRight: "30px",
+                  }}
+                  className="box-border"
+                ></p>
+                <div className="flex justify-between items-center m-[15px] pt-[3px] pb-[14px] box-border">
                   <button
                     onClick={handleView}
-                    className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[30px] py-[5px]"
+                    className="flex items-center bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[14px] py-[3px] ml-[32px] box-border"
                   >
+                    <TbArrowBarToDown className="mr-[2px]" />
                     Download
                   </button>
+
                   <button
                     onClick={handleView}
-                    className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[30px] py-[5px]"
+                    className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[18px] py-[3px] mr-[32px] box-border"
                   >
                     View
                   </button>
                 </div>
+                <div
+                  className="absolute inset-0 border-[#89C1FF] rounded-[10px] pointer-events-none"
+                  style={{
+                    borderWidth: "1px 1px 1px 1px",
+                    borderStyle: "solid",
+                    top: "0px",
+                    left: "0px",
+                    right: "6px",
+                    bottom: "6px",
+                  }}
+                ></div>
               </div>
-              <div className=" bg-[#EEF6FF] w-[40%] flex flex-col border border-[#89C1FF] rounded-[10px] pt-[24px] ">
+              <div className="bg-[#EEF6FF] w-[40%] flex flex-col rounded-[10px] pt-[24px] box-border relative">
                 <img
-                  className="w-[30px] h-[30px] ml-[10px]"
+                  className="w-[30px] h-[30px] ml-[8px] mt-[-14px]"
                   src={"Test.png"}
                   alt="certificate"
                 />
-                <p className="text-[Segoe UI] text-[#00227A] text-center font-[600] text-[20px] leading-[27px] pt-[11px]">
+                <p className="text-[Segoe UI] text-[#00227A] font-[600] text-center text-[19px] leading-[27px] pt-[9px] box-border">
                   First Year Result
                 </p>
-                <p className="text-[Segoe UI] text-[#00227A] text-center font-[400] text-[15px] leading-[20px] pt-[10px]">
+                <p className="text-[Segoe UI] text-[#00227A] font-[400] text-center text-[15px] leading-[20px] pt-[10px] box-border">
                   Semester: 1(Backlog)
                 </p>
-                <p className="text-[Segoe UI] text-[#00227A] text-center font-[400] text-[15px] leading-[20px] pt-[8px]">
+                <p className="text-[Segoe UI] text-[#00227A] font-[400] text-center text-[15px] leading-[20px] pt-[8px] box-border">
                   Academic Year: 2020-2021
                 </p>
-                <div className="flex justify-between px-[16px] pt-[27px] pb-[14px]">
-                  {" "}
+                <p
+                  style={{
+                    borderBottom: "1.5px solid #C7E2FF",
+                    marginBottom: "0px",
+                    marginTop: "18px",
+                    marginLeft: "30px",
+                    marginRight: "30px",
+                  }}
+                  className="box-border"
+                ></p>
+                <div className="flex justify-between items-center m-[15px] pt-[3px] pb-[14px] box-border">
                   <button
                     onClick={handleView}
-                    className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[30px] py-[5px]"
+                    className="flex items-center bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[14px] py-[3px] ml-[32px] box-border"
                   >
+                    <TbArrowBarToDown className="mr-[2px]" />
                     Download
                   </button>
+
                   <button
                     onClick={handleView}
-                    className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[30px] py-[5px]"
+                    className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[18px] py-[3px] mr-[32px] box-border"
                   >
                     View
                   </button>
                 </div>
+                <div
+                  className="absolute inset-0 border-[#89C1FF] rounded-[10px] pointer-events-none"
+                  style={{
+                    borderWidth: "1px 1px 1px 1px",
+                    borderStyle: "solid",
+                    top: "0px",
+                    left: "0px",
+                    right: "6px",
+                    bottom: "6px",
+                  }}
+                ></div>
               </div>
             </div>
           </div>
