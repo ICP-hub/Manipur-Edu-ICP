@@ -202,7 +202,7 @@ const PostScholarshipDetails = ({ onBack }) => {
           <div className="w-[50%] flex relative justify-between">
             <div className="grow pr-2">
               <label className="text-[#00227A]" htmlFor="date_of_birth">
-                Date of Birth
+                Date
               </label>
               <br />
               <div className="relative">

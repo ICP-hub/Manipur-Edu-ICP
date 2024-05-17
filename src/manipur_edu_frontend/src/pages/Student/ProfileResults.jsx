@@ -310,7 +310,7 @@ const ProfileResult = () => {
                   }}
                 ></div>
               </div>
-              <div className="bg-[#EEF6FF] w-[40%] flex flex-col rounded-[10px] pt-[24px] box-border relative">
+              {/* <div className="bg-[#EEF6FF] w-[40%] flex flex-col rounded-[10px] pt-[24px] box-border relative">
                 <img
                   className="w-[30px] h-[30px] ml-[8px] mt-[-14px]"
                   src={"Test.png"}
@@ -362,7 +362,7 @@ const ProfileResult = () => {
                     bottom: "6px",
                   }}
                 ></div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -1,16 +1,30 @@
 import React, { useState } from "react";
-import { useSelector , useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import NoDataComponent from "../../pages/Institute/NoData";
 const ScholarshipPostedAdmin = ({ onView, onEdit, onPost }) => {
   const entries = useSelector((state) => state.allScholarshipsReducer);
-if (!entries || entries.length === 0) {
-  return (
-    <NoDataComponent
-      message={"No Scholarships posted yet!"}
-      imageSrc={"OngoingSchp.png"}
-    ></NoDataComponent>
-  );
-}
+  if (!entries || entries.length === 0) {
+    return (
+      <div>
+        <NoDataComponent
+          message={"No Scholarships posted yet!"}
+          imageSrc={"OngoingSchp.png"}
+        ></NoDataComponent>
+        <div className="flex justify-between pt-[200px] ">
+          <div>
+            <button
+              onClick={onPost}
+              className="px-[34px] py-[15px] bg-[#0041E9] text-[white] rounded-[5px]"
+            >
+              Post new Scholarship
+            </button>
+          </div>
+          <p>Page 1 of 100</p>
+        </div>
+      </div>
+
+    );
+  }
   return (
     <div>
       <div className="flex flex-col gap-[35px]">

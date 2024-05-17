@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "../../../../../node_modules/react-router-dom/dist/index";
 import { useSelector } from "react-redux";
+import NoDataComponent from "../Institute/NoData";
 
 const AllRegisteredInstitutes = ({ onView, onEdit, onStudent, SetTab }) => {
   let entries = useSelector((state) => state.allInstitutesReducer);
