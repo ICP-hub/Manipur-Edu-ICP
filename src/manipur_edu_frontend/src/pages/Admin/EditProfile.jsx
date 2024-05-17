@@ -68,13 +68,17 @@ const EditProfile = ({ onBack }) => {
                   123456789
                 </p>
               </div>
-              <img className="w-[67px] h-[55px] pl-[12px]" src='/student.svg' alt="" />
+              <img
+                className="w-[67px] h-[55px] pl-[12px]"
+                src="/student.svg"
+                alt=""
+              />
             </div>
           </div>
         </div>
         <div className="flex flex-col border border-[#BED0FF] rounded-[20px] mt-[20px] xl:mt-[30px] ">
           <div className="flex px-[2.875rem] py-[1rem] border-b border-[#BED0FF] mb-[0.75rem] xl:mb-[1.6875rem]">
-            <img className="w-[100px] h-[100px]" src='/student.svg' alt="" />
+            <img className="w-[100px] h-[100px]" src="/student.svg" alt="" />
             <div className="flex flex-col justify-center pl-[1.8125rem]">
               <p className="font-[Noto Sans] text-[#00227A] text-[1.5625rem] leading-[2.125rem] font-[400] pb-[0.375rem]">
                 Name
@@ -225,7 +229,7 @@ const EditProfile = ({ onBack }) => {
                     class="text-[Noto Sans] text-[#00227A] text-[1.0625rem] leading-[1.4375rem] font-[400]"
                     for="lname"
                   >
-                    Zip Code
+                    Pin Code
                   </label>
                   <br />
                   <input

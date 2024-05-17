@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../utils/useAuthClient";
 import { useQuery } from "react-query";
 import { getInstituteDetails } from "../../../Redux/Action/index";
 import AdminDashboard from "../Admin/AdminDashboard";
+import NoDataComponent from "./NoData";
 const InstituteEditRequest = ({ onView, SetTab }) => {
   const { actor } = useAuth();
   const allInstitutes = useSelector((state) => state.allInstitutesReducer);
@@ -33,9 +34,18 @@ const InstituteEditRequest = ({ onView, SetTab }) => {
       
 
   console.log("entries " , entries )
+
+   if (!entries || entries.length === 0) {
+    return (
+      <NoDataComponent
+        message={"No Edit Requests yet!"}
+        imageSrc="NoData.png"
+      ></NoDataComponent>
+    );
+  }
   return (
     <div>
-       {isLoadingEntries && <Loader></Loader>}
+      {isLoadingEntries && <Loader></Loader>}
       <div className="border rounded-[10px] border-[#D9EBFF]">
         <div className="  grid grid-cols-5 py-[20px]   font-[600]  font-[Segoe UI] text-[15px] text-[#00227A] leading-[20px]">
           <div className="flex justify-center">INSTITUTE NAME</div>
@@ -73,7 +83,6 @@ const Card = ({ entry, onView, SetTab }) => {
   const instituteEmail = entry?.[1].email?.[0] ?? "N/A";
   const verificationStatus = "pending";
   return (
-   
     <div className="grid grid-cols-5 py-[20px] border-t border-[#D9EBFF]">
       <div className="flex items-center justify-center text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] rounded-[5px]">
         <div className="flex items-center rounded-[5px] ml-[35px]">
@@ -103,13 +112,12 @@ const Card = ({ entry, onView, SetTab }) => {
             ? "text-[#B26868]"
             : "text-[#687DB2]"
         }`}
-        
       >
         {verificationStatus}
       </p>
       <div className="flex items-center">
         <button
-          onClick={()=>handleClick({entry})}
+          onClick={() => handleClick({ entry })}
           className="pt-[7px] pr-[15px] font-[700] underline flex justify-center text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px]"
         >
           Click to View/Verify

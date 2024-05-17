@@ -156,7 +156,7 @@ const StudentDetails = ({ onBack }) => {
                   </div>
                   <div className="w-1/2">
                     <p className="font-[Noto Sans] text-[#8CA3C3] text-[1rem] leading-[1.375rem] font-[300] pb-[0.1875rem]">
-                      Zip code
+                      Pin code
                     </p>
                     <p className="font-[Noto Sans] text-[#00227A] text-[1.125rem] leading-[1.53125rem] font-[400]">
                       123456
@@ -233,7 +233,7 @@ const StudentDetails = ({ onBack }) => {
                   </div>
                   <div className="w-1/2">
                     <p className="font-[Noto Sans] text-[#8CA3C3] text-[1rem] leading-[1.375rem] font-[300] pb-[0.1875rem]">
-                      Zip code
+                      Pin code
                     </p>
                     <p className="font-[Noto Sans] text-[#00227A] text-[1.125rem] leading-[1.53125rem] font-[400]">
                       123456
@@ -306,7 +306,7 @@ const StudentDetails = ({ onBack }) => {
               </div>
             </div>
           </div>
-          <div className="  flex flex-col  rounded-[20px] border border-[#D8E1F8]">
+          <div className="  flex rounded-[20px] border border-[#D8E1F8]">
             <div className="flex justify-between border-b border-[#D8E1F8]">
               <p className="px-[46px] py-[19px] text-[#00227A] text-[18px] font-[Noto Sans] font-[500]">
                 KYC Documents
@@ -332,7 +332,7 @@ const StudentDetails = ({ onBack }) => {
                 </button>
               </div>
             </div>
-            <div className="flex py-[30px] px-[46px] gap-[76px]">
+            <div className="flex justify-between py-[30px] px-[46px] gap-[76px]">
               <div>
                 <p className="text-[#8CA3C3] text-[16px] font-[Noto Sans] font-[300] pb-[20px]">
                   Aadhaar Card

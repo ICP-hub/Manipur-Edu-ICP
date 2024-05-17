@@ -125,12 +125,12 @@ const EditResult = ({ open, onClose, publicKey, principalId }) => {
 
   };
   return (
-    <div className="shadow-lg fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#EEF6FF] h-[32.5rem] mt-[50px] w-[70%] rounded-xl">
-      <div className="shadow-lg flex flex-col items-center justify-center h-full">
-        <input
-          type="file"
-          onChange={handleFileChange}
-          accept="image/*"
+     <div className="shadow-lg fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#EEF6FF] h-[32.5rem] mt-[50px] w-[70%] rounded-xl">
+            <div className="shadow-lg flex flex-col items-center justify-center h-full">
+                <input 
+                    type="file" 
+                    onChange={handleFileChange} 
+          accept="image/*" 
           name="Upload File"
           className="mt-8 mb-4 p-2 border border-blue-500 rounded-lg"
         />

@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import Loader from "../../loader/Loader";
 import { useAuth } from "../../utils/useAuthClient";
-import { useQuery } from 'react-query';
+import { useQuery } from "react-query";
 import Modal from "../../components/Modal";
 import Background from "../../components/BackgroudPage";
+import { TbArrowBarToDown } from "react-icons/tb";
+import NoDataComponent from "../Institute/NoData";
 import {
-  Link, useNavigate,
+  Link,
+  useNavigate,
 } from "../../../../../node_modules/react-router-dom/dist/index";
 import { aes_Decrypt, handleFileDecrypt,decrypted_Img } from "../../utils/helper";
 import { useSelector } from "react-redux";
@@ -14,11 +17,19 @@ const ProfileResult = () => {
   const navigate = useNavigate();
   const { actor, authClient } = useAuth();
   const principal_id = authClient.getIdentity().getPrincipal().toString();
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState("");
 
   let entry = useSelector(
     (state) => state.studentDetailsReducer
   );
+  if (!entry || entry.length === 0) {
+    return (
+      <NoDataComponent
+        message={"No Result to View!"}
+        imageSrc={"ResultNoStu.png"}
+      ></NoDataComponent>
+    );
+
 
   //STARTS :-  CODE TO  ACCUMULATE CHUNKS 
   const getImage = async (kyc) => {
@@ -133,13 +144,19 @@ const ProfileResult = () => {
   return (
     <Background>
       <div className="relative pt-10">
-        <Modal open={openModal} onClose={() => setOpenModal(false)} image={imageUrl} />
+        <Modal
+          open={openModal}
+          onClose={() => setOpenModal(false)}
+          image={imageUrl}
+        />
         <div className="flex min-h-screen justify-evenly  ">
           <div className="w-[30%] bg-white mt-[80px] mb-[40px] rounded-[10px] flex flex-col">
             <div className="flex flex-col items-center border-b border-[#D8E1F8] mx-[20px]">
               <img className="pt-[50px]" src="/student.svg" />
               <p className="text-[Noto Sans] text-[#00227A] text-[26px] font-[400] leading-[35px] pt-[10px] ">
-                {entry?.[0]?.first_name?.[0] + " " + entry?.[0]?.last_name?.[0] ?? "N/A"}
+                {entry?.[0]?.first_name?.[0] +
+                  " " +
+                  entry?.[0]?.last_name?.[0] ?? "N/A"}
               </p>
               <p className="text-[Noto Sans] text-[#687EB5] text-[15px] font-[500] leading-[21px] mb-[30px]">
                 Student #: 1234567
@@ -195,7 +212,8 @@ const ProfileResult = () => {
                 {entry?.[0]?.address?.[0] ?? "N/A"}{" "}
               </p>
               <p className="text-[Segoe UI] text-[#4B64A4] font-[400] text-[14px] leading-[19px] pt-[4px] pb-[21px]">
-                {entry?.[0]?.state?.[0] + " " + entry?.[0]?.zip_code?.[0] ?? "N/A"}
+                {entry?.[0]?.state?.[0] + " " + entry?.[0]?.zip_code?.[0] ??
+                  "N/A"}
               </p>
             </div>
             <div className="mx-[25px] border-b border-[#D8E1F8]">
@@ -336,53 +354,111 @@ const ProfileResult = () => {
               </div>
             </div>
             <div className="flex justify-evenly">
-              <div className=" bg-[#EEF6FF] w-[40%] flex flex-col border border-[#89C1FF] rounded-[10px] px-[35px] pt-[24px]">
+              <div className="bg-[#EEF6FF] w-[40%] flex flex-col rounded-[10px] pt-[24px] box-border relative">
                 <img
-                  className="w-[30px] h-[30px]"
-                  src="/certificate.svg"
+                  className="w-[30px] h-[30px] ml-[8px] mt-[-14px]"
+                  src={"Test.png"}
                   alt="certificate"
                 />
-                <p className="text-[Segoe UI] text-[#00227A] font-[600] text-[20px] leading-[27px] pt-[11px]">
+                <p className="text-[Segoe UI] text-[#00227A] font-[600] text-center text-[19px] leading-[27px] pt-[9px] box-border">
                   First Year Result
                 </p>
-                <p className="text-[Segoe UI] text-[#00227A] font-[400] text-[15px] leading-[20px] pt-[10px]">
+                <p className="text-[Segoe UI] text-[#00227A] font-[400] text-center text-[15px] leading-[20px] pt-[10px] box-border">
                   Semester: 1
                 </p>
-                <p className="text-[Segoe UI] text-[#00227A] font-[400] text-[15px] leading-[20px] pt-[8px]">
+                <p className="text-[Segoe UI] text-[#00227A] font-[400] text-center text-[15px] leading-[20px] pt-[8px] box-border">
                   Academic Year: 2020-2021
                 </p>
-                <div className="flex flex-row-reverse pt-[27px] pb-[14px]">
+                <p
+                  style={{
+                    borderBottom: "1.5px solid #C7E2FF",
+                    marginBottom: "0px",
+                    marginTop: "18px",
+                    marginLeft: "30px",
+                    marginRight: "30px",
+                  }}
+                  className="box-border"
+                ></p>
+                <div className="flex justify-between items-center m-[15px] pt-[3px] pb-[14px] box-border">
                   <button
                     onClick={handleView}
-                    className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[30px] py-[5px]"
+                    className="flex items-center bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[14px] py-[3px] ml-[32px] box-border"
+                  >
+                    <TbArrowBarToDown className="mr-[2px]" />
+                    Download
+                  </button>
+
+                  <button
+                    onClick={handleView}
+                    className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[18px] py-[3px] mr-[32px] box-border"
                   >
                     View
                   </button>
                 </div>
+                <div
+                  className="absolute inset-0 border-[#89C1FF] rounded-[10px] pointer-events-none"
+                  style={{
+                    borderWidth: "1px 1px 1px 1px",
+                    borderStyle: "solid",
+                    top: "0px",
+                    left: "0px",
+                    right: "6px",
+                    bottom: "6px",
+                  }}
+                ></div>
               </div>
-              <div className=" bg-[#EEF6FF] w-[40%] flex flex-col border border-[#89C1FF] rounded-[10px] px-[35px] pt-[24px] ">
+              <div className="bg-[#EEF6FF] w-[40%] flex flex-col rounded-[10px] pt-[24px] box-border relative">
                 <img
-                  className="w-[30px] h-[30px]"
-                  src="certificate.svg"
+                  className="w-[30px] h-[30px] ml-[8px] mt-[-14px]"
+                  src={"Test.png"}
                   alt="certificate"
                 />
-                <p className="text-[Segoe UI] text-[#00227A] font-[600] text-[20px] leading-[27px] pt-[11px]">
+                <p className="text-[Segoe UI] text-[#00227A] font-[600] text-center text-[19px] leading-[27px] pt-[9px] box-border">
                   First Year Result
                 </p>
-                <p className="text-[Segoe UI] text-[#00227A] font-[400] text-[15px] leading-[20px] pt-[10px]">
+                <p className="text-[Segoe UI] text-[#00227A] font-[400] text-center text-[15px] leading-[20px] pt-[10px] box-border">
                   Semester: 1(Backlog)
                 </p>
-                <p className="text-[Segoe UI] text-[#00227A] font-[400] text-[15px] leading-[20px] pt-[8px]">
+                <p className="text-[Segoe UI] text-[#00227A] font-[400] text-center text-[15px] leading-[20px] pt-[8px] box-border">
                   Academic Year: 2020-2021
                 </p>
-                <div className="flex flex-row-reverse pt-[27px] pb-[14px]">
+                <p
+                  style={{
+                    borderBottom: "1.5px solid #C7E2FF",
+                    marginBottom: "0px",
+                    marginTop: "18px",
+                    marginLeft: "30px",
+                    marginRight: "30px",
+                  }}
+                  className="box-border"
+                ></p>
+                <div className="flex justify-between items-center m-[15px] pt-[3px] pb-[14px] box-border">
                   <button
                     onClick={handleView}
-                    className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[30px] py-[5px]"
+                    className="flex items-center bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[14px] py-[3px] ml-[32px] box-border"
+                  >
+                    <TbArrowBarToDown className="mr-[2px]" />
+                    Download
+                  </button>
+
+                  <button
+                    onClick={handleView}
+                    className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[18px] py-[3px] mr-[32px] box-border"
                   >
                     View
                   </button>
                 </div>
+                <div
+                  className="absolute inset-0 border-[#89C1FF] rounded-[10px] pointer-events-none"
+                  style={{
+                    borderWidth: "1px 1px 1px 1px",
+                    borderStyle: "solid",
+                    top: "0px",
+                    left: "0px",
+                    right: "6px",
+                    bottom: "6px",
+                  }}
+                ></div>
               </div>
             </div>
           </div>

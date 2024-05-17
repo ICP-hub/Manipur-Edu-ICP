@@ -13,6 +13,30 @@ import {
   handleFileEncrypt,
 } from "../../utils/helper";
 import Status from "../../components/student/status";
+import loadingimg from "../../../assets/loading.gif";
+
+const Overlay = () => (
+  <div
+    style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
+      zIndex: 1000, // Ensures it covers other content
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    }}
+  >
+    <img
+      src={loadingimg}
+      alt="Loading..."
+      style={{ width: "100px", height: "100px" }}
+    />
+  </div>
+);
 import KycDocuments from "./KycDocuments";
 // import { v4 as uuidv4 } from 'uuid';
 const { v4: uuidv4 } = require('uuid'); // Import UUIDv4
@@ -71,7 +95,6 @@ const SignupStudents = () => {
   const [step, setStep] = useState(0);
   const [modelStatus, setModelStatus] = React.useState(false);
   const [Field, setField] = React.useState("");
-  // Set City and state
   const [selectedCountry, setSelectedCountry] = useState("IN");
   const [selectedState, setSelectedState] = useState("");
   const [isRendering, setIsRendering] = React.useState(false);
@@ -124,18 +147,19 @@ const SignupStudents = () => {
     return instituteList.find((obj) => obj.name == name);
   }
 
-  //  input type==-Files
   const [fileName, setFileName] = useState("");
 
   // Function to call when a file is selected
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const validExtensions = ['image/png', 'image/jpeg', 'image/svg+xml'];
+      const validExtensions = ["image/png", "image/jpeg", "image/svg+xml"];
       if (validExtensions.includes(file.type)) {
         setFileName(file.name);
       } else {
-        alert("Invalid file type. Please upload an image file (.png, .jpeg, .svg).");
+        alert(
+          "Invalid file type. Please upload an image file (.png, .jpeg, .svg)."
+        );
       }
     } else {
       setFileName("");
@@ -265,7 +289,7 @@ const SignupStudents = () => {
       console.log(register_student);
       setIsRendering(false);
       console.log("Submitted Successfully");
-      setField("Wait for your request to get approved");
+      setField("Wait for  your request to get approved");
       await setModelStatus(true);
     } else {
       console.log("notu 2")
@@ -286,12 +310,42 @@ const SignupStudents = () => {
       </div>
       <>
         {step === 0 && (
-          <div className="flex flex-col justify-center items-center px-[2%] m-auto w-fit md:px-[15%]">
+          <div className="flex flex-col justify-center items-center px-[2%] h-auto sm1:my-auto w-fit md:px-[15%]">
             <div className="text-[#00227A] text-3xl font-[500] pb-8">
-              Sign up: Personal Details
+              Personal Details
             </div>
 
             <div className="flex flex-col">
+              {/* User Profile */}
+              <div className="mb-[20px]">
+                <p className="mb-[10px] text-[#00227A]">Profile Photo</p>
+                <div className="flex flex-row">
+                  <div className="flex justify-center items-center w-[100px] h-[100px]">
+                    <img
+                      class="ring-2 ring-[#8CA3C3] rounded-full"
+                      src="/student.svg"
+                      alt="user profile picture"
+                    />
+                  </div>
+
+                  <div className="flex flex-col">
+                    <p className="ml-[20px] text-[13px] sm1:text-[15px] text-[#ACBFFD] mb-[10px]">
+                      Needs to be a formal passport size photo.
+                      <br />
+                      Photo Size should be less than 1 MB.
+                    </p>
+                    <div className="flex flex-row">
+                      <button className="flex-1 ml-[20px] w-[99px] h-[37px] text-[#00227A] text-[14px] sm1:w-[119px] sm1:h-[45px] sm1:text-[15px] border border-[#ACBFFD] rounded-[10px]">
+                        Upload
+                      </button>
+                      <button className="flex-1 ml-[20px] w-[99px] h-[37px] text-[#00227A] text-[14px] sm1:w-[199px] sm1:h-[45px] sm1:text-[15px] border border-[#ACBFFD] rounded-[10px]">
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div className="flex justify-between">
                 <div className="w-full pr-1">
                   <label className="text-[#00227A]" htmlFor="first_name">
@@ -392,14 +446,16 @@ const SignupStudents = () => {
                   </label>
                   <br />
                   <input
-                    className={`Date w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1 border ${errors.date_of_birth
-                      ? "border-[#FF0606] focus:outline-[#FF0606]"
-                      : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
-                      }`}
+                    className={`Date w-full h-[40px] dxl:h-[45px] rounded-[10px] px-1  border ${
+                      errors.date_of_birth
+                        ? "border-[#FF0606] focus:outline-[#FF0606]"
+                        : "border-[#ACBFFD] focus:outline-[#ACBFFD]"
+                    }`}
                     type="date"
                     id="date_of_birth"
                     max="2009-12-31"
                     name="date_of_birth"
+                    placeholder="DD-MM-YYYY"
                     {...register("date_of_birth", {
                       required: "This field is required",
                     })}
@@ -415,7 +471,11 @@ const SignupStudents = () => {
                     className="w-full h-[43px] rounded-[10px] px-1 p-1 focus:outline-[#ACBFFD] border-[#ACBFFD] border cursor-pointer"
                   // onClick={toggleDatePicker}
                   >
-                    <img src="/calander.svg" alt="calendar" />
+                    <img
+                      src="/calander.svg"
+                      alt="calendar"
+                      id="date_of_birth"
+                    />
                   </div>
                 </div>
                 {/* Date Picker */}
@@ -447,7 +507,9 @@ const SignupStudents = () => {
                     required: "This field is required",
                   })}
                 >
-                  <option value="">Select Gender</option>{" "}
+                  <option className="text-slate-500" value="">
+                    Select Gender
+                  </option>
                   {/* Provides a default prompt to select, can be used for validation to ensure a choice is made */}
                   <option value="male">Male</option>
                   <option value="female">Female</option>
@@ -485,7 +547,7 @@ const SignupStudents = () => {
         {step === 1 && (
           <div className="flex flex-col justify-center items-center px-[2%] m-auto w-fit md:px-[15%]">
             <div className="text-[#00227A] text-3xl font-[500] pb-4">
-              Sign up: Contact/Address
+              Contact/Address
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="flex flex-col">
@@ -688,7 +750,7 @@ const SignupStudents = () => {
                   </div>
                   <div className="w-full pl-1">
                     <label className="text-[#00227A]" htmlFor="zipcode">
-                      Zip code <span className="text-[#FF0606]">*</span>
+                      Pin Code <span className="text-[#FF0606]">*</span>
                     </label>
                     <br />
                     <input
@@ -737,7 +799,7 @@ const SignupStudents = () => {
         {step === 2 && (
           <div className="flex flex-col justify-center items-center px-[2%] m-auto w-fit md:px-[15%]">
             <div className="text-[#00227A] text-3xl font-[500] pb-8">
-              Sign up: Institute Details
+              Institute Details
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="flex flex-col">

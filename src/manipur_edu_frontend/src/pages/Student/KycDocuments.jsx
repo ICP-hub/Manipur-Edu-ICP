@@ -28,6 +28,7 @@ const KycDocuments = ({ prev, formData }) => {
   const { actor } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState();
+const KycDocuments = ({ prev , formData }) => {
   const {
     register,
     handleSubmit,
@@ -128,7 +129,7 @@ const KycDocuments = ({ prev, formData }) => {
     //   setIsLoading(false); // End loading
     // }
 
-    console.log("file is " , file)
+    console.log("file is " , entry.aadhar_upload)
   }
   return (
     <div className="border-l border-[#D8E1F8] ml-[55px] flex flex-col justify-between pl-[47px] w-full pt-[45px] pr-[45px] ">

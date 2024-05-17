@@ -226,7 +226,7 @@ const EditInstituteProfile = ({ onBack }) => {
                                         class="text-[Noto Sans] text-[#00227A] text-[1.0625rem] leading-[1.4375rem] font-[400]"
                                         for="lname"
                                     >
-                                        Zip Code
+                                        Pin Code
                                     </label>
                                     <br />
                                     <input

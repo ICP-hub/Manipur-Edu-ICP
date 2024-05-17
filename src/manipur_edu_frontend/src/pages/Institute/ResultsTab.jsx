@@ -1,15 +1,22 @@
 import React, { useState } from "react";
 import EditResult from "../../components/institute/EditResultPop";
 import UploadResult from "../../components/institute/UploadResultPopup";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
+import NoDataComponent from "./NoData";
 const ResultTab = () => {
   const [editresultpopup, seteditresultpopup] = useState(false);
   const [uploadresultpopup, setuploadresultpopup] = useState(false);
-  const [publicKey, setPublicKey] = useState('');
-  const [principalId, setPrincipalId] = useState('');
-  let entries = useSelector(
-    (state) => state.allStudentsReducer
-  );
+  const [publicKey, setPublicKey] = useState("");
+  const [principalId, setPrincipalId] = useState("");
+  let entries = useSelector((state) => state.allStudentsReducer);
+  if (!entries || entries.length === 0) {
+    return (
+      <NoDataComponent
+        message={"No Results posted yet!"}
+        imageSrc="NoResult.png"
+      ></NoDataComponent>
+    );
+  }
 
   return (
     <div className="w-[85%] self-center  pt-[27px]">
@@ -18,8 +25,8 @@ const ResultTab = () => {
         <div className="flex justify-center col-span-1">STUDENT ID</div>
         <div className="flex justify-center col-span-1">EMAIL</div>
         <div className="flex justify-center col-span-1">ROLL NUMBER</div>
-        <div className="flex justify-center col-span-1">RESULT</div>
-
+        <div className="flex justify-center col-span-1">EDIT RESULT</div>
+        <div className="flex justify-center col-span-1"></div>
         {/* Adjust width as needed */}
       </div>
       {entries?.map(({ studentId, details }, index) => (
@@ -59,20 +66,26 @@ const ResultTab = () => {
 };
 export default ResultTab;
 
-const Card = ({ studentPrincipalId, entry, seteditresultpopup, setPublicKey, setPrincipalId }) => {
-
-  const studentName = entry?.[0].first_name?.[0] + " " + entry?.[0].last_name?.[0] ?? 'N/A';
-  const studentId = entry?.[0].student_id?.[0].substr(0, 6) ?? 'N/A';
-  const rollNo = entry?.[0].roll_no?.[0] ?? 'N/A';
-  const verificationStatus = entry?.[0].status?.[0] ?? 'N/A';
-  const email = entry?.[0].personal_email?.[0] ?? 'N/A';
+const Card = ({
+  studentPrincipalId,
+  entry,
+  seteditresultpopup,
+  setPublicKey,
+  setPrincipalId,
+}) => {
+  const studentName =
+    entry?.[0].first_name?.[0] + " " + entry?.[0].last_name?.[0] ?? "N/A";
+  const studentId = entry?.[0].student_id?.[0].substr(0, 6) ?? "N/A";
+  const rollNo = entry?.[0].roll_no?.[0] ?? "N/A";
+  const verificationStatus = entry?.[0].status?.[0] ?? "N/A";
+  const email = entry?.[0].personal_email?.[0] ?? "N/A";
   return (
     <div className="grid grid-cols-[repeat(5,1fr)_3.125rem] mt-4 h-[3rem] rounded-[0.3125rem] bg-[#EEF6FF] pt-[0.4375rem]">
       <div className="flex justify-center text-[#687DB2] font-[Segoe UI] font-[400] text-[0.9375rem] leading-[1.25rem] rounded-[0.3125rem]">
         <div className="flex rounded-[0.3125rem]">
           <img
             className="w-[2.0625rem] h-[2.0625rem]"
-            src='/student.svg'
+            src="/student.svg"
             alt=""
           />
           <p className="pt-[0.375rem] pl-[0.8125rem]">{studentName}</p>
@@ -93,11 +106,20 @@ const Card = ({ studentPrincipalId, entry, seteditresultpopup, setPublicKey, set
           setPrincipalId(studentPrincipalId);
           setPublicKey(entry?.[0].public_key?.[0]);
         }}
-
-        className="pt-[0.4375rem] font-[700] underline flex justify-center bg-[#EEF6FF] text-[#687DB2] font-[Segoe UI] font-[400] text-[0.9375rem] leading-[1.25rem]"
+        className="pt-2 ml-9 font-semibold underline flex justify-center bg-[#EEF6FF] text-[#687DB2] font-[Segoe UI] text-sm leading-5"
+        style={{
+          width: "90px",
+          height: "35px",
+          backgroundColor: "#355389",
+          borderRadius: "8px",
+          color: "#FFFFFF",
+          cursor: "pointer",
+          border: "none",
+        }}
       >
-        Click to Edit
+        Edit
       </button>
+
       <button className="mb-[0.5rem]">
         <svg
           width="1.25rem"

@@ -11,25 +11,20 @@ import { useDispatch } from "react-redux";
 import { getAllStudents } from "../../../Redux/Action/index";
 import Loader from "../../loader/Loader";
 const StudentResultScholarship = () => {
-
   const location = useLocation();
   const [page, setPage] = useState("student");
   const [result, setResult] = useState([]);
   const { actor } = useAuth();
   const dispatch = useDispatch();
   useEffect(() => {
-
-    // what is the necessacity of this useEffect code in here
-
-    
     // Check the path in the location object and set the page state accordingly
-    if (location.pathname === '/institute-student/result') {
-      setPage('result');
-    
-    // } else if(location.pathname === '/institute-student/scholarship'){
-    //   setPage('scholarship');
-    }else {
-      setPage('student');
+    if (location.pathname === "/institute-student/result") {
+      setPage("result");
+
+      // } else if(location.pathname === '/institute-student/scholarship'){
+      //   setPage('scholarship');
+    } else {
+      setPage("student");
     }
   }, [location.pathname]);
 
@@ -37,10 +32,12 @@ const StudentResultScholarship = () => {
     const studentIdsResponse = await actor.get_institute_students(); // This returns an array containing a single element that is an array of student IDs
     if (studentIdsResponse.length > 0 && studentIdsResponse[0].length > 0) {
       const studentIds = studentIdsResponse[0]; // Access the first element to get the actual student IDs array
-      console.log("student id are : " ,studentIds);
+      console.log("student id are : ", studentIds);
 
       // Fetch details for each student
-      const detailsPromises = studentIds.map(studentId => actor.get_student_details(studentId));
+      const detailsPromises = studentIds.map((studentId) =>
+        actor.get_student_details(studentId)
+      );
       const detailsResults = await Promise.all(detailsPromises);
 
       console.log(detailsResults);
@@ -48,13 +45,13 @@ const StudentResultScholarship = () => {
       // Combine student IDs and their details into an array of objects
       const combinedResult = detailsResults.map((details, index) => ({
         studentId: studentIds[index], // Now correctly matches each detail with its student ID
-        details: details
+        details: details,
       }));
 
       console.log(combinedResult);
       setResult(combinedResult); // Update the state with the combined data
     }
-  }
+  };
 
   const {
     data: entries,
@@ -62,25 +59,14 @@ const StudentResultScholarship = () => {
     error: errorEntries,
   } = useQuery("dataEntries", getEntries);
   if (!isLoadingEntries && !errorEntries) {
-    console.log("entries", result)
-
-    // console.log("entries 1st array", entries[0])
-    // entries[0].map(item => (
-    //   console.log(item)
-    // ))
+    console.log("entries", result);
   }
   dispatch(getAllStudents(result));
-
-
-
 
   return (
     <Background>
       {isLoadingEntries && <Loader></Loader>}
-      <div
-        className="relative pt-[70px] min-h-screen flex justify-center items-center px-[4%] lg1:px-[5%] "
-      // style={{ backgroundImage: "radial-gradient( #E5F1FF 0%, #E5F1FF 100%)" }}
-      >
+      <div className="relative pt-[70px] min-h-screen flex justify-center items-center px-[4%] lg1:px-[5%] ">
         <div className=" w-full  my-[100px]  bg-white flex flex-col justify-between rounded-[10px]">
           <div className="  flex justify-center rounded-t-[10px]">
             <div className="bg-white w-[85%] flex border-b border-[#BED0FF]   pt-[19px]">
@@ -108,9 +94,10 @@ const StudentResultScholarship = () => {
                   {" "}
                   Results
                 </button>{" "}
-                <button 
+                <button
                   onClick={() => setPage("scholarship")}
-                   className="  text-[#687DB2] text-[1.125rem] font-[500] leading-[1.5625rem]  ">
+                  className="  text-[#687DB2] text-[1.125rem] font-[500] leading-[1.5625rem]  "
+                >
                   {" "}
                   Scholarship Applications
                 </button>{" "}

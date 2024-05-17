@@ -17,43 +17,39 @@ const DashboardTab = () => {
   const [value, onChange] = useState(new Date());
   const [isOpen, setIsOpen] = useState(false);
   const { actor } = useAuth();
-  const[registeredStudent , setRegisteredStudent] = useState(0)
-  const[institutecount , setInstituteCount] = useState(0) ; 
+  const [registeredStudent, setRegisteredStudent] = useState(0);
+  const [institutecount, setInstituteCount] = useState(0);
   const toggleSearchBar = () => {
     setIsOpen(!isOpen);
   };
-  
+
   const scholarships = useSelector((state) => state.allScholarshipsReducer);
   let entries = useSelector((state) => state.allInstitutesReducer) || [];
-  // const entries = actor.get_institutes([]); 
+  // const entries = actor.get_institutes([]);
   let studentEntries = useSelector((state) => state.studentDetailsReducer);
   console.log("enteries is  : ", entries);
   console.log("entries size", entries?.length);
 
-  console.log("studentEntries is : " , studentEntries)   ; 
+  console.log("studentEntries is : ", studentEntries);
   // let registeredStudent = studentEntries.length;
-
 
   const get = async () => {
     const allInstitutes = await actor.get_institutes();
     console.log("allInstitutes from gi is : ", allInstitutes);
-    setInstituteCount( allInstitutes.filter(institute => institute[1].status[0] === "approved").length) ; 
+    setInstituteCount(allInstitutes.length);
   };
 
-  get() ; 
-
-
+  get();
 
   async function getSudents() {
     const studentIdsResponse = await actor.get_students_withdetails();
     console.log("studentIdsResponse", studentIdsResponse);
-    setRegisteredStudent(studentIdsResponse.length) ; 
+    setRegisteredStudent(studentIdsResponse.length);
   }
-  
-  getSudents() ; 
 
+  getSudents();
 
-  // if(registeredStudent > 1000) registeredStudent = registeredStudent/1000  + "K" ; 
+  // if(registeredStudent > 1000) registeredStudent = registeredStudent/1000  + "K" ;
   // let entries;
 
   const getEntries = async () => {
@@ -150,7 +146,6 @@ const DashboardTab = () => {
                 <div className="font-[400] font-[Mukta] text-[#00227A] text-[40px] dxl:text-5xl flex items-center pr-[10px] ">
                   {/* {entries?.length} */}
                   {institutecount}
-
                 </div>
                 <div className="font-[350] font-[Segoe UI] text-[#00227A] text-[13px] xxs1:text-lg flex flex-col justify-center ">
                   <p>
@@ -220,33 +215,38 @@ const DashboardTab = () => {
                 Ongoing Scholarships
               </p>
               <div className="md1:flex md1:justify-between px-9">
-                {scholarships && scholarships.slice(-2).map((scholarship, index) => (
-                  <div key={index} className="flex rounded-[10px] mb-[20px] dxs:w-full sm1:w-[80%] md1:mb-[0px] md1:w-[48%]">
-                    <div className="w-[35%] bg-[#86ABF3] rounded-tl-[10px] rounded-bl-[10px]">
-                      {/* <img src={scholarship.image} className="w-48 h-38 mt-8" alt="scholarship" /> */}
-                      <img src="scholarship.jpg" class="w-48 h-38 mt-8" ></img>
-                    </div>
-                    <div className="w-[65%] bg-[#E7F4FF] p-[13px] rounded-tr-[10px] rounded-br-[10px]">
-                      <p className="font-[Segoe UI] font-[600] text-[16px] text-[#00227A] leading-[21px] pb-[10px]">
-                        {scholarship?.[1].name ?? 'N/A'}
-                      </p>
-                      <p className="font-[Segoe UI] font-[400] text-[13px] text-[#4E6DBB] leading-[17px] pb-[5px]">
-                        Offered by: {scholarship?.[1].institute ?? 'N/A'}
-                      </p>
-                      <p className="font-[Segoe UI] font-[400] text-[13px] text-[#4E6DBB] leading-[17px] pb-[16px]">
-                        Total Students Registered: {scholarship?.[1].students ?? 'N/A'}
-                      </p>
-                      <div className="flex flex-row-reverse">
-                        <button
-                          onClick={() => setView("viewScholarship")}
-                          className="bg-[#89C1FF] text-[#00227A] text-[13px] rounded-[5px] px-[22px] py-[5px]"
-                        >
-                          View
-                        </button>
+                {scholarships &&
+                  scholarships.slice(-2).map((scholarship, index) => (
+                    <div
+                      key={index}
+                      className="flex rounded-[10px] mb-[20px] dxs:w-full sm1:w-[80%] md1:mb-[0px] md1:w-[48%]"
+                    >
+                      <div className="w-[35%] bg-[#86ABF3] rounded-tl-[10px] rounded-bl-[10px]">
+                        {/* <img src={scholarship.image} className="w-48 h-38 mt-8" alt="scholarship" /> */}
+                        <img src="scholarship.jpg" class="w-48 h-38 mt-8"></img>
+                      </div>
+                      <div className="w-[65%] bg-[#E7F4FF] p-[13px] rounded-tr-[10px] rounded-br-[10px]">
+                        <p className="font-[Segoe UI] font-[600] text-[16px] text-[#00227A] leading-[21px] pb-[10px]">
+                          {scholarship?.[1].name ?? "N/A"}
+                        </p>
+                        <p className="font-[Segoe UI] font-[400] text-[13px] text-[#4E6DBB] leading-[17px] pb-[5px]">
+                          Offered by: {scholarship?.[1].institute ?? "N/A"}
+                        </p>
+                        <p className="font-[Segoe UI] font-[400] text-[13px] text-[#4E6DBB] leading-[17px] pb-[16px]">
+                          Total Students Registered:{" "}
+                          {scholarship?.[1].students ?? "N/A"}
+                        </p>
+                        <div className="flex flex-row-reverse">
+                          <button
+                            onClick={() => setView("viewScholarship")}
+                            className="bg-[#89C1FF] text-[#00227A] text-[13px] rounded-[5px] px-[22px] py-[5px]"
+                          >
+                            View
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
               </div>
             </div>
 
@@ -452,66 +452,6 @@ const DashboardTab = () => {
                     </button>
                   </div>
                 </div>
-                {/* <div className="flex justify-between">
-                  <div className="flex items-center">
-                    <img
-                      className="w-[50px] h-[50px]"
-                      src="student.jpg"
-                      alt=""
-                    />
-                    <div className="pl-[27px]">
-                      <p className="text-[#00227A] text-[15px] font-[Segoe UI] font-[600] leading-[24px]">
-                        Name
-                      </p>
-                      <p className="text-[#8CA3C3] text-[15px] font-[Segoe UI] font-[400] leading-[24px]">
-                        Institute
-                      </p>
-                    </div>
-                  </div>
-                  <div className="pt-[12px]">
-                    <button>
-                      <svg
-                        width="10"
-                        height="10"
-                        viewBox="0 0 10 10"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <circle cx="5" cy="5" r="5" fill="#6392EE" />
-                      </svg>
-                    </button>
-                  </div>
-                </div> */}
-                {/* <div className="flex justify-between">
-                  <div className="flex items-center">
-                    <img
-                      className="w-[50px] h-[50px]"
-                      src="student.jpg"
-                      alt=""
-                    />
-                    <div className="pl-[27px]">
-                      <p className="text-[#00227A] text-[15px] font-[Segoe UI] font-[600] leading-[24px]">
-                        Name
-                      </p>
-                      <p className="text-[#8CA3C3] text-[15px] font-[Segoe UI] font-[400] leading-[24px]">
-                        Institute
-                      </p>
-                    </div>
-                  </div>
-                  <div className="pt-[12px]">
-                    <button>
-                      <svg
-                        width="10"
-                        height="10"
-                        viewBox="0 0 10 10"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <circle cx="5" cy="5" r="5" fill="#6392EE" />
-                      </svg>
-                    </button>
-                  </div>
-                </div> */}
               </div>
             </div>
           </div>

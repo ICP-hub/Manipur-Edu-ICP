@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useAuth } from "../../utils/useAuthClient";
 import { useNavigate } from 'react-router-dom';
@@ -7,8 +7,7 @@ import loadingimg  from "../../../../manipur_edu_frontend/assets/loading.gif";
 
 // /Users/shivamgupta/Devlopment/Manipur/Manipur-Edu-ICP/src/manipur_edu_frontend/assets/loading.gif
 
-const notify = () => toast.success('Edits Approved.');
-
+const notify = () => toast.success("Edits Approved.");
 
 const StudentEditRequestRejectApproval = () => {
   const { actor } = useAuth();
@@ -158,7 +157,6 @@ function onBack() {
             Previous
           </div>
 
-
           <div className="px-[46px] py-[28px] flex items-center gap-[29px] rounded-[20px] border border-[#D8E1F8]">
             <img className="w-[100px] h-[100px]" src="student.jpg" alt="" />
             <div className="gap-[6px]">
@@ -223,7 +221,9 @@ function onBack() {
                   Address
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  {student.address}<br />{student.city} {student.zip_code}
+                  {student.address}
+                  <br />
+                  {student.city} {student.zip_code}
                 </p>
               </div>
               <div>
@@ -236,7 +236,7 @@ function onBack() {
               </div>
               <div>
                 <p className="text-[#8CA3C3] text-[16px] font-[Noto Sans] font-[300]">
-                  Zip Code
+                  Pin Code
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
                   {student.zip_code}
@@ -309,7 +309,7 @@ function onBack() {
               </div>
               <div>
                 <p className="text-[#8CA3C3] text-[16px] font-[Noto Sans] font-[300]">
-                  Zip Code
+                  Pin Code
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
                   {student.zip_code}
@@ -431,7 +431,8 @@ function onBack() {
                   Address
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  {studentUpdatedData.address}, <br />  {studentUpdatedData.city} {studentUpdatedData.zip_code}
+                  {studentUpdatedData.address}, <br /> {studentUpdatedData.city}{" "}
+                  {studentUpdatedData.zip_code}
                 </p>
               </div>
               <div>
@@ -444,7 +445,7 @@ function onBack() {
               </div>
               <div>
                 <p className="text-[#8CA3C3] text-[16px] font-[Noto Sans] font-[300]">
-                  Zip Code
+                  Pin Code
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
                   {studentUpdatedData.zip_code}
@@ -504,7 +505,8 @@ function onBack() {
                   Address
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
-                  {studentUpdatedData.address}, <br /> {studentUpdatedData.city} {studentUpdatedData.zip_code}
+                  {studentUpdatedData.address}, <br /> {studentUpdatedData.city}{" "}
+                  {studentUpdatedData.zip_code}
                 </p>
               </div>
               <div>
@@ -517,7 +519,7 @@ function onBack() {
               </div>
               <div>
                 <p className="text-[#8CA3C3] text-[16px] font-[Noto Sans] font-[300]">
-                  Zip Code
+                  Pin Code
                 </p>
                 <p className="text-[#00227A] text-[18px] font-[Noto Sans] font-[400]">
                   {studentUpdatedData.zip_code}
@@ -572,7 +574,10 @@ function onBack() {
           </div>
           <div className="flex flex-row-reverse gap-[16px] mb-[50px]">
             <div>
-              <button className="bg-[#0041E9] text-[white] py-[13px] px-[34px] rounded-[10px] text-[18px] font-[400]" onClick={handleApprove}>
+              <button
+                className="bg-[#0041E9] text-[white] py-[13px] px-[34px] rounded-[10px] text-[18px] font-[400]"
+                onClick={handleApprove}
+              >
                 Approve
               </button>
             </div>

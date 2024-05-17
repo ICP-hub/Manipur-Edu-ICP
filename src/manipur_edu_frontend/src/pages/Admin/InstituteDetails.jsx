@@ -26,7 +26,7 @@ const Overlay = () => (
 
 
 
-const InstituteDetails = ({ onBack  }) => {
+const InstituteDetails = ({ onBack }) => {
   const [openModalReject, setOpenModalReject] = useState(false);
   const [openModalVerify, setOpenModalVerify] = useState(false);
   const { actor } = useAuth();
@@ -37,15 +37,15 @@ const InstituteDetails = ({ onBack  }) => {
   console.log("Insititute  id is : ", ins.instituteId)
 
   let entries = useSelector((state) => state.allInstitutesReducer);
-  
-  let i ; 
-  for( i = 0; i < entries.length; i++){
-    if(entries[i][1].institute_id[0].substring(0, 6) === ins.instituteId){
-        console.log("Matching index:", i);
-        break ; 
+
+  let i;
+  for (i = 0; i < entries.length; i++) {
+    if (entries[i][1].institute_id[0].substring(0, 6) === ins.instituteId) {
+      console.log("Matching index:", i);
+      break;
     }
   }
-  let indexValue  = Number(i) ; 
+  let indexValue = Number(i);
   let entry = entries[indexValue];
   const verifyInstitute = async () => {
     setOpenModalVerify(false);
@@ -228,7 +228,7 @@ const InstituteDetails = ({ onBack  }) => {
                 </div>
                 <div className="w-[50%]">
                   <p className="font-[Noto Sans] text-[#8CA3C3] text-[1rem] leading-[1.375rem] font-[300] pb-[0.1875rem]">
-                    Zip code
+                    Pin Code
                   </p>
                   <p className="font-[Noto Sans] text-[#00227A] text-[1.125rem] leading-[1.53125rem] font-[400]">
                     {entry?.[1].zip_code?.[0] || "N/A"}
@@ -252,7 +252,7 @@ const InstituteDetails = ({ onBack  }) => {
           />
         </div>
         <div className="flex flex-row-reverse pt-[0.5rem] pb-[1.875rem] gap-[18px]">
-          {entry?.[1].status?.[0] === "pending" && (
+          {entry?.[1].status?.[0] === "Pending" && (
             <>
               <button
                 onClick={() => setOpenModalVerify(true)}

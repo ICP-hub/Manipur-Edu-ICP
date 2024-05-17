@@ -247,27 +247,6 @@ pub fn student_application_status(user_principal: String) -> Option<String> {
             .and_then(|user| user.status.clone())
     })
 }
-
-// pub fn student_application_status(user_principal: String) -> String {
-//     STATE.with(|state| {
-//         let state = state.borrow();
-//         if state.users.contains_key(&user_principal) {
-//             if state.unapproved_students.contains(&user_principal) {
-//                 "pending".to_string()
-//             } else if state.rejected_students.contains(&user_principal)
-//                 && !state.unapproved_students.contains(&user_principal)
-//             {
-//                 "rejected".to_string()
-//             } else {
-//                 "approved".to_string()
-//             }
-//         } else {
-//             "student not found".to_string()
-//         }
-//     })
-// }
-
-//function for student to register
 #[update]
 pub async fn register_user(mut user_data: UserData) -> String {
     let principal_id = caller().to_string();

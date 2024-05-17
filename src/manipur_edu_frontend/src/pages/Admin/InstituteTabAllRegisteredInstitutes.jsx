@@ -143,14 +143,23 @@ import { useSelector } from "react-redux";
 
 const AllRegisteredInstitutes = ({ onView, onEdit, onStudent, SetTab }) => {
   let entries = useSelector((state) => state.allInstitutesReducer);
+  if (!entries || entries.length === 0) {
+    return (
+      <NoDataComponent
+        message={"No Institutes registered yet!"}
+        imageSrc="NoData.png"
+      ></NoDataComponent>
+    );
+  }
   return (
     <div>
       <div className="border rounded-[10px] border-[#D9EBFF]">
-        <div className="  grid grid-cols-[repeat(4,1fr)_100px] py-[15px]   font-[600]  font-[Segoe UI] text-[15px] text-[#00227A] leading-[20px]">
+        <div className="  grid grid-cols-[repeat(4,1fr)_100px] py-[15px] font-[600]  font-[Segoe UI] text-[15px] text-[#00227A] leading-[20px]">
           <div className="flex justify-center">INSTITUTE NAME</div>
           <div className="flex justify-center">INSTITUTE ID</div>
           <div className="flex justify-center">EMAIL</div>
           <div className="flex justify-center">REGISTERED STUDENTS</div>
+          <div className="flex justify-center"></div>
         </div>
         {entries?.map((entry, index) => (
           <Card
@@ -174,11 +183,11 @@ const Card = ({ entry, onView, onEdit, onStudent, SetTab }) => {
   console.log(entry);
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate("/register-students-details", { state: { entry } });
-    
-    // click to view 
-    // navigate("/institute-details-admin", { state: { entry } });
-    // SetTab("register-students-details");
+    // navigate("/register-students-details", { state: { entry } });
+
+    // click to view
+    navigate("/institute-details-admin", { state: { entry } });
+    SetTab("register-students-details");
   };
 
   const handleView = () => {
@@ -211,10 +220,11 @@ const Card = ({ entry, onView, onEdit, onStudent, SetTab }) => {
         {instituteEmail}
       </p>
       <button
+        className="bg-blue-500 text-white font-segoe-ui text-11 rounded-lg h-9 w-20 ml-10"
         onClick={handleClick}
-        className="pt-[7px] font-[700] underline flex justify-center  text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px]"
+        style={{ backgroundColor: "#355389" }}
       >
-        Click to View
+        {"View"}
       </button>
       <div className="flex gap-[8px]">
         <button onClick={handleView}>
