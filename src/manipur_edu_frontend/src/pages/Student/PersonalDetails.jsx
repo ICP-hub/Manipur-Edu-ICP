@@ -42,7 +42,6 @@ const StudentPersonalDetailsEdit = ({ next, formData, updateFormData }) => {
   const [Field, setField] = React.useState("");
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   console.log("formData in pd aadhar is : ", formData.aadhar_no[0]);
 

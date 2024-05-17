@@ -467,4 +467,5 @@ const ProfileResult = () => {
     </Background>
   );
 };
+}
 export default ProfileResult;

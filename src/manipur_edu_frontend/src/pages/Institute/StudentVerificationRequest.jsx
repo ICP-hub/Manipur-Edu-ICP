@@ -196,5 +196,6 @@ const StudentVerificationRequest = () => {
     </div>
   );
 };
+}
 
 export default StudentVerificationRequest;
