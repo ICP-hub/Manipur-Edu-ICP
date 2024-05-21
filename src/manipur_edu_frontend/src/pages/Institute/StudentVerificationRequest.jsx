@@ -34,7 +34,7 @@ const StudentVerificationRequest = () => {
 
 
 
-  const getImage = async ( kyc) => {
+  const getImage = async (kyc) => {
     try {
       let i = 1;
       let data;
@@ -45,14 +45,14 @@ const StudentVerificationRequest = () => {
 
       console.log("num_chunks is ", no_Of_chunks)
 
-      console.log("  chunk_id_val is " , chunk_id_val , typeof(chunk_id_val))
+      console.log("  chunk_id_val is ", chunk_id_val, typeof (chunk_id_val))
 
 
 
       console.log("chunk_id_val is ", chunk_id_val)
       for (let i = 0; i < Number(kyc[0].num_chunks); i++) {
         console.log("Fetching chunks at i = ", i);
-        console.log("kyc[0].image_id is  in for  ", kyc[0].image_id , typeof( kyc[0].image_id))
+        console.log("kyc[0].image_id is  in for  ", kyc[0].image_id, typeof (kyc[0].image_id))
 
         const imageId = parseInt(kyc[0].image_id, 10);
         let chunkId = parseInt(chunk_id_val, 10);
@@ -70,24 +70,24 @@ const StudentVerificationRequest = () => {
         console.log("next_chunk_id is ", next_chunk_id)
         console.log("chunk_data.length is ", chunk_data.length)
         if (chunk_data.length > 0) {
-        
+
           newChunks.push(new Uint8Array(chunk_data));
           chunkId = next_chunk_id;  // Update chunkId to fetch the next chunk
         }
       }
-    
+
       // Calculate the total length of all chunks combined
       let totalLength = newChunks.reduce((acc, val) => val ? acc + val.length : acc, 0);
       let combinedData = new Uint8Array(totalLength);
-      
+
       let offset = 0;
       newChunks.forEach(chunk => {
-          if (chunk) {  // Ensure chunk is not null
-              combinedData.set(chunk, offset);
-              offset += chunk.length;
-          }
+        if (chunk) {  // Ensure chunk is not null
+          combinedData.set(chunk, offset);
+          offset += chunk.length;
+        }
       });
-      
+
 
 
       // Now you have a single Uint8Array containing all the data
@@ -122,7 +122,7 @@ const StudentVerificationRequest = () => {
         console.log('public:', publicKey);
         // const decryptedAes = await aes_Decrypt(entry[0].kyc, privateKey);
         // console.log(" decryptedAes : ", decryptedAes);
-        const imgEncrypted = await getImage( entry[0].kyc); // failed to fetch chunks 
+        const imgEncrypted = await getImage(entry[0].kyc); // failed to fetch chunks 
         console.log("imgEncrypted in return is ", imgEncrypted)
         const url = await decrypted_Img(entry[0].kyc, imgEncrypted, privateKey); // error iv not defined 
         const reader = new FileReader();
@@ -131,9 +131,9 @@ const StudentVerificationRequest = () => {
           setImage(imageDataUrl);
           setOpenModal(true);
           // document.getElementById('imagePreview').src = imageDataUrl;
-      };
-      reader.readAsDataURL(url);
-       
+        };
+        reader.readAsDataURL(url);
+
       }
     };
 
@@ -146,56 +146,93 @@ const StudentVerificationRequest = () => {
     const rollNo = entry?.[0].roll_no?.[0] ?? "N/A";
     const verificationStatus = entry?.[0].status?.[0] ?? "N/A"; // Example for accessing student_id
 
-  return (
-    <div>
-      <Modal
-        open={openModal}
-        image={image}
-        onClose={() => setOpenModal(false)}
-      />
-      <div className="w-full self-center">
-        <div className="grid grid-cols-5 mt-4 h-[50px] rounded-[5px] bg-[#EEF6FF] pt-[7px]">
-          <div className="flex justify-center text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] rounded-[5px]">
-            <div className="flex rounded-[5px]">
-              <img className="w-[33px] h-[33px]" src="/student.svg" alt="" />
-              <p className="pt-[6px] pl-[13px]">{studentName}</p>{" "}
+    return (
+
+      <div>
+          <Modal
+            open={openModal}
+            image={image}
+            onClose={() => setOpenModal(false)}
+          />
+          <div className="w-full self-center">
+            <div className="grid grid-cols-5 mt-4 h-[50px] rounded-[5px] bg-[#EEF6FF] pt-[7px]">
+              <div className="flex justify-center text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] rounded-[5px]">
+                <div className="flex rounded-[5px]">
+                  <img className="w-[33px] h-[33px]" src="/student.svg" alt="" />
+                  <p className="pt-[6px] pl-[13px]">{studentName}</p>{" "}
+                </div>
+              </div>
+              <p className="flex justify-center bg-[#EEF6FF] text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px]">
+                {studentId} {/* Displaying the student ID */}
+              </p>
+              <p className="flex justify-center bg-[#EEF6FF] text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px]">
+                {rollNo} {/* Displaying the student ID */}
+              </p>
+              <p
+                className={`flex justify-center bg-[#EEF6FF] font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px] ${verificationStatus === "approved"
+                    ? "text-[#13BC24]"
+                    : verificationStatus === "pending"
+                      ? "text-[#C3A846]"
+                      : verificationStatus === "rejected"
+                        ? "text-[#B26868]"
+                        : "text-[#687DB2]"
+                  }`}
+              >
+                {verificationStatus}
+              </p>
+              <button
+                className="bg-blue-500 text-white font-segoe-ui text-11 rounded-lg ml-6"
+                onClick={handleClick}
+                style={{
+                  backgroundColor: "#355389",
+                  height: "40px",
+                  width: "110px",
+                }}
+              >
+                {"View/Verify"}
+              </button>
+
+              <button className="font-[700] underline flex justify-center bg-[#EEF6FF] text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px]"
+              onClick={handleKyc}>
+              {'view kyc'}
+            </button>
+
             </div>
           </div>
-          <p className="flex justify-center bg-[#EEF6FF] text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px]">
-            {studentId} {/* Displaying the student ID */}
-          </p>
-          <p className="flex justify-center bg-[#EEF6FF] text-[#687DB2] font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px]">
-            {rollNo} {/* Displaying the student ID */}
-          </p>
-          <p
-            className={`flex justify-center bg-[#EEF6FF] font-[Segoe UI] font-[400] text-[15px] leading-[20px] pt-[6px] ${
-              verificationStatus === "approved"
-                ? "text-[#13BC24]"
-                : verificationStatus === "pending"
-                ? "text-[#C3A846]"
-                : verificationStatus === "rejected"
-                ? "text-[#B26868]"
-                : "text-[#687DB2]"
-            }`}
-          >
-            {verificationStatus}
-          </p>
-          <button
-            className="bg-blue-500 text-white font-segoe-ui text-11 rounded-lg ml-6"
-            onClick={handleClick}
-            style={{
-              backgroundColor: "#355389",
-              height: "40px",
-              width: "110px",
-            }}
-          >
-            {"View/Verify"}
-          </button>
         </div>
+      );
+  };
+  
+
+       
+  return (
+    <div className="w-full self-center">
+      <div className="grid grid-cols-5 py-[15px] mt-[27px] rounded-md bg-[#D9EBFF] font-[600] text-[15px] text-[#00227A] leading-[20px]">
+        <div className="flex justify-center">NAME</div>
+        <div className="flex justify-center">STUDENT ID</div>
+        <div className="flex justify-center">ROLL NUMBER</div>
+        <div className="flex justify-center">STATUS</div>
+        <div className="flex justify-center">STUDENT DETAILS</div>
+      </div>
+      {entries &&
+        entries.map(({ studentId, details }, index) => (
+          <Card
+            key={index}
+            entry={details}
+            studentPrincipalId={studentId}
+            publicKey={publicKey}
+          /> // Directly pass each entry
+        ))}
+      <div className="flex flex-row-reverse pt-[50px] pb-[100px]">
+        Page 1 of 100
       </div>
     </div>
   );
-};
-}
+
+} ; 
+
+
+
+
 
 export default StudentVerificationRequest;

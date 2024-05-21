@@ -252,7 +252,7 @@ const InstituteDetails = ({ onBack }) => {
           />
         </div>
         <div className="flex flex-row-reverse pt-[0.5rem] pb-[1.875rem] gap-[18px]">
-          {entry?.[1].status?.[0] === "Pending" && (
+          {entry?.[1].status?.[0] === "pending" && (
             <>
               <button
                 onClick={() => setOpenModalVerify(true)}

@@ -375,7 +375,7 @@ function onBack() {
                 {studentUpdatedData.first_name} {studentUpdatedData.last_name}
               </p>
               <p className="text-[#687EB5] text-[15px] font-[Noto Sans] font-[500]">
-                Student #: {studentUpdatedData.roll_no}
+                {studentUpdatedData.roll_no}
               </p>
             </div>
           </div>

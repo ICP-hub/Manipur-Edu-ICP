@@ -87,6 +87,7 @@ const Card = ({ student, studentId }) => {
           height: "40px",
           width: "110px",
         }}
+        onClick={handleVerify}
       >
         {"View/Verify"}
       </button>

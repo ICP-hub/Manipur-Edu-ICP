@@ -25,6 +25,7 @@ import ScholarshipPostedAdmin from "./components/admin/ScholarshipPostedAdmin";
 import InstituteEditRequestRejectApprove from "./pages/Institute/InstituteEditRequestRejectApproval";
 import EditInstituteProfile from "./pages/Admin/EditInstituteDetails"
 import ScholarshipTab from "./pages/Institute/ScholarshipTab";
+import ViewStudentProfileDetails from "./pages/Institute/ViewStudentProfileDetials"
 
 // All Routes according to usertype
 const routes = [
@@ -268,6 +269,17 @@ const routes = [
       appConstants.UNKNOWN,
     ],
   },
+  {
+    path: "/ViewStudentProfileDetails",
+    component: <ViewStudentProfileDetails />,
+    allowedUser: [
+      appConstants.INSTITUTE,
+      appConstants.ADMIN,
+      appConstants.STUDENT,
+      appConstants.UNKNOWN,
+    ],
+  },
+  
   {
     path: "/institute-details-check",
     component: <InstituteDetails />,

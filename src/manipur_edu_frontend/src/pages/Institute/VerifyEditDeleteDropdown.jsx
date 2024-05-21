@@ -11,7 +11,7 @@ const VerifyEditDeleteDropdown = ({ open, onClose, entries }) => {
   console.log("hii", entries);
   const handleViewDetails = () => {
     setIsViewOpen(true);
-    navigate("/viewDetails", { state: { entries } });
+    navigate("/ViewStudentProfileDetails", { state: { entries } });
   };
   const handleEditClick = () => {
     setIsEditOpen(true);

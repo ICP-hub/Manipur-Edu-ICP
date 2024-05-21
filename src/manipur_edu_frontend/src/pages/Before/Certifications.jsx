@@ -284,7 +284,9 @@ const Certifications = () => {
                     className="box-border"
                   ></p>
                   <div className="flex justify-center px-[16px] pt-[27px] pb-[14px]">
-                    <button className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[30px] py-[5px]">
+                    <button className="bg-[#89C1FF] rounded-[5px] text-[#00227A] text-[Noto Sans] text-[13px] leading-[18px] font-[400] px-[30px] py-[5px]"
+                      onClick={handleStudentCertificate}
+                    >
                       View
                     </button>
                   </div>
@@ -300,7 +302,7 @@ const Certifications = () => {
                     }}
                   ></div>
                 </div>
-                <div className="bg-[#EEF6FF] w-[30%] flex flex-col rounded-[10px] pt-[24px] box-border relative">
+                {/* <div className="bg-[#EEF6FF] w-[30%] flex flex-col rounded-[10px] pt-[24px] box-border relative">
                   <img
                     className="w-[30px] h-[30px] ml-[3px] mt-[-20px]"
                     src={"Certificate.png"}
@@ -425,7 +427,7 @@ const Certifications = () => {
                       bottom: "6px",
                     }}
                   ></div>
-                </div>
+                </div> */}
               </div>
             </>
           ) : (
