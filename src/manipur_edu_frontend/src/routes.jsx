@@ -25,6 +25,8 @@ import ScholarshipPostedAdmin from "./components/admin/ScholarshipPostedAdmin";
 import InstituteEditRequestRejectApprove from "./pages/Institute/InstituteEditRequestRejectApproval";
 import EditInstituteProfile from "./pages/Admin/EditInstituteDetails"
 import ScholarshipTab from "./pages/Institute/ScholarshipTab";
+import AadhaarInputCard from "./pages/Login/AdharUi";
+import OtpInputCard from "./pages/Login/Otp";
 
 // All Routes according to usertype
 const routes = [
@@ -58,7 +60,28 @@ const routes = [
       appConstants.UNKNOWN,
     ],
   },
-
+  {
+    path: "/aadhar",
+    component: <AadhaarInputCard />,
+    allowedUser: [
+      appConstants.INSTITUTE,
+      appConstants.ADMIN,
+      appConstants.STUDENT,
+      appConstants.UNKNOWN,
+    ],
+    
+  },
+  {
+    path: "/otp",
+    component: <OtpInputCard />,
+    allowedUser: [
+      appConstants.INSTITUTE,
+      appConstants.ADMIN,
+      appConstants.STUDENT,
+      appConstants.UNKNOWN,
+    ],
+    
+  },
   {
     path: "/instituteEditRequest",
     component: <InstituteDetails />,

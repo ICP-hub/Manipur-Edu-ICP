@@ -79,9 +79,9 @@ const Login = () => {
           setStatus(true);
           console.log("student details not found");
           if (chossed === "stud") {
-            navigate("/register-student");
+            navigate("/aadhar");
           } else if (chossed === "inst") {
-            navigate("/register-institute");
+            navigate("/otp");
           } else {
             navigate("/dsa");
           }
