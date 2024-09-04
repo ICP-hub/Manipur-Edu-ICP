@@ -81,7 +81,7 @@ const Login = () => {
           if (chossed === "stud") {
             navigate("/aadhar");
           } else if (chossed === "inst") {
-            navigate("/otp");
+            navigate("/inst");
           } else {
             navigate("/dsa");
           }
